@@ -6,13 +6,10 @@
 # Instalation and Dependencies
 ### Backend dependencies
 - Node
-- Nodemon (dev dependencie)
+- Nodemon (dev dependency)
 - Mongoose
-- Body-parser
-- Cors
 - Express
 
-commmand: npm install nodemon mongoose body-parser cors express
 
 ## How to run back end
 Make sure to have the latesded versoin of node install. CD into server and run **"npm install"**. It will install all the dependencies automatic. After the installation, run **"npm run server"** to start the back end server.
@@ -28,3 +25,14 @@ You need to have access to the database to run this application. If you dont hav
 ```
 
 ## How to run front end
+### Front end depencies
+- Redux
+- Redux-react
+- redux toolkit
+- Bootstrap 5
+- React icons
+
+```cmd
+npm install redux react-redux @reduxjs/toolkit
+npm i bootstrap@5.2.0-beta1
+```

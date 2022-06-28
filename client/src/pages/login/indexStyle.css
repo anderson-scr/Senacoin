@@ -1,0 +1,68 @@
+.logoSenacoinLogin {
+  width: 50%;
+}
+.leftSide {
+  background-color: #DFDFDF;
+}
+.rigthSide {
+  -webkit-box-shadow: -7px -1px 25px -4px rgba(0,0,0,0.36);
+  -moz-box-shadow: -7px -1px 25px -4px rgba(0,0,0,0.36);
+  box-shadow: -7px -1px 25px -4px rgba(0,0,0,0.36);
+}
+.rigthSide, .leftSide {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.containerLogin {
+  width: 80%;
+}
+.titleLogin {
+  text-align: center;
+  font-size: 3vw;
+  margin-bottom: 10vh;
+}
+.forgotPasswordText {
+  font-size: .85vw;
+}
+.btnSubmitLogin {
+  background-color: var(--main-color);
+  border: none;
+  outline: none;
+  width: 40%;
+  margin: auto;
+}
+.btnSubmitLogin:hover {
+  background-color: var(--main-color);
+}
+.inputPassword::-ms-reveal,
+.inputPassword::-ms-clear {
+  display: none;
+}
+.containerPassword {
+  position: relative;
+}
+.showPasswordIcon {
+  color: #999;
+  position: absolute;
+  right: 10px;
+  top: 33px;
+  bottom: 0;
+  margin: auto 0;
+  cursor: pointer;
+}
+/* Forgot password */
+.containerForgotPassword {
+  text-align: center;
+  margin-top: 5vh;
+  padding-top: 3vh;
+}
+.forgotPassword {
+  color: var(--main-color);
+  text-decoration: underline;
+  cursor: default; /* Prevent bug with text cursor */
+}
+.forgotPassword:hover {
+  cursor: pointer;
+}
