@@ -31,8 +31,10 @@ You need to have access to the database to run this application. If you dont hav
 - redux toolkit
 - Bootstrap 5
 - React icons
+- React Router v6
 
 ```cmd
+npm install react-router-dom@6
 npm install redux react-redux @reduxjs/toolkit
 npm i bootstrap@5.2.0-beta1
 ```
