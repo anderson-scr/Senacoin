@@ -1,7 +1,7 @@
 import React, { useState, useRef } from 'react'
 import './formLoginStyle.css'
 import { BsFillEyeFill, BsFillEyeSlashFill } from "react-icons/bs";
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { getFormData } from '../../../../common/getFormData/getFormData'
 import { verificaLogin } from '../../../../auth/login/verificarLogin';
 
@@ -16,6 +16,7 @@ import LoginCampos from './modal/loginCampos';
 const FormLogin = () => {
   const [showPassword, setShowPassword] = useState(true);
   const inputPassword = useRef()
+  const navigate = useNavigate()
 
   const checkLogin = (evt) => {
     evt.preventDefault()
@@ -26,6 +27,8 @@ const FormLogin = () => {
         infoLogin.emailLogin.length === 0 || infoLogin.senhaLogin.length === 0? LoginCampos : LoginInvalido
       )
       inputPassword.current.value = ''
+    } else {
+      navigate("/Home", {replace: true} )
     }
   }
 
