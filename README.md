@@ -9,6 +9,7 @@
 - Nodemon (dev dependency)
 - Mongoose
 - Express
+- DotEnv
 
 
 ## How to run back end
