@@ -1,10 +1,17 @@
-import React, { useState } from 'react'
+import React from 'react'
 import './esqueceuSenhaStyle.css'
 import { NavLink } from 'react-router-dom';
-import ModalEsqueceuSenha from './modal/modalEsqueceuSenha'
 
+// Modal components
+import ModalService from '../../../../common/modal/services/modalService';
+import TestModal from './modal/modalEsqueceuSenha';
 
 const EsqueceuSenha = () => {
+
+  const addModal = (evt) => {
+    evt.preventDefault()
+    ModalService.open(TestModal);
+  };
 
 
   return (
@@ -26,7 +33,7 @@ const EsqueceuSenha = () => {
         </div>
 
         <div className='text-center containerBtnEnviar'>
-          <button type="submit" className="btn btn-primary btnSubmitLoginEsqueceuSenha" >Enviar</button>
+          <button type="submit" onClick={evt => addModal(evt) } className="btn btn-primary btnSubmitLoginEsqueceuSenha" >Enviar</button>
         </div>
       </form>
 
