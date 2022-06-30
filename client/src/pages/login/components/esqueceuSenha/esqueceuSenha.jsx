@@ -1,18 +1,25 @@
 import React from 'react'
 import './esqueceuSenhaStyle.css'
 import { NavLink } from 'react-router-dom';
+import { getFormData } from '../../../../common/getFormData/getFormData'
 
 // Modal components
 import ModalService from '../../../../common/modal/services/modalService';
-import TestModal from './modal/modalEsqueceuSenha';
+import ModalEsqueceuSenha from './modal/modalEsqueceuSenha';
 
 const EsqueceuSenha = () => {
 
+  const checkEmail = (evt) => {
+    evt.preventDefault()
+
+    const infoEmail = getFormData()
+    console.log(infoEmail)
+  }
+
   const addModal = (evt) => {
     evt.preventDefault()
-    ModalService.open(TestModal);
+    ModalService.open(ModalEsqueceuSenha);
   };
-
 
   return (
     <>
@@ -24,16 +31,16 @@ const EsqueceuSenha = () => {
 
       <form>
         <div className="mb-3">
-          <label htmlFor="recuperarEmail1" className="form-label" placeholder='ex: email@gmail.com'>Email</label>
-          <input type="email" className="form-control" id="recuperarEmail1" />
+          <label htmlFor="recuperarEmail1" className="form-label" >Email</label>
+          <input name='primeiraSenha' type="email" className="form-control" id="recuperarEmail1" />
         </div>
         <div className="mb-3 containerPassword">
-          <label htmlFor="recuperarEmail2" className="form-label" placeholder='ex: email@gmail.com'>Confirmar email</label>
-          <input type="email" className="form-control" id="recuperarEmail2" />
+          <label htmlFor="recuperarEmail2" className="form-label" >Confirmar email</label>
+          <input name='segundaSenha' type="email" className="form-control" id="recuperarEmail2" />
         </div>
 
         <div className='text-center containerBtnEnviar'>
-          <button type="submit" onClick={evt => addModal(evt) } className="btn btn-primary btnSubmitLoginEsqueceuSenha" >Enviar</button>
+          <button type="submit" value="Submit" onClick={evt => checkEmail(evt)} className="btn btn-primary btnSubmitLoginEsqueceuSenha" >Enviar</button>
         </div>
       </form>
 

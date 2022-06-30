@@ -1,0 +1,14 @@
+.btnConfirmaSenhaModal {
+  background-color: var(--main-color);
+  border-color: var(--main-color);
+  width: 130px;
+}
+.modal-footer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.btnConfirmaSenhaModal:hover {
+  background-color: var(--main-color-ligth);
+  border-color: var(--main-color);
+}
