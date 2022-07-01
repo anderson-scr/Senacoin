@@ -1,5 +1,6 @@
 const express = require('express');
 const path = require('path');
+const cors = require('cors');
 require('dotenv').config();
 
 const app = express();
@@ -8,9 +9,16 @@ const port = process.env.PORT;
 //salva o caminho para a raiz do projeto
 global.__basedir = __dirname;
 
+// Configures the database and opens a global connection that can be used in any module with `mongoose.connection`
+require('./libs/connect');
+
+
 //config parsing middleware
 app.use(express.json());
 app.use(express.urlencoded({extended: false}));
+
+// Allows our Angular application to make HTTP requests to Express application
+app.use(cors());
 
 //arq estaticos
 app.use(express.static(path.join(__dirname, 'public')));
