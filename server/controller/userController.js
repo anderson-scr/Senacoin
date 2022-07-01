@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const User = mongoose.model('User');
-const utils = require('../libs/util');
+const utils = require('../libs/utils');
 
 
 exports.login = (req, res, next) => {
@@ -8,21 +8,17 @@ exports.login = (req, res, next) => {
     User.findOne({ username: req.body.username })
         .then((user) => {
 
-            if (!user) {
-                res.status(401).json({ success: false, msg: "could not find user" });
-            }
+            if (!user)
+                return res.status(401).json({ success: false, msg: "could not find user" });
             
             const isValid = utils.validPassword(req.body.password, user.hash, user.salt);  
-            if (isValid) {
-
+            if (isValid)
+            {
                 const tokenObject = utils.issueJWT(user);
-
                 res.status(200).json({ success: true, user: user, token: tokenObject.token, expiresIn: tokenObject.expires });
-
-            } else {
-                res.status(401).json({ success: false, msg: "you entered the wrong password" });
             }
-
+            else 
+                res.status(401).json({ success: false, msg: "you entered the wrong password" });
         })
         .catch((err) => {
             next(err);

@@ -1,9 +1,8 @@
 const router = require('express').Router();
 const controller = require('../controller/userController');
-const passport = require('passport');
-const utils = require('../libs/util');
+const utils = require('../libs/utils');
 
-router.get('/home', passport.authenticate('jwt', {session: false}), (req, res, next) => {
+router.get('/home', utils.authMiddleware, (req, res, next) => {
     res.status(200).json({ success: true, msg: "You are successfully authenticated to this route!"});
 });
 
