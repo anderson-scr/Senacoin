@@ -6,12 +6,8 @@ const LoginContext = createContext()
 const LoginProvider = ({children}) => {
   const [login, setLogin] = useState(false)
 
-  const setLoggedInOut = () => {
-    setLogin(!login)
-  }
-
   return (
-    <LoginContext.Provider value={{login, setLoggedInOut}} >
+    <LoginContext.Provider value={{login, setLogin}} >
       {children}
     </LoginContext.Provider>
   )

@@ -2,12 +2,12 @@ import React, { useState, useRef } from 'react'
 import './formLoginStyle.css'
 import { BsFillEyeFill, BsFillEyeSlashFill } from "react-icons/bs";
 import { NavLink, useNavigate } from 'react-router-dom';
-import { getFormData } from '../../../../common/getFormData/getFormData'
-import { verificaLogin } from '../../../../auth/login/verificarLogin';
+import { getFormData } from 'common/getFormData/getFormData'
+import { verificaLogin } from 'auth/login/verificarLogin';
 
 
 // Modal
-import ModalService from '../../../../common/modal/services/modalService';
+import ModalService from 'common/modal/services/modalService';
 import LoginInvalido from './modal/loginInvalido';
 import LoginCampos from './modal/loginCampos';
 

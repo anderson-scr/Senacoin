@@ -1,11 +1,11 @@
 import React, { useRef } from 'react'
 import './esqueceuSenhaStyle.css'
 import { NavLink } from 'react-router-dom';
-import { getFormData } from '../../../../common/getFormData/getFormData'
-import { verificaLogin } from '../../../../auth/login/verificarLogin';
+import { getFormData } from 'common/getFormData/getFormData'
+import { verificaLogin } from 'auth/login/verificarLogin';
 
 // Modal components
-import ModalService from '../../../../common/modal/services/modalService';
+import ModalService from 'common/modal/services/modalService';
 import ModalEsqueceuSenha from './modal/modalEsqueceuSenha';
 import ModalEmailIncompativel from './modal/modalEmailIncompativel';
 import ModalEmailInvalido from './modal/modalEmailInvalido';

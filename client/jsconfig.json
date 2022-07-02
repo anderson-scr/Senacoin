@@ -1,0 +1,7 @@
+// This commands enable imports direct from root (src)
+{
+  "compilerOptions": {
+    "baseUrl": "src"
+  },
+  "include": ["src"]
+}
