@@ -1,6 +1,9 @@
 :root {
   --main-color: #935700;
   --main-color-ligth: #ac6700;
+  --dorado: #9A5F10;
+  --main-cinza: #DFDFDF;
+  --main-cinza-dark: #cdcdcd;
 }
 
 * {

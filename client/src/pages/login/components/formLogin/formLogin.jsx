@@ -1,10 +1,10 @@
-import React, { useState, useRef } from 'react'
+import React, { useState, useRef, useContext } from 'react'
 import './formLoginStyle.css'
 import { BsFillEyeFill, BsFillEyeSlashFill } from "react-icons/bs";
 import { NavLink, useNavigate } from 'react-router-dom';
 import { getFormData } from 'common/getFormData/getFormData'
 import { verificaLogin } from 'auth/login/verificarLogin';
-
+import { AuthContext } from 'contexts/authContext';
 
 // Modal
 import ModalService from 'common/modal/services/modalService';
@@ -12,30 +12,44 @@ import LoginInvalido from './modal/loginInvalido';
 import LoginCampos from './modal/loginCampos';
 
 
-
 const FormLogin = () => {
   const [showPassword, setShowPassword] = useState(true);
   const inputPassword = useRef()
   const navigate = useNavigate()
+  const { setUserAuth } = useContext(AuthContext)
 
-  const checkLogin = (evt) => {
+
+  const checkLogin = async (evt) => {
     evt.preventDefault()
-    const infoLogin = getFormData()
+    const {emailLogin, senhaLogin} = getFormData()
+
     
-    if(!verificaLogin.verificarEmail(infoLogin.emailLogin) || !verificaLogin.verificarSenha(infoLogin.senhaLogin)) {
-      ModalService.open(
-        infoLogin.emailLogin.length === 0 || infoLogin.senhaLogin.length === 0? LoginCampos : LoginInvalido
-      )
+    // Verify if user filled all inputs
+    if(emailLogin.length === 0 || senhaLogin.length === 0) {
+      ModalService.open( LoginCampos )
       inputPassword.current.value = ''
+
     } else {
-      navigate("/Home", {replace: true} )
+
+      // Calls the API to check if the user entry matchs any user in DB
+      if(await verificaLogin.authLogin(emailLogin, senhaLogin)) {
+        setUserAuth(true)
+        navigate("/Home", {replace: true} )
+        
+      } else {
+        ModalService.open( LoginInvalido ) 
+        inputPassword.current.value = ''
+      }
     }
   }
 
+
+  // Password visibility 
   const changeVisibility = () => {
     showPassword? inputPassword.current.type = "text" : inputPassword.current.type = "password"
     setShowPassword(!showPassword)
   }
+
 
   return (
     <>

@@ -59,7 +59,7 @@ const EsqueceuSenha = () => {
       </form>
 
       <div className='containerForgotPassword'>
-        <NavLink to="/" className='forgotPassword'>Voltar</NavLink>
+        <NavLink to="/Login" className='forgotPassword'>Voltar</NavLink>
       </div>
     </>
   )
