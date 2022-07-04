@@ -24,20 +24,18 @@ npm run server
 ```
 ```
 >> IMPORTANT <<
-You need to have access to the database to run this application. If you dont have it, there`s a clean json file in the "extra" folder, where you can create you own mongoDB database and set it up to run the application.
+You need to have access to the database to run this application. 
+If you dont have it, there`s a clean json file in the "extra" folder, where you can create you own mongoDB database and set it up to run the application.
 ```
 
 ## How to run front end
 ### Front end depencies
-- Redux
-- Redux-react
-- redux toolkit
 - Bootstrap 5
 - React icons
 - React Router v6
+- Axios
 
 ```cmd
-npm install react-router-dom@6
-npm install redux react-redux @reduxjs/toolkit
-npm i bootstrap@5.2.0-beta1
+npm install
+npm start
 ```
