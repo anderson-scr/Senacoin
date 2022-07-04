@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export const callLoginAPI = async (username, password) => {
-  const query = await axios.post("http://localhost:3001/login", {
+  const query = await axios.post("http://localhost:5000/login", {
     username: username,
     password: password
   })
