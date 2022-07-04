@@ -1,4 +1,3 @@
-
 const ModalService = {
   on(event, callback) {
     document.addEventListener(event, (e) => callback(e.detail));

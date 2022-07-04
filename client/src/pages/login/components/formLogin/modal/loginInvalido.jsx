@@ -1,6 +1,6 @@
-import Modal from "../../../../../common/modal/modalIndex";
-import ModalBody from "../../../../../common/modal/components/modalBody";
-import ModalFooter from "../../../../../common/modal/components/modalFooter";
+import Modal from "common/modal/modalIndex";
+import ModalBody from "common/modal/components/modalBody";
+import ModalFooter from "common/modal/components/modalFooter";
 import './loginInvalidoStyle.css'
 
 export default function LoginInvalido(props) {
