@@ -1,11 +1,11 @@
 const mongoose = require('mongoose');
-const User = mongoose.model('User');
+const Usuario = mongoose.model('Usuario');
 const utils = require('../libs/utils');
 
 
 exports.login = (req, res, next) => {
 
-    User.findOne({ username: req.body.username })
+    Usuario.findOne({ username: req.body.username })
         .then((user) => {
 
             if (!user)
@@ -32,7 +32,7 @@ exports.register = (req, res, next) => {
     const salt = saltHash.salt;
     const hash = saltHash.hash;
 
-    const newUser = new User({
+    const novoUsuario = new Usuario({
         username: req.body.username,
         hash: hash,
         salt: salt
@@ -40,7 +40,7 @@ exports.register = (req, res, next) => {
 
     try 
 	{
-        newUser.save()
+        novoUsuario.save()
             .then((user) => {
 				const jwt = utils.issueJWT(user);
                 res.json({ success: true, user: user, token: jwt.token, expiresIn: jwt.expires});
