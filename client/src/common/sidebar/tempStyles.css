@@ -20,12 +20,17 @@ body{
 
 .sidebar{
     height: 100%;
-    width: 300px;
+    width: 78px;
     background: var(--greyBackground);
     position: fixed;
     top: 0;
     left: 0;
     padding: 6px 14px;
+    transition: all 0.5s ease;
+}
+
+.sidebar.active{
+    width: 300px;
 }
 
 .sidebar .logoContent{
@@ -50,7 +55,14 @@ body{
     text-align: center;
     line-height: 50px;
     transform: translateX(-50%);
-    background-color: aqua;
+    
+}
+
+.sidebar .logoContent #btnMenu:hover{
+    background-color: var(--emphasisBronze);
+    color: var(--greyBackground);
+    border-radius: 8px;
+    transition: all 0.4s ease;
 }
 
 .sidebar ul{
@@ -72,6 +84,15 @@ body{
     align-items: center;
     text-decoration: none;
     margin-top: 14px;
+}
+
+.sidebar ul li a .linksName{
+    display: none;
+}
+
+.sidebar.active ul li a .linksName{
+    display: inline;
+    overflow: hidden;
 }
 
 .sidebar ul li a:hover{
@@ -97,7 +118,7 @@ body{
 
 .sidebar ul li .tooltip{
     position: absolute;
-    left: 250px;
+    left: 70px;
     color: var(--emphasisBronze);
     font-weight: bolder;
     top: 0;
@@ -108,6 +129,7 @@ body{
     line-height: 35px;
     padding: 5px 10px;
     box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+    display: block;
 }
 
 .sidebar ul li:hover .tooltip{
@@ -116,6 +138,10 @@ body{
     opacity: 1;
     /* left: 70px; */
     transition: all 0.4s ease;
+}
+
+.sidebar.active ul li:hover .tooltip{
+    display: none;
 }
 
 .sidebar .profileContent{
