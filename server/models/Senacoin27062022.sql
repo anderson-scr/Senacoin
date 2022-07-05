@@ -1023,3 +1023,19 @@ COMMIT;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+
+
+
+{
+  "cpf": "92219912478",
+  "matricula": "",
+  "nome": "Joãozinho Delas",
+  "apelido": "",
+  "email": "joao@delas.com",
+  "telefone": "",
+  "data_nasc": "1997-06-03",
+  "id_status": "62c4436f4b3a1f516e3c8bb7",
+  "id_perfil": "62c446137ad2a5a6ca5fbf08",
+  "id_unidade": "62c449467ad2a5a6ca5fbf0c",
+  "password": "qwe123"
+}

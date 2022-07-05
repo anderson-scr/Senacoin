@@ -1,26 +1,9 @@
 const mongoose = require('mongoose');
 
-const UsuarioSchema = new mongoose.Schema({
-	cpf: {type: String, required: true, minLength: 11, maxLength: 11},
-	matricula: String,
-	nome: {type: String, required: true},
-	apelido: String,
-	email: {type: String, required: true, lowercase: true},
-	hash: {type: String, required: true},
-	salt: {type: String, required: true},
-	telefone: String,
-	data_nasc: Date,
-	id_status: mongoose.SchemaTypes.ObjectId, //.populate("id_status")
-	id_perfil: mongoose.SchemaTypes.ObjectId, //.populate("id_perfil")
-	id_unidade: mongoose.SchemaTypes.ObjectId, //.populate("id_unidade")
-});
-mongoose.model('Usuario', UsuarioSchema);
-
-
 const StatusSchema = new mongoose.Schema({
 	nome: {type: String, required: true},
 });
-mongoose.model('Status', StatusSchema);
+mongoose.model("Status", StatusSchema);
 
 
 const PerfilSchema = new mongoose.Schema({
@@ -36,10 +19,9 @@ const PerfilSchema = new mongoose.Schema({
 	relatorios: {type: Boolean, default: false},
 	admin: {type: Boolean, default: false},
 	gerencia: {type: Boolean, default: false},
-	id_status: mongoose.SchemaTypes.ObjectId, //.populate("id_status")
-	id_perfil: mongoose.SchemaTypes.ObjectId, //.populate("id_perfil")
+	id_status: {type: mongoose.SchemaTypes.ObjectId, ref: "Status"}, //.populate("id_status")
 });
-mongoose.model('Perfil', PerfilSchema);
+mongoose.model("Perfil", PerfilSchema);
 
 
 const EnderecoSchema = new mongoose.Schema({
@@ -48,7 +30,7 @@ const EnderecoSchema = new mongoose.Schema({
 	logradouro: String,
 	numero: Number
 });
-mongoose.model('Endereco', EnderecoSchema);
+mongoose.model("Endereco", EnderecoSchema);
 
 
 const UnidadeSchema = new mongoose.Schema({
@@ -56,33 +38,50 @@ const UnidadeSchema = new mongoose.Schema({
 	endereco: EnderecoSchema,
 	telefone: String,
 	resposavel: {type: String, required: true},
-	id_status: mongoose.SchemaTypes.ObjectId //.populate("id_status")
+	id_status: {type: mongoose.SchemaTypes.ObjectId, ref: "Status"} //.populate("id_status")
 });
-mongoose.model('Unidade', UnidadeSchema);
+mongoose.model("Unidade", UnidadeSchema);
+
+
+const UsuarioSchema = new mongoose.Schema({
+	cpf: {type: String, required: true, minLength: 11, maxLength: 11},
+	matricula: String,
+	nome: {type: String, required: true},
+	apelido: String,
+	email: {type: String, required: true, lowercase: true},
+	hash: {type: String, required: true},
+	salt: {type: String, required: true},
+	telefone: String,
+	data_nasc: Date,
+	id_status: {type: mongoose.SchemaTypes.ObjectId, ref: "Status"}, //.populate("id_status")
+	id_perfil: {type: mongoose.SchemaTypes.ObjectId, ref: "Perfil"}, //.populate("id_perfil")
+	id_unidade: {type: mongoose.SchemaTypes.ObjectId, ref: "Unidade"}, //.populate("id_unidade")
+});
+mongoose.model("Usuario", UsuarioSchema);
 
 
 const AreaSchema = new mongoose.Schema({
 	nome: {type: String, required: true},
 	observacao: String,
-	id_status: mongoose.SchemaTypes.ObjectId //.populate("id_status")
+	id_status: {type: mongoose.SchemaTypes.ObjectId, ref: "Status"} //.populate("id_status")
 });
-mongoose.model('Area', AreaSchema);
+mongoose.model("Area", AreaSchema);
 
 
 const CategoriaSchema = new mongoose.Schema({
 	nome: {type: String, required: true},
 	observacao: String,
-	id_status: mongoose.SchemaTypes.ObjectId //.populate("id_status")
+	id_status: {type: mongoose.SchemaTypes.ObjectId, ref: "Status"} //.populate("id_status")
 });
-mongoose.model('Categoria', CategoriaSchema);
+mongoose.model("Categoria", CategoriaSchema);
 
 
 const SubCategoriaSchema = new mongoose.Schema({
 	nome: {type: String, required: true},
 	observacao: String,
-	id_status: mongoose.SchemaTypes.ObjectId //.populate("id_status")
+	id_status: {type: mongoose.SchemaTypes.ObjectId, ref: "Status"} //.populate("id_status")
 });
-mongoose.model('SubCategoria', SubCategoriaSchema);
+mongoose.model("SubCategoria", SubCategoriaSchema);
 
 
 const ItemSchema = new mongoose.Schema({
@@ -93,10 +92,10 @@ const ItemSchema = new mongoose.Schema({
 	imagem: String,
 	data_inicio: {type: Date, immutable: true, default: () => Date.now()},
 	data_fim: Date,
-	id_area: mongoose.SchemaTypes.ObjectId,
-	id_categoria: mongoose.SchemaTypes.ObjectId,
-	id_subcategoria: mongoose.SchemaTypes.ObjectId,
-	id_status: mongoose.SchemaTypes.ObjectId,
-	id_unidade: mongoose.SchemaTypes.ObjectId
+	id_area: {type: mongoose.SchemaTypes.ObjectId, ref: "Area"},
+	id_categoria: {type: mongoose.SchemaTypes.ObjectId, ref: "Categoria"},
+	id_subcategoria: {type: mongoose.SchemaTypes.ObjectId, ref: "SubCategoria"},
+	id_status: {type: mongoose.SchemaTypes.ObjectId, ref: "Status"},
+	id_unidade: {type: mongoose.SchemaTypes.ObjectId, ref: "Unidade"}
 });
-mongoose.model('Item', ItemSchema);
+mongoose.model("Item", ItemSchema);
