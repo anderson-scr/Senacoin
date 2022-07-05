@@ -98,6 +98,5 @@ const ItemSchema = new mongoose.Schema({
 	id_subcategoria: mongoose.SchemaTypes.ObjectId,
 	id_status: mongoose.SchemaTypes.ObjectId,
 	id_unidade: mongoose.SchemaTypes.ObjectId
-
 });
 mongoose.model('Item', ItemSchema);
