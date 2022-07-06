@@ -6,7 +6,7 @@ import { BrowserRouter as Router,  Routes, Route, Navigate } from 'react-router-
 import TelaLogin from './pages/login/index';
 import EsqueceuSenha from './pages/login/components/esqueceuSenha/esqueceuSenha';
 import FormLogin from './pages/login/components/formLogin/formLogin';
-import Home from './pages/home';
+import Dashboard from './pages/dashboard';
 import RequireAuth from 'auth/protectedRoutes/protectedRoutes';
 import Layout from 'common/layout/layout';
 import { AuthContext } from 'contexts/authContext';
@@ -33,10 +33,10 @@ function App() {
 
 
           {/* Protect routes */}
-          <Route path='/' element={<Navigate replace to='/Home' />} />
+          <Route path='/' element={<Navigate replace to='/Dashboard' />} />
           <Route path='/' element={<RequireAuth />} >
             <Route path='/' element={<Layout />}>
-              <Route path='/Home' element={<Home />} />
+              <Route path='/Dashboard' element={<Dashboard />} />
             </Route>
           </Route>
         </Routes>
