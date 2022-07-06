@@ -23,7 +23,7 @@ const PerfilSchema = new mongoose.Schema({
 });
 mongoose.model("Perfil", PerfilSchema);
 
-
+//nao to convencido talvez seja melhor dentro de unidade msm
 const EnderecoSchema = new mongoose.Schema({
 	cidade: {type: String, required: true},
 	uf: {type: String, required: true},
@@ -35,7 +35,7 @@ mongoose.model("Endereco", EnderecoSchema);
 
 const UnidadeSchema = new mongoose.Schema({
 	nome: {type: String, required: true},
-	endereco: EnderecoSchema,
+	endereco: {type: mongoose.SchemaTypes.ObjectId, ref: "Endereco"},
 	telefone: String,
 	resposavel: {type: String, required: true},
 	id_status: {type: mongoose.SchemaTypes.ObjectId, ref: "Status"} //.populate("id_status")

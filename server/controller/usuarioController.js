@@ -5,7 +5,7 @@ const utils = require('../libs/utils');
 // logs the user
 exports.login = (req, res, next) => {
     
-    Usuario.findOne({ username: req.body.username })
+    Usuario.findOne({ email: req.body.email })
     .then((usuario) => {
         
         if (!usuario)
@@ -15,7 +15,8 @@ exports.login = (req, res, next) => {
         if (isValid)
         {
             const tokenObject = utils.issueJWT(usuario);
-            res.status(200).json({ success: true, usuario: user, token: tokenObject.token, expiresIn: tokenObject.expires });
+            res.status(200).json({ success: true, token: tokenObject.token, expiresIn: tokenObject.expires });
+            console.log(usuario)
         }
         else 
             res.status(401).json({ success: false, msg: "you entered the wrong password" });
@@ -50,7 +51,7 @@ exports.register = (req, res, next) => {
         .then((usuario) => {
             const jwt = utils.issueJWT(usuario);
             console.log(usuario)
-            res.json({ success: true, token: jwt.token, expiresIn: jwt.expires});
+            res.status(201).json({ success: true, token: jwt.token, expiresIn: jwt.expires});
         });
         
     }
@@ -62,17 +63,36 @@ exports.register = (req, res, next) => {
     
 }
 
-exports.list = (req, res, next) => {
+exports.listAll = (req, res, next) => {
     Usuario.find({})
+    .select("nome email telefone id_unidade id_status")
+    .populate({path : 'id_unidade', select: 'nome -_id'})   //.populate('id_unidade id_perfil id_status')
+    .populate({path : 'id_status' , select: 'nome -_id'})
     .then((usuarios) => {
         
         if (usuarios.length === 0)
             return res.status(401).json({ success: false, msg: "nenhum usuário encontrado" });  
         else
             {
-                usuarios.forEach(usuario => {
-                    usuario.populate("id_unidade")
-                });
+                res.status(200).json(usuarios);
+            }
+    })
+    .catch((err) => {
+        next(err);
+    });
+}
+
+exports.listOne = (req, res, next) => {
+    Usuario.findOne({ _id: req.params.id})
+    .select('-hash -salt')
+    .populate({path : 'id_unidade', populate: [{path: 'endereco', select: '-_id'}, {path: 'id_status', select: '-_id'}], select: 'nome endereco responsavel id_status -_id'})   //.populate('id_unidade id_perfil id_status')
+    .populate({path : 'id_status' , select: 'nome -_id'})
+    .then((usuarios) => {
+        
+        if (usuarios.length === 0)
+            return res.status(401).json({ success: false, msg: "nenhum usuário encontrado" });  
+        else
+            {
                 res.status(200).json(usuarios);
             }
     })

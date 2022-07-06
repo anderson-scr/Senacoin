@@ -8,6 +8,9 @@ router.post('/login', controller.login);
 // Register a new user
 router.post('/register', controller.register);
 // list all users
-router.get('/list', utils.authMiddleware, controller.list);
+router.get('/all', utils.authMiddleware, controller.listAll);
+// list single user
+router.get('/:id', utils.authMiddleware, controller.listOne);
+
 
 module.exports = router;
