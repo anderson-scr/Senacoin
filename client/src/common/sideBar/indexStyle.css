@@ -1,6 +1,6 @@
 .barraLateral {
   height: 100vh;
-  background-color: var(--main-cinza);
+  background-color: #000;
   box-shadow: 0px 0px 10px 3px rgba(0, 0, 0, 0.25);
   display: flex;
   flex-direction: column;
@@ -21,17 +21,20 @@
   align-items: center;
   justify-content: space-between;
   overflow: visible;
-  height: 70%;
+  height: 78%;
   width: 100%;
 }
 
 
 /* Icons in general */
 .icon {
-  color: var(--dorado);
+  color: var(--branco);
   margin-top: 6px;
   margin-bottom: 6px;
   margin-left: 15.2px;
+}
+.icon2 {
+  margin-left: 13px; 
 }
 
 
@@ -49,6 +52,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  gap: 25px;
 }
 .navBarraLateral  ul li {
   width: 100%;
@@ -59,15 +63,18 @@
   border-radius: 8px;
   cursor: pointer;
 }
-.navBarraLateral  ul li:hover {
-  background-color: var(--dorado);
-}
 .navBarraLateral  ul li:hover .icon {
-  color: var(--main-cinza);
+  color: var(--senac-amarelo);
 }
-/* Extra when open sidebar */
-.space {
-  margin-right: 23px;
+.navBarraLateral  ul li:hover > .textMenuOption {
+  color: var(--senac-amarelo);
+}
+.textMenuOption {
+  margin-left: 20px;
+  font-weight: 600;
+  white-space: nowrap;
+  transition: opacity .1s ease-in;
+  color: var(--branco);
 }
 
 
@@ -76,9 +83,9 @@
 
 /* Line for separation */
 .justLine {
-  height: 4px;
+  height: 3px;
   width: 100%;
-  background-color: var(--main-cinza-dark);
+  background-color: var(--main-cinza);
   border: 2px;
 }
 .lineT {
@@ -130,7 +137,7 @@
 
 /* User section */
 .userSection {
-  background-color: var(--main-cinza-dark);
-  width: 100%;
+  border-top: 2px solid var(--main-cinza);
+  width: 90%;
   height: 75px;
 }

@@ -7,6 +7,13 @@ import TelaLogin from './pages/login/index';
 import EsqueceuSenha from './pages/login/components/esqueceuSenha/esqueceuSenha';
 import FormLogin from './pages/login/components/formLogin/formLogin';
 import Dashboard from './pages/dashboard';
+import CadUsuario from 'pages/cadUsuario/cadUsuario';
+import CadItem from 'pages/cadItem/cadItem';
+import CadPromocao from 'pages/cadPromocao/carPromocao';
+import CadQrcode from 'pages/cadQrcode/cadQrcode';
+import GerUsuario from 'pages/gerUsuario/gerUsuario';
+import GerItem from 'pages/gerItem/gerItem';
+import GerQrcode from 'pages/gerQrcode/gerQrcode';
 import RequireAuth from 'auth/protectedRoutes/protectedRoutes';
 import Layout from 'common/layout/layout';
 import { AuthContext } from 'contexts/authContext';
@@ -37,6 +44,13 @@ function App() {
           <Route path='/' element={<RequireAuth />} >
             <Route path='/' element={<Layout />}>
               <Route path='/Dashboard' element={<Dashboard />} />
+              <Route path='/CadastroUsuario' element={<CadUsuario />} />
+              <Route path='/CadastroItem' element={<CadItem />} />
+              <Route path='/CadastroPromocao' element={<CadPromocao />} />
+              <Route path='/CadastroQrcode' element={<CadQrcode />} />
+              <Route path='/GerenciarUsuarios' element={<GerUsuario />} />
+              <Route path='/GerenciarItems' element={<GerItem />} />
+              <Route path='/GerenciasQrcoes' element={<GerQrcode />} />
             </Route>
           </Route>
         </Routes>
