@@ -1,33 +1,103 @@
 .barraLateral {
-  width: 70px;
   height: 100vh;
-  background-color: var(--main-cinza);
+  background-color: #000;
   box-shadow: 0px 0px 10px 3px rgba(0, 0, 0, 0.25);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
-  padding-top: 2%;
   overflow: visible;
+  transition: width .4s ease-in;
 }
-.icon {
-  color: var(--dorado);
+.iconeMenuContainer {
+  display: flex;
+  justify-content: flex-start;
+  width: 85%;
   cursor: pointer;
 }
-.navBarraLateral {
-  height: 40%;
+.containerNav {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
   overflow: visible;
+  height: 78%;
+  width: 100%;
+}
+
+
+/* Icons in general */
+.icon {
+  color: var(--branco);
+  margin-top: 6px;
+  margin-bottom: 6px;
+  margin-left: 15.2px;
+}
+.icon2 {
+  margin-left: 13px; 
+}
+
+
+
+/* Navigation */
+.navBarraLateral {
+  overflow: visible;
+  width: 85%;
 }
 .navBarraLateral  ul  {
   list-style-type: none;
   padding: 0;
   margin: 0;
-  height: 70%;
   overflow: visible;
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
+  align-items: center;
+  gap: 25px;
 }
+.navBarraLateral  ul li {
+  width: 100%;
+  margin: 2px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  border-radius: 8px;
+  cursor: pointer;
+}
+.navBarraLateral  ul li:hover .icon {
+  color: var(--senac-amarelo);
+}
+.navBarraLateral  ul li:hover > .textMenuOption {
+  color: var(--senac-amarelo);
+}
+.textMenuOption {
+  margin-left: 20px;
+  font-weight: 600;
+  white-space: nowrap;
+  transition: opacity .1s ease-in;
+  color: var(--branco);
+}
+
+
+
+
+
+/* Line for separation */
+.justLine {
+  height: 3px;
+  width: 100%;
+  background-color: var(--main-cinza);
+  border: 2px;
+}
+.lineT {
+  margin-top: 30px;
+  margin-bottom: 5px;
+}
+.lineB {
+  margin-bottom: 30px;
+  margin-top: 5px;
+}
+
+
 
 
 
@@ -35,31 +105,39 @@
 .navBarraLateral  ul li {
   position: relative;
 }
-.tooltipHover:hover:before {
-  content: attr(data-tooltipName);
+.tooltipHover:before {
+  content: attr(data-tooltipname);
   font-weight: 600;
   border: 1px solid rgb(232, 232, 232);
   background-color: rgb(252, 252, 252);
   box-shadow: 0px 0px 3px 3px rgba(0, 0, 0, 0.05);
   position: absolute;
   letter-spacing: 1px;
-  left: 60px;
+  left: 75px;
   border-radius: 5px;
   top: 0;
   white-space: nowrap;
-  bottom: 0;
-  margin: auto 0;
   text-align: center;
-  padding-top: 1px;
   padding-left: 15px;
   padding-right: 15px;
+
+  /* Animation */
+  opacity: 0;
+  transition: 
+    opacity .15s ease-in,
+    transform .15s ease-in;
 }
+.tooltipHover:hover:before {
+  opacity: 1;
+  transform: translateY(11.5px);
+}
+
 
 
 
 /* User section */
 .userSection {
-  background-color: var(--main-cinza-dark);
-  width: 100%;
+  border-top: 2px solid var(--main-cinza);
+  width: 90%;
   height: 75px;
 }

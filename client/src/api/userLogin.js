@@ -1,8 +1,8 @@
 import axios from "axios";
 
-export const callLoginAPI = async (username, password) => {
-  const query = await axios.post("http://localhost:3001/login", {
-    username: username,
+export const callLoginAPI = async (email, password) => {
+  const query = await axios.post("http://localhost:5000/login", {
+    email: email,
     password: password
   })
     .then(response => {

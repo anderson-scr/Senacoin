@@ -34,7 +34,7 @@ const FormLogin = () => {
       // Calls the API to check if the user entry matchs any user in DB
       if(await verificaLogin.authLogin(emailLogin, senhaLogin)) {
         setUserAuth(true)
-        navigate("/Home", {replace: true} )
+        navigate("/Dashboard", {replace: true} )
         
       } else {
         ModalService.open( LoginInvalido ) 
