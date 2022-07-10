@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from 'react'
 import { verificaSessao } from 'auth/login/verificaSessao'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, NavLink, Outlet } from 'react-router-dom'
+import './cadItemStyle.css'
 
 const CadItem = () => {
   const effectOnce = useRef(true)
@@ -17,7 +18,18 @@ const CadItem = () => {
   }, [])
 
   return (
-    <div>CadItem</div>
+    <div className='container col'>
+      <div className='teste h-100 row'>
+        <nav className='navCadItem d-flex justify-content-around align-items-end mb-5'>
+          <NavLink className="containerTabOption" to="/CadastroItem/Produto" >Produto</NavLink>
+          <NavLink className="containerTabOption tabCenter" to="/CadastroItem/Servico" >Serviço</NavLink>
+          <NavLink className="containerTabOption" to="/CadastroItem/Evento" >Evento</NavLink>
+        </nav>
+        <section className='containerForm'>
+          <Outlet />
+        </section>
+      </div>
+    </div>
   )
 }
 
