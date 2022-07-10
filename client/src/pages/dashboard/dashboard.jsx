@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from 'react'
 import { verificaSessao } from 'auth/login/verificaSessao'
 import { useNavigate } from 'react-router-dom'
 
-const CadItem = () => {
+const Dashboard = () => {
   const effectOnce = useRef(true)
   const navigate = useNavigate()
 
@@ -17,8 +17,8 @@ const CadItem = () => {
   }, [])
 
   return (
-    <div>CadItem</div>
+    <div>Dashboard</div>
   )
 }
 
-export default CadItem
+export default Dashboard
