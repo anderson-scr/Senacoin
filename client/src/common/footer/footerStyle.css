@@ -1,0 +1,9 @@
+.containerFooter {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  color: var(--main-cinza-dark);
+}
+.logoSenac {
+  width: 6%;
+}
