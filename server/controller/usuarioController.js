@@ -36,13 +36,23 @@ exports.register = (req, res, next) => {
         nome: req.body.nome,
         apelido: req.body.apelido,
         email: req.body.email,
+        hash: saltHash.hash,
+        salt: saltHash.salt,
         telefone: req.body.telefone,
         data_nasc: req.body.data_nasc,
-        id_status: req.body.id_status,
-        id_perfil: req.body.id_perfil,
+        perfil: req.body.perfil,
+        areas: req.body.areas,
+        categorias: req.body.categorias,
+        subcategorias: req.body.subcategorias,
+        usuarios: req.body.usuarios,
+        promocoes: req.body.promocoes,
+        unidades: req.body.unidades,
+        itens: req.body.itens,
+        relatorios: req.body.relatorios,
+        admin: req.body.admin,
+        gerencia: req.body.gerencia,
         id_unidade: req.body.id_unidade,
-        hash: saltHash.hash,
-        salt: saltHash.salt
+        id_status: "62c4436f4b3a1f516e3c8bb7"
     });
     
     try 
@@ -85,7 +95,7 @@ exports.listAll = (req, res, next) => {
 exports.listOne = (req, res, next) => {
     Usuario.findOne({ _id: req.params.id})
     .select('-hash -salt')
-    .populate({path : 'id_unidade', populate: [{path: 'endereco', select: '-_id'}, {path: 'id_status', select: '-_id'}], select: 'nome endereco responsavel id_status -_id'})   //.populate('id_unidade id_perfil id_status')
+    .populate({path : 'id_unidade', populate: {path: 'id_status', select: '-_id'}, select: 'nome cidade uf logradouro numero responsavel id_status -_id'})   //.populate('id_unidade id_perfil id_status')
     .populate({path : 'id_status' , select: 'nome -_id'})
     .then((usuarios) => {
         
