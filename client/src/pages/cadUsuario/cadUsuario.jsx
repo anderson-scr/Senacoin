@@ -10,7 +10,7 @@ const CadUsuario = () => {
         <div className='containerForm container row'>
 
           {/* First col */}
-          <div className='teste col'>
+          <div className='col'>
             <div className="mb-3">
               <label htmlFor="iptNome" className="form-label">Nome</label>
               <input type="text" className="form-control" id="iptNome" />

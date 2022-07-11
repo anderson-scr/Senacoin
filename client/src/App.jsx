@@ -18,6 +18,9 @@ import GerItem from 'pages/gerItem/gerItem';
 import GerQrcode from 'pages/gerQrcode/gerQrcode';
 import Layout from 'common/layout/layout';
 import Relatorios from 'pages/relatorios/relatorios';
+import CadEvento from 'pages/cadItem/components/cadEvento/cadEvento';
+import CadProduto from 'pages/cadItem/components/cadProdutos/cadProduto';
+import CadServico from 'pages/cadItem/components/cadServico/cadServico';
 
 
 function App() {
@@ -42,7 +45,12 @@ function App() {
             <Route path='/' element={<Layout />}>
               <Route path='/Dashboard' element={<Dashboard />} />
               <Route path='/CadastroUsuario' element={<CadUsuario />} />
-              <Route path='/CadastroItem' element={<CadItem />} />
+              <Route path='/CadastroItem' element={<Navigate replace to='/CadastroItem/Produto' />} />
+              <Route path='/CadastroItem' element={<CadItem />} >
+                <Route path='/CadastroItem/Produto' element={<CadProduto />} />
+                <Route path='/CadastroItem/Evento' element={<CadEvento />} />
+                <Route path='/CadastroItem/Servico' element={<CadServico />} />
+              </Route>
               <Route path='/CadastroPromocao' element={<CadPromocao />} />
               <Route path='/CadastroQrcode' element={<CadQrcode />} />
               <Route path='/GerenciarUsuarios' element={<GerUsuario />} />
