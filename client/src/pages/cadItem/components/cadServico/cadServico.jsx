@@ -2,6 +2,7 @@ import React from 'react'
 
 const CadServico = () => {
   return (
+<<<<<<< HEAD
     <form className='container'>
       <div className='containerDouble d-flex'>
 
@@ -80,6 +81,9 @@ const CadServico = () => {
         </div>
       </div>
     </form>
+=======
+    <div>CadServico</div>
+>>>>>>> origin/Diego
   )
 }
 

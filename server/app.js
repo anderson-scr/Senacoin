@@ -13,7 +13,11 @@ global.__basedir = __dirname;
 require('./libs/connect');
 
 // Must first load the models
-require('./models/user');
+require('./models/item');
+require('./models/perfil');
+require('./models/status');
+require('./models/unidade');
+require('./models/usuario');
 
 //config parsing middleware
 app.use(express.json());

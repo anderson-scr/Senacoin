@@ -332,7 +332,7 @@ INSERT INTO `subcategoria` (`id_subcat`, `sc_titulo`, `fk_id_status`, `fk_id_uni
 --
 -- Estrutura da tabela `transacao`
 --
-
+**transacao
 CREATE TABLE `transacao` (
   `id_transacao` int(11) NOT NULL,
   `fk_cpf` varchar(11) NOT NULL,

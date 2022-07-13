@@ -10,6 +10,8 @@
 - Mongoose
 - Express
 - DotEnv
+- Cors
+- JsonWebToken
 
 
 ## How to run back end

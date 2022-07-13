@@ -2,6 +2,7 @@ import React from 'react'
 
 const CadEvento = () => {
   return (
+<<<<<<< HEAD
     <form className='container'>
       <div className='containerDouble d-flex'>
 
@@ -73,6 +74,9 @@ const CadEvento = () => {
         </div>
       </div>
     </form>
+=======
+    <div>CadEvento</div>
+>>>>>>> origin/Diego
   )
 }
 

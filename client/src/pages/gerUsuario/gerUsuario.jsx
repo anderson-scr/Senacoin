@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from 'react'
 import { verificaSessao } from 'auth/login/verificaSessao'
+import "./gerUsuarioStyle.css"
 import { useNavigate } from 'react-router-dom'
 
 const GerUsuario = () => {
