@@ -1,15 +1,12 @@
 const mongoose = require('mongoose');
 
-const UsuarioSchema = new mongoose.Schema({
+exports.ColaboradorSchema = new mongoose.Schema({
+	nome: {type: String, required: true},
+	email: {type: String, required: true, lowercase: true},
 	cpf: {type: String, required: true, minLength: 11, maxLength: 11},
 	matricula: String,
-	nome: {type: String, required: true},
-	apelido: String,
-	email: {type: String, required: true, lowercase: true},
 	hash: {type: String, required: true},
 	salt: {type: String, required: true},
-	telefone: String,
-	data_nasc: Date,
 	perfil: {type: Boolean, default: false},
 	areas: {type: Boolean, default: false},
 	categorias: {type: Boolean, default: false},
@@ -24,4 +21,3 @@ const UsuarioSchema = new mongoose.Schema({
 	id_status: {type: mongoose.SchemaTypes.ObjectId, ref: "Status"},
 	id_unidade: {type: mongoose.SchemaTypes.ObjectId, ref: "Unidade"},
 });
-mongoose.model("Usuario", UsuarioSchema);

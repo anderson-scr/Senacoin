@@ -1,15 +1,7 @@
 const mongoose = require('mongoose');
 
-const SenaCoinSchema = new mongoose.Schema({
+exports.SenaCoinSchema = new mongoose.Schema({ // lote de senacoins obtidos e sua data de expiração
 	data_inicio: Date,
 	data_fim: Date,
 	pontos: {type: Number, min: 0, default: 0},
 });
-mongoose.model("SenaCoin", SenaCoinSchema);
-
-
-const CarteiraPontosSchema = new mongoose.Schema({
-	id_transacao: {type: mongoose.SchemaTypes.ObjectId, ref: "Transacao"},
-	saldo: Number
-});
-mongoose.model("CarteiraPontos", CarteiraPontosSchema);

@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const ItemSchema = new mongoose.Schema({
+exports.ItemSchema = new mongoose.Schema({
 	nome: {type: String, required: true},
 	descricao: String,
 	pontos: {type: Number, required: true},
@@ -13,4 +13,3 @@ const ItemSchema = new mongoose.Schema({
 	id_status: {type: mongoose.SchemaTypes.ObjectId, ref: "Status"},
 	id_unidade: {type: mongoose.SchemaTypes.ObjectId, ref: "Unidade"}
 });
-mongoose.model("Item", ItemSchema);

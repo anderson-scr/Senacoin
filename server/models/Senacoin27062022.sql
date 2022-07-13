@@ -36,7 +36,7 @@ INSERT INTO `area` (`id_area`, `fk_id_status`, `fk_id_unidade`, `ar_titulo`, `ar
 
 CREATE TABLE `carteira_digital` (
   `id_carteira` int(11) NOT NULL,
-  `fk_id_transacao` int(11) NOT NULL,
+  `fk_id_cpf` int(11) NOT NULL,
   `cd_saldo` float NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 

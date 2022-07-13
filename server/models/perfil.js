@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const PerfilSchema = new mongoose.Schema({
+exports.PerfilSchema = new mongoose.Schema({
 	nome: {type: String, required: true},
 	perfil: {type: Boolean, default: false},
 	areas: {type: Boolean, default: false},
@@ -15,4 +15,3 @@ const PerfilSchema = new mongoose.Schema({
 	gerencia: {type: Boolean, default: false},
 	id_status: {type: mongoose.SchemaTypes.ObjectId, ref: "Status"}, //.populate("id_status")
 });
-mongoose.model("Perfil", PerfilSchema);
