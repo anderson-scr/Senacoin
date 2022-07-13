@@ -7,7 +7,7 @@ exports.ColaboradorSchema = new mongoose.Schema({
 	matricula: String,
 	hash: {type: String, required: true},
 	salt: {type: String, required: true},
-	perfil: {type: Boolean, default: false},
+	perfis: {type: Boolean, default: false},
 	areas: {type: Boolean, default: false},
 	categorias: {type: Boolean, default: false},
 	subcategorias: {type: Boolean, default: false},
