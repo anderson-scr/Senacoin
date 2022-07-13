@@ -28,7 +28,7 @@ exports.login = (req, res, next) => {
 
 // Register a new user
 exports.register = (req, res, next) => {
-    const saltHash = utils.genPassword(req.body.password);
+    const saltHash = utils.genPassword(req.body.senha);
     
     const novoColaborador = new Colaborador({
         nome: req.body.nome,
