@@ -44,7 +44,7 @@ const BarraLateral = () => {
   }
 
   return (
-    <aside className='barraLateral' style={ isOpen? {width: '265px'} : {width: '70px'}}>
+    <aside className='barraLateral' style={ isOpen? {width: '285px'} : {width: '70px'}}>
       <section className='containerNav'>
         {/* Hamburger menu */}
         <div className='iconeMenuContainer' >

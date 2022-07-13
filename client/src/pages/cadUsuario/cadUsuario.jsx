@@ -112,15 +112,33 @@ const CadUsuario = () => {
                 <div className="form-check mt-3">
                   <input className="form-check-input" type="checkbox" name="flexcheckboxDefault" id="flexcheckboxDefault1" />
                   <label className="form-check-label" htmlFor="flexcheckboxDefault1">
-                    Default checkbox
+                    Gerenciar usuários
                   </label>
                 </div>
                 <div className="form-check mt-3">
                   <input className="form-check-input" type="checkbox" name="flexcheckboxDefault" id="flexcheckboxDefault2" />
                   <label className="form-check-label" htmlFor="flexcheckboxDefault2">
-                    Default checked radio
+                    Gerenciar items
                   </label>
-                </div>  
+                </div>
+                <div className="form-check mt-3">
+                  <input className="form-check-input" type="checkbox" name="flexcheckboxDefault" id="flexcheckboxDefault2" />
+                  <label className="form-check-label" htmlFor="flexcheckboxDefault2">
+                    Gerenciar Promoções
+                  </label>
+                </div> 
+                <div className="form-check mt-3">
+                  <input className="form-check-input" type="checkbox" name="flexcheckboxDefault" id="flexcheckboxDefault2" />
+                  <label className="form-check-label" htmlFor="flexcheckboxDefault2">
+                    Gerenciar Qrcode
+                  </label>
+                </div>
+                <div className="form-check mt-3">
+                  <input className="form-check-input" type="checkbox" name="flexcheckboxDefault" id="flexcheckboxDefault2" />
+                  <label className="form-check-label" htmlFor="flexcheckboxDefault2">
+                    Emitor relatórios
+                  </label>
+                </div> 
               </div>
             </div>
 

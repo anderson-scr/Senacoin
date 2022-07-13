@@ -25,3 +25,6 @@
 .containerForm a {
   border: 1px solid green;
 }
+.containerDouble {
+  gap: 1vw;
+}
