@@ -21,6 +21,8 @@ import Relatorios from 'pages/relatorios/relatorios';
 import CadEvento from 'pages/cadItem/components/cadEvento/cadEvento';
 import CadProduto from 'pages/cadItem/components/cadProdutos/cadProduto';
 import CadServico from 'pages/cadItem/components/cadServico/cadServico';
+import QrcodeLivre from 'pages/cadQrcode/components/qrcodeLivre';
+import QrcodeVinculado from 'pages/cadQrcode/components/qrcodeVinculado';
 
 
 function App() {
@@ -45,6 +47,7 @@ function App() {
             <Route path='/' element={<Layout />}>
               <Route path='/Dashboard' element={<Dashboard />} />
               <Route path='/CadastroUsuario' element={<CadUsuario />} />
+
               <Route path='/CadastroItem' element={<Navigate replace to='/CadastroItem/Produto' />} />
               <Route path='/CadastroItem' element={<CadItem />} >
                 <Route path='/CadastroItem/Produto' element={<CadProduto />} />
@@ -52,7 +55,12 @@ function App() {
                 <Route path='/CadastroItem/Servico' element={<CadServico />} />
               </Route>
               <Route path='/CadastroPromocao' element={<CadPromocao />} />
-              <Route path='/CadastroQrcode' element={<CadQrcode />} />
+
+              <Route path='/CadastroQrcode' element={<Navigate replace to='/CadastroQrcode/Livre' />} />
+              <Route path='/CadastroQrcode' element={<CadQrcode />} >
+                <Route path='/CadastroQrcode/Livre' element={<QrcodeLivre />} />
+                <Route path='/CadastroQrcode/Vinculado' element={<QrcodeVinculado />} />
+              </Route>
               <Route path='/GerenciarUsuarios' element={<GerUsuario />} />
               <Route path='/GerenciarItems' element={<GerItem />} />
               <Route path='/GerenciarQrcodes' element={<GerQrcode />} />
