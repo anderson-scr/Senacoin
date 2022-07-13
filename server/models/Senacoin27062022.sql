@@ -36,7 +36,7 @@ INSERT INTO `area` (`id_area`, `fk_id_status`, `fk_id_unidade`, `ar_titulo`, `ar
 
 CREATE TABLE `carteira_digital` (
   `id_carteira` int(11) NOT NULL,
-  `fk_id_transacao` int(11) NOT NULL,
+  `fk_id_cpf` int(11) NOT NULL,
   `cd_saldo` float NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -332,7 +332,7 @@ INSERT INTO `subcategoria` (`id_subcat`, `sc_titulo`, `fk_id_status`, `fk_id_uni
 --
 -- Estrutura da tabela `transacao`
 --
-
+**transacao
 CREATE TABLE `transacao` (
   `id_transacao` int(11) NOT NULL,
   `fk_cpf` varchar(11) NOT NULL,

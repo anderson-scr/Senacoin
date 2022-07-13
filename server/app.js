@@ -12,14 +12,14 @@ global.__basedir = __dirname;
 // Configures the database and opens a global connection that can be used in any module with `mongoose.connection`
 require('./libs/connect');
 
-// Must first load the models
-require('./models/user');
+// load the models
+require('./models/index');
 
 //config parsing middleware
 app.use(express.json());
 app.use(express.urlencoded({extended: false}));
 
-// Allows our Angular application to make HTTP requests to Express application
+// Allows our React application to make HTTP requests to Express application
 app.use(cors());
 
 //arq estaticos
