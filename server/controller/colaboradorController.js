@@ -1,25 +1,25 @@
 const mongoose = require('mongoose');
-const Usuario = mongoose.model('Usuario');
+const Colaborador = mongoose.model('Colaborador');
 const utils = require('../libs/utils');
 
 // logs the user
 exports.login = (req, res, next) => {
     
-    Usuario.findOne({ email: req.body.email })
-    .then((usuario) => {
+    Colaborador.findOne({ email: req.body.email })
+    .then((colab) => {
         
-        if (!usuario)
-        return res.status(401).json({ success: false, msg: "usuário não encontrado" });
+        if (!colab)
+        return res.status(401).json({ success: false, msg: "colaborador não encontrado" });
         
-        const isValid = utils.validPassword(req.body.password, usuario.hash, usuario.salt);  
+        const isValid = utils.validPassword(req.body.senha, colab.hash, colab.salt);  
         if (isValid)
         {
-            const tokenObject = utils.issueJWT(usuario);
+            const tokenObject = utils.issueJWT(colab);
             res.status(200).json({ success: true, token: tokenObject.token, expiresIn: tokenObject.expires });
-            console.log(usuario)
+            console.log(colab)
         }
         else 
-            res.status(401).json({ success: false, msg: "you entered the wrong password" });
+            res.status(401).json({ success: false, msg: "colaborador/senha inválidos!" });
     })
     .catch((err) => {
         next(err);
@@ -30,17 +30,14 @@ exports.login = (req, res, next) => {
 exports.register = (req, res, next) => {
     const saltHash = utils.genPassword(req.body.password);
     
-    const novoUsuario = new Usuario({
+    const novoColaborador = new Colaborador({
+        nome: req.body.nome,
+        email: req.body.email,
         cpf: req.body.cpf,
         matricula: req.body.matricula,
-        nome: req.body.nome,
-        apelido: req.body.apelido,
-        email: req.body.email,
         hash: saltHash.hash,
         salt: saltHash.salt,
-        telefone: req.body.telefone,
-        data_nasc: req.body.data_nasc,
-        perfil: req.body.perfil,
+        perfis: req.body.perfis,
         areas: req.body.areas,
         categorias: req.body.categorias,
         subcategorias: req.body.subcategorias,
@@ -52,15 +49,15 @@ exports.register = (req, res, next) => {
         admin: req.body.admin,
         gerencia: req.body.gerencia,
         id_unidade: req.body.id_unidade,
-        id_status: "62c4436f4b3a1f516e3c8bb7"
+        id_status: "62cec6c463187bb9b498687b"
     });
     
     try 
 	{
-        novoUsuario.save()
-        .then((usuario) => {
-            const jwt = utils.issueJWT(usuario);
-            console.log(usuario)
+        novoColaborador.save()
+        .then((colab) => {
+            const jwt = utils.issueJWT(colab);
+            console.log(colab)
             res.status(201).json({ success: true, token: jwt.token, expiresIn: jwt.expires});
         });
         
@@ -74,17 +71,17 @@ exports.register = (req, res, next) => {
 }
 
 exports.listAll = (req, res, next) => {
-    Usuario.find({})
+    Colaborador.find({})
     .select("nome email telefone id_unidade id_status")
     .populate({path : 'id_unidade', select: 'nome -_id'})   //.populate('id_unidade id_perfil id_status')
     .populate({path : 'id_status' , select: 'nome -_id'})
-    .then((usuarios) => {
+    .then((colabs) => {
         
-        if (usuarios.length === 0)
-            return res.status(401).json({ success: false, msg: "nenhum usuário encontrado" });  
+        if (colabs.length === 0)
+            return res.status(401).json({ success: false, msg: "nenhum colaborador encontrado" });  
         else
             {
-                res.status(200).json(usuarios);
+                res.status(200).json(colabs);
             }
     })
     .catch((err) => {
@@ -93,17 +90,17 @@ exports.listAll = (req, res, next) => {
 }
 
 exports.listOne = (req, res, next) => {
-    Usuario.findOne({ _id: req.params.id})
+    Colaborador.findOne({ _id: req.params.id})
     .select('-hash -salt')
     .populate({path : 'id_unidade', populate: {path: 'id_status', select: '-_id'}, select: 'nome cidade uf logradouro numero responsavel id_status -_id'})   //.populate('id_unidade id_perfil id_status')
     .populate({path : 'id_status' , select: 'nome -_id'})
-    .then((usuarios) => {
+    .then((colabs) => {
         
-        if (usuarios.length === 0)
-            return res.status(401).json({ success: false, msg: "nenhum usuário encontrado" });  
+        if (colabs.length === 0)
+            return res.status(401).json({ success: false, msg: "nenhum colaborador encontrado" });  
         else
             {
-                res.status(200).json(usuarios);
+                res.status(200).json(colabs);
             }
     })
     .catch((err) => {
