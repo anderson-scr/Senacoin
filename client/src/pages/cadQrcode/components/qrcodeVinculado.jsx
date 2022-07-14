@@ -12,7 +12,7 @@ const QrcodeVinculado = () => {
           <div id="iptNomeNeeded" className="textObrigatorio form-text">Campo obrigatório.</div>
         </div>
         <div className="mb-2">
-          <label htmlFor="iptNome" className="form-label">Senacoins</label>
+          <label htmlFor="iptNome" className="form-label">Item vinculado</label>
           <input type="text" className="form-control" id="iptNome" />
           <div id="iptNomeNeeded" className="textObrigatorio form-text">Campo obrigatório.</div>
         </div>
