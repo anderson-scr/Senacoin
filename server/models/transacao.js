@@ -9,6 +9,6 @@ exports.TransacaoSchema = new mongoose.Schema({
 
 exports.HistoricoTransacaoSchema = new mongoose.Schema({
 	id_transacao: {type: mongoose.SchemaTypes.ObjectId, ref: "Transacao"},
-	data: {type: Date, immutable: true, default: () => Date.now()},
+	data: {type: Date, immutable: true, default: () => Date.now(Date.now()-3600*1000*4)}, //fuso horario gmt-4
 	tipo: Boolean
 });

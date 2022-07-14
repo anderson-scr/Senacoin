@@ -72,9 +72,27 @@ exports.register = (req, res, next) => {
 
 exports.listAll = (req, res, next) => {
     Colaborador.find({})
-    .select("nome email telefone id_unidade id_status")
+    .select("nome email cpf id_unidade id_status")
     .populate({path : 'id_unidade', select: 'nome -_id'})   //.populate('id_unidade id_perfil id_status')
     .populate({path : 'id_status' , select: 'nome -_id'})
+    .then((colabs) => {
+        
+        if (colabs.length === 0)
+            return res.status(401).json({ success: false, msg: "nenhum colaborador encontrado" });  
+        else
+            {
+                res.status(200).json(colabs);
+            }
+    })
+    .catch((err) => {
+        next(err);
+    });
+}
+
+exports.listActive = (req, res, next) => {
+    Colaborador.find({id_status: "62cec6c463187bb9b498687b"})
+    .select("nome email cpf matricula id_unidade")
+    .populate({path : 'id_unidade', select: 'nome -_id'})   //.populate('id_unidade id_perfil id_status')
     .then((colabs) => {
         
         if (colabs.length === 0)
