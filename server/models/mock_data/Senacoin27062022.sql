@@ -1027,15 +1027,12 @@ COMMIT;
 
 
 {
-  "cpf": "92219912478",
-  "matricula": "",
-  "nome": "Joãozinho Delas",
-  "apelido": "",
-  "email": "joao@delas.com",
-  "telefone": "",
-  "data_nasc": "1997-06-03",
-  "id_status": "62c4436f4b3a1f516e3c8bb7",
-  "id_perfil": "62c446137ad2a5a6ca5fbf08",
-  "id_unidade": "62c449467ad2a5a6ca5fbf0c",
-  "password": "qwe123"
+    "titulo": "Técnico em Desenvolvimento de Sistemas",
+    "descricao": "posuere cubilia curae mauris viverra diam vitae quam suspendisse potenti nullam porttitor lacus at turpis donec posuere metus vitae",
+    "senacoins": 5000,
+    "quantidade": 20,
+    "imagem": "/uploads/caminho_da_imagem/img.png",
+    "area": "62d0730e181c3910cc21082e",
+    "subcategoria": "62d079307c50501b7a5cabea",
+    "unidade": "62d06f2c181c3910cc1f8268"
 }

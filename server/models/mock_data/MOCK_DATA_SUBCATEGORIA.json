@@ -1,0 +1,4 @@
+[{"nome":"Brindes","descricao":"Gastronomia","id_status":{"$oid":"62cec6c463187bb9b498687b"}},
+{"nome":"Camisetas","descricao":"Fabrica de Software","id_status":{"$oid":"62cec6c463187bb9b498687b"}},
+{"nome":"Curso","descricao":"Cursos ofertados durante o ano segundo disponibilidade de docentes e interesse de discentes","id_status":{"$oid":"62cec6c463187bb9b498687b"}},
+{"nome":"Squeeze","descricao":"Comércio","id_status":{"$oid":"62cec6c463187bb9b498687b"}}]

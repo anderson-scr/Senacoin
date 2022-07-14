@@ -12,9 +12,9 @@ exports.new = (req, res, next) => {
 		imagem: req.body.imagem,
 		data_inicio: req.body.data_inicio,
 		data_fim: req.body.data_fim,
-		id_area: req.body.area,
+		id_area: mongoose.Types.ObjectId(req.body.area),
 		id_categoria: mongoose.Types.ObjectId("62d017a1181c3910ccfd43d3"),
-		id_subcategoria: req.body.subcategoria,
+		id_subcategoria: mongoose.Types.ObjectId(req.body.subcategoria),
 		id_unidade: req.body.unidade,
         id_status: mongoose.Types.ObjectId("62cec6c463187bb9b498687b")
     });
