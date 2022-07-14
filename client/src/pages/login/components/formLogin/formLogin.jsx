@@ -2,7 +2,7 @@ import React, { useState, useRef, useContext } from 'react'
 import './formLoginStyle.css'
 import { BsFillEyeFill, BsFillEyeSlashFill } from "react-icons/bs";
 import { NavLink, useNavigate } from 'react-router-dom';
-import { getFormData } from 'utils/getFormData/getFormData'
+import { getFormData } from 'utils/getFormData/loginForm'
 import { verificaLogin } from 'auth/login/verificarLogin';
 import { AuthContext } from 'contexts/authContext';
 

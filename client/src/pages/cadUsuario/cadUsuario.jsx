@@ -1,14 +1,17 @@
 import React, { useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { verificaSessao } from 'auth/login/verificaSessao';
-import { getFormData } from 'utils/getFormData/getFormData';
+import { getUserFormData } from 'utils/getFormData/cadUsuarioForm';
+import { callRegisterAPI } from 'api/cadastros/cadUsuarios';
+import { getUnidadesAPI } from 'api/cadastros/getUnidades';
 import './cadUsuarioStyle.css';
+import { useState } from 'react';
 
 
 const CadUsuario = () => {
   const effectOnce = useRef(true)
   const navigate = useNavigate()
-
+  const [unidades, setUnidades] = useState()
 
   // Verifica sessão de usuário
   useEffect(() => {
@@ -16,14 +19,25 @@ const CadUsuario = () => {
       if(!verificaSessao()) {
         navigate("/Login", {replace: true})
       }
+
+      // Preenche dropdown unidades
+      getDropDownData()
   
       return () => effectOnce.current = false
     }
   }, [navigate])
 
+
+  async function getDropDownData() {
+    const drop =  await getUnidadesAPI()
+  }
+
   const getInfo = (evt) => {
     evt.preventDefault()
-    getFormData()
+    const formData = getUserFormData()
+    console.log(formData)
+
+    // callRegisterAPI(formData)
   }
 
   return (
@@ -37,31 +51,31 @@ const CadUsuario = () => {
           <div className='col'>
             <div className="mb-2">
               <label htmlFor="iptNome" className="form-label">Nome</label>
-              <input type="text" className="form-control" id="iptNome" />
+              <input type="text" className="form-control" id="nome" />
               <div id="iptNomeNeeded" className="textObrigatorio form-text">Este campo e obrigatório.</div>
             </div>
 
             <div className="mb-2">
               <label htmlFor="iptSobrenome" className="form-label">Sobrenome</label>
-              <input type="text" className="form-control" id="iptSobrenome" />
+              <input type="text" className="form-control" id="sobrenome" />
               <div id="iptSobrenomeNeeded" className="textObrigatorio form-text">Este campo e obrigatório.</div>
             </div>
 
             <div className="mb-2">
               <label htmlFor="iptEmail" className="form-label">Email</label>
-              <input type="email" className="form-control" id="iptEmail" aria-describedby="emailHelp" placeholder='exemplo@email.com' />
+              <input type="email" className="form-control" id="email" aria-describedby="emailHelp" placeholder='exemplo@email.com' />
               <div id="iptEmailNeeded" className="textObrigatorio form-text">Este campo e obrigatório.</div>
             </div>
 
             <div className="mb-2">
               <label htmlFor="iptCpf" className="form-label">CPF</label>
-              <input type="number" className="form-control" id="iptCpf" placeholder='000.000.000-00' />
+              <input type="number" className="form-control" id="cpf" placeholder='000.000.000-00' />
               <div id="iptCpfNeeded" className="textObrigatorio form-text">Este campo e obrigatório.</div>
             </div>
 
             <div className="mb-2">
               <label htmlFor="iptNumeroMatricula" className="form-label">Numero de matricula</label>
-              <input type="number" className="form-control" id="iptNumeroMatricula" placeholder='000.000/000.00-00'/>
+              <input type="number" className="form-control" id="matricula" placeholder='000.000/000.00-00'/>
               <div id="emailHelp" className="textObrigatorio form-text">Este campo e obrigatório.</div>
             </div>
           </div>
@@ -72,7 +86,7 @@ const CadUsuario = () => {
             {/* Second Col - first row */}
             <div className='row arrumaSapoha'>
               <label htmlFor="dropPerfil" className="form-label">Unidade</label>
-              <select className="form-select" id='unidade' aria-label="Default select example">
+              <select className="form-select" id='id_unidade' aria-label="Default select example">
                 <option defaultValue={0}>Open this select menu</option>
                 <option value={1}>One</option>
                 <option value={2}>Two</option>
@@ -96,39 +110,51 @@ const CadUsuario = () => {
               <div className='columnCheks col-5 mx-auto'>
                 <h4>Cadastros</h4>
                 <div className="form-check mt-2">
-                  <input className="form-check-input" type="checkbox" name="checkboxCadUsuario" id="cadUsuario" />
+                  <input className="form-check-input" type="checkbox" name="checkboxCadUsuario" id="cad_usuarios" />
                   <label className="form-check-label" htmlFor="checkboxCadUsuario">
                     Usuários
                   </label>
                 </div>
                 <div className="form-check mt-2">
-                  <input className="form-check-input" type="checkbox" name="checkboxCadItems" id="cadItems" />
+                  <input className="form-check-input" type="checkbox" name="checkboxCadItems" id="cad_itens" />
                   <label className="form-check-label" htmlFor="checkboxCadItems">
                     Items
                   </label>
                 </div>
                 <div className="form-check mt-2">
-                  <input className="form-check-input" type="checkbox" name="checkboxCadAreas" id="cadAreas" />
+                  <input className="form-check-input" type="checkbox" name="checkboxCadAreas" id="cad_areas" />
                   <label className="form-check-label" htmlFor="checkboxCadAreas">
                     Areas
                   </label>
                 </div>
                 <div className="form-check mt-2">
-                  <input className="form-check-input" type="checkbox" name="checkboxCadSubcategorias" id="cadSubcategorias" />
+                  <input className="form-check-input" type="checkbox" name="checkboxCadSubcategorias" id="cad_subcategorias" />
                   <label className="form-check-label" htmlFor="checkboxCadSubcategorias">
                     Subcategorias
                   </label>
                 </div>
                 <div className="form-check mt-2">
-                  <input className="form-check-input" type="checkbox" name="checkboxCadPromocoes" id="cadPromocoes" />
+                  <input className="form-check-input" type="checkbox" name="checkboxCadSubcategorias" id="cad_perfis" />
+                  <label className="form-check-label" htmlFor="checkboxCadSubcategorias">
+                    Perfis
+                  </label>
+                </div>
+                <div className="form-check mt-2">
+                  <input className="form-check-input" type="checkbox" name="checkboxCadPromocoes" id="cad_promocoes" />
                   <label className="form-check-label" htmlFor="checkboxCadPromocoes">
                     Promoções
                   </label>
                 </div>
                 <div className="form-check mt-2">
-                  <input className="form-check-input" type="checkbox" name="checkboxCadQRcodes" id="cadQrcodes" />
+                  <input className="form-check-input" type="checkbox" name="checkboxCadQRcodes" id="cad_qrcode" />
                   <label className="form-check-label" htmlFor="checkboxCadQRcodes">
                     QRcodes
+                  </label>
+                </div>
+                <div className="form-check mt-2">
+                  <input className="form-check-input" type="checkbox" name="checkboxCadQRcodes" id="cad_unidades" />
+                  <label className="form-check-label" htmlFor="checkboxCadQRcodes">
+                    Unidades
                   </label>
                 </div>
 
@@ -138,31 +164,31 @@ const CadUsuario = () => {
               <div className='columnCheks col-5 mx-auto'>
                 <h4>Gerenciamento</h4>
                 <div className="form-check mt-2">
-                  <input className="form-check-input" type="checkbox" name="flexcheckboxDefault" id="gerUsuario" />
+                  <input className="form-check-input" type="checkbox" name="flexcheckboxDefault" id="ger_usuarios" />
                   <label className="form-check-label" htmlFor="flexcheckboxDefault1">
                     Gerenciar usuários
                   </label>
                 </div>
                 <div className="form-check mt-2">
-                  <input className="form-check-input" type="checkbox" name="flexcheckboxDefault" id="gerItems" />
+                  <input className="form-check-input" type="checkbox" name="flexcheckboxDefault" id="ger_items" />
                   <label className="form-check-label" htmlFor="flexcheckboxDefault2">
                     Gerenciar items
                   </label>
                 </div>
                 <div className="form-check mt-2">
-                  <input className="form-check-input" type="checkbox" name="flexcheckboxDefault" id="gerPromocoes" />
+                  <input className="form-check-input" type="checkbox" name="flexcheckboxDefault" id="ger_promocoes" />
                   <label className="form-check-label" htmlFor="flexcheckboxDefault2">
                     Gerenciar Promoções
                   </label>
                 </div> 
                 <div className="form-check mt-2">
-                  <input className="form-check-input" type="checkbox" name="flexcheckboxDefault" id="gerQrcode" />
+                  <input className="form-check-input" type="checkbox" name="flexcheckboxDefault" id="ger_qrcode" />
                   <label className="form-check-label" htmlFor="flexcheckboxDefault2">
                     Gerenciar Qrcode
                   </label>
                 </div>
                 <div className="form-check mt-2">
-                  <input className="form-check-input" type="checkbox" name="flexcheckboxDefault" id="gerRelatorios" />
+                  <input className="form-check-input" type="checkbox" name="flexcheckboxDefault" id="ger_relatorios" />
                   <label className="form-check-label" htmlFor="flexcheckboxDefault2">
                     Emitir relatórios
                   </label>
