@@ -26,7 +26,7 @@ exports.listAll = (req, res, next) => {
 
 exports.listActive = (req, res, next) => {
 	Unidade.find({id_status: "62cec6c463187bb9b498687b"})
-    .select("nome -_id")
+    .select("nome")
     .then((unidades) => {
         
         if (unidades.length === 0)
@@ -43,7 +43,7 @@ exports.listActive = (req, res, next) => {
 
 exports.listOne = (req, res, next) => {// colocar um && pra procurar por id tbm
 
-    Unidade.findOne({ nome: req.body.nome })
+    Unidade.findOne({ _id: req.params.id })
 	.populate({path : 'id_status' , select: 'nome -_id'})
     .then((unidade) => {
         
