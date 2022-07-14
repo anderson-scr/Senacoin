@@ -23,6 +23,6 @@ exports.ColaboradorSchema = new mongoose.Schema({
 	ger_qrcode: {type: Boolean, default: false},
 	relatorios: {type: Boolean, default: false},
 
-	id_status: {type: mongoose.SchemaTypes.ObjectId, ref: "Status"},
-	id_unidade: {type: mongoose.SchemaTypes.ObjectId, ref: "Unidade"},
+	id_status: {type: mongoose.Types.ObjectId, ref: "Status"},
+	id_unidade: {type: mongoose.Types.ObjectId, ref: "Unidade"},
 });

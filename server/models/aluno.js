@@ -8,11 +8,11 @@ exports.AlunoSchema = new mongoose.Schema({
 	apelido: String,
 	telefone: String,
 	data_nasc: Date,
-	id_status: {type: mongoose.SchemaTypes.ObjectId, ref: "Status"},
-	id_unidade: {type: mongoose.SchemaTypes.ObjectId, ref: "Unidade"}
+	id_status: {type: mongoose.Types.ObjectId, ref: "Status"},
+	id_unidade: {type: mongoose.Types.ObjectId, ref: "Unidade"}
 });
 
 exports.CarteiraPontosSchema = new mongoose.Schema({
-	id_aluno: {type: mongoose.SchemaTypes.ObjectId, ref: "Aluno"},
+	id_aluno: {type: mongoose.Types.ObjectId, ref: "Aluno"},
 	saldo: Number
 });

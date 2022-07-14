@@ -13,17 +13,17 @@ exports.new = (req, res, next) => {
 		data_inicio: null,
 		data_fim: null,
 		id_area: req.body.area,
-		id_categoria: "62d017a1181c3910ccfd43d1",
+		id_categoria: mongoose.Types.ObjectId("62d017a1181c3910ccfd43d1"),
 		id_subcategoria: req.body.subcategoria,
 		id_unidade: req.body.unidade,
-        id_status: "62cec6c463187bb9b498687b"
+        id_status: mongoose.Types.ObjectId("62cec6c463187bb9b498687b")
     });
     
     try 
 	{
         novoProduto.save()
         .then((prod) => {
-            res.status(201).json({ success: true, id: prod._id, tittulo: prod.nome});
+            res.status(201).json({ success: true, id: prod._id, titulo: prod.nome});
         });
         
     }
