@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const SubCategoria = mongoose.model('SubCategoria');
+const SubCategoria = mongoose.model('Categoria');
 
 
 exports.new = (req, res, next) => {
