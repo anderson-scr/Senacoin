@@ -1036,3 +1036,15 @@ COMMIT;
     "subcategoria": "62d079307c50501b7a5cabea",
     "unidade": "62d06f2c181c3910cc1f8268"
 }
+
+{
+    "titulo": "Experience Day",
+    "descricao": "sem fusce consequat nulla nisl nunc nisl duis bibendum felis sed interdum venenatis turpis",
+    "senacoins": 2000,
+    "imagem": "/uploads/caminho_da_imagem/img2.png",
+    "data_inicio": "2022-06-28",
+    "data_fim": "2022-06-28",
+    "area": "62d07ef77c50501b7a5cabeb",
+    "subcategoria": "62d07fad7c50501b7a5cabec",
+    "unidade": "62d06f2c181c3910cc1f8268"
+}

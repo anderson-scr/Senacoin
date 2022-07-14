@@ -10,8 +10,8 @@ exports.new = (req, res, next) => {
 		pontos: req.body.senacoins,
 		quantidade: req.body.quantidade,
 		imagem: req.body.imagem,
-		data_inicio: req.body.data_inicio,
-		data_fim: req.body.data_fim,
+		data_inicio: new Date(req.body.data_inicio),
+		data_fim: new Date(req.body.data_fim),
 		id_area: mongoose.Types.ObjectId(req.body.area),
 		id_categoria: mongoose.Types.ObjectId("62d017a1181c3910ccfd43d3"),
 		id_subcategoria: mongoose.Types.ObjectId(req.body.subcategoria),
@@ -56,7 +56,7 @@ exports.listAll = (req, res, next) => {
 
 exports.listActive = (req, res, next) => {
 	Item.find({id_categoria: "62d017a1181c3910ccfd43d3", id_status: "62cec6c463187bb9b498687b"})
-    .select("nome id_area id_unidade pontos descricao imagem")
+    .select("nome id_area id_unidade pontos data_inicio data_fim descricao imagem")
 	.populate({path : 'id_area', select: 'nome -_id'})   //.populate('id_unidade id_perfil id_status')
     .populate({path : 'id_unidade' , select: 'nome -_id'})
     .then((servs) => {
