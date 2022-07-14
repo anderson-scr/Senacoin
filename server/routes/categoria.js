@@ -1,15 +1,13 @@
 const router = require('express').Router();
-const controller = require('../controller/unidadeController');
+const controller = require('../controller/categoriaController');
 const utils = require('../libs/utils');
 
 
-// Register a new unidade
+// Register a new categoria
 router.post('/add', utils.authMiddleware, controller.new);
-// list all unidades
+// list all categorias
 router.get('/all', utils.authMiddleware, controller.listAll);
-// list all active unidades
+// list all active categorias
 router.get('/active', utils.authMiddleware, controller.listActive);
-// list single unidade
-router.get('/:id', utils.authMiddleware, controller.listOne);
 
 module.exports = router;
