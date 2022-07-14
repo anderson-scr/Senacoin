@@ -3,7 +3,25 @@ const Area = mongoose.model('Area');
 
 
 exports.new = (req, res, next) => {
-	res.status(200).json({ success: true, msg: "voce acessou a rota de adicionar area."});
+	const novaArea = new Area({
+		nome: req.body.titulo,
+		descricao: req.body.descricao,
+        id_status: mongoose.Types.ObjectId("62cec6c463187bb9b498687b")
+    });
+    
+    try 
+	{
+        novaArea.save()
+        .then((area) => {
+            res.status(201).json({ success: true, id: area._id, nome: area.nome});
+        });
+        
+    }
+	catch (err) {
+        
+        res.json({ success: false, msg: err });
+        
+    }
 }
 
 exports.listAll = (req, res, next) => {
