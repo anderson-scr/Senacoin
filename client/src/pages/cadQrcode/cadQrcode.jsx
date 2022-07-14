@@ -16,7 +16,7 @@ const CadQrcode = () => {
   
       return () => effectOnce.current = false
     }
-  }, [])
+  }, [navigate])
 
 
   return (

@@ -1,10 +1,34 @@
-import React from 'react'
-import './cadUsuarioStyle.css'
+import React, { useEffect, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { verificaSessao } from 'auth/login/verificaSessao';
+import { getFormData } from 'utils/getFormData/getFormData';
+import './cadUsuarioStyle.css';
+
 
 const CadUsuario = () => {
+  const effectOnce = useRef(true)
+  const navigate = useNavigate()
+
+
+  // Verifica sessão de usuário
+  useEffect(() => {
+    if(effectOnce.current) {
+      if(!verificaSessao()) {
+        navigate("/Login", {replace: true})
+      }
+  
+      return () => effectOnce.current = false
+    }
+  }, [navigate])
+
+  const getInfo = (evt) => {
+    evt.preventDefault()
+    getFormData()
+  }
+
   return (
     <section>
-      <form className='form'>
+      <form>
 
         {/* First row */}
         <div className='containerForm container row'>
@@ -38,7 +62,7 @@ const CadUsuario = () => {
             <div className="mb-2">
               <label htmlFor="iptNumeroMatricula" className="form-label">Numero de matricula</label>
               <input type="number" className="form-control" id="iptNumeroMatricula" placeholder='000.000/000.00-00'/>
-              <div id="emailHelp" className="textObrigatorio form-text">Este campo e obrigató<rio className=""></rio></div>
+              <div id="emailHelp" className="textObrigatorio form-text">Este campo e obrigatório.</div>
             </div>
           </div>
 
@@ -48,8 +72,8 @@ const CadUsuario = () => {
             {/* Second Col - first row */}
             <div className='row arrumaSapoha'>
               <label htmlFor="dropPerfil" className="form-label">Unidade</label>
-              <select className="form-select" id='dropPerfil' aria-label="Default select example">
-                <option selected>Open this select menu</option>
+              <select className="form-select" id='unidade' aria-label="Default select example">
+                <option defaultValue={0}>Open this select menu</option>
                 <option value={1}>One</option>
                 <option value={2}>Two</option>
                 <option value={3}>Three</option>
@@ -58,8 +82,8 @@ const CadUsuario = () => {
 
             <div className='row arrumaSapoha2'>
               <label htmlFor="dropPerfil" className="form-label">Perfil</label>
-              <select className="form-select" id='dropPerfil' aria-label="Default select example">
-                <option selected>Open this select menu</option>
+              <select className="form-select" id='perfil' aria-label="Default select example">
+                <option defaultValue={0}>Open this select menu</option>
                 <option value={1}>One</option>
                 <option value={2}>Two</option>
                 <option value={3}>Three</option>
@@ -72,43 +96,37 @@ const CadUsuario = () => {
               <div className='columnCheks col-5 mx-auto'>
                 <h4>Cadastros</h4>
                 <div className="form-check mt-2">
-                  <input className="form-check-input" type="checkbox" name="checkboxCadUsuario" id="checkboxCadUsuario" />
+                  <input className="form-check-input" type="checkbox" name="checkboxCadUsuario" id="cadUsuario" />
                   <label className="form-check-label" htmlFor="checkboxCadUsuario">
                     Usuários
                   </label>
                 </div>
                 <div className="form-check mt-2">
-                  <input className="form-check-input" type="checkbox" name="checkboxCadItems" id="checkboxCadItems" />
+                  <input className="form-check-input" type="checkbox" name="checkboxCadItems" id="cadItems" />
                   <label className="form-check-label" htmlFor="checkboxCadItems">
                     Items
                   </label>
                 </div>
                 <div className="form-check mt-2">
-                  <input className="form-check-input" type="checkbox" name="checkboxCadAreas" id="checkboxCadAreas" />
+                  <input className="form-check-input" type="checkbox" name="checkboxCadAreas" id="cadAreas" />
                   <label className="form-check-label" htmlFor="checkboxCadAreas">
                     Areas
                   </label>
                 </div>
                 <div className="form-check mt-2">
-                  <input className="form-check-input" type="checkbox" name="checkboxCadCategorias" id="checkboxCadCategorias" />
-                  <label className="form-check-label" htmlFor="checkboxCadCategorias">
-                    Categorias
-                  </label>
-                </div>
-                <div className="form-check mt-2">
-                  <input className="form-check-input" type="checkbox" name="checkboxCadSubcategorias" id="checkboxCadSubcategorias" />
+                  <input className="form-check-input" type="checkbox" name="checkboxCadSubcategorias" id="cadSubcategorias" />
                   <label className="form-check-label" htmlFor="checkboxCadSubcategorias">
                     Subcategorias
                   </label>
                 </div>
                 <div className="form-check mt-2">
-                  <input className="form-check-input" type="checkbox" name="checkboxCadPromocoes" id="checkboxCadPromocoes" />
+                  <input className="form-check-input" type="checkbox" name="checkboxCadPromocoes" id="cadPromocoes" />
                   <label className="form-check-label" htmlFor="checkboxCadPromocoes">
                     Promoções
                   </label>
                 </div>
                 <div className="form-check mt-2">
-                  <input className="form-check-input" type="checkbox" name="checkboxCadQRcodes" id="checkboxCadQRcodes" />
+                  <input className="form-check-input" type="checkbox" name="checkboxCadQRcodes" id="cadQrcodes" />
                   <label className="form-check-label" htmlFor="checkboxCadQRcodes">
                     QRcodes
                   </label>
@@ -120,31 +138,31 @@ const CadUsuario = () => {
               <div className='columnCheks col-5 mx-auto'>
                 <h4>Gerenciamento</h4>
                 <div className="form-check mt-2">
-                  <input className="form-check-input" type="checkbox" name="flexcheckboxDefault" id="flexcheckboxDefault1" />
+                  <input className="form-check-input" type="checkbox" name="flexcheckboxDefault" id="gerUsuario" />
                   <label className="form-check-label" htmlFor="flexcheckboxDefault1">
                     Gerenciar usuários
                   </label>
                 </div>
                 <div className="form-check mt-2">
-                  <input className="form-check-input" type="checkbox" name="flexcheckboxDefault" id="flexcheckboxDefault2" />
+                  <input className="form-check-input" type="checkbox" name="flexcheckboxDefault" id="gerItems" />
                   <label className="form-check-label" htmlFor="flexcheckboxDefault2">
                     Gerenciar items
                   </label>
                 </div>
                 <div className="form-check mt-2">
-                  <input className="form-check-input" type="checkbox" name="flexcheckboxDefault" id="flexcheckboxDefault2" />
+                  <input className="form-check-input" type="checkbox" name="flexcheckboxDefault" id="gerPromocoes" />
                   <label className="form-check-label" htmlFor="flexcheckboxDefault2">
                     Gerenciar Promoções
                   </label>
                 </div> 
                 <div className="form-check mt-2">
-                  <input className="form-check-input" type="checkbox" name="flexcheckboxDefault" id="flexcheckboxDefault2" />
+                  <input className="form-check-input" type="checkbox" name="flexcheckboxDefault" id="gerQrcode" />
                   <label className="form-check-label" htmlFor="flexcheckboxDefault2">
                     Gerenciar Qrcode
                   </label>
                 </div>
                 <div className="form-check mt-2">
-                  <input className="form-check-input" type="checkbox" name="flexcheckboxDefault" id="flexcheckboxDefault2" />
+                  <input className="form-check-input" type="checkbox" name="flexcheckboxDefault" id="gerRelatorios" />
                   <label className="form-check-label" htmlFor="flexcheckboxDefault2">
                     Emitir relatórios
                   </label>
@@ -160,7 +178,7 @@ const CadUsuario = () => {
               <button type="submit" className="btn btn-outline-secondary w-50">Cancelar</button>
             </div>
             <div className='col d-flex justify-content-end'>
-              <button type="submit" className="btn btn-primary w-50">Salvar</button>
+              <button type="submit" className="btn btn-primary w-50" onClick={evt => getInfo(evt)}>Salvar</button>
             </div>
           </div>
         </div>
@@ -169,4 +187,4 @@ const CadUsuario = () => {
   )
 }
 
-export default CadUsuario
+export default CadUsuario;
