@@ -12,12 +12,12 @@ exports.new = (req, res, next) => {
         cad_subcategorias: req.body.cad_subcategorias,
         cad_promocoes: req.body.cad_promocoes,
         cad_unidades: req.body.cad_unidades,
-        cad_qrcode: req.body.cad_qrcode,
+        cad_qrcodes: req.body.cad_qrcode,
         
         ger_usuarios: req.body.ger_usuarios,
-        ger_items: req.body.ger_items,
+        ger_itens: req.body.ger_items,
         ger_promocoes: req.body.ger_promocoes,
-        ger_qrcode: req.body.ger_qrcode,
+        ger_qrcodes: req.body.ger_qrcode,
         relatorios: req.body.relatorios,
 
         id_status: mongoose.Types.ObjectId("62cec6c463187bb9b498687b")
