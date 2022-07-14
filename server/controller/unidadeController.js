@@ -26,7 +26,7 @@ exports.listAll = (req, res, next) => {
 
 exports.listActive = (req, res, next) => {
 	Unidade.find({id_status: "62cec6c463187bb9b498687b"})
-    .select("nome -_id")
+    .select("nome")
     .then((unidades) => {
         
         if (unidades.length === 0)
