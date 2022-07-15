@@ -8,16 +8,15 @@ exports.new = (req, res, next) => {
 		titulo: req.body.titulo,
 		descricao: req.body.descricao,
 		id_item: mongoose.Types.ObjectId(req.body.id_item), //se não passar por padrao ta nulo
-		id_aluno: mongoose.Types.ObjectId(req.body.id_aluno), // ?????
 		id_unidade: mongoose.Types.ObjectId(req.body.id_unidade),
 		unico: req.body.radioUnico, //isso ta zoado mas eu ja não to mais raciocinando.
 		diario: req.body.radioDiario,
 		semanal: req.body.radioSemanal,
-		ilimitado: req.body.radioIlimitado,
+		mensal: req.body.radioMensal,
 		url: req.body.url,
 		data_inicio: new Date(req.body.data_inicio),
 		data_fim: new Date(req.body.data_fim),
-		id_senacoin: mongoose.Types.ObjectId(req.body.id_senacoin), //aqui é o id ou a quantidade?
+		quantidade: req.body.quantidade, //aqui é o id_senacion ou a quantidade?
         id_status: mongoose.Types.ObjectId("62cec6c463187bb9b498687b")
     });
     
