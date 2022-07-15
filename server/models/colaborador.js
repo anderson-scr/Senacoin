@@ -18,7 +18,7 @@ exports.ColaboradorSchema = new mongoose.Schema({
 	cad_qrcode: {type: Boolean, default: false},
 
 	ger_usuarios: {type: Boolean, default: false},
-	ger_items: {type: Boolean, default: false},
+	ger_itens: {type: Boolean, default: false},
 	ger_promocoes: {type: Boolean, default: false},
 	ger_qrcode: {type: Boolean, default: false},
 	relatorios: {type: Boolean, default: false},

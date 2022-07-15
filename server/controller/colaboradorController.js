@@ -37,20 +37,22 @@ exports.register = (req, res, next) => {
         matricula: req.body.matricula,
         hash: saltHash.hash,
         salt: saltHash.salt,
+
         cad_perfis: req.body.cad_perfis,
         cad_areas: req.body.cad_areas,
-        cad_categorias: req.body.cad_categorias,
         cad_subcategorias: req.body.cad_subcategorias,
         cad_usuarios: req.body.cad_usuarios,
         cad_promocoes: req.body.cad_promocoes,
         cad_unidades: req.body.cad_unidades,
         cad_itens: req.body.cad_itens,
-        cad_relatorios: req.body.cad_relatorios,
-        ger_items: req.body.ger_items,
+        cad_qrcode: req.body.cad_qrcode,
+    
+        ger_usuarios: req.body.ger_usuarios,
+        ger_itens: req.body.ger_itens,
         ger_promocoes: req.body.ger_promocoes,
         ger_qrcode: req.body.ger_qrcode,
-        ger_relatorios: req.body.ger_relatorios,
-        admin: req.body.admin,
+        relatorios: req.body.ger_relatorios,
+
         id_unidade: mongoose.Types.ObjectId(req.body.id_unidade),
         id_status: mongoose.Types.ObjectId("62cec6c463187bb9b498687b")
     });
