@@ -33,7 +33,7 @@ exports.listAll = (req, res, next) => {
     .then((areas) => {
         
         if (areas.length === 0)
-            return res.status(401).json({ success: false, msg: "nenhuma area encontrada" });  
+            return res.status(204).json({ success: false, msg: "nenhuma area encontrada" });  
         else
             {
                 res.status(200).json(areas);
@@ -50,7 +50,7 @@ exports.listActive = (req, res, next) => {
     .then((areas) => {
         
         if (areas.length === 0)
-            return res.status(401).json({ success: false, msg: "nenhuma area encontrada" });  
+            return res.status(204).json({ success: false, msg: "nenhuma area encontrada" });  
         else
             {
                 res.status(200).json(areas);

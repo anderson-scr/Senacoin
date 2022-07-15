@@ -81,7 +81,7 @@ exports.listAll = (req, res, next) => {
     .then((colabs) => {
         
         if (colabs.length === 0)
-            return res.status(401).json({ success: false, msg: "nenhum colaborador encontrado" });  
+            return res.status(204).json({ success: false, msg: "nenhum colaborador encontrado" });  
         else
             {
                 res.status(200).json(colabs);
@@ -99,7 +99,7 @@ exports.listActive = (req, res, next) => {
     .then((colabs) => {
         
         if (colabs.length === 0)
-            return res.status(401).json({ success: false, msg: "nenhum colaborador encontrado" });  
+            return res.status(204).json({ success: false, msg: "nenhum colaborador encontrado" });  
         else
             {
                 res.status(200).json(colabs);
@@ -118,7 +118,7 @@ exports.listOne = (req, res, next) => {
     .then((colabs) => {
         
         if (colabs.length === 0)
-            return res.status(401).json({ success: false, msg: "nenhum colaborador encontrado" });  
+            return res.status(204).json({ success: false, msg: "nenhum colaborador encontrado" });  
         else
             {
                 res.status(200).json(colabs);

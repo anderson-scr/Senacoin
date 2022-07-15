@@ -61,7 +61,7 @@ exports.listActive = (req, res, next) => {
 	console.log(today)
 	QrCode.find({$and: [{id_status: "62cec6c463187bb9b498687b"}, {data_inicio: {$gte: today}}, {data_fim: {$lt: today}}]})
     .select("-id_status -_id")
-	.populate({path : 'id_item' , select: 'nome area id_categoria -_id'}) //populate id_categoria! 
+	.populate({path : 'id_item' , select: 'nome area id_categoria -_id', populate: {path: 'id_categoria', select: 'nome -_id'}})
 	.populate({path : 'id_unidade' , select: 'nome -_id'})
     .then((qrcodes) => {
         
@@ -80,7 +80,7 @@ exports.listActive = (req, res, next) => {
 exports.listOne = (req, res, next) => {
     QrCode.findOne({ _id: req.params.id})
     .select('-_id')
-    .populate({path : 'id_item' , select: 'nome area id_categoria -_id'}) //populate id_categoria! 
+    .populate({path : 'id_item' , select: 'nome area id_categoria -_id', populate: {path: 'id_categoria', select: 'nome -_id'}})
 	.populate({path : 'id_unidade' , select: 'nome -_id'})
 	.populate({path : 'id_status' , select: 'nome -_id'})
     .then((qrcodes) => {

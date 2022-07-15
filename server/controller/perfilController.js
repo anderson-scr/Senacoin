@@ -45,7 +45,7 @@ exports.listAll = (req, res, next) => {
     .then((perfis) => {
         
         if (perfis.length === 0)
-            return res.status(401).json({ success: false, msg: "nenhum perfil encontrado" });  
+            return res.status(204).json({ success: false, msg: "nenhum perfil encontrado" });  
         else
             {
                 res.status(200).json(perfis);
@@ -62,7 +62,7 @@ exports.listActive = (req, res, next) => {
     .then((perfis) => {
         
         if (perfis.length === 0)
-            return res.status(401).json({ success: false, msg: "nenhum perfil encontrado" });  
+            return res.status(204).json({ success: false, msg: "nenhum perfil encontrado" });  
         else
             {
                 res.status(200).json(perfis);
@@ -80,7 +80,7 @@ exports.listOne = (req, res, next) => {
     .then((perfil) => {
         
         if (!perfil)
-			return res.status(401).json({ success: false, msg: "colaborador não encontrado" });
+			return res.status(204).json({ success: false, msg: "colaborador não encontrado" });
         
 		res.status(200).json({ success: true, 'perfil': perfil});
 		console.log(perfil)
