@@ -1140,7 +1140,7 @@
   --
   DROP TABLE IF EXISTS `vw_kardex_posicao_atual_somada`;
 
-  CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `vw_kardex_posicao_atual_somada`  AS SELECT `it`.`id_item` AS `Código`, `it`.`it_titulo` AS `Título`, `it`.`it_descricao` AS `Descrição`, sum(`k`.`kar_qtde_item`) AS `Saldo Atual`, `u`.`usu_nome` AS `Usuário` FROM ((`kardex` `k` join `itens` `it` on(`it`.`id_item` = `k`.`fk_id_item`)) join `usuario` `u` on(`u`.`cpf` = `k`.`fk_cpf`)) GROUP BY `k`.`fk_id_item``fk_id_item`  ;
+  CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `vw_kardex_posicao_atual_somada`  AS SELECT `it`.`id_item` AS `Código`, `it`.`it_titulo` AS `Título`, `it`.`it_descricao` AS `Descrição`, sum(`k`.`kar_qtde_item`) AS `Saldo Atual`, `u`.`usu_nome` AS `Usuário` FROM ((`kardex` `k` join `itens` `it` on(`it`.`id_item` = `k`.`fk_id_item`)) join `usuario` `u` on(`u`.`cpf` = `k`.`fk_cpf`)) GROUP BY `k`.`fk_id_item`  ;
 
   -- --------------------------------------------------------
 
