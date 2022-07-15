@@ -1,10 +1,20 @@
 :root {
   --main-color: #935700;
   --main-color-ligth: #ac6700;
+  --dorado: #9A5F10;
+  --branco: #FFFEFE;
+  --main-cinza: #DFDFDF;
+  --main-cinza-dark: #cdcdcd;
+  --senac-amarelo: #F78B1F;
+  --senac-amarelo-dark: #e17e1c;
+  --senac-amarelo-claro: #F6BF86;
+  --senac-azul: #005594;
+  --senac-azul-dark: #17384D;
 }
 
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
