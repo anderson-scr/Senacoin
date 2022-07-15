@@ -51,7 +51,7 @@ exports.register = (req, res, next) => {
         ger_qrcode: req.body.ger_qrcode,
         ger_relatorios: req.body.ger_relatorios,
         admin: req.body.admin,
-        id_unidade: req.body.id_unidade,
+        id_unidade: mongoose.Types.ObjectId(req.body.id_unidade),
         id_status: mongoose.Types.ObjectId("62cec6c463187bb9b498687b")
     });
     

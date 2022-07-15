@@ -3,26 +3,26 @@ const Promocao = mongoose.model('Promocao');
 
 
 exports.new = (req, res, next) => {
-    const novoUnidade = new Unidade({
+    const novoPromocao = new Promocao({
 
         titulo: req.body.titulo,
         descricao: req.body.descricao,
         pontos: req.body.pontos,
         desconto: req.body.desconto,
         quantidade: req.body.quantidade,
-        data_inicio: req.body.data_inicio,
-        data_fim: req.body.data_fim,
-        id_unidade: req.body.id_unidade,
-        id_item: req.body.id_item,
+        data_inicio: new Date(req.body.data_inicio),
+        data_fim: new Date(req.body.data_fim),
+        id_unidade: mongoose.Types.ObjectId(req.body.id_unidade),
+        id_item: mongoose.Types.ObjectId(req.body.id_item),
         imagem: req.body.imagem,
         id_status: mongoose.Types.ObjectId("62cec6c463187bb9b498687b")
     });
     
     try 
 	{
-        novoUnidade.save()
-        .then((un) => {
-            res.status(201).json({ success: true, id: un._id, nome: un.nome});
+        novoPromocao.save()
+        .then((promo) => {
+            res.status(201).json({ success: true, id: promo._id, nome: promo.nome});
         });
         
     }
@@ -58,7 +58,7 @@ exports.listActive = (req, res, next) => {
 	console.log(today)
 	Promocao.find({$and: [{id_status: "62cec6c463187bb9b498687b"}, {data_inicio: {$gte: today}}, {data_fim: {$lt: today}}]})
     .select("titulo pontos desconto id_item id_unidade -_id")
-	.populate({path : 'id_item' , select: 'nome area categoria -_id'})
+	.populate({path : 'id_item' , select: 'nome area id_categoria -_id'}) //populate id_categoria! 
 	.populate({path : 'id_unidade' , select: 'nome -_id'})
     .then((promocoes) => {
         
@@ -77,7 +77,7 @@ exports.listActive = (req, res, next) => {
 exports.listOne = (req, res, next) => {
     Promocao.findOne({ _id: req.params.id})
     .select('-_id')
-    .populate({path : 'id_item' , select: 'nome area categoria -_id'})
+    .populate({path : 'id_item' , select: 'nome area id_categoria -_id'}) //populate id_categoria! 
 	.populate({path : 'id_unidade' , select: 'nome -_id'})
 	.populate({path : 'id_status' , select: 'nome -_id'})
     .then((promocoes) => {

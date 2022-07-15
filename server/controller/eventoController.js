@@ -14,7 +14,7 @@ exports.new = (req, res, next) => {
 		id_area: mongoose.Types.ObjectId(req.body.area),
 		id_categoria: mongoose.Types.ObjectId("62d017a1181c3910ccfd43d2"),
 		id_subcategoria: mongoose.Types.ObjectId(req.body.subcategoria),
-		id_unidade: req.body.unidade,
+		id_unidade: mongoose.Types.ObjectId(req.body.unidade),
         id_status: mongoose.Types.ObjectId("62cec6c463187bb9b498687b")
     });
     

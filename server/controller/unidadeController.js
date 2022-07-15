@@ -65,7 +65,7 @@ exports.listActive = (req, res, next) => {
     });
 }
 
-exports.listOne = (req, res, next) => {// colocar um && pra procurar por id tbm
+exports.listOne = (req, res, next) => { // colocar um && pra procurar por id tbm
 
     Unidade.findOne({ _id: req.params.id })
 	.populate({path : 'id_status' , select: 'nome -_id'})
