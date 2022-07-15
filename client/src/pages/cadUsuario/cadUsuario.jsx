@@ -21,15 +21,17 @@ const CadUsuario = () => {
       }
 
       // Preenche dropdown unidades
-      getDropDownData()
-  
+      // setUnidades(getDropDownData())
+      console.log(`${JSON.stringify(getDropDownData())}`)
+
       return () => effectOnce.current = false
     }
   }, [navigate])
 
 
   async function getDropDownData() {
-    const drop =  await getUnidadesAPI()
+    return await getUnidadesAPI()
+    
   }
 
   const getInfo = (evt) => {
