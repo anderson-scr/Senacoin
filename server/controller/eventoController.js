@@ -8,13 +8,12 @@ exports.new = (req, res, next) => {
 		nome: req.body.titulo,
 		descricao: req.body.descricao,
 		pontos: req.body.senacoins,
-		quantidade: req.body.quantidade,
 		imagem: req.body.imagem,
-		data_inicio: req.body.data_inicio,
-		data_fim: req.body.data_fim,
-		id_area: req.body.area,
+		data_inicio: new Date(req.body.data_inicio),
+		data_fim: new Date(req.body.data_fim),
+		id_area: mongoose.Types.ObjectId(req.body.area),
 		id_categoria: mongoose.Types.ObjectId("62d017a1181c3910ccfd43d2"),
-		id_subcategoria: req.body.subcategoria,
+		id_subcategoria: mongoose.Types.ObjectId(req.body.subcategoria),
 		id_unidade: req.body.unidade,
         id_status: mongoose.Types.ObjectId("62cec6c463187bb9b498687b")
     });
@@ -56,7 +55,7 @@ exports.listAll = (req, res, next) => {
 
 exports.listActive = (req, res, next) => {
 	Item.find({id_categoria: "62d017a1181c3910ccfd43d2", id_status: "62cec6c463187bb9b498687b"})
-    .select("nome id_area id_unidade pontos descricao imagem")
+    .select("nome id_area id_unidade data_inicio data_fim pontos descricao imagem")
 	.populate({path : 'id_area', select: 'nome -_id'})   //.populate('id_unidade id_perfil id_status')
     .populate({path : 'id_unidade' , select: 'nome -_id'})
     .then((evts) => {
