@@ -54,7 +54,7 @@ exports.listActive = (req, res, next) => {
     .then((unidades) => {
         
         if (unidades.length === 0)
-            return res.status(401).json({ success: false, msg: "nenhuma unidade encontrada" });  
+            return res.status(404).json({ success: false, msg: "nenhuma unidade encontrada" });  
         else
             {
                 res.status(200).json(unidades);

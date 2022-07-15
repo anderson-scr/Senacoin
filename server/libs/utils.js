@@ -70,7 +70,7 @@ function issueJWT(user) {
 }
 
 function authMiddleware(req, res, next) {
-	
+
 	if(!req.headers.authorization)
 	{
 		res.status(401).json({ success: false, msg: "You are not authorized to visit this route" });
