@@ -8,8 +8,8 @@ exports.PromocaoSchema = new mongoose.Schema({
 	quantidade: Number,
 	data_inicio: Date,
 	data_fim: Date,
-	id_unidade: {type: mongoose.SchemaTypes.ObjectId, ref: "Unidade"},
-	id_item: {type: mongoose.SchemaTypes.ObjectId, ref: "Item"},
+	id_unidade: {type: mongoose.Types.ObjectId, ref: "Unidade"},
+	id_item: {type: mongoose.Types.ObjectId, ref: "Item"},
 	imagem: String,
-	id_status: {type: mongoose.SchemaTypes.ObjectId, ref: "Status"}
+	id_status: {type: mongoose.Types.ObjectId, ref: "Status"}
 });

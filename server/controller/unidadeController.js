@@ -3,7 +3,30 @@ const Unidade = mongoose.model('Unidade');
 
 
 exports.new = (req, res, next) => {
-	res.status(200).json({ success: true, msg: "voce acessou a rota de adicionar unidade."});
+	const novoUnidade = new Unidade({
+		nome: req.body.nome,
+        cidade: req.body.cidade,
+        uf: req.body.uf,
+        logradouro: req.body.logradouro,
+        numero: req.body.numero,
+        telefone: req.body.telefone,
+        resposavel: req.body.resposavel,
+        id_status: mongoose.Types.ObjectId("62cec6c463187bb9b498687b")
+    });
+    
+    try 
+	{
+        novoUnidade.save()
+        .then((un) => {
+            res.status(201).json({ success: true, id: un._id, nome: un.nome});
+        });
+        
+    }
+	catch (err) {
+        
+        res.json({ success: false, msg: err });
+        
+    }
 }
 
 exports.listAll = (req, res, next) => {
@@ -25,6 +48,7 @@ exports.listAll = (req, res, next) => {
 }
 
 exports.listActive = (req, res, next) => {
+
 	Unidade.find({id_status: "62cec6c463187bb9b498687b"})
     .select("nome")
     .then((unidades) => {

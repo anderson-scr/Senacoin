@@ -1,7 +1,7 @@
 import React, { useRef } from 'react'
 import './esqueceuSenhaStyle.css'
 import { NavLink } from 'react-router-dom';
-import { getFormData } from 'common/getFormData/getFormData'
+import { getFormData } from 'utils/getFormData/loginForm'
 import { verificaLogin } from 'auth/login/verificarLogin';
 
 // Modal components

@@ -1,9 +1,27 @@
 const mongoose = require('mongoose');
-const SubCategoria = mongoose.model('Categoria');
+const SubCategoria = mongoose.model('SubCategoria');
 
 
 exports.new = (req, res, next) => {
-	res.status(200).json({ success: true, msg: "voce acessou a rota de adicionar subcategoria."});
+	const novaSubCategoria = new SubCategoria({
+		nome: req.body.titulo,
+		descricao: req.body.descricao,
+        id_status: mongoose.Types.ObjectId("62cec6c463187bb9b498687b")
+    });
+    
+    try 
+	{
+        novaSubCategoria.save()
+        .then((subcat) => {
+            res.status(201).json({ success: true, id: subcat._id, nome: subcat.nome});
+        });
+        
+    }
+	catch (err) {
+        
+        res.json({ success: false, msg: err });
+        
+    }
 }
 
 exports.listAll = (req, res, next) => {

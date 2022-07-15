@@ -8,5 +8,5 @@ exports.UnidadeSchema = new mongoose.Schema({
 	numero: Number,
 	telefone: String,
 	resposavel: {type: String, required: true},
-	id_status: {type: mongoose.SchemaTypes.ObjectId, ref: "Status"} //.populate("id_status")
+	id_status: {type: mongoose.Types.ObjectId, ref: "Status"} //.populate("id_status")
 });

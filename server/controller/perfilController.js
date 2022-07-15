@@ -3,7 +3,39 @@ const Perfil = mongoose.model('Perfil');
 
 
 exports.new = (req, res, next) => {
-	res.status(200).json({ success: true, msg: "voce acessou a rota de adicionar perfil."});
+    const novoPerfil = new Perfil({
+        nome: req.body.nome,
+        cad_usuarios: req.body.cad_usuarios,
+        cad_itens: req.body.cad_itens,
+        cad_perfis: req.body.cad_perfis,
+        cad_areas: req.body.cad_areas,
+        cad_subcategorias: req.body.cad_subcategorias,
+        cad_promocoes: req.body.cad_promocoes,
+        cad_unidades: req.body.cad_unidades,
+        cad_qrcodes: req.body.cad_qrcode,
+        
+        ger_usuarios: req.body.ger_usuarios,
+        ger_itens: req.body.ger_items,
+        ger_promocoes: req.body.ger_promocoes,
+        ger_qrcodes: req.body.ger_qrcode,
+        relatorios: req.body.relatorios,
+
+        id_status: mongoose.Types.ObjectId("62cec6c463187bb9b498687b")
+    });
+    
+    try 
+	{
+        novoPerfil.save()
+        .then((perfil) => {
+            res.status(201).json({ success: true, id: perfil._id, nome: perfil.nome});
+        });
+        
+    }
+	catch (err) {
+        
+        res.json({ success: false, msg: err });
+        
+    }
 }
 
 exports.listAll = (req, res, next) => {

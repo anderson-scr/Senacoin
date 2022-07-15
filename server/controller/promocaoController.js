@@ -3,7 +3,34 @@ const Promocao = mongoose.model('Promocao');
 
 
 exports.new = (req, res, next) => {
-	res.status(200).json({ success: true, msg: "voce acessou a rota de adicionar promocao."});
+    const novoUnidade = new Unidade({
+
+        titulo: req.body.titulo,
+        descricao: req.body.descricao,
+        pontos: req.body.pontos,
+        desconto: req.body.desconto,
+        quantidade: req.body.quantidade,
+        data_inicio: req.body.data_inicio,
+        data_fim: req.body.data_fim,
+        id_unidade: req.body.id_unidade,
+        id_item: req.body.id_item,
+        imagem: req.body.imagem,
+        id_status: mongoose.Types.ObjectId("62cec6c463187bb9b498687b")
+    });
+    
+    try 
+	{
+        novoUnidade.save()
+        .then((un) => {
+            res.status(201).json({ success: true, id: un._id, nome: un.nome});
+        });
+        
+    }
+	catch (err) {
+        
+        res.json({ success: false, msg: err });
+        
+    }
 }
 
 

@@ -52,7 +52,7 @@ exports.register = (req, res, next) => {
         ger_relatorios: req.body.ger_relatorios,
         admin: req.body.admin,
         id_unidade: req.body.id_unidade,
-        id_status: "62cec6c463187bb9b498687b"
+        id_status: mongoose.Types.ObjectId("62cec6c463187bb9b498687b")
     });
     
     try 
