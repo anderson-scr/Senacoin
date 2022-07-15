@@ -31,7 +31,7 @@ exports.listAll = (req, res, next) => {
     .then((subcats) => {
         
         if (subcats.length === 0)
-            return res.status(401).json({ success: false, msg: "nenhuma subcategoria encontrada" });  
+            return res.status(204).json({ success: false, msg: "nenhuma subcategoria encontrada" });  
         else
             {
                 res.status(200).json(subcats);
@@ -48,7 +48,7 @@ exports.listActive = (req, res, next) => {
     .then((subcats) => {
         
         if (subcats.length === 0)
-            return res.status(401).json({ success: false, msg: "nenhuma subcategoria encontrada" });  
+            return res.status(204).json({ success: false, msg: "nenhuma subcategoria encontrada" });  
         else
             {
                 res.status(200).json(subcats);

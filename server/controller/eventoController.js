@@ -42,7 +42,7 @@ exports.listAll = (req, res, next) => {
     .then((evts) => {
         
         if (evts.length === 0)
-            return res.status(401).json({ success: false, msg: "nenhum item/evento encontrado" });  
+            return res.status(204).json({ success: false, msg: "nenhum item/evento encontrado" });  
         else
             {
                 res.status(200).json(evts);
@@ -61,7 +61,7 @@ exports.listActive = (req, res, next) => {
     .then((evts) => {
         
         if (evts.length === 0)
-            return res.status(401).json({ success: false, msg: "nenhum item/evento encontrado" });  
+            return res.status(204).json({ success: false, msg: "nenhum item/evento encontrado" });  
         else
             {
                 res.status(200).json(evts);
@@ -78,7 +78,7 @@ exports.listOne = (req, res, next) => {
     .then((evt) => {
         
         if (!evt)
-			return res.status(401).json({ success: false, msg: "item/evento não encontrado" });
+			return res.status(204).json({ success: false, msg: "item/evento não encontrado" });
         
 		res.status(200).json({ success: true, 'item/evento': evt});
 		console.log(evt)

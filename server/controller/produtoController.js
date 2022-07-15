@@ -43,7 +43,7 @@ exports.listAll = (req, res, next) => {
     .then((prods) => {
         
         if (prods.length === 0)
-            return res.status(401).json({ success: false, msg: "nenhum item/produto encontrado" });  
+            return res.status(204).json({ success: false, msg: "nenhum item/produto encontrado" });  
         else
             {
                 res.status(200).json(prods);
@@ -62,7 +62,7 @@ exports.listActive = (req, res, next) => {
     .then((prods) => {
         
         if (prods.length === 0)
-            return res.status(401).json({ success: false, msg: "nenhum item/produto encontrado" });  
+            return res.status(204).json({ success: false, msg: "nenhum item/produto encontrado" });  
         else
             {
                 res.status(200).json(prods);
@@ -79,7 +79,7 @@ exports.listOne = (req, res, next) => {
     .then((prod) => {
         
         if (!prod)
-			return res.status(401).json({ success: false, msg: "item/produto não encontrado" });
+			return res.status(204).json({ success: false, msg: "item/produto não encontrado" });
         
 		res.status(200).json({ success: true, 'item/produto': prod});
 		console.log(prod)
