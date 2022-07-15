@@ -36,7 +36,7 @@ INSERT INTO `area` (`id_area`, `fk_id_status`, `fk_id_unidade`, `ar_titulo`, `ar
 
 CREATE TABLE `carteira_digital` (
   `id_carteira` int(11) NOT NULL,
-  `fk_id_cpf` int(11) NOT NULL,
+  `fk_id_transacao` int(11) NOT NULL,
   `cd_saldo` float NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -332,7 +332,7 @@ INSERT INTO `subcategoria` (`id_subcat`, `sc_titulo`, `fk_id_status`, `fk_id_uni
 --
 -- Estrutura da tabela `transacao`
 --
-**transacao
+
 CREATE TABLE `transacao` (
   `id_transacao` int(11) NOT NULL,
   `fk_cpf` varchar(11) NOT NULL,
@@ -1019,32 +1019,3 @@ ALTER TABLE `usuario`
   ADD CONSTRAINT `fk_id_status_usuario` FOREIGN KEY (`fk_id_status`) REFERENCES `status` (`id_status`),
   ADD CONSTRAINT `fk_id_unidade_usuario` FOREIGN KEY (`fk_id_unidade`) REFERENCES `unidades` (`id_unidade`);
 COMMIT;
-
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
-
-
-
-{
-    "titulo": "Técnico em Desenvolvimento de Sistemas",
-    "descricao": "posuere cubilia curae mauris viverra diam vitae quam suspendisse potenti nullam porttitor lacus at turpis donec posuere metus vitae",
-    "senacoins": 5000,
-    "quantidade": 20,
-    "imagem": "/uploads/caminho_da_imagem/img.png",
-    "area": "62d0730e181c3910cc21082e",
-    "subcategoria": "62d079307c50501b7a5cabea",
-    "unidade": "62d06f2c181c3910cc1f8268"
-}
-
-{
-    "titulo": "Experience Day",
-    "descricao": "sem fusce consequat nulla nisl nunc nisl duis bibendum felis sed interdum venenatis turpis",
-    "senacoins": 2000,
-    "imagem": "/uploads/caminho_da_imagem/img2.png",
-    "data_inicio": "2022-06-28",
-    "data_fim": "2022-06-28",
-    "area": "62d07ef77c50501b7a5cabeb",
-    "subcategoria": "62d07fad7c50501b7a5cabec",
-    "unidade": "62d06f2c181c3910cc1f8268"
-}
