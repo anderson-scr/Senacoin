@@ -36,7 +36,7 @@ exports.listAll = (req, res, next) => {
     .then((unidades) => {
         
         if (unidades.length === 0)
-            return res.status(401).json({ success: false, msg: "nenhuma unidade encontrada" });  
+            return res.status(204).json({ success: false, msg: "nenhuma unidade encontrada" });  
         else
             {
                 res.status(200).json(unidades);
@@ -54,7 +54,7 @@ exports.listActive = (req, res, next) => {
     .then((unidades) => {
         
         if (unidades.length === 0)
-            return res.status(401).json({ success: false, msg: "nenhuma unidade encontrada" });  
+            return res.status(204).json({ success: false, msg: "nenhuma unidade encontrada" });  
         else
             {
                 res.status(200).json(unidades);
@@ -65,14 +65,14 @@ exports.listActive = (req, res, next) => {
     });
 }
 
-exports.listOne = (req, res, next) => {// colocar um && pra procurar por id tbm
+exports.listOne = (req, res, next) => { // colocar um && pra procurar por id tbm
 
     Unidade.findOne({ _id: req.params.id })
 	.populate({path : 'id_status' , select: 'nome -_id'})
     .then((unidade) => {
         
         if (!unidade)
-			return res.status(401).json({ success: false, msg: "unidade não encontrada" });
+			return res.status(204).json({ success: false, msg: "unidade não encontrada" });
         
 		res.status(200).json({ success: true, 'unidade': unidade});
 		console.log(unidade)

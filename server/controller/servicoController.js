@@ -15,7 +15,7 @@ exports.new = (req, res, next) => {
 		id_area: mongoose.Types.ObjectId(req.body.area),
 		id_categoria: mongoose.Types.ObjectId("62d017a1181c3910ccfd43d3"),
 		id_subcategoria: mongoose.Types.ObjectId(req.body.subcategoria),
-		id_unidade: req.body.unidade,
+		id_unidade: mongoose.Types.ObjectId(req.body.unidade),
         id_status: mongoose.Types.ObjectId("62cec6c463187bb9b498687b")
     });
     
@@ -43,7 +43,7 @@ exports.listAll = (req, res, next) => {
     .then((servs) => {
         
         if (servs.length === 0)
-            return res.status(401).json({ success: false, msg: "nenhum item/servico encontrado" });  
+            return res.status(204).json({ success: false, msg: "nenhum item/servico encontrado" });  
         else
             {
                 res.status(200).json(servs);
@@ -62,7 +62,7 @@ exports.listActive = (req, res, next) => {
     .then((servs) => {
         
         if (servs.length === 0)
-            return res.status(401).json({ success: false, msg: "nenhum item/servico encontrado" });  
+            return res.status(204).json({ success: false, msg: "nenhum item/servico encontrado" });  
         else
             {
                 res.status(200).json(servs);
@@ -79,7 +79,7 @@ exports.listOne = (req, res, next) => {
     .then((serv) => {
         
         if (!serv)
-			return res.status(401).json({ success: false, msg: "item/servico não encontrado" });
+			return res.status(204).json({ success: false, msg: "item/servico não encontrado" });
         
 		res.status(200).json({ success: true, 'item/servico': serv});
 		console.log(serv)

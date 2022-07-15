@@ -14,5 +14,7 @@ router.use('/api/v1/categoria', require('./categoria'));
 
 router.use('/api/v1/promocao', require('./promocao'));
 
+router.use('/api/v1/qrcode', require('./qrcode'));
+
 
 module.exports = router;
