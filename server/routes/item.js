@@ -33,4 +33,19 @@ router.get('/servico/:id', utils.authMiddleware, sv_controller.listOne);
 // list single evento
 router.get('/evento/:id', utils.authMiddleware, ev_controller.listOne);
 
+// edit a produto
+router.patch('/:id', utils.authMiddleware, pd_controller.edit);
+// edit a servico
+router.patch('/:id', utils.authMiddleware, sv_controller.edit);
+// edit a evento
+router.patch('/:id', utils.authMiddleware, ev_controller.edit);
+
+// delete a produto
+router.delete('/:id', utils.authMiddleware, pd_controller.delete);
+// delete a servico
+router.delete('/:id', utils.authMiddleware, sv_controller.delete);
+// delete a evento
+router.delete('/:id', utils.authMiddleware, ev_controller.delete);
+
+
 module.exports = router;

@@ -11,6 +11,11 @@ router.get('/all', utils.authMiddleware, controller.listAll);
 router.get('/active', utils.authMiddleware, controller.listActive);
 // list single promocao
 router.get('/:id', utils.authMiddleware, controller.listOne);
+// edit a promocao
+router.patch('/:id', utils.authMiddleware, controller.edit);
+// delete a promocao
+router.delete('/:id', utils.authMiddleware, controller.delete);
+
 
 
 module.exports = router;

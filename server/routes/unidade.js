@@ -11,5 +11,10 @@ router.get('/all', utils.authMiddleware, controller.listAll);
 router.get('/active', utils.authMiddleware, controller.listActive);
 // list single unidade
 router.get('/:id', utils.authMiddleware, controller.listOne);
+// edit a unidade
+router.patch('/:id', utils.authMiddleware, controller.edit);
+// delete a unidade
+router.delete('/:id', utils.authMiddleware, controller.delete);
+
 
 module.exports = router;
