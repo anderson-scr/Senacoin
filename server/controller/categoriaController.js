@@ -38,7 +38,7 @@ exports.listAll = (req, res, next) => {
             }
     })
     .catch((err) => {
-        next(err);
+        res.status(500).json(err);
     });
 }
 
@@ -55,6 +55,21 @@ exports.listActive = (req, res, next) => {
             }
     })
     .catch((err) => {
-        next(err);
+        res.status(500).json(err);
+    });
+}
+
+exports.listOne = (req, res, next) => {
+	SubCategoria.findOne({ _id: req.params.id })
+    .populate({path : 'id_status' , select: '-_id'})
+    .then((subcat) => {
+        
+        if (!subcat)
+            return res.status(204).json({ success: false, msg: "nenhuma subcategoria encontrada" });  
+
+        res.status(200).json(subcat);
+    })
+    .catch((err) => {
+        res.status(500).json(err);
     });
 }

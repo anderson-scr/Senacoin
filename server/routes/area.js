@@ -9,7 +9,7 @@ router.post('/add', utils.authMiddleware, controller.new);
 router.get('/all', utils.authMiddleware, controller.listAll);
 // list all active areas
 router.get('/active', utils.authMiddleware, controller.listActive);
-
+// list single area
 router.get('/:id', utils.authMiddleware, controller.listOne);
 
 module.exports = router;

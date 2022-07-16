@@ -22,7 +22,7 @@ exports.login = (req, res, next) => {
             res.status(401).json({ success: false, msg: "colaborador/senha inválidos!" });
     })
     .catch((err) => {
-        next(err);
+        res.status(500).json(err);
     });
 }
 
@@ -90,7 +90,7 @@ exports.listAll = (req, res, next) => {
             }
     })
     .catch((err) => {
-        next(err);
+        res.status(500).json(err);
     });
 }
 
@@ -108,7 +108,7 @@ exports.listActive = (req, res, next) => {
             }
     })
     .catch((err) => {
-        next(err);
+        res.status(500).json(err);
     });
 }
 
@@ -127,6 +127,6 @@ exports.listOne = (req, res, next) => {
             }
     })
     .catch((err) => {
-        next(err);
+        res.status(500).json(err);
     });
 }

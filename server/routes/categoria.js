@@ -9,5 +9,7 @@ router.post('/add', utils.authMiddleware, controller.new);
 router.get('/all', utils.authMiddleware, controller.listAll);
 // list all active categorias
 router.get('/active', utils.authMiddleware, controller.listActive);
+// list single categoria
+router.get('/:id', utils.authMiddleware, controller.listOne);
 
 module.exports = router;

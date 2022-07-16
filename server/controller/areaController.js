@@ -40,7 +40,7 @@ exports.listAll = (req, res, next) => {
             }
     })
     .catch((err) => {
-        next(err);
+        res.status(500).json(err);
     });
 }
 
@@ -57,7 +57,7 @@ exports.listActive = (req, res, next) => {
             }
     })
     .catch((err) => {
-        next(err);
+        res.status(500).json(err);
     });
 }
 
@@ -72,6 +72,6 @@ exports.listOne = (req, res, next) => {
         res.status(200).json(area);
     })
     .catch((err) => {
-        next(err);
+        res.status(500).json(err);
     });
 }
