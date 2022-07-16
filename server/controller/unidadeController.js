@@ -32,7 +32,7 @@ exports.new = (req, res, next) => {
 exports.listAll = (req, res, next) => {
 	Unidade.find({})
     .select("nome cidade uf id_status")
-	.populate({path : 'id_status' , select: 'nome -_id'})
+    .populate({path : 'id_status' , select: '-_id'})
     .then((unidades) => {
         
         if (unidades.length === 0)
@@ -68,7 +68,7 @@ exports.listActive = (req, res, next) => {
 exports.listOne = (req, res, next) => { // colocar um && pra procurar por id tbm
 
     Unidade.findOne({ _id: req.params.id })
-	.populate({path : 'id_status' , select: 'nome -_id'})
+    .populate({path : 'id_status' , select: '-_id'})
     .then((unidade) => {
         
         if (!unidade)

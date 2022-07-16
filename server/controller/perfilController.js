@@ -41,7 +41,7 @@ exports.new = (req, res, next) => {
 exports.listAll = (req, res, next) => {
 	Perfil.find({})
     .select("nome id_status")
-	.populate({path : 'id_status' , select: 'nome -_id'})
+    .populate({path : 'id_status' , select: '-_id'})
     .then((perfis) => {
         
         if (perfis.length === 0)
@@ -76,7 +76,7 @@ exports.listActive = (req, res, next) => {
 exports.listOne = (req, res, next) => {
 
     Perfil.findOne({ _id: req.params.id })// colocar um && pra procurar por id tbm
-	.populate({path : 'id_status' , select: 'nome -_id'})
+    .populate({path : 'id_status' , select: '-_id'})
     .then((perfil) => {
         
         if (!perfil)

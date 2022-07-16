@@ -27,7 +27,7 @@ exports.new = (req, res, next) => {
 exports.listAll = (req, res, next) => {
 	SubCategoria.find({})
     .select("nome descricao id_status")
-	.populate({path : 'id_status' , select: 'nome -_id'})
+    .populate({path : 'id_status' , select: '-_id'})
     .then((subcats) => {
         
         if (subcats.length === 0)

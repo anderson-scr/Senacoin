@@ -6,7 +6,7 @@ exports.new = (req, res, next) => {
 	const novaArea = new Area({
 		nome: req.body.titulo,
 		descricao: req.body.descricao,
-        unidade: mongoose.Types.ObjectId(req.body.unidade),
+        id_unidade: mongoose.Types.ObjectId(req.body.unidade),
         id_status: mongoose.Types.ObjectId("62cec6c463187bb9b498687b")
     });
     
@@ -29,7 +29,7 @@ exports.listAll = (req, res, next) => {
 	Area.find({})
     .select("nome descricao id_unidade id_status")
     .populate({path : 'id_unidade' , select: 'nome -_id'})
-	.populate({path : 'id_status' , select: 'nome -_id'})
+    .populate({path : 'id_status' , select: '-_id'})
     .then((areas) => {
         
         if (areas.length === 0)
@@ -55,6 +55,21 @@ exports.listActive = (req, res, next) => {
             {
                 res.status(200).json(areas);
             }
+    })
+    .catch((err) => {
+        next(err);
+    });
+}
+
+exports.listOne = (req, res, next) => {
+	Area.findOne({ _id: req.params.id })
+    .populate({path : 'id_status' , select: '-_id'})
+    .then((area) => {
+        
+        if (!area)
+            return res.status(204).json({ success: false, msg: "nenhuma area encontrada" });  
+
+        res.status(200).json(area);
     })
     .catch((err) => {
         next(err);

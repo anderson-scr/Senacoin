@@ -38,7 +38,7 @@ exports.listAll = (req, res, next) => {
     .select("nome id_area id_unidade pontos id_status")
 	.populate({path : 'id_area', select: 'nome -_id'})   //.populate('id_unidade id_perfil id_status')
     .populate({path : 'id_unidade' , select: 'nome -_id'})
-	.populate({path : 'id_status' , select: 'nome -_id'})
+    .populate({path : 'id_status' , select: '-_id'})
     .then((evts) => {
         
         if (evts.length === 0)
@@ -74,7 +74,7 @@ exports.listActive = (req, res, next) => {
 
 exports.listOne = (req, res, next) => {
 	Item.findOne({ _id: req.params.id })
-	.populate({path : 'id_status' , select: 'nome -_id'})
+    .populate({path : 'id_status' , select: '-_id'})
     .then((evt) => {
         
         if (!evt)

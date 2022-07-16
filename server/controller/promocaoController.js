@@ -38,7 +38,7 @@ exports.listAll = (req, res, next) => {
 	Promocao.find({})
     .select("titulo descricao desconto id_unidade id_status")
 	.populate({path : 'id_unidade' , select: 'nome -_id'})
-	.populate({path : 'id_status' , select: 'nome -_id'})
+    .populate({path : 'id_status' , select: '-_id'})
     .then((promocoes) => {
         
         if (promocoes.length === 0)
@@ -78,7 +78,7 @@ exports.listOne = (req, res, next) => {
     .select('-_id')
     .populate({path : 'id_item' , select: 'nome area id_categoria -_id', populate: {path: 'id_categoria', select: 'nome -_id'}})
 	.populate({path : 'id_unidade' , select: 'nome -_id'})
-	.populate({path : 'id_status' , select: 'nome -_id'})
+    .populate({path : 'id_status' , select: '-_id'})
     .then((promocoes) => {
         
         if (promocoes.length === 0)
