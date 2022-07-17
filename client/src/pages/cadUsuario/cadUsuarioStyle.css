@@ -1,19 +1,4 @@
-.containerForm {
-  margin: auto;
-}
 .textObrigatorio {
   opacity: 0;
-}
-.teste2 {
-  padding-left: 2%;
-  padding-right: 2%;
-}
-.btnRadio {
-  border: 1px solid red;
-}
-.arrumaSapoha {
-  margin-bottom: 35px;
-}
-.arrumaSapoha2 {
-  margin-bottom: 57px;
+  color: rgb(135, 10, 10);
 }
