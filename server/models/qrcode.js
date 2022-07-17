@@ -14,4 +14,4 @@ exports.QrCodeSchema = new mongoose.Schema({
 	data_fim: Date,
 	quantidade: {type: Number, min: 0},
 	id_status: {type: mongoose.Types.ObjectId, ref: "Status"}
-});
+}, { versionKey: false });

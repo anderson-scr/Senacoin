@@ -10,9 +10,9 @@ exports.AlunoSchema = new mongoose.Schema({
 	data_nasc: Date,
 	id_status: {type: mongoose.Types.ObjectId, ref: "Status"},
 	id_unidade: {type: mongoose.Types.ObjectId, ref: "Unidade"}
-});
+}, { versionKey: false });
 
 exports.CarteiraPontosSchema = new mongoose.Schema({
 	id_aluno: {type: mongoose.Types.ObjectId, ref: "Aluno"},
 	saldo: Number
-});
+}, { versionKey: false });

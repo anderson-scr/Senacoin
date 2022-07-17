@@ -12,4 +12,4 @@ exports.PromocaoSchema = new mongoose.Schema({
 	id_item: {type: mongoose.Types.ObjectId, ref: "Item"},
 	imagem: String,
 	id_status: {type: mongoose.Types.ObjectId, ref: "Status"}
-});
+}, { versionKey: false });

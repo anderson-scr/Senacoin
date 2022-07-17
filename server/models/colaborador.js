@@ -25,4 +25,4 @@ exports.ColaboradorSchema = new mongoose.Schema({
 
 	id_status: {type: mongoose.Types.ObjectId, ref: "Status"},
 	id_unidade: {type: mongoose.Types.ObjectId, ref: "Unidade"},
-});
+}, { versionKey: false });

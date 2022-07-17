@@ -5,4 +5,4 @@ exports.AreaSchema = new mongoose.Schema({
 	descricao: String,
 	id_unidade: {type: mongoose.Types.ObjectId, ref: "Unidade"},
 	id_status: {type: mongoose.Types.ObjectId, ref: "Status"} //.populate("id_status")
-});
+}, { versionKey: false });
