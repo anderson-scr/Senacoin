@@ -9,7 +9,7 @@ exports.login = (req, res, next) => {
     .then((colab) => {
         
         if (!colab)
-        return res.status(401).json({ success: false, msg: "colaborador não encontrado" });
+            return res.status(401).json({ success: false, msg: "colaborador não encontrado" });
         
         const isValid = utils.validPassword(req.body.senha, colab.hash, colab.salt);  
         if (isValid)
@@ -22,7 +22,7 @@ exports.login = (req, res, next) => {
             res.status(401).json({ success: false, msg: "colaborador/senha inválidos!" });
     })
     .catch((err) => {
-        next(err);
+        res.status(500).json(err);
     });
 }
 
@@ -79,7 +79,7 @@ exports.listAll = (req, res, next) => {
     Colaborador.find({})
     .select("nome email cpf id_unidade id_status")
     .populate({path : 'id_unidade', select: 'nome -_id'})   //.populate('id_unidade id_perfil id_status')
-    .populate({path : 'id_status' , select: 'nome -_id'})
+    .populate({path : 'id_status' , select: '-_id'})
     .then((colabs) => {
         
         if (colabs.length === 0)
@@ -90,7 +90,7 @@ exports.listAll = (req, res, next) => {
             }
     })
     .catch((err) => {
-        next(err);
+        res.status(500).json(err);
     });
 }
 
@@ -108,7 +108,7 @@ exports.listActive = (req, res, next) => {
             }
     })
     .catch((err) => {
-        next(err);
+        res.status(500).json(err);
     });
 }
 
@@ -116,7 +116,7 @@ exports.listOne = (req, res, next) => {
     Colaborador.findOne({ _id: req.params.id})
     .select('-hash -salt')
     .populate({path : 'id_unidade', populate: {path: 'id_status', select: '-_id'}, select: 'nome cidade uf logradouro numero responsavel id_status -_id'})   //.populate('id_unidade id_perfil id_status')
-    .populate({path : 'id_status' , select: 'nome -_id'})
+    .populate({path : 'id_status' , select: '-_id'})
     .then((colabs) => {
         
         if (colabs.length === 0)
@@ -127,6 +127,23 @@ exports.listOne = (req, res, next) => {
             }
     })
     .catch((err) => {
-        next(err);
+        res.status(500).json(err);
     });
+}
+
+exports.edit = (req, res, nxt) => {
+    // delete req.body.id_status; // impede de enviar opcoes que não devem ser alteradas
+    Colaborador.findByIdAndUpdate(req.params.id, {$set: req.body}, {new: true})
+    .select('-_id -__v')
+    .populate({path : 'id_status' , select: '-_id'})
+    .then((doc) => (res.status(200).json(doc)))
+    .catch((err) => (res.status(500).json(err)));
+}
+
+exports.delete = (req, res, nxt) => {
+    Colaborador.findByIdAndUpdate(req.params.id, {id_status: mongoose.Types.ObjectId("62cec7b263187bb9b498687e")}, {new: true})
+    .select('-_id -__v')
+    .populate({path : 'id_status' , select: '-_id'})
+    .then((doc) => (res.status(200).json(doc)))
+    .catch((err) => (res.status(500).json(err)));
 }

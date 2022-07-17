@@ -1,5 +1,78 @@
-[{"id_status":{"$oid":"62cec7b263187bb9b498687b"},"nome":"Sarena","cad_usuarios":true,"cad_itens":true,"cad_perfis":true,"cad_areas":false,"cad_subcategorias":false,"cad_promocoes":true,"cad_unidades":true,"cad_qrcodes":false,"ger_usuarios":true,"ger_itens":false,"ger_promocoes":false, "ger_qrcodes":false,"relatorios":false},
-{"id_status":{"$oid":"62cec7b263187bb9b498687e"},"nome":"Ree","cad_usuarios":true,"cad_itens":false,"cad_perfis":true,"cad_areas":true,"cad_subcategorias":true,"cad_promocoes":true,"cad_unidades":true,"cad_qrcodes":true,"ger_usuarios":true,"ger_itens":true,"ger_promocoes":true, "ger_qrcodes":true,"relatorios":true},
-{"id_status":{"$oid":"62cec6c463187bb9b498687b"},"nome":"Joseph","cad_usuarios":true,"cad_itens":false,"cad_perfis":false,"cad_areas":true,"cad_subcategorias":true,"cad_promocoes":false,"cad_unidades":false,"cad_qrcodes":false,"ger_usuarios":false,"ger_itens":false,"ger_promocoes":false, "ger_qrcodes":false,"relatorios":false},
-{"id_status":{"$oid":"62cec7b263187bb9b498687b"},"nome":"Administrador","cad_usuarios":true,"cad_itens":true,"cad_perfis":true,"cad_areas":true,"cad_subcategorias":true,"cad_promocoes":true,"cad_unidades":true,"cad_qrcodes":true,"ger_usuarios":true,"ger_itens":true,"ger_promocoes":true, "ger_qrcodes":true,"relatorios":true},
-{"id_status":{"$oid":"62cec7b263187bb9b498687e"},"nome":"Jeramie","cad_usuarios":false,"cad_itens":false,"cad_perfis":true,"cad_areas":true,"cad_subcategorias":false,"cad_promocoes":true,"cad_unidades":false,"cad_qrcodes":false,"ger_usuarios":true,"ger_itens":false,"ger_promocoes":false, "ger_qrcodes":false,"relatorios":false}]
+[
+    {
+        "id_status": {
+            "$oid": "62cec6c463187bb9b498687b"
+        },
+        "nome": "Administrador",
+        "cad_usuarios": true,
+        "cad_itens": true,
+        "cad_perfis": true,
+        "cad_areas": true,
+        "cad_subcategorias": true,
+        "cad_promocoes": true,
+        "cad_unidades": true,
+        "cad_qrcodes": true,
+        "ger_usuarios": true,
+        "ger_itens": true,
+        "ger_promocoes": true,
+        "ger_qrcodes": true,
+        "relatorios": true
+    },
+    {
+        "id_status": {
+            "$oid": "62cec6c463187bb9b498687b"
+        },
+        "nome": "Suporte",
+        "cad_usuarios": false,
+        "cad_itens": true,
+        "cad_perfis": true,
+        "cad_areas": true,
+        "cad_subcategorias": true,
+        "cad_promocoes": true,
+        "cad_unidades": true,
+        "cad_qrcodes": true,
+        "ger_usuarios": true,
+        "ger_itens": true,
+        "ger_promocoes": true,
+        "ger_qrcodes": true,
+        "relatorios": true
+    },
+    {
+        "id_status": {
+            "$oid": "62cec6c463187bb9b498687b"
+        },
+        "nome": "Colaborador",
+        "cad_usuarios": false,
+        "cad_itens": true,
+        "cad_perfis": false,
+        "cad_areas": true,
+        "cad_subcategorias": true,
+        "cad_promocoes": true,
+        "cad_unidades": false,
+        "cad_qrcodes": true,
+        "ger_usuarios": false,
+        "ger_itens": true,
+        "ger_promocoes": true,
+        "ger_qrcodes": true,
+        "relatorios": true
+    },
+    {
+        "id_status": {
+            "$oid": "62cec7b263187bb9b498687e"
+        },
+        "nome": "Aluno",
+        "cad_usuarios": false,
+        "cad_itens": false,
+        "cad_perfis": false,
+        "cad_areas": false,
+        "cad_subcategorias": false,
+        "cad_promocoes": false,
+        "cad_unidades": false,
+        "cad_qrcodes": false,
+        "ger_usuarios": false,
+        "ger_itens": false,
+        "ger_promocoes": false,
+        "ger_qrcodes": false,
+        "relatorios": false
+    }
+]

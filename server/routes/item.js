@@ -1,36 +1,22 @@
 const router = require('express').Router();
-const pd_controller = require('../controller/produtoController');
-const sv_controller = require('../controller/servicoController');
-const ev_controller = require('../controller/eventoController');
+const controller = require('../controller/itemController');
 const utils = require('../libs/utils');
 
 
-// add a new produto item
-router.post('/produto/add', utils.authMiddleware, pd_controller.new);
-// add a new servico item
-router.post('/servico/add', utils.authMiddleware, sv_controller.new);
-// add a new evento item
-router.post('/evento/add', utils.authMiddleware, ev_controller.new);
+// add a new item
+router.post('/:categoria/add', utils.authMiddleware, controller.new);
+// list all items
+router.get('/all', utils.authMiddleware, controller.listAll);
+// list all items of a categoria
+router.get('/:categoria/all', utils.authMiddleware, controller.listAllByCategory);
+// list all active items of a categoria
+router.get('/:categoria/active', utils.authMiddleware, controller.listActive);
+// list single item
+router.get('/:categoria/:id', utils.authMiddleware, controller.listOne);
+// edit a item
+router.patch('/:categoria/:id', utils.authMiddleware, controller.edit);
+// delete a item
+router.delete('/:categoria/:id', utils.authMiddleware, controller.delete);
 
-// list all produto items
-router.get('/produto/all', utils.authMiddleware, pd_controller.listAll);
-// list all servico items
-router.get('/servico/all', utils.authMiddleware, sv_controller.listAll);
-// list all evento items
-router.get('/evento/all', utils.authMiddleware, ev_controller.listAll);
-
-// list all active produto items
-router.get('/produto/active', utils.authMiddleware, pd_controller.listActive);
-// list all active servico items
-router.get('/servico/active', utils.authMiddleware, sv_controller.listActive);
-// list all active evento items
-router.get('/evento/active', utils.authMiddleware, ev_controller.listActive);
-
-// list single produto
-router.get('/produto/:id', utils.authMiddleware, pd_controller.listOne);
-// list single servico
-router.get('/servico/:id', utils.authMiddleware, sv_controller.listOne);
-// list single evento
-router.get('/evento/:id', utils.authMiddleware, ev_controller.listOne);
 
 module.exports = router;

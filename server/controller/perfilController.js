@@ -41,7 +41,7 @@ exports.new = (req, res, next) => {
 exports.listAll = (req, res, next) => {
 	Perfil.find({})
     .select("nome id_status")
-	.populate({path : 'id_status' , select: 'nome -_id'})
+    .populate({path : 'id_status' , select: '-_id'})
     .then((perfis) => {
         
         if (perfis.length === 0)
@@ -52,7 +52,7 @@ exports.listAll = (req, res, next) => {
             }
     })
     .catch((err) => {
-        next(err);
+        res.status(500).json(err);
     });
 }
 
@@ -69,14 +69,14 @@ exports.listActive = (req, res, next) => {
             }
     })
     .catch((err) => {
-        next(err);
+        res.status(500).json(err);
     });
 }
 
 exports.listOne = (req, res, next) => {
 
     Perfil.findOne({ _id: req.params.id })// colocar um && pra procurar por id tbm
-	.populate({path : 'id_status' , select: 'nome -_id'})
+    .populate({path : 'id_status' , select: '-_id'})
     .then((perfil) => {
         
         if (!perfil)
@@ -86,6 +86,23 @@ exports.listOne = (req, res, next) => {
 		console.log(perfil)
     })
     .catch((err) => {
-        next(err);
+        res.status(500).json(err);
     });
+}
+
+exports.edit = (req, res, nxt) => {
+    // delete req.body.id_status; // impede de enviar opcoes que não devem ser alteradas
+    Perfil.findByIdAndUpdate(req.params.id, {$set: req.body}, {new: true})
+    .select('-_id -__v')
+    .populate({path : 'id_status' , select: '-_id'})
+    .then((doc) => (res.status(200).json(doc)))
+    .catch((err) => (res.status(500).json(err)));
+}
+
+exports.delete = (req, res, nxt) => {
+    Perfil.findByIdAndUpdate(req.params.id, {id_status: mongoose.Types.ObjectId("62cec7b263187bb9b498687e")}, {new: true})
+    .select('-_id -__v')
+    .populate({path : 'id_status' , select: '-_id'})
+    .then((doc) => (res.status(200).json(doc)))
+    .catch((err) => (res.status(500).json(err)));
 }

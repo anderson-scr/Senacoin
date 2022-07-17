@@ -11,5 +11,10 @@ router.get('/all', utils.authMiddleware, controller.listAll);
 router.get('/active', utils.authMiddleware, controller.listActive);
 // list single perfil
 router.get('/:id', utils.authMiddleware, controller.listOne);
+// edit a perfil
+router.patch('/:id', utils.authMiddleware, controller.edit);
+// delete a perfil
+router.delete('/:id', utils.authMiddleware, controller.delete);
+
 
 module.exports = router;
