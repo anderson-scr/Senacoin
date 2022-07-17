@@ -3,8 +3,10 @@ const controller = require('../controller/unidadeController');
 const utils = require('../libs/utils');
 
 
-// Register a new unidade
+// add a new unidade
 router.post('/add', utils.authMiddleware, controller.new);
+// add a new unidade list
+router.post('/populate', utils.authMiddleware, controller.newList);
 // list all unidades
 router.get('/all', utils.authMiddleware, controller.listAll);
 // list all active unidades

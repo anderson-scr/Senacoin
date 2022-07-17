@@ -5,7 +5,6 @@ const Item = mongoose.model('Item');
 function getIdbyName(item) {
 	
 	let categoria;
-
 	if (item === 'produto')
 		categoria = mongoose.Types.ObjectId("62d017a1181c3910ccfd43d1");
 	else if (item === 'evento')
@@ -18,37 +17,38 @@ function getIdbyName(item) {
 
 exports.new = (req, res, next) => {
 
-	categoria = getIdbyName(req.params.categoria);
+    categoria = getIdbyName(req.params.categoria);
 	if (!categoria)
 		return res.status(400).json({msg: "categoria de item inexistente."});
+    
+    req.body.data_inicio = new Date(req.body.data_inicio);
+    req.body.data_fim = new Date(req.body.data_fim);
+    req.body["id_categoria"] = categoria;
 
-	const novoItem = new Item({
-		nome: req.body.titulo,
-		descricao: req.body.descricao,
-		pontos: req.body.senacoins,
-		quantidade: req.body.quantidade,
-		imagem: req.body.imagem,
-		data_inicio: new Date(req.body.data_inicio),
-		data_fim: new Date(req.body.data_fim),
-		id_area: mongoose.Types.ObjectId(req.body.area),
-		id_categoria: categoria,
-		id_subcategoria: mongoose.Types.ObjectId(req.body.subcategoria),
-		id_unidade: mongoose.Types.ObjectId(req.body.unidade),
-        id_status: mongoose.Types.ObjectId("62cec6c463187bb9b498687b")
+    Item.create({...req.body, id_status: "62cec6c463187bb9b498687b"}, (err, item) =>  {
+        if (err)
+            return res.status(500).json({ success: false, ...err });
+
+        res.status(201).json({ success: true, ...item["_doc"]});
+    });
+}
+
+exports.newList = (req, res, next) => {
+    
+    req.body.forEach(item => {
+        item.data_inicio = new Date(item.data_inicio);
+        item.data_fim = new Date(item.data_fim);
+        item["id_status"] = "62cec6c463187bb9b498687b";
     });
     
-    try 
-	{
-        novoItem.save()
-        .then((item) => {
-            res.status(201).json({ success: true, id: item._id, titulo: item.nome});
-        });
-        
-    }
-	catch (err) {
-        res.json({ success: false, msg: err });
-    }
+    Item.insertMany(req.body, (err) => {
+        if (err)
+            return res.status(500).json({ success: false, ...err });
+    
+        res.status(201).json({ success: true});
+    });
 }
+
 exports.listAll = (req, res, next) => {
 
 	Item.find({})
@@ -60,7 +60,7 @@ exports.listAll = (req, res, next) => {
     .then((itens) => {
         
         if (!itens)
-            return res.status(204).json({ success: false, msg: `nenhum item encontrado` });  
+            return res.status(204).json({ success: false, msg: 'nenhum item encontrado' });  
         else
 			res.status(200).json(itens);
     })
@@ -125,7 +125,7 @@ exports.listOne = (req, res, next) => {
     .then((item) => {
         
         if (!item)
-			return res.status(204).json({ success: false, msg: `nenhum ${categoria} encontrado` });
+			return res.status(204).json({ success: false, msg: `${categoria} não encontrado` });
         
 		res.status(200).json({ success: true, [categoria]: item});
     })

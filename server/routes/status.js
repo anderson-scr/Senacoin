@@ -3,8 +3,10 @@ const controller = require('../controller/statusController');
 const utils = require('../libs/utils');
 
 
-// Register a new status
+// add a new status
 router.post('/add', utils.authMiddleware, controller.new);
+// add a new status list
+router.post('/populate', utils.authMiddleware, controller.newList);
 // list all status
 router.get('/all', utils.authMiddleware, controller.listAll);
 // edit a status

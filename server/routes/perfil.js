@@ -3,8 +3,10 @@ const controller = require('../controller/perfilController');
 const utils = require('../libs/utils');
 
 
-// Register a new perfil
+// add a new perfil
 router.post('/new', utils.authMiddleware, controller.new);
+// add a new perfil list
+router.post('/populate', utils.authMiddleware, controller.newList);
 // list all perfis
 router.get('/all', utils.authMiddleware, controller.listAll);
 // list all active perfis

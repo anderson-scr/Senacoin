@@ -3,8 +3,10 @@ const controller = require('../controller/promocaoController');
 const utils = require('../libs/utils');
 
 
-// Register a new promocao
+// add a new promocao
 router.post('/add', utils.authMiddleware, controller.new);
+// add a new promocao list
+router.post('/populate', utils.authMiddleware, controller.newList);
 // list all promocoes
 router.get('/all', utils.authMiddleware, controller.listAll);
 // list all active promocoes

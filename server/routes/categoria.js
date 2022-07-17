@@ -3,8 +3,10 @@ const controller = require('../controller/categoriaController');
 const utils = require('../libs/utils');
 
 
-// Register a new categoria
+// add a new categoria
 router.post('/add', utils.authMiddleware, controller.new);
+// add a new categoria list
+router.post('/populate', utils.authMiddleware, controller.newList);
 // list all categorias
 router.get('/all', utils.authMiddleware, controller.listAll);
 // list all active categorias

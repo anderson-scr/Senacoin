@@ -3,50 +3,46 @@ const Promocao = mongoose.model('Promocao');
 
 
 exports.new = (req, res, next) => {
-    const novoPromocao = new Promocao({
 
-        titulo: req.body.titulo,
-        descricao: req.body.descricao,
-        pontos: req.body.pontos,
-        desconto: req.body.desconto,
-        quantidade: req.body.quantidade,
-        data_inicio: new Date(req.body.data_inicio),
-        data_fim: new Date(req.body.data_fim),
-        id_unidade: mongoose.Types.ObjectId(req.body.id_unidade),
-        id_item: mongoose.Types.ObjectId(req.body.id_item),
-        imagem: req.body.imagem,
-        id_status: mongoose.Types.ObjectId("62cec6c463187bb9b498687b")
+    req.body.data_inicio = new Date(req.body.data_inicio);
+    req.body.data_fim = new Date(req.body.data_fim);
+
+    Promocao.create({...req.body, id_status: "62cec6c463187bb9b498687b"}, (err, promocao) =>  {
+        if (err)
+            return res.status(500).json({ success: false, ...err });
+
+        res.status(201).json({ success: true, ...promocao["_doc"]});
     });
-    
-    try 
-	{
-        novoPromocao.save()
-        .then((promo) => {
-            res.status(201).json({ success: true, id: promo._id, nome: promo.nome});
-        });
-        
-    }
-	catch (err) {
-        
-        res.json({ success: false, msg: err });
-        
-    }
 }
 
+exports.newList = (req, res, next) => {
+    
+    req.body.forEach(promocao => {
+        promocao.data_inicio = new Date(promocao.data_inicio);
+        promocao.data_fim = new Date(promocao.data_fim);
+        promocao["id_status"] = "62cec6c463187bb9b498687b";
+    });
+    
+    Promocao.insertMany(req.body, (err) => {
+        if (err)
+            return res.status(500).json({ success: false, ...err });
+    
+        res.status(201).json({ success: true});
+    });
+}
 
 exports.listAll = (req, res, next) => {
+
 	Promocao.find({})
     .select("titulo descricao desconto id_unidade id_status")
 	.populate({path : 'id_unidade' , select: 'nome -_id'})
     .populate({path : 'id_status' , select: '-_id'})
     .then((promocoes) => {
         
-        if (promocoes.length === 0)
-            return res.status(204).json({ success: false, msg: "nenhuma promocao encontrada" });  
+        if (!promocoes)
+            return res.status(204).json({ success: false, msg: "nenhuma promoção encontrada" });  
         else
-            {
-                res.status(200).json(promocoes);
-            }
+            res.status(200).json(promocoes);
     })
     .catch((err) => {
         res.status(500).json(err);
@@ -54,6 +50,7 @@ exports.listAll = (req, res, next) => {
 }
 
 exports.listActive = (req, res, next) => {
+
 	const today = new Date(new Date()-3600*1000*4); //fuso horario gmt-4 talvez .toISOString() no final
 	Promocao.find({$and: [{id_status: "62cec6c463187bb9b498687b"}, {data_inicio: {$gte: today}}, {data_fim: {$lt: today}}]})
     .select("titulo pontos desconto id_item id_unidade -_id")
@@ -61,12 +58,10 @@ exports.listActive = (req, res, next) => {
 	.populate({path : 'id_unidade' , select: 'nome -_id'})
     .then((promocoes) => {
         
-        if (promocoes.length === 0)
-            return res.status(204).json({ success: false, msg: "nenhuma promocao encontrada" });  
+        if (!promocoes)
+            return res.status(204).json({ success: false, msg: "nenhuma promoção encontrada" });  
         else
-            {
-                res.status(200).json(promocoes);
-            }
+            res.status(200).json(promocoes);
     })
     .catch((err) => {
         res.status(500).json(err);
@@ -74,19 +69,18 @@ exports.listActive = (req, res, next) => {
 }
 
 exports.listOne = (req, res, next) => {
+
     Promocao.findOne({ _id: req.params.id})
     .select('-_id')
     .populate({path : 'id_item' , select: 'nome area id_categoria -_id', populate: {path: 'id_categoria', select: 'nome -_id'}})
 	.populate({path : 'id_unidade' , select: 'nome -_id'})
     .populate({path : 'id_status' , select: '-_id'})
-    .then((promocoes) => {
+    .then((promocao) => {
         
-        if (promocoes.length === 0)
-            return res.status(204).json({ success: false, msg: "nenhuma promocao encontrada" });  
+        if (!promocao)
+            return res.status(204).json({ success: false, msg: "promoção não encontrada" });  
         else
-            {
-                res.status(200).json(promocoes);
-            }
+            res.status(200).json(promocao);
     })
     .catch((err) => {
         res.status(500).json(err);
@@ -94,6 +88,7 @@ exports.listOne = (req, res, next) => {
 }
 
 exports.edit = (req, res, nxt) => {
+
     // delete req.body.id_status; // impede de enviar opcoes que não devem ser alteradas
     Promocao.findByIdAndUpdate(req.params.id, {$set: req.body}, {new: true})
     .select('-_id -__v')
@@ -103,6 +98,7 @@ exports.edit = (req, res, nxt) => {
 }
 
 exports.delete = (req, res, nxt) => {
+
     Promocao.findByIdAndUpdate(req.params.id, {id_status: mongoose.Types.ObjectId("62cec7b263187bb9b498687e")}, {new: true})
     .select('-_id -__v')
     .populate({path : 'id_status' , select: '-_id'})
