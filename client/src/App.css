@@ -6,7 +6,7 @@
   --main-cinza: #DFDFDF;
   --main-cinza-dark: #cdcdcd;
   --senac-amarelo: #F78B1F;
-  --senac-amarelo-dark: #e17e1c;
+  --senac-amarelo-dark: rgb(225, 126, 28);
   --senac-amarelo-claro: #F6BF86;
   --senac-azul: #005594;
   --senac-azul-dark: #17384D;
@@ -18,3 +18,7 @@
   padding: 0;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
+.form-control:focus, .form-select:focus, .form-check-input:focus {
+  border-color: var(--senac-amarelo-claro);
+  box-shadow: 0 0 0 0.2rem rgba(225, 126, 28, 0.25);
+} 
