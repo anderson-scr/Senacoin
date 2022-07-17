@@ -33,7 +33,7 @@ exports.listAll = (req, res, next) => {
     .populate({path : 'id_status' , select: '-_id'})
     .then((unidades) => {
         
-        if (!unidades)
+        if (!unidades.length)
             return res.status(204).json({ success: false, msg: "nenhuma unidade encontrada" });  
         else
             res.status(200).json(unidades);
@@ -49,7 +49,7 @@ exports.listActive = (req, res, next) => {
     .select("nome")
     .then((unidades) => {
         
-        if (!unidades)
+        if (!unidades.length)
             return res.status(204).json({ success: false, msg: "nenhuma unidade encontrada" });  
         else
             res.status(200).json(unidades);

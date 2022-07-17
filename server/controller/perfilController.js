@@ -33,7 +33,7 @@ exports.listAll = (req, res, next) => {
     .populate({path : 'id_status' , select: '-_id'})
     .then((perfis) => {
         
-        if (!perfis)
+        if (!perfis.length)
             return res.status(204).json({ success: false, msg: "nenhum perfil encontrado" });  
         else
             res.status(200).json(perfis);
@@ -49,7 +49,7 @@ exports.listActive = (req, res, next) => {
     .select("-id_status")
     .then((perfis) => {
         
-        if (!perfis)
+        if (!perfis.length)
             return res.status(204).json({ success: false, msg: "nenhum perfil encontrado" });  
         else
             res.status(200).json(perfis);

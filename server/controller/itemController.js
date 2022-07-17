@@ -21,8 +21,6 @@ exports.new = (req, res, next) => {
 	if (!categoria)
 		return res.status(400).json({msg: "categoria de item inexistente."});
     
-    req.body.data_inicio = new Date(req.body.data_inicio);
-    req.body.data_fim = new Date(req.body.data_fim);
     req.body["id_categoria"] = categoria;
 
     Item.create({...req.body, id_status: "62cec6c463187bb9b498687b"}, (err, item) =>  {
@@ -34,10 +32,8 @@ exports.new = (req, res, next) => {
 }
 
 exports.newList = (req, res, next) => {
-    
+
     req.body.forEach(item => {
-        item.data_inicio = new Date(item.data_inicio);
-        item.data_fim = new Date(item.data_fim);
         item["id_status"] = "62cec6c463187bb9b498687b";
     });
     
@@ -59,7 +55,7 @@ exports.listAll = (req, res, next) => {
     .populate({path : 'id_status' , select: '-_id'})
     .then((itens) => {
         
-        if (!itens)
+        if (!itens.length)
             return res.status(204).json({ success: false, msg: 'nenhum item encontrado' });  
         else
 			res.status(200).json(itens);
@@ -82,7 +78,7 @@ exports.listAllByCategory = (req, res, next) => {
     .populate({path : 'id_status' , select: '-_id'})
     .then((itens) => {
         
-        if (!itens)
+        if (!itens.length)
             return res.status(204).json({ success: false, msg: `nenhum ${categoria} encontrado` });  
         else
 			res.status(200).json(itens);
@@ -104,7 +100,7 @@ exports.listActive = (req, res, next) => {
     .populate({path : 'id_unidade' , select: 'nome -_id'})
     .then((itens) => {
         
-        if (!itens)
+        if (!itens.length)
             return res.status(204).json({ success: false, msg: `nenhum ${categoria} encontrado` });  
         else
 			res.status(200).json(itens);

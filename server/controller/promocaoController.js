@@ -4,9 +4,6 @@ const Promocao = mongoose.model('Promocao');
 
 exports.new = (req, res, next) => {
 
-    req.body.data_inicio = new Date(req.body.data_inicio);
-    req.body.data_fim = new Date(req.body.data_fim);
-
     Promocao.create({...req.body, id_status: "62cec6c463187bb9b498687b"}, (err, promocao) =>  {
         if (err)
             return res.status(500).json({ success: false, ...err });
@@ -18,8 +15,6 @@ exports.new = (req, res, next) => {
 exports.newList = (req, res, next) => {
     
     req.body.forEach(promocao => {
-        promocao.data_inicio = new Date(promocao.data_inicio);
-        promocao.data_fim = new Date(promocao.data_fim);
         promocao["id_status"] = "62cec6c463187bb9b498687b";
     });
     
@@ -39,7 +34,7 @@ exports.listAll = (req, res, next) => {
     .populate({path : 'id_status' , select: '-_id'})
     .then((promocoes) => {
         
-        if (!promocoes)
+        if (!promocoes.length)
             return res.status(204).json({ success: false, msg: "nenhuma promoção encontrada" });  
         else
             res.status(200).json(promocoes);
@@ -58,7 +53,7 @@ exports.listActive = (req, res, next) => {
 	.populate({path : 'id_unidade' , select: 'nome -_id'})
     .then((promocoes) => {
         
-        if (!promocoes)
+        if (!promocoes.length)
             return res.status(204).json({ success: false, msg: "nenhuma promoção encontrada" });  
         else
             res.status(200).json(promocoes);

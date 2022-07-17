@@ -34,7 +34,7 @@ exports.listAll = (req, res, next) => {
     .populate({path : 'id_status' , select: '-_id'})
     .then((areas) => {
         
-        if (!areas)
+        if (!areas.length)
             return res.status(204).json({ success: false, msg: "nenhuma area encontrada" });  
         else
             res.status(200).json(areas);
@@ -50,7 +50,7 @@ exports.listActive = (req, res, next) => {
     .select("nome id_unidade -_id")
     .then((areas) => {
         
-        if (!areas)
+        if (!areas.length)
             return res.status(204).json({ success: false, msg: "nenhuma area encontrada" });  
         else
             res.status(200).json(areas);

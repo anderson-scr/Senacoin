@@ -4,9 +4,6 @@ const QrCode = mongoose.model('QrCode');
 
 exports.new = (req, res, next) => {
     
-    req.body.data_inicio = new Date(req.body.data_inicio);
-    req.body.data_fim = new Date(req.body.data_fim);
-
     QrCode.create({...req.body, id_status: "62cec6c463187bb9b498687b"}, (err, qrcode) =>  {
         if (err)
             return res.status(500).json({ success: false, ...err });
@@ -18,8 +15,6 @@ exports.new = (req, res, next) => {
 exports.newList = (req, res, next) => {
     
     req.body.forEach(qrcode => {
-        qrcode.data_inicio = new Date(qrcode.data_inicio);
-        qrcode.data_fim = new Date(qrcode.data_fim);
         qrcode["id_status"] = "62cec6c463187bb9b498687b";
     });
     
@@ -39,7 +34,7 @@ exports.listAll = (req, res, next) => {
     .populate({path : 'id_status' , select: '-_id'})
     .then((qrcodes) => {
         
-        if (!qrcodes)
+        if (!qrcodes.length)
             return res.status(204).json({ success: false, msg: "nenhum qr code encontrado" });  
         else
             res.status(200).json(qrcodes);
@@ -60,7 +55,7 @@ exports.listActive = (req, res, next) => {
 	.populate({path : 'id_unidade' , select: 'nome -_id'})
     .then((qrcodes) => {
         
-        if (!qrcodes)
+        if (!qrcodes.length)
             return res.status(204).json({ success: false, msg: "nenhum qr code encontrado" });  
         else
             res.status(200).json(qrcodes);

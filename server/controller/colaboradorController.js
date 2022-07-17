@@ -69,7 +69,7 @@ exports.listAll = (req, res, next) => {
     .populate({path : 'id_status' , select: '-_id'})
     .then((colabs) => {
         
-        if (colabs)
+        if (!colabs.length)
             return res.status(204).json({ success: false, msg: "nenhum colaborador encontrado" });  
         else
             res.status(200).json(colabs);
@@ -86,7 +86,7 @@ exports.listActive = (req, res, next) => {
     .populate({path : 'id_unidade', select: 'nome -_id'})   //.populate('id_unidade id_perfil id_status')
     .then((colabs) => {
         
-        if (colabs)
+        if (!colabs.length)
             return res.status(204).json({ success: false, msg: "nenhum colaborador encontrado" });  
         else
             res.status(200).json(colabs);

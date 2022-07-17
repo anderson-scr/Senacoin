@@ -33,7 +33,7 @@ exports.listAll = (req, res, next) => {
     .populate({path : 'id_status' , select: '-_id'})
     .then((subcats) => {
         
-        if (!subcats)
+        if (!subcats.length)
             return res.status(204).json({ success: false, msg: "nenhuma subcategoria encontrada" });  
         else
             res.status(200).json(subcats);
@@ -49,7 +49,7 @@ exports.listActive = (req, res, next) => {
     .select("nome -_id")
     .then((subcats) => {
         
-        if (!subcats)
+        if (!subcats.length)
             return res.status(204).json({ success: false, msg: "nenhuma subcategoria encontrada" });  
         else
             res.status(200).json(subcats);

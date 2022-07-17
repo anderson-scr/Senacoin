@@ -28,7 +28,7 @@ exports.listAll = (req, res, next) => {
 	.select('-__v')
     .then((status) => {
         
-        if (!status)
+        if (!status.length)
             return res.status(204).json({ success: false, msg: "nenhum status encontrado" });  
         else
 			res.status(200).json(status);
@@ -47,7 +47,7 @@ exports.edit = (req, res, nxt) => {
 }
 
 exports.delete = (req, res, nxt) => {
-    
+
     Status.findByIdAndDelete(req.params.id, (err, doc) => {
 		if (err)
 			res.status(500).json(err);
