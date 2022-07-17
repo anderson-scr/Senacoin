@@ -2,8 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { verificaSessao } from 'auth/login/verificaSessao';
 import { getUserFormData } from 'utils/getFormData/cadUsuarioForm';
-import { callRegisterAPI } from 'api/cadastros/cadUsuarios';
-import { getUnidadesAPI } from 'api/cadastros/getUnidades';
+import { callUnidadeAPI } from 'api/cadastros/callUnidades';
 import './cadUsuarioStyle.css';
 import { useState } from 'react';
 
@@ -12,6 +11,7 @@ const CadUsuario = () => {
   const effectOnce = useRef(true)
   const navigate = useNavigate()
   const [unidades, setUnidades] = useState()
+  const [formData, setFormData] = useState()
 
   // Verifica sessão de usuário
   useEffect(() => {
@@ -20,24 +20,21 @@ const CadUsuario = () => {
         navigate("/Login", {replace: true})
       }
 
-      // Preenche dropdown unidades
-      getDropDownData()
-  
+      // Fill dropDows unidades
+      (async () => {
+        await setUnidades(await callUnidadeAPI())
+      })()
+
       return () => effectOnce.current = false
     }
   }, [navigate])
 
 
-  async function getDropDownData() {
-    const drop =  await getUnidadesAPI()
-  }
+
 
   const getInfo = (evt) => {
     evt.preventDefault()
-    const formData = getUserFormData()
-    console.log(formData)
-
-    // callRegisterAPI(formData)
+    setFormData(getUserFormData())
   }
 
   return (
@@ -87,9 +84,10 @@ const CadUsuario = () => {
             <div className='row arrumaSapoha'>
               <label htmlFor="dropPerfil" className="form-label">Unidade</label>
               <select className="form-select" id='id_unidade' aria-label="Default select example">
-                <option defaultValue={0}>Open this select menu</option>
-                <option value={1}>One</option>
-                <option value={2}>Two</option>
+                <option disabled defaultValue={0}>Selecione uma unidade</option>
+                  {useEffect(() => {
+                    console.log(unidades)
+                  }, [unidades])}
                 <option value={3}>Three</option>
               </select>
             </div>
