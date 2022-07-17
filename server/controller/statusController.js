@@ -14,11 +14,11 @@ exports.new = (req, res, next) => {
 
 exports.newList = (req, res, next) => {
     
-    Status.insertMany(req.body, (err) => {
+    Status.insertMany(req.body, (err, docs) => {
         if (err)
             return res.status(500).json({ success: false, ...err });
     
-        res.status(201).json({ success: true});
+        res.status(201).json({ success: true, total: docs.length});
     });
 }
 

@@ -18,11 +18,11 @@ exports.newList = (req, res, next) => {
         area["id_status"] = "62cec6c463187bb9b498687b";
     });
     
-    Area.insertMany(req.body, (err) => {
+    Area.insertMany(req.body, (err,docs) => {
         if (err)
             return res.status(500).json({ success: false, ...err });
     
-        res.status(201).json({ success: true});
+        res.status(201).json({ success: true, total: docs.length});
     });
 }
 

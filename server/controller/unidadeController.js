@@ -18,11 +18,11 @@ exports.newList = (req, res, next) => {
         unidade["id_status"] = "62cec6c463187bb9b498687b";
     });
     
-    Unidade.insertMany(req.body, (err) => {
+    Unidade.insertMany(req.body, (err, docs) => {
         if (err)
             return res.status(500).json({ success: false, ...err });
     
-        res.status(201).json({ success: true});
+        res.status(201).json({ success: true, total: docs.length});
     });
 }
 
