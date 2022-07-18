@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 exports.AlunoSchema = new mongoose.Schema({
 	nome: {type: String, required: true},
-	email: {type: String, required: true, lowercase: true},
+	email: {type: String, required: true, lowercase: true, unique: true},
 	hash: {type: String, required: true},
 	salt: {type: String, required: true},
 	apelido: {type: String, default: null},
