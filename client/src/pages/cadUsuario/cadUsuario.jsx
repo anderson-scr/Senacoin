@@ -1,12 +1,12 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { verificaSessao } from 'auth/login/verificaSessao';
-import { getUserFormData } from 'utils/getFormData/cadUsuarioForm';
 import { callUnidadeAPI } from 'api/cadastros/callUnidade';
 import { callPerfilAPI } from 'api/cadastros/callPerfil';
-import { yupSchemaCadUsuario } from 'utils/validation/cadUsuario';
+import { yupSchemaCadUsuario } from 'utils/validation/schemas/cadUsuario';
 import { useForm } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
+import { callUsuarioAPI } from 'api/cadUsuario/callUsuarios';
 import './cadUsuarioStyle.css';
 
 
@@ -40,7 +40,22 @@ const CadUsuario = () => {
   }, [navigate])
 
   function certo(dados) {
+    // Arrumando a estrutura do objeto para enviar pro post de usuario
+    dados.senha = dados.nome.toLowerCase() + '1234'
+    dados.nome = dados.nome + ' ' + dados.sobrenome
+    dados.cpf = dados.cpf + ' '
+    dados.id_unidade = unidades[parseInt(dados.id_unidade) - 1]._id
+    dados = {...dados, ...dados.gerenciar}
+    dados = {...dados, ...dados.cadastros}
+
+    // Depois dos spreads, deleto os desnecessários
+    delete dados.sobrenome
+    delete dados.gerenciar 
+    delete dados.cadastros
+    delete dados.perfil
+
     console.log(dados)
+    callUsuarioAPI.novo(dados)
   }
 
   return (
@@ -228,7 +243,7 @@ const CadUsuario = () => {
                   </label>
                 </div>
                 <div className="form-check mt-2">
-                  <input className="form-check-input" type="checkbox" name="flexcheckboxDefault" id="ger_relatorios" {...register('gerenciar.ger_relatorios')} />
+                  <input className="form-check-input" type="checkbox" name="flexcheckboxDefault" id="ger_relatorios" {...register('gerenciar.relatorios')} />
                   <label className="form-check-label" htmlFor="flexcheckboxDefault2">
                     Emitir relatórios
                   </label>
@@ -241,10 +256,10 @@ const CadUsuario = () => {
           {/* Second row */}
           <div className='row mx-auto mt-5'>
             <div className='col d-flex p-0'>
-              <button type="button" className="btn btn-outline-secondary w-50">Cancelar</button>
+              <button type="button" className="btn btnCancelar btn-outline-secondary w-50">Cancelar</button>
             </div>
             <div className='col d-flex justify-content-end p-0'>
-              <button type="submit" className="btn btn-primary w-50">Salvar</button>
+              <button type="submit" className="btn btnSalvar btn-primary w-50">Salvar</button>
             </div>
           </div>
         </div>

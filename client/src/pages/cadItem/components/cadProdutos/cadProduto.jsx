@@ -1,7 +1,39 @@
-import React from 'react'
+import React, {useState, useEffect, useRef} from 'react'
+import { useNavigate } from 'react-router-dom';
+import { useForm } from "react-hook-form";
+import { yupResolver } from '@hookform/resolvers/yup';
+import { yupSchemaCadProduto } from 'utils/validation/schemas/itens/cadProduto';
+import { callUnidadeAPI } from 'api/common/callUnidades';
+import { verificaSessao } from 'auth/login/verificaSessao';
 import './cadProdutoStyle.css'
 
+
 const CadProduto = () => {
+  const effectOnce = useRef(true)
+  const navigate = useNavigate()
+  const [unidades, setUnidades] = useState([])
+  const { register, handleSubmit, formState: {
+    errors
+  } } = useForm({
+    resolver: yupResolver(yupSchemaCadProduto)
+  });
+  
+  useEffect(() => {
+    if(effectOnce.current) {
+      if(!verificaSessao()) {
+        navigate("/Login", {replace: true})
+      }
+
+      // Fill dropDows unidades
+      (async () => {
+        setUnidades(await callUnidadeAPI.ativo())
+      })()
+
+      return () => effectOnce.current = false
+    }
+  }, [navigate])
+
+
   return (
     <form className='container'>
       <div className='containerDouble d-flex'>
@@ -26,13 +58,26 @@ const CadProduto = () => {
           </select>
           <div id="emailHelp" className="form-text">Este campo e obrigatório.</div>
         </div>
-
       </div>
 
-      <div className="mb-3">
-        <label htmlFor="exampleInputEmail1" className="form-label">Titulo</label>
-        <input type="email" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" />
-        <div id="emailHelp" className="form-text">Este campo e obrigatório.</div>
+      <div className='containerDouble d-flex'>
+        <div className="mb-3 flex-grow-1">
+          <label htmlFor="exampleInputEmail1" className="form-label">Titulo</label>
+          <input type="email" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" />
+          <div id="emailHelp" className="form-text">Este campo e obrigatório.</div>
+        </div>
+        <div className='mb-3 flex-grow-1'>
+          <label htmlFor="dropSubcategoria" className="form-label">Unidade</label>
+          <select className="form-select" id='dropSubcategoria' aria-label="Default select example" defaultValue={0}>
+            <option value="DEFAULT" disabled style={{display: "none"}}>Selecione uma unidade.</option>
+            {unidades.length > 1 &&
+              unidades.map((unidade, idx) => {
+                return <option key={idx} value={idx + 1}>{unidade.nome}</option>
+              })
+            }
+          </select>
+          <div id="emailHelp" className="form-text">Este campo e obrigatório.</div>
+        </div>
       </div>
 
       <div className='containerDouble d-flex'>

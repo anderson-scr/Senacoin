@@ -1,5 +1,5 @@
 import * as yup from 'yup'
-import { regexUtils } from './regex'
+import { regexUtils } from '../regex'
 
 export const yupSchemaCadUsuario = yup.object().shape({
   nome: yup.string().required(),
