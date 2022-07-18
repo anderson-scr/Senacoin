@@ -4,7 +4,7 @@ exports.ColaboradorSchema = new mongoose.Schema({
 	nome: {type: String, required: true},
 	email: {type: String, required: true, lowercase: true},
 	cpf: {type: String, required: true, minLength: 15, maxLength: 15},
-	matricula: String,
+	matricula: {type: String, default: null},
 	hash: {type: String, required: true},
 	salt: {type: String, required: true},
 	
@@ -23,6 +23,6 @@ exports.ColaboradorSchema = new mongoose.Schema({
 	ger_qrcode: {type: Boolean, default: false},
 	relatorios: {type: Boolean, default: false},
 
-	id_status: {type: mongoose.Types.ObjectId, ref: "Status"},
-	id_unidade: {type: mongoose.Types.ObjectId, ref: "Unidade"},
+	id_status: {type: mongoose.Types.ObjectId, ref: "Status", required: true},
+	id_unidade: {type: mongoose.Types.ObjectId, ref: "Unidade", required: true},
 }, { versionKey: false });
