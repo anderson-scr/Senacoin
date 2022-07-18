@@ -28,7 +28,7 @@ exports.login = (req, res, next) => {
 
 // Register a new user
 exports.new = (req, res, next) => {
-
+    console.log(req.body)
     const saltHash = utils.genPassword(req.body.senha);
     delete req.body.id_status;
     

@@ -12,6 +12,12 @@ export const routes = {
     todos: 'unidade/all'
   },
 
+  area: {
+    novo: "area/add",
+    ativo: "area/active",
+    todos: "area/all",
+  },
+
   perfil: {
     novo: 'perfil/new',
     ativo: 'perfil/active',
