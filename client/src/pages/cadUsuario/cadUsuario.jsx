@@ -150,49 +150,49 @@ const CadUsuario = () => {
               <div className='col-5'>
                 <h4>Cadastros</h4>
                 <div className="form-check mt-2">
-                  <input className="form-check-input" type="checkbox" name="checkboxCadUsuario" id="cad_usuarios" />
+                  <input className="form-check-input" type="checkbox" name="checkboxCadUsuario" id="cad_usuarios" {...register('cadastros.cad_usuarios')} />
                   <label className="form-check-label" htmlFor="checkboxCadUsuario">
                     Usuários
                   </label>
                 </div>
                 <div className="form-check mt-2">
-                  <input className="form-check-input" type="checkbox" name="checkboxCadItems" id="cad_itens" />
+                  <input className="form-check-input" type="checkbox" name="checkboxCadItems" id="cad_itens" {...register('cadastros.cad_itens')} />
                   <label className="form-check-label" htmlFor="checkboxCadItems">
                     Items
                   </label>
                 </div>
                 <div className="form-check mt-2">
-                  <input className="form-check-input" type="checkbox" name="checkboxCadAreas" id="cad_areas" />
+                  <input className="form-check-input" type="checkbox" name="checkboxCadAreas" id="cad_areas" {...register('cadastros.cad_areas')} />
                   <label className="form-check-label" htmlFor="checkboxCadAreas">
                     Areas
                   </label>
                 </div>
                 <div className="form-check mt-2">
-                  <input className="form-check-input" type="checkbox" name="checkboxCadSubcategorias" id="cad_subcategorias" />
+                  <input className="form-check-input" type="checkbox" name="checkboxCadSubcategorias" id="cad_subcategorias" {...register('cadastros.cad_subcategoria')} />
                   <label className="form-check-label" htmlFor="checkboxCadSubcategorias">
                     Subcategorias
                   </label>
                 </div>
                 <div className="form-check mt-2">
-                  <input className="form-check-input" type="checkbox" name="checkboxCadSubcategorias" id="cad_perfis" />
+                  <input className="form-check-input" type="checkbox" name="checkboxCadSubcategorias" id="cad_perfis" {...register('cadastros.cad_perfis')} />
                   <label className="form-check-label" htmlFor="checkboxCadSubcategorias">
                     Perfis
                   </label>
                 </div>
                 <div className="form-check mt-2">
-                  <input className="form-check-input" type="checkbox" name="checkboxCadPromocoes" id="cad_promocoes" />
+                  <input className="form-check-input" type="checkbox" name="checkboxCadPromocoes" id="cad_promocoes" {...register('cadastros.cad_promocoes')} />
                   <label className="form-check-label" htmlFor="checkboxCadPromocoes">
                     Promoções
                   </label>
                 </div>
                 <div className="form-check mt-2">
-                  <input className="form-check-input" type="checkbox" name="checkboxCadQRcodes" id="cad_qrcode" />
+                  <input className="form-check-input" type="checkbox" name="checkboxCadQRcodes" id="cad_qrcode" {...register('cadastros.cad_qrcode')} />
                   <label className="form-check-label" htmlFor="checkboxCadQRcodes">
                     QRcodes
                   </label>
                 </div>
                 <div className="form-check mt-2">
-                  <input className="form-check-input" type="checkbox" name="checkboxCadQRcodes" id="cad_unidades" />
+                  <input className="form-check-input" type="checkbox" name="checkboxCadQRcodes" id="cad_unidades" {...register('cadastros.cad_unidades')} />
                   <label className="form-check-label" htmlFor="checkboxCadQRcodes">
                     Unidades
                   </label>
@@ -204,31 +204,31 @@ const CadUsuario = () => {
               <div className='col-5'>
                 <h4>Gerenciamento</h4>
                 <div className="form-check mt-2">
-                  <input className="form-check-input" type="checkbox" name="flexcheckboxDefault" id="ger_usuarios" />
+                  <input className="form-check-input" type="checkbox" name="flexcheckboxDefault" id="ger_usuarios" {...register('gerenciar.ger_usuarios')} />
                   <label className="form-check-label" htmlFor="flexcheckboxDefault1">
                     Gerenciar usuários
                   </label>
                 </div>
                 <div className="form-check mt-2">
-                  <input className="form-check-input" type="checkbox" name="flexcheckboxDefault" id="ger_items" />
+                  <input className="form-check-input" type="checkbox" name="flexcheckboxDefault" id="ger_itens" {...register('gerenciar.ger_itens')} />
                   <label className="form-check-label" htmlFor="flexcheckboxDefault2">
                     Gerenciar items
                   </label>
                 </div>
                 <div className="form-check mt-2">
-                  <input className="form-check-input" type="checkbox" name="flexcheckboxDefault" id="ger_promocoes" />
+                  <input className="form-check-input" type="checkbox" name="flexcheckboxDefault" id="ger_promocoes" {...register('gerenciar.ger_promocoes')} />
                   <label className="form-check-label" htmlFor="flexcheckboxDefault2">
                     Gerenciar Promoções
                   </label>
                 </div> 
                 <div className="form-check mt-2">
-                  <input className="form-check-input" type="checkbox" name="flexcheckboxDefault" id="ger_qrcode" />
+                  <input className="form-check-input" type="checkbox" name="flexcheckboxDefault" id="ger_qrcode" {...register('gerenciar.ger_qrcode')} />
                   <label className="form-check-label" htmlFor="flexcheckboxDefault2">
                     Gerenciar Qrcode
                   </label>
                 </div>
                 <div className="form-check mt-2">
-                  <input className="form-check-input" type="checkbox" name="flexcheckboxDefault" id="ger_relatorios" />
+                  <input className="form-check-input" type="checkbox" name="flexcheckboxDefault" id="ger_relatorios" {...register('gerenciar.ger_relatorios')} />
                   <label className="form-check-label" htmlFor="flexcheckboxDefault2">
                     Emitir relatórios
                   </label>
