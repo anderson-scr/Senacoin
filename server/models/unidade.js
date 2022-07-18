@@ -9,4 +9,4 @@ exports.UnidadeSchema = new mongoose.Schema({
 	telefone: String,
 	resposavel: {type: String, required: true},
 	id_status: {type: mongoose.Types.ObjectId, ref: "Status"} //.populate("id_status")
-});
+}, { versionKey: false });

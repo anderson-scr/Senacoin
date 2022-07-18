@@ -3,8 +3,10 @@ const controller = require('../controller/qrcodeController');
 const utils = require('../libs/utils');
 
 
-// Register a new qr code
+// ad a new qr code
 router.post('/add', utils.authMiddleware, controller.new);
+// add a new qr code list
+router.post('/populate', utils.authMiddleware, controller.newList);
 // list all qr codes
 router.get('/all', utils.authMiddleware, controller.listAll);
 // list all active qr codes

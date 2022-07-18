@@ -5,10 +5,10 @@ exports.TransacaoSchema = new mongoose.Schema({
 	id_senacoin: {type: mongoose.Types.ObjectId, ref: "SenaCoin"},
 	id_item: {type: mongoose.Types.ObjectId, ref: "Item"},
 	id_promocao: {type: mongoose.Types.ObjectId, ref: "Promocao"},
-});
+}, { versionKey: false });
 
 exports.HistoricoTransacaoSchema = new mongoose.Schema({
 	id_transacao: {type: mongoose.Types.ObjectId, ref: "Transacao"},
 	data: {type: Date, immutable: true, default: () => Date.now(Date.now()-3600*1000*4)}, //fuso horario gmt-4
 	tipo: Boolean
-});
+}, { versionKey: false });

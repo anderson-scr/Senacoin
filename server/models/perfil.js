@@ -18,4 +18,4 @@ exports.PerfilSchema = new mongoose.Schema({
 	relatorios: {type: Boolean, default: false},
 
 	id_status: {type: mongoose.Types.ObjectId, ref: "Status"}, //.populate("id_status")
-});
+}, { versionKey: false });

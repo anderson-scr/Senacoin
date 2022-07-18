@@ -3,28 +3,32 @@ const Status = mongoose.model('Status');
 
 
 exports.new = (req, res, next) => {
-	const novoStatus = new Status({
-		nome: req.body.nome,
+
+    Status.create(req.body, (err, status) =>  {
+        if (err)
+            return res.status(500).json({ success: false, ...err });
+
+        res.status(201).json({ success: true, ...status["_doc"]});
     });
+}
+
+exports.newList = (req, res, next) => {
     
-    try 
-	{
-        novoStatus.save()
-        .then((status) => {
-            res.status(201).json({ success: true, id: status._id, nome: status.nome});
-        });
-    }
-	catch (err) {
-        res.json({ success: false, msg: err });
-    }
+    Status.insertMany(req.body, (err, docs) => {
+        if (err)
+            return res.status(500).json({ success: false, ...err });
+    
+        res.status(201).json({ success: true, total: docs.length});
+    });
 }
 
 exports.listAll = (req, res, next) => {
+
 	Status.find({})
 	.select('-__v')
     .then((status) => {
         
-        if (!status)
+        if (!status.length)
             return res.status(204).json({ success: false, msg: "nenhum status encontrado" });  
         else
 			res.status(200).json(status);
@@ -35,6 +39,7 @@ exports.listAll = (req, res, next) => {
 }
 
 exports.edit = (req, res, nxt) => {
+
     Status.findByIdAndUpdate(req.params.id, {$set: req.body}, {new: true})
     .select('-_id -__v')
     .then((doc) => (res.status(200).json(doc)))
@@ -42,6 +47,7 @@ exports.edit = (req, res, nxt) => {
 }
 
 exports.delete = (req, res, nxt) => {
+
     Status.findByIdAndDelete(req.params.id, (err, doc) => {
 		if (err)
 			res.status(500).json(err);

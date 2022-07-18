@@ -3,8 +3,10 @@ const controller = require('../controller/areaController');
 const utils = require('../libs/utils');
 
 
-// Register a new area
+// add a new area
 router.post('/add', utils.authMiddleware, controller.new);
+// add a new area list
+router.post('/populate', utils.authMiddleware, controller.newList);
 // list all areas
 router.get('/all', utils.authMiddleware, controller.listAll);
 // list all active areas

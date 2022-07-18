@@ -5,6 +5,8 @@ const utils = require('../libs/utils');
 
 // add a new item
 router.post('/:categoria/add', utils.authMiddleware, controller.new);
+// add a new item list
+router.post('/populate', utils.authMiddleware, controller.newList);
 // list all items
 router.get('/all', utils.authMiddleware, controller.listAll);
 // list all items of a categoria
