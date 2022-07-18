@@ -11,6 +11,6 @@ exports.ItemSchema = new mongoose.Schema({
 	id_area: {type: mongoose.Types.ObjectId, ref: "Area", required: true},
 	id_categoria: {type: mongoose.Types.ObjectId, ref: "Categoria", required: true},
 	id_subcategoria: {type: mongoose.Types.ObjectId, ref: "SubCategoria", required: true},
-	id_unidade: {type: mongoose.Types.ObjectId, ref: "Unidade", required: true},
+	id_unidade: [{type: mongoose.Types.ObjectId, ref: "Unidade", required: true}],
 	id_status: {type: mongoose.Types.ObjectId, ref: "Status", required: true}
 }, { versionKey: false });

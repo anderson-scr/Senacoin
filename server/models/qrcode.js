@@ -3,8 +3,6 @@ const mongoose = require('mongoose');
 exports.QrCodeSchema = new mongoose.Schema({
 	titulo: {type: String, required: true},
 	descricao: {type: String, default: null},
-	id_item: {type: mongoose.Types.ObjectId, ref: "Item", default: null},
-	id_unidade: {type: mongoose.Types.ObjectId, ref: "Unidade", required: true},
 	unico: {type: Boolean, default: true},
 	diario: {type: Boolean, default: false},
 	semanal: {type: Boolean, default: false},
@@ -13,5 +11,7 @@ exports.QrCodeSchema = new mongoose.Schema({
 	data_inicio: {type: Date, required: true},
 	data_fim: {type: Date, required: true},
 	quantidade: {type: Number, min: 0, default: 0},
+	id_item: {type: mongoose.Types.ObjectId, ref: "Item", default: null},
+	id_unidade: [{type: mongoose.Types.ObjectId, ref: "Unidade", required: true}],
 	id_status: {type: mongoose.Types.ObjectId, ref: "Status", required: true}
 }, { versionKey: false });
