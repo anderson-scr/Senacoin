@@ -4,7 +4,10 @@ const Promocao = mongoose.model('Promocao');
 
 exports.new = (req, res, next) => {
 
-    Promocao.create({...req.body, id_status: "62cec6c463187bb9b498687b"}, (err, promocao) =>  {
+    if (!("id_status" in req.body))
+        req.body["id_status"] = "62cec6c463187bb9b498687b";
+
+    Promocao.create(req.body, (err, promocao) =>  {
         if (err)
             return res.status(500).json({ success: false, ...err });
 
@@ -15,7 +18,8 @@ exports.new = (req, res, next) => {
 exports.newList = (req, res, next) => {
     
     req.body.forEach(promocao => {
-        promocao["id_status"] = "62cec6c463187bb9b498687b";
+        if (!("id_status" in promocao))
+            promocao["id_status"] = "62cec6c463187bb9b498687b";
     });
     
     Promocao.insertMany(req.body, (err, docs) => {

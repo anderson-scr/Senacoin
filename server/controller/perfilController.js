@@ -4,7 +4,10 @@ const Perfil = mongoose.model('Perfil');
 
 exports.new = (req, res, next) => {
 
-    Perfil.create({...req.body, id_status: "62cec6c463187bb9b498687b"}, (err, perfil) =>  {
+    if (!("id_status" in req.body))
+        req.body["id_status"] = "62cec6c463187bb9b498687b";
+
+    Perfil.create(req.body, (err, perfil) =>  {
         if (err)
             return res.status(500).json({ success: false, ...err });
 
@@ -15,7 +18,8 @@ exports.new = (req, res, next) => {
 exports.newList = (req, res, next) => {
 
     req.body.forEach(perfil => {
-        perfil["id_status"] = "62cec6c463187bb9b498687b";
+        if (!("id_status" in perfil))
+            perfil["id_status"] = "62cec6c463187bb9b498687b";
     });
     
     Perfil.insertMany(req.body, (err, docs) => {

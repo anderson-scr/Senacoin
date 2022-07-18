@@ -22,8 +22,10 @@ exports.new = (req, res, next) => {
 		return res.status(400).json({msg: "categoria de item inexistente."});
     
     req.body["id_categoria"] = categoria;
+    if (!("id_status" in req.body))
+        req.body["id_status"] = "62cec6c463187bb9b498687b";
 
-    Item.create({...req.body, id_status: "62cec6c463187bb9b498687b"}, (err, item) =>  {
+    Item.create(req.body, (err, item) =>  {
         if (err)
             return res.status(500).json({ success: false, ...err });
 
@@ -34,7 +36,8 @@ exports.new = (req, res, next) => {
 exports.newList = (req, res, next) => {
 
     req.body.forEach(item => {
-        item["id_status"] = "62cec6c463187bb9b498687b";
+        if (!("id_status" in item))
+            item["id_status"] = "62cec6c463187bb9b498687b";
     });
     
     Item.insertMany(req.body, (err, docs) => {

@@ -4,7 +4,10 @@ const QrCode = mongoose.model('QrCode');
 
 exports.new = (req, res, next) => {
     
-    QrCode.create({...req.body, id_status: "62cec6c463187bb9b498687b"}, (err, qrcode) =>  {
+    if (!("id_status" in req.body))
+        req.body["id_status"] = "62cec6c463187bb9b498687b";
+    
+    QrCode.create(req.body, (err, qrcode) =>  {
         if (err)
             return res.status(500).json({ success: false, ...err });
 
@@ -15,7 +18,8 @@ exports.new = (req, res, next) => {
 exports.newList = (req, res, next) => {
     
     req.body.forEach(qrcode => {
-        qrcode["id_status"] = "62cec6c463187bb9b498687b";
+        if (!("id_status" in qrcode))
+            qrcode["id_status"] = "62cec6c463187bb9b498687b";
     });
     
     QrCode.insertMany(req.body, (err, docs) => {

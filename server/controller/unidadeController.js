@@ -4,7 +4,10 @@ const Unidade = mongoose.model('Unidade');
 
 exports.new = (req, res, next) => {
     
-    Unidade.create({...req.body, id_status: "62cec6c463187bb9b498687b"}, (err, unidade) =>  {
+    if (!("id_status" in req.body))
+        req.body["id_status"] = "62cec6c463187bb9b498687b";
+
+    Unidade.create(req.body, (err, unidade) =>  {
         if (err)
             return res.status(500).json({ success: false, ...err });
 
@@ -15,7 +18,8 @@ exports.new = (req, res, next) => {
 exports.newList = (req, res, next) => {
 
     req.body.forEach(unidade => {
-        unidade["id_status"] = "62cec6c463187bb9b498687b";
+        if (!("id_status" in unidade))
+            unidade["id_status"] = "62cec6c463187bb9b498687b";
     });
     
     Unidade.insertMany(req.body, (err, docs) => {

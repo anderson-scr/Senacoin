@@ -4,7 +4,10 @@ const SubCategoria = mongoose.model('SubCategoria');
 
 exports.new = (req, res, next) => {
     
-    SubCategoria.create({...req.body, id_status: "62cec6c463187bb9b498687b"}, (err, subcat) =>  {
+    if (!("id_status" in req.body))
+        req.body["id_status"] = "62cec6c463187bb9b498687b";
+    
+        SubCategoria.create(req.body, (err, subcat) =>  {
         if (err)
             return res.status(500).json({ success: false, ...err });
 
@@ -15,7 +18,8 @@ exports.new = (req, res, next) => {
 exports.newList = (req, res, next) => {
 
     req.body.forEach(subcat => {
-        subcat["id_status"] = "62cec6c463187bb9b498687b";
+        if (!("id_status" in subcat))
+            subcat["id_status"] = "62cec6c463187bb9b498687b";
     });
     
     SubCategoria.insertMany(req.body, (err, docs) => {

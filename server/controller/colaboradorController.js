@@ -4,7 +4,7 @@ const utils = require('../libs/utils');
 
 // logs the user
 exports.login = (req, res, next) => {
-    
+
     Colaborador.findOne({ email: req.body.email })
     .then((colab) => {
         
@@ -31,6 +31,9 @@ exports.new = (req, res, next) => {
 
     const saltHash = utils.genPassword(req.body.senha);
     delete req.body.id_status;
+    
+    if (!("id_status" in req.body))
+        req.body["id_status"] = "62cec6c463187bb9b498687b";
 
     Colaborador.create({...req.body, hash: saltHash.hash, salt: saltHash.salt, id_status: "62cec6c463187bb9b498687b"}, (err, colab) =>  {
         if (err)
@@ -47,9 +50,11 @@ exports.newList = (req, res, next) => {
         const saltHash = utils.genPassword(req.body.senha);
         delete colab.id_status;
 
-        colab["hash"] = saltHash.hash,
-        colab["salt"] = saltHash.salt,
-        colab["id_status"] = "62cec6c463187bb9b498687b";
+        if (!("id_status" in colab))
+            colab["id_status"] = "62cec6c463187bb9b498687b";
+
+        colab["hash"] = saltHash.hash;
+        colab["salt"] = saltHash.salt;
     });
     
     Colaborador.insertMany(req.body, (err, docs) => {
