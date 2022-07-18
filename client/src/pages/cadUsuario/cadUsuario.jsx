@@ -12,9 +12,9 @@ import './cadUsuarioStyle.css';
 
 const CadUsuario = () => {
   const effectOnce = useRef(true)
-  const navigate = useNavigate()
   const [unidades, setUnidades] = useState([])
   const [perfis, setPerfil] = useState([])
+  const navigate = useNavigate()
   const { register, handleSubmit, formState: {
     errors
   } } = useForm({
@@ -41,15 +41,11 @@ const CadUsuario = () => {
 
   function certo(dados) {
     console.log(dados)
-    console.log("deu bom")
-  }
-  function errado(dados) {
-    console.log(`erro`, dados)
   }
 
   return (
     <section>
-      <form onSubmit={handleSubmit(certo, errado)}>
+      <form onSubmit={handleSubmit(certo)}>
 
         {/* First row */}
         <div className='container row mx-auto'>

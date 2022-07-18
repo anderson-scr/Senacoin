@@ -22,3 +22,7 @@
   border-color: var(--senac-amarelo-claro);
   box-shadow: 0 0 0 0.2rem rgba(225, 126, 28, 0.25);
 } 
+.form-check-input:checked {
+  background-color: var(--senac-amarelo);
+  border-color: var(--senac-amarelo-dark);
+}
