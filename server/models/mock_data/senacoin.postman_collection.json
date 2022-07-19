@@ -1,0 +1,1950 @@
+{
+	"info": {
+		"_postman_id": "b6b923b5-1527-4173-b92d-d5eda30f9780",
+		"name": "senacoin",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "21978815"
+	},
+	"item": [
+		{
+			"name": "Aluno",
+			"item": [
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"\",\r\n    \"senha\":\"\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/aluno/login",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"aluno",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Register",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/aluno/register",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"aluno",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Populate",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "[\r\n    {\r\n        \r\n    }\r\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/aluno/populate",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"aluno",
+								"populate"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "All",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/aluno/all",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"aluno",
+								"all"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Active",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/aluno/active",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"aluno",
+								"active"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "One",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/aluno/id",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"aluno",
+								"id"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "One",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/aluno/id",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"aluno",
+								"id"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "One",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/aluno/id",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"aluno",
+								"id"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Area",
+			"item": [
+				{
+					"name": "Add",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/area/add",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"area",
+								"add"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Populate",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "[\r\n    {\r\n        \r\n    }\r\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/area/populate",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"area",
+								"populate"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "All",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/area/all",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"area",
+								"all"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Active",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/area/active",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"area",
+								"active"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "One",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/area/id",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"area",
+								"id"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "One",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/area/id",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"area",
+								"id"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "One",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/area/id",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"area",
+								"id"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Categoria",
+			"item": [
+				{
+					"name": "Add",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/categoria/add",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"categoria",
+								"add"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Populate",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "[\r\n    {\r\n        \r\n    }\r\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/categoria/populate",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"categoria",
+								"populate"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "All",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/categoria/all",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"categoria",
+								"all"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Active",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/categoria/active",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"categoria",
+								"active"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "One",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/categoria/id",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"categoria",
+								"id"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "One",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/categoria/id",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"categoria",
+								"id"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "One",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/categoria/id",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"categoria",
+								"id"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Colaborador",
+			"item": [
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"\",\r\n    \"senha\":\"\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/colaborador/login",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"colaborador",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Register",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/colaborador/register",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"colaborador",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Populate",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "[\r\n    {\r\n        \r\n    }\r\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/colaborador/populate",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"colaborador",
+								"populate"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "All",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/colaborador/all",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"colaborador",
+								"all"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Active",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/colaborador/active",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"colaborador",
+								"active"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "One",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/colaborador/id",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"colaborador",
+								"id"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "One",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/colaborador/id",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"colaborador",
+								"id"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "One",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/colaborador/id",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"colaborador",
+								"id"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Item",
+			"item": [
+				{
+					"name": "Populate",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "[\r\n    {\r\n        \r\n    }\r\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/item/populate",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"item",
+								"populate"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "All",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/item/all",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"item",
+								"all"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Produto",
+			"item": [
+				{
+					"name": "Add",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/item/produto/add",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"item",
+								"produto",
+								"add"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "All",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/item/produto/all",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"item",
+								"produto",
+								"all"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Active",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/item/produto/active",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"item",
+								"produto",
+								"active"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "One",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/item/produto/id",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"item",
+								"produto",
+								"id"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "One",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/item/produto/id",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"item",
+								"produto",
+								"id"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "One",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/item/produto/id",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"item",
+								"produto",
+								"id"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Evento",
+			"item": [
+				{
+					"name": "Add",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/item/evento/add",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"item",
+								"evento",
+								"add"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "All",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/item/evento/all",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"item",
+								"evento",
+								"all"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Active",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/item/evento/active",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"item",
+								"evento",
+								"active"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "One",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/item/evento/id",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"item",
+								"evento",
+								"id"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "One",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/item/evento/id",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"item",
+								"evento",
+								"id"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "One",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/item/evento/id",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"item",
+								"evento",
+								"id"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Serviço",
+			"item": [
+				{
+					"name": "Add",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/item/servico/add",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"item",
+								"servico",
+								"add"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "All",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/item/servico/all",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"item",
+								"servico",
+								"all"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Active",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/item/servico/active",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"item",
+								"servico",
+								"active"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "One",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/item/servico/id",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"item",
+								"servico",
+								"id"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "One",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/item/servico/id",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"item",
+								"servico",
+								"id"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "One",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/item/servico/id",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"item",
+								"servico",
+								"id"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Perfil",
+			"item": [
+				{
+					"name": "Add",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/perfil/add",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"perfil",
+								"add"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Populate",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "[\r\n    {\r\n        \r\n    }\r\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/perfil/populate",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"perfil",
+								"populate"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "All",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/perfil/all",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"perfil",
+								"all"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Active",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/perfil/active",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"perfil",
+								"active"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "One",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/perfil/id",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"perfil",
+								"id"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "One",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/perfil/id",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"perfil",
+								"id"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "One",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/perfil/id",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"perfil",
+								"id"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Promoção",
+			"item": [
+				{
+					"name": "Add",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/promocao/add",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"promocao",
+								"add"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Populate",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "[\r\n    {\r\n        \r\n    }\r\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/promocao/populate",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"promocao",
+								"populate"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "All",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/promocao/all",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"promocao",
+								"all"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Active",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/promocao/active",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"promocao",
+								"active"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "One",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/promocao/id",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"promocao",
+								"id"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "One",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/promocao/id",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"promocao",
+								"id"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "One",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/promocao/id",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"promocao",
+								"id"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Qr Code",
+			"item": [
+				{
+					"name": "Add",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/qrcode/add",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"qrcode",
+								"add"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Populate",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "[\r\n    {\r\n        \r\n    }\r\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/qrcode/populate",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"qrcode",
+								"populate"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "All",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/qrcode/all",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"qrcode",
+								"all"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Active",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/qrcode/active",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"qrcode",
+								"active"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "One",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/qrcode/id",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"qrcode",
+								"id"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "One",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/qrcode/id",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"qrcode",
+								"id"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "One",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/qrcode/id",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"qrcode",
+								"id"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Status",
+			"item": [
+				{
+					"name": "Add",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/status/add",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"status",
+								"add"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Populate",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "[\r\n    {\r\n        \r\n    }\r\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/status/populate",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"status",
+								"populate"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "All",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/status/all",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"status",
+								"all"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Active",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/status/active",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"status",
+								"active"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "One",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/status/id",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"status",
+								"id"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "One",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/status/id",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"status",
+								"id"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Unidade",
+			"item": [
+				{
+					"name": "Add",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/unidade/add",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"unidade",
+								"add"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Populate",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "[\r\n    {\r\n        \r\n    }\r\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/unidade/populate",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"unidade",
+								"populate"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "All",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/unidade/all",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"unidade",
+								"all"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Active",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/unidade/active",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"unidade",
+								"active"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "One",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/unidade/id",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"unidade",
+								"id"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "One",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/unidade/id",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"unidade",
+								"id"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "One",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/unidade/id",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"unidade",
+								"id"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2MmNlY2ZiNjA1NTA5YzIxYmRlZWEzN2IiLCJpYXQiOjE2NTgxNTg1NDE4NDQsImV4cCI6MTY1ODE1ODYyODI0NH0.U9UW2464fSqQsCorUUlKCoJIbl3Sfb5Pyr7o4VZ7wskiypKYlK4kkw6nFiVO-GTumQVkbRwAb0n-MWX16fA4x3fDmDqEH1BKaLlq7VTK0pu91LgwAN09DWU4Y8yvsstuJNCPvnFsxPfzvQwWcDr7Tpx027XP0bEzwiQqweNoWKY2pilg2kkMge-ZAz6Q-TaFnO54cs9qihgzcMR9WBDxn73U81HqvAIbnbg2iMx-fevxWKWEAcq5JHzoG8Spimq5zqtTTkhFSr5Q-rJ14vht0hwhWroeYqwl9_W4quTAwUkcdf2ouW7AejnHpW5oxM7fxlKf72ugmFOwotHtKghSE1jEISHdvK9-0EdV2v_noxwx5PTBpX6rpQE1JZN5h5mr5f5b6K1CUWyvjzFJlQ1jYPbOhhxcBR4Dri5v23SARgH1iKlkytgP7xDpo2vJ0FngtK3EcMxTvJHc0yM03pFK2LuMVT0EyYfVK6rL_YJ039TfmoHxqUlDjz0_bao8DDIg17nO08-QYGyMqoyyv1ctcHdqZrJNupkmu2gcQx6Al_-KkzK23SvDKk4yTIAzvTDLOWs0mmo4REJgWVLik37rGoH8kn7PeA8L9sKEgjrxJNPAaokXEfPbJXj2l6pKLz8vFqy4G0ddYg5OIN8fVvL5Acxv7CIXeTjw0vOWevz_vJQ",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
