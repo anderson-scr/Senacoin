@@ -1,12 +1,12 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { verificaSessao } from 'auth/login/verificaSessao';
-import { callUnidadeAPI } from 'api/cadastros/callUnidade';
-import { callPerfilAPI } from 'api/cadastros/callPerfil';
+import { callUnidadeAPI } from 'api/common/callUnidades';
+import { callPerfilAPI } from 'api/common/callPerfil';
 import { yupSchemaCadUsuario } from 'utils/validation/schemas/cadUsuario';
 import { useForm } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
-import { callUsuarioAPI } from 'api/cadUsuario/callUsuarios';
+import { callUsuarioAPI } from 'api/usuario/callUsuarios';
 import './cadUsuarioStyle.css';
 
 
@@ -54,7 +54,6 @@ const CadUsuario = () => {
     delete dados.cadastros
     delete dados.perfil
 
-    console.log(dados)
     callUsuarioAPI.novo(dados)
   }
 
