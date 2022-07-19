@@ -25,11 +25,10 @@ exports.newList = (req, res, next) => {
 exports.listAll = (req, res, next) => {
 
 	Status.find({})
-	.select('-__v')
     .then((status) => {
         
         if (!status.length)
-            return res.status(204).json({ success: false, msg: "nenhum status encontrado" });  
+            return res.status(204).json({ success: false, msg: "nenhum status encontrado." });  
         else
 			res.status(200).json(status);
     })
@@ -41,7 +40,7 @@ exports.listAll = (req, res, next) => {
 exports.edit = (req, res, nxt) => {
 
     Status.findByIdAndUpdate(req.params.id, {$set: req.body}, {new: true})
-    .select('-_id -__v')
+    .select('-_id')
     .then((doc) => (res.status(200).json(doc)))
     .catch((err) => (res.status(500).json(err)));
 }

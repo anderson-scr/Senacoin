@@ -18,4 +18,5 @@ router.patch('/:id', utils.authMiddleware, controller.edit);
 // delete a area
 router.delete('/:id', utils.authMiddleware, controller.delete);
 
+
 module.exports = router;

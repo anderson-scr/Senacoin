@@ -1,21 +1,23 @@
 const router = require('express').Router();
-const controller = require('../controller/qrcodeController');
+const controller = require('../controller/alunoController');
 const utils = require('../libs/utils');
 
 
-// ad a new qr code
-router.post('/add', utils.authMiddleware, controller.new);
-// add a new qr code list
+// Validate an existing aluno and issue a JWT
+router.post('/login', controller.login);
+// Register a new aluno
+router.post('/register', controller.new);
+// add a new aluno list
 router.post('/populate', utils.authMiddleware, controller.newList);
-// list all qr codes
+// list all alunos
 router.get('/all', utils.authMiddleware, controller.listAll);
-// list all active qr codes
+// list all active alunos
 router.get('/active', utils.authMiddleware, controller.listActive);
-// list single qr code
+// list single aluno
 router.get('/:id', utils.authMiddleware, controller.listOne);
-// edit a qr code
+// edit a aluno
 router.patch('/:id', utils.authMiddleware, controller.edit);
-// delete a qr code
+// delete a aluno
 router.delete('/:id', utils.authMiddleware, controller.delete);
 
 
