@@ -41,5 +41,6 @@ mongoose.model("Transacao", transacao.TransacaoSchema);
 mongoose.model("Unidade", unidade.UnidadeSchema);
 
 mongoose.model("Colaborador", colaborador.ColaboradorSchema);
+mongoose.model("AuditoriaColaborador", colaborador.AuditoriaColaboradorSchema);
 
 mongoose.model("Aluno", aluno.AlunoSchema);

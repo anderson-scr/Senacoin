@@ -50,7 +50,7 @@ exports.listAll = (req, res, next) => {
 exports.listActive = (req, res, next) => {
 
 	SubCategoria.find({id_status: "62cec6c463187bb9b498687b"})
-    .select("nome -_id")
+    .select("nome")
     .then((subcats) => {
         
         if (!subcats.length)
