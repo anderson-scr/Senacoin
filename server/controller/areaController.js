@@ -34,12 +34,12 @@ exports.listAll = (req, res, next) => {
 
 	Area.find({})
     .select("nome descricao id_unidade id_status")
-    .populate({path : 'id_unidade' , select: 'nome -_id'})
-    .populate({path : 'id_status' , select: '-_id'})
+    .populate({path : 'id_unidade', select: 'nome -_id'})
+    .populate({path : 'id_status', select: '-_id'})
     .then((areas) => {
         
         if (!areas.length)
-            return res.status(204).json({ success: false, msg: "nenhuma area encontrada" });  
+            return res.status(204).json({ success: false, msg: "nenhuma area encontrada." });  
         else
             res.status(200).json(areas);
     })
@@ -55,7 +55,7 @@ exports.listActive = (req, res, next) => {
     .then((areas) => {
         
         if (!areas.length)
-            return res.status(204).json({ success: false, msg: "nenhuma area encontrada" });  
+            return res.status(204).json({ success: false, msg: "nenhuma area encontrada." });  
         else
             res.status(200).json(areas);
     })
@@ -67,11 +67,11 @@ exports.listActive = (req, res, next) => {
 exports.listOne = (req, res, next) => {
 
 	Area.findOne({ _id: req.params.id })
-    .populate({path : 'id_status' , select: '-_id'})
+    .populate({path : 'id_status', select: '-_id'})
     .then((area) => {
         
         if (!area)
-            return res.status(204).json({ success: false, msg: "area não encontrada" });  
+            return res.status(204).json({ success: false, msg: "area não encontrada." });  
         else
             res.status(200).json(area);
     })
@@ -84,8 +84,8 @@ exports.edit = (req, res, nxt) => {
 
     // delete req.body.id_status; // impede de enviar opcoes que não devem ser alteradas
     Area.findByIdAndUpdate(req.params.id, {$set: req.body}, {new: true})
-    .select('-_id -__v')
-    .populate({path : 'id_status' , select: '-_id'})
+    .select('-_id')
+    .populate({path : 'id_status', select: '-_id'})
     .then((doc) => (res.status(200).json(doc)))
     .catch((err) => (res.status(500).json(err)));
 }
@@ -93,8 +93,8 @@ exports.edit = (req, res, nxt) => {
 exports.delete = (req, res, nxt) => {
 
     Area.findByIdAndUpdate(req.params.id, {id_status: mongoose.Types.ObjectId("62cec7b263187bb9b498687e")}, {new: true})
-    .select('-_id -__v')
-    .populate({path : 'id_status' , select: '-_id'})
+    .select('-_id')
+    .populate({path : 'id_status', select: '-_id'})
     .then((doc) => (res.status(200).json(doc)))
     .catch((err) => (res.status(500).json(err)));
 }

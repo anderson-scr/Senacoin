@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const area = require('./area');
 const categoria = require('./categoria');
+const subcategoria = require('./subcategoria');
 const estoque = require('./estoque');
 const item = require('./item');
 const perfil = require('./perfil');
@@ -17,7 +18,8 @@ const aluno = require('./aluno');
 mongoose.model("Area", area.AreaSchema);
 
 mongoose.model("Categoria", categoria.CategoriaSchema);
-mongoose.model("SubCategoria", categoria.SubCategoriaSchema);
+
+mongoose.model("SubCategoria", subcategoria.SubCategoriaSchema);
 
 mongoose.model("Estoque", estoque.EstoqueSchema);
 mongoose.model("HistoricoEstoque", estoque.HistoricoEstoqueSchema);
@@ -35,11 +37,9 @@ mongoose.model("SenaCoin", senacoin.SenaCoinSchema);
 mongoose.model("Status", status.StatusSchema);
 
 mongoose.model("Transacao", transacao.TransacaoSchema);
-mongoose.model("HistoricoTransacao", transacao.HistoricoTransacaoSchema);
 
 mongoose.model("Unidade", unidade.UnidadeSchema);
 
 mongoose.model("Colaborador", colaborador.ColaboradorSchema);
 
 mongoose.model("Aluno", aluno.AlunoSchema);
-mongoose.model("CarteiraPontos", aluno.CarteiraPontosSchema);

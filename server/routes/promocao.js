@@ -19,5 +19,4 @@ router.patch('/:id', utils.authMiddleware, controller.edit);
 router.delete('/:id', utils.authMiddleware, controller.delete);
 
 
-
 module.exports = router;

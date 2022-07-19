@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const controller = require('../controller/categoriaController');
+const controller = require('../controller/subcategoriaController');
 const utils = require('../libs/utils');
 
 
@@ -17,5 +17,6 @@ router.get('/:id', utils.authMiddleware, controller.listOne);
 router.patch('/:id', utils.authMiddleware, controller.edit);
 // delete a categoria
 router.delete('/:id', utils.authMiddleware, controller.delete);
+
 
 module.exports = router;

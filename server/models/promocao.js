@@ -5,7 +5,7 @@ exports.PromocaoSchema = new mongoose.Schema({
 	descricao: {type: String, default: null},
 	pontos: {type: Number, min: 0, required: true},
 	desconto: {type: Number, min: 0, required: true},
-	quantidade: {type: Number, min: 0, default: 0},
+	quantidade: {type: Number, min: 0, default: 0}, // que isso?
 	data_inicio: {type: Date, required: true},
 	data_fim: {type: Date, required: true},
 	id_item: [{type: mongoose.Types.ObjectId, ref: "Item", required: true}],
