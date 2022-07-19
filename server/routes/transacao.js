@@ -14,9 +14,9 @@ router.get('/:aluno/all', utils.authMiddleware, controller.listAllByAluno);
 // list single transacao
 router.get('/:id', utils.authMiddleware, controller.listOne);
 // edit a transacao
-router.patch('/:id', utils.authMiddleware, controller.edit); // posso editar uma transacao ou apenas fazer uma nova para corrigir inconsistencias?
+router.patch('/:id', utils.authMiddleware, controller.edit);
 // delete a transacao
-router.delete('/:id', utils.authMiddleware, controller.delete);  // posso deletar uma transacao ou apenas fazer uma nova para corrigir inconsistencias?
+router.delete('/:id', utils.authMiddleware, controller.delete);
 
 
 module.exports = router;
