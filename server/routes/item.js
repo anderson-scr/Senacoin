@@ -4,21 +4,21 @@ const utils = require('../libs/utils');
 
 
 // add a new item
-router.post('/:categoria/add', utils.authUserMiddleware, controller.new);
+router.post('/:categoria/add', utils.authUserMiddleware, utils.authRoleMiddleware("cad_itens"), controller.new);
 // add a new item list
-router.post('/populate', utils.authUserMiddleware, controller.newList);
+router.post('/populate', utils.authUserMiddleware, utils.authRoleMiddleware("cad_itens"), controller.newList);
 // list all items
-router.get('/all', utils.authUserMiddleware, controller.listAll);
+router.get('/all', utils.authUserMiddleware, utils.authRoleMiddleware("ger_itens"), controller.listAll);
 // list all items of a categoria
-router.get('/:categoria/all', utils.authUserMiddleware, controller.listAllByCategory);
+router.get('/:categoria/all', utils.authUserMiddleware, utils.authRoleMiddleware("ger_itens"), controller.listAllByCategory);
 // list all active items of a categoria
-router.get('/:categoria/active', utils.authUserMiddleware, controller.listActive);
+router.get('/:categoria/active', utils.authUserMiddleware, utils.authRoleMiddleware("ger_itens"), controller.listActive);
 // list single item
-router.get('/:categoria/:id', utils.authUserMiddleware, controller.listOne);
+router.get('/:categoria/:id', utils.authUserMiddleware, utils.authRoleMiddleware("ger_itens"), controller.listOne);
 // edit a item
-router.patch('/:categoria/:id', utils.authUserMiddleware, controller.edit);
+router.patch('/:categoria/:id', utils.authUserMiddleware, utils.authRoleMiddleware("ger_itens"), controller.edit);
 // delete a item
-router.delete('/:categoria/:id', utils.authUserMiddleware, controller.delete);
+router.delete('/:categoria/:id', utils.authUserMiddleware, utils.authRoleMiddleware("cad_itens"), controller.delete);
 
 
 module.exports = router;
