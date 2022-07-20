@@ -56,7 +56,7 @@ function genPassword(password) {
 function issueJWT(user) {
 	const _id = user._id;
 
-	const expiresIn = '5m'; //DateTime.UtcNow.AddMinutes(10)
+	const expiresIn = '5m';
 
 	const payload = {
 		sub: _id,

@@ -47,7 +47,7 @@ exports.new = (req, res, next) => {
 exports.newList = (req, res, next) => {
 
     req.body.forEach(aluno => {
-        const saltHash = utils.genPassword(req.body.senha);
+        const saltHash = utils.genPassword(aluno.senha);
         delete aluno.id_status;
 
         if (!("id_status" in aluno))

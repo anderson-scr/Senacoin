@@ -46,7 +46,7 @@ exports.new = (req, res, next) => {
 exports.newList = (req, res, next) => {
 
     req.body.forEach(colab => {
-        const saltHash = utils.genPassword(req.body.senha);
+        const saltHash = utils.genPassword(colab.senha);
         delete colab.id_status;
 
         if (!("id_status" in colab))
