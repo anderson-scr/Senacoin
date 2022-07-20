@@ -4,7 +4,7 @@ exports.ItemSchema = new mongoose.Schema({
 	nome: {type: String, required: true},
 	descricao: {type: String, default: null},
 	pontos: {type: Number, min: 0, default: 0},
-	quantidade: {type: Number, min: 0, required: true},
+	quantidade: {type: Number, min: 0, required: false},
 	imagem: {type: String, default: null},
 	data_inicio: {type: Date, required: false},
 	data_fim: {type: Date, required: false},

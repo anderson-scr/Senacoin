@@ -44,20 +44,17 @@ const CadProduto = () => {
   const certo = (dados) => {
     dados.id_unidade = unidades[(parseInt(dados.id_unidade) - 1)]._id
     dados.id_area = areas[parseInt(dados.id_area) - 1].id_unidade[0]
-    // console.log(areas)
-    // console.log(subcategorias)
-    // console.log(unidades)
     dados.id_subcategoria = subcategorias[parseInt(dados.id_subcategoria) - 1]._id
 
-    console.log(dados)
-    // callProdutoAPI.novo(dados)
+    console.log(`como esta o envio: ${dados}`)
+    callProdutoAPI.novo(dados)
   }
   const errado = (dados) => {
     console.log(dados)
   }
 
   return (
-    <form className='container' onSubmit={handleSubmit(certo, errado)}>
+    <form className='container mt-3' onSubmit={handleSubmit(certo, errado)}>
       <div className='containerDouble d-flex'>
 
         <div className='mb-3 col'>

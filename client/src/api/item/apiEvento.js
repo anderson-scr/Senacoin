@@ -1,11 +1,11 @@
 import api from '../routes/default';
 import { routes } from "api/routes/routes";
 
-export const callProdutoAPI = {
-  novo: async (dadosProduto) => {
+export const callEventoAPI = {
+  novo: async (dadosEvento) => {
 
     try {
-      const call = await api.post(routes.produto.novo, JSON.stringify(dadosProduto))
+      const call = await api.post(routes.evento.novo, JSON.stringify(dadosEvento))
       console.log(call)  
       return call.data
 
