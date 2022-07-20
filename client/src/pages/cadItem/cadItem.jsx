@@ -15,7 +15,7 @@ const CadItem = () => {
   
       return () => effectOnce.current = false
     }
-  }, [])
+  }, [navigate])
 
   return (
     <div className='container col'>

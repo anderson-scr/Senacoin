@@ -31,7 +31,7 @@ const FormLogin = () => {
 
     } else {
 
-      // Calls the API to check if the user entry matchs any user in DB
+      // Calls the API to check if the user entry matches any user in DB
       if(await verificaLogin.authLogin(emailLogin, senhaLogin)) {
         setUserAuth(true)
         navigate("/Dashboard", {replace: true} )
@@ -66,10 +66,6 @@ const FormLogin = () => {
 
           {/* Icon to show password */}
           {showPassword? <BsFillEyeFill className='showPasswordIcon' size={20} onClick={changeVisibility} />: <BsFillEyeSlashFill className='showPasswordIcon' size={20} onClick={changeVisibility} />}
-        </div>
-        <div className="mb-3 form-check">
-          <input type="checkbox" className="form-check-input" id="exampleCheck1" />
-          <label className="form-check-label" htmlFor="exampleCheck1">Mantenha-me logado</label>
         </div>
         <div className='text-center'>
           <button onClick={evt => checkLogin(evt)} type="submit" value="Submit" className="btn btn-primary btnSubmitLogin">Entrar</button>

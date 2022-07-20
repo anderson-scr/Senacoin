@@ -5,9 +5,8 @@ export const callTodosItemsAPI = {
   ativos: async () => {
 
     try {
-      const call = await api.post(routes.servico.novo, JSON.stringify())
-      console.log(call)
-      return call.data
+      const todosItems = await api.get(routes.items.ativo)
+        return todosItems.data
 
     } catch (error) {
       console.log(error)

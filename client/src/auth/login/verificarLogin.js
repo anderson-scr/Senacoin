@@ -7,6 +7,7 @@ export const verificaLogin = {
       .then(data => {
         if(data.status === 200) {
           localStorage.setItem("accessToken", JSON.stringify(data.data.token))
+          localStorage.setItem("x-user-email", emailEntrada)
           return true
 
         } else return false

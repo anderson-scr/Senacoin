@@ -5,6 +5,7 @@ export default axios.create({
   headers: {
     'Authorization': JSON.parse(localStorage.getItem('accessToken')),
     'Accept': 'application/json',
-    'Content-Type': 'application/json'
+    'Content-Type': 'application/json',
+    'x-user-email': localStorage.getItem('x-user-email')
   } 
 })
