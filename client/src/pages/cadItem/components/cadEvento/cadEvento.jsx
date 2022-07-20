@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useRef} from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { callEventoAPI } from 'api/item/apiEvento';
 import { yupSchemaCadServico } from 'utils/validation/schemas/itens/cadServico';
 import { useNavigate } from 'react-router-dom'
