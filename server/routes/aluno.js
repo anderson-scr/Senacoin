@@ -19,6 +19,8 @@ router.get('/:id', utils.authUserMiddleware, utils.authRoleMiddleware("ger_usuar
 router.patch('/:id', utils.authUserMiddleware, utils.authRoleMiddleware("ger_usuarios"), controller.edit);
 // delete a aluno
 router.delete('/:id', utils.authUserMiddleware, utils.authRoleMiddleware("cad_usuarios"), controller.delete);
+// delete all alunos
+router.delete('/truncate', utils.authUserMiddleware, utils.authRoleMiddleware("cad_usuarios"), controller.deleteAll);
 
 
 module.exports = router;

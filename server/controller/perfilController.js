@@ -97,3 +97,7 @@ exports.delete = (req, res, nxt) => {
     .then((doc) => (res.status(200).json(doc)))
     .catch((err) => (res.status(500).json(err)));
 }
+
+exports.deleteAll = (req, res, nxt) => {
+    Perfil.deleteMany({});
+}

@@ -56,7 +56,7 @@ function genPassword(password) {
 function issueJWT(user) {
 	const _id = user._id;
 
-	const expiresIn = '1d';
+	const expiresIn = '5m'; //DateTime.UtcNow.AddMinutes(10)
 
 	const payload = {
 		sub: _id,
@@ -100,7 +100,7 @@ function authRoleMiddleware(role) {
 		
 		Colaborador.findOne({ email: req.headers["x-user-email"] })
 		.then((colab) => {
-			if (colab)
+			if (!colab)
 				return res.status(403).json({ success: false, msg: "You are not authorized to visit this route" });
 			if (!colab.permissoes[role])
 				return res.status(403).json({ success: false, msg: "You are not authorized to visit this route" });

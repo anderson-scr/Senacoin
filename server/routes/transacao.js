@@ -17,6 +17,8 @@ router.get('/:id', utils.authUserMiddleware, controller.listOne);
 router.patch('/:id', utils.authUserMiddleware, controller.edit);
 // delete a transacao
 router.delete('/:id', utils.authUserMiddleware, controller.delete);
+// delete all alunos
+router.delete('/truncate', utils.authUserMiddleware, utils.authRoleMiddleware("admin"), controller.deleteAll);
 
 
 module.exports = router;

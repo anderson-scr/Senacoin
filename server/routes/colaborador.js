@@ -17,6 +17,8 @@ router.get('/active', utils.authUserMiddleware, utils.authRoleMiddleware("ger_us
 router.get('/:id', utils.authUserMiddleware, utils.authRoleMiddleware("ger_usuarios"), controller.listOne);
 // edit a colaborador
 router.patch('/:id', utils.authUserMiddleware, utils.authRoleMiddleware("ger_usuarios"), controller.edit);
+// delete all colaborador
+router.delete('/truncate', utils.authUserMiddleware, utils.authRoleMiddleware("cad_usuarios"), controller.deleteAll);
 // delete a colaborador
 router.delete('/:id', utils.authUserMiddleware, utils.authRoleMiddleware("cad_usuarios"), controller.delete);
 

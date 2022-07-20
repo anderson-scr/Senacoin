@@ -17,6 +17,8 @@ router.get('/:id', utils.authUserMiddleware, utils.authRoleMiddleware("cad_subca
 router.patch('/:id', utils.authUserMiddleware, utils.authRoleMiddleware("cad_subcategorias"), controller.edit);
 // delete a categoria
 router.delete('/:id', utils.authUserMiddleware, utils.authRoleMiddleware("cad_subcategorias"), controller.delete);
+// delete all categoria
+router.delete('/truncate', utils.authUserMiddleware, utils.authRoleMiddleware("cad_subcategoria"), controller.deleteAll);
 
 
 module.exports = router;

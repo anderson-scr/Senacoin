@@ -54,3 +54,7 @@ exports.delete = (req, res, nxt) => {
 			res.status(200).json(doc);
 	});
 }
+
+exports.deleteAll = (req, res, nxt) => {
+    Status.deleteMany({});
+}
