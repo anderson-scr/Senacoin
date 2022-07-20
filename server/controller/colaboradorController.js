@@ -15,8 +15,8 @@ exports.login = (req, res, next) => {
         if (isValid)
         {
             const tokenObject = utils.issueJWT(colab);//rato
-            res.status(200).json({ success: true, email: colab.email, token: tokenObject.token, expiresIn: tokenObject.expires, permissions: colab.permissions });
-            console.log(colab)
+            res.status(200).json({ success: true, email: colab.email, token: tokenObject.token, expiraEm: tokenObject.expires, permissoes: colab.permissoes });
+            // console.log(colab)
         }
         else 
             res.status(401).json({ success: false, msg: "colaborador/senha inválidos!" });
@@ -67,11 +67,11 @@ exports.newList = (req, res, next) => {
 }
 
 exports.listAll = (req, res, next) => {
-
+console.log('\n\n\n\nAOBA\n\n\n\n')
     Colaborador.find({})
     .select("-__v")
-    // .populate({path : 'id_unidade', select: 'nome -_id'})   //.populate('id_unidade id_perfil id_status')
-    // .populate({path : 'id_status', select: '-_id'})
+    .populate({path : 'id_unidade', select: 'nome -_id'})   //.populate('id_unidade id_perfil id_status')
+    .populate({path : 'id_status', select: '-_id'})
     .then((colabs) => {
         
         if (!colabs.length)

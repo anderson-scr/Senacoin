@@ -4,19 +4,19 @@ const utils = require('../libs/utils');
 
 
 // add a new unidade
-router.post('/add', utils.authMiddleware, controller.new);
+router.post('/add', utils.authUserMiddleware, controller.new);
 // add a new unidade list
-router.post('/populate', utils.authMiddleware, controller.newList);
+router.post('/populate', utils.authUserMiddleware, controller.newList);
 // list all unidades
-router.get('/all', utils.authMiddleware, controller.listAll);
+router.get('/all', utils.authUserMiddleware, controller.listAll);
 // list all active unidades
-router.get('/active', utils.authMiddleware, controller.listActive);
+router.get('/active', utils.authUserMiddleware, controller.listActive);
 // list single unidade
-router.get('/:id', utils.authMiddleware, controller.listOne);
+router.get('/:id', utils.authUserMiddleware, controller.listOne);
 // edit a unidade
-router.patch('/:id', utils.authMiddleware, controller.edit);
+router.patch('/:id', utils.authUserMiddleware, controller.edit);
 // delete a unidade
-router.delete('/:id', utils.authMiddleware, controller.delete);
+router.delete('/:id', utils.authUserMiddleware, controller.delete);
 
 
 module.exports = router;

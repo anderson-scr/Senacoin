@@ -4,19 +4,19 @@ const utils = require('../libs/utils');
 
 
 // add a new perfil
-router.post('/new', utils.authMiddleware, controller.new);
+router.post('/new', utils.authUserMiddleware, controller.new);
 // add a new perfil list
-router.post('/populate', utils.authMiddleware, controller.newList);
+router.post('/populate', utils.authUserMiddleware, controller.newList);
 // list all perfis
-router.get('/all', utils.authMiddleware, controller.listAll);
+router.get('/all', utils.authUserMiddleware, controller.listAll);
 // list all active perfis
-router.get('/active', utils.authMiddleware, controller.listActive);
+router.get('/active', utils.authUserMiddleware, controller.listActive);
 // list single perfil
-router.get('/:id', utils.authMiddleware, controller.listOne);
+router.get('/:id', utils.authUserMiddleware, controller.listOne);
 // edit a perfil
-router.patch('/:id', utils.authMiddleware, controller.edit);
+router.patch('/:id', utils.authUserMiddleware, controller.edit);
 // delete a perfil
-router.delete('/:id', utils.authMiddleware, controller.delete);
+router.delete('/:id', utils.authUserMiddleware, controller.delete);
 
 
 module.exports = router;
