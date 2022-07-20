@@ -68,6 +68,27 @@ exports.listAll = (req, res, next) => {
     });
 }
 
+exports.listActive = (req, res, next) => {
+
+
+	Item.find({id_status: "62cec6c463187bb9b498687b"})
+    .select("nome id_area id_categoria id_subcategoria id_unidade")
+	.populate({path : 'id_area', select: 'nome -_id'})   //.populate('id_unidade id_perfil id_status')
+    .populate({path : 'id_categoria', select: 'nome -_id'})
+    .populate({path : 'id_subcategoria', select: 'nome -_id'})
+    .populate({path : 'id_unidade', select: 'nome -_id'})
+    .then((itens) => {
+        
+        if (!itens.length)
+            return res.status(204).json({ success: false, msg: `nenhum ${categoria} encontrado.` });  
+        else
+			res.status(200).json(itens);
+    })
+    .catch((err) => {
+        res.status(500).json(err);
+    });
+}
+
 exports.listAllByCategory = (req, res, next) => {
 
 	categoria = getIdbyName(req.params.categoria);
@@ -91,7 +112,7 @@ exports.listAllByCategory = (req, res, next) => {
     });
 }
 
-exports.listActive = (req, res, next) => {
+exports.listActiveByCategory = (req, res, next) => {
 
 	categoria = getIdbyName(req.params.categoria);
 	if (!categoria)
@@ -158,4 +179,8 @@ exports.delete = (req, res, nxt) => {
     .populate({path : 'id_status', select: '-_id'})
     .then((doc) => (res.status(200).json(doc)))
     .catch((err) => (res.status(500).json(err)));
+}
+
+exports.deleteAll = (req, res, nxt) => {
+    Item.deleteMany({});
 }

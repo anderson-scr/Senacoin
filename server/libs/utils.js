@@ -2,7 +2,9 @@ const crypto = require('crypto');
 const jsonwebtoken = require('jsonwebtoken');
 const fs = require('fs');
 const path = require('path');
+const mongoose = require('mongoose');
 
+const Colaborador = mongoose.model('Colaborador');
 const PRIV_KEY = fs.readFileSync(path.join(__dirname, 'id_rsa_priv.pem'), 'utf8');
 const PUB_KEY = fs.readFileSync(path.join(__dirname, 'id_rsa_pub.pem'), 'utf8');
 
@@ -54,7 +56,7 @@ function genPassword(password) {
 function issueJWT(user) {
 	const _id = user._id;
 
-	const expiresIn = '1d';
+	const expiresIn = '5m'; //DateTime.UtcNow.AddMinutes(10)
 
 	const payload = {
 		sub: _id,
@@ -69,13 +71,10 @@ function issueJWT(user) {
 	}
 }
 
-function authMiddleware(req, res, next) {
+function authUserMiddleware(req, res, next) {
 
 	if(!req.headers.authorization)
-	{
-		res.status(401).json({ success: false, msg: "You are not authorized to visit this route" });
-		return
-	}
+		return res.status(401).json({ success: false, msg: "You are not authenticated to visit this route" });
 
 	const tokenParts = req.headers.authorization.split(' ');
 	if (tokenParts[0] === 'Bearer' && tokenParts[1].match(/\S+\.\S+\.\S+/) !== null) {
@@ -85,16 +84,37 @@ function authMiddleware(req, res, next) {
 			req.jwt = verification;
 			next();
 		} catch(err) {
-			res.status(401).json({ success: false, msg: "You are not authorized to visit this route" });
+			res.status(401).json({ success: false, msg: "You are not authenticated to visit this route" });
 		}
-
-	} else {
-		res.status(401).json({ success: false, msg: "You are not authorized to visit this route" });
-	}
+	} 
+	else
+		res.status(401).json({ success: false, msg: "You are not authenticated to visit this route" });
 }
 
+function authRoleMiddleware(role) {
+	return (req, res, next) => {
+		
+		// console.log(req);
+		if (!("x-user-email" in req.headers))
+			return res.status(403).json({ success: false, msg: "You are not authorized to visit this route" });
+		
+		Colaborador.findOne({ email: req.headers["x-user-email"] })
+		.then((colab) => {
+			if (!colab)
+				return res.status(403).json({ success: false, msg: "You are not authorized to visit this route" });
+			if (!colab.permissoes[role])
+				return res.status(403).json({ success: false, msg: "You are not authorized to visit this route" });
+			
+			next()
+		})
+		.catch((err) => {
+			res.status(500).json(err);
+		});
+	}
+}
 
 module.exports.validPassword = validPassword;
 module.exports.genPassword = genPassword;
 module.exports.issueJWT = issueJWT;
-module.exports.authMiddleware = authMiddleware;
+module.exports.authUserMiddleware = authUserMiddleware;
+module.exports.authRoleMiddleware = authRoleMiddleware;

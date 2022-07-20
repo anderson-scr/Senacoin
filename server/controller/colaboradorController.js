@@ -15,8 +15,7 @@ exports.login = (req, res, next) => {
         if (isValid)
         {
             const tokenObject = utils.issueJWT(colab);
-            res.status(200).json({ success: true, token: tokenObject.token, expiresIn: tokenObject.expires });
-            console.log(colab)
+            res.status(200).json({ success: true, email: colab.email, token: tokenObject.token, expiresIn: tokenObject.expires});
         }
         else 
             res.status(401).json({ success: false, msg: "colaborador/senha inválidos!" });
@@ -67,9 +66,7 @@ exports.newList = (req, res, next) => {
 }
 
 exports.listAll = (req, res, next) => {
-
     Colaborador.find({})
-    .select("nome email cpf id_unidade id_status")
     .populate({path : 'id_unidade', select: 'nome -_id'})   //.populate('id_unidade id_perfil id_status')
     .populate({path : 'id_status', select: '-_id'})
     .then((colabs) => {
@@ -135,5 +132,11 @@ exports.delete = (req, res, nxt) => {
     .select('-_id')
     .populate({path : 'id_status', select: '-_id'})
     .then((doc) => (res.status(200).json(doc)))
+    .catch((err) => (res.status(500).json(err)));
+}
+
+exports.deleteAll = (req, res, nxt) => {
+    Colaborador.deleteMany({})
+    .then((n) => (res.status(200).json(n)))
     .catch((err) => (res.status(500).json(err)));
 }
