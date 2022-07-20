@@ -52,7 +52,6 @@
             "cad_unidades": true,
             "cad_qrcodes": true,
             "cad_status": false,
-            "cad_status": false,
             "ger_usuarios": true,
             "ger_itens": true,
             "ger_promocoes": true,
