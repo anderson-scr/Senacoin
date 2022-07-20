@@ -100,7 +100,7 @@ function authRoleMiddleware(role) {
 		
 		Colaborador.findOne({ email: req.headers["x-user-email"] })
 		.then((colab) => {
-			if (colab)
+			if (!colab)
 				return res.status(403).json({ success: false, msg: "You are not authorized to visit this route" });
 			if (!colab.permissoes[role])
 				return res.status(403).json({ success: false, msg: "You are not authorized to visit this route" });
