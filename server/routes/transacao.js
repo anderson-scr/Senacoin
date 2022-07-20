@@ -4,19 +4,19 @@ const utils = require('../libs/utils');
 
 
 // add a new transacao
-router.post('/add', utils.authMiddleware, controller.new);
+router.post('/add', utils.authUserMiddleware, controller.new);
 // add a new transacao list
-router.post('/populate', utils.authMiddleware, controller.newList);
+router.post('/populate', utils.authUserMiddleware, controller.newList);
 // list all transacaos
-router.get('/all', utils.authMiddleware, controller.listAll);
+router.get('/all', utils.authUserMiddleware, controller.listAll);
 // list all active transacaos
-router.get('/:aluno/all', utils.authMiddleware, controller.listAllByAluno);
+router.get('/:aluno/all', utils.authUserMiddleware, controller.listAllByAluno);
 // list single transacao
-router.get('/:id', utils.authMiddleware, controller.listOne);
+router.get('/:id', utils.authUserMiddleware, controller.listOne);
 // edit a transacao
-router.patch('/:id', utils.authMiddleware, controller.edit); // posso editar uma transacao ou apenas fazer uma nova para corrigir inconsistencias?
+router.patch('/:id', utils.authUserMiddleware, controller.edit);
 // delete a transacao
-router.delete('/:id', utils.authMiddleware, controller.delete);  // posso deletar uma transacao ou apenas fazer uma nova para corrigir inconsistencias?
+router.delete('/:id', utils.authUserMiddleware, controller.delete);
 
 
 module.exports = router;
