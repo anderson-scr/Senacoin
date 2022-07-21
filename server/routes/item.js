@@ -19,10 +19,10 @@ router.get('/:categoria/active/:offset', utils.authUserMiddleware, utils.authRol
 router.get('/:categoria/:id', utils.authUserMiddleware, utils.authRoleMiddleware("ger_itens"), controller.listOne);
 // edit a item
 router.patch('/:categoria/:id', utils.authUserMiddleware, utils.authRoleMiddleware("ger_itens"), controller.edit);
-// delete a item
-router.delete('/:categoria/:id', utils.authUserMiddleware, utils.authRoleMiddleware("cad_itens"), controller.delete);
 // delete all item
 router.delete('/truncate', utils.authUserMiddleware, utils.authRoleMiddleware("cad_itens"), controller.deleteAll);
+// delete a item
+router.delete('/:categoria/:id', utils.authUserMiddleware, utils.authRoleMiddleware("cad_itens"), controller.delete);
 
 
 module.exports = router;

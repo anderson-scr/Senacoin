@@ -15,10 +15,10 @@ router.get('/active', utils.authUserMiddleware, utils.authRoleMiddleware("ger_pr
 router.get('/:id', utils.authUserMiddleware, utils.authRoleMiddleware("ger_promocoes"), controller.listOne);
 // edit a promocao
 router.patch('/:id', utils.authUserMiddleware, utils.authRoleMiddleware("ger_promocoes"), controller.edit);
-// delete a promocao
-router.delete('/:id', utils.authUserMiddleware, utils.authRoleMiddleware("cad_promocoes"), controller.delete);
 // delete all promocao
 router.delete('/truncate', utils.authUserMiddleware, utils.authRoleMiddleware("cad_promocoes"), controller.deleteAll);
+// delete a promocao
+router.delete('/:id', utils.authUserMiddleware, utils.authRoleMiddleware("cad_promocoes"), controller.delete);
 
 
 module.exports = router;
