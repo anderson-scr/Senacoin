@@ -17,10 +17,10 @@ router.get('/active', utils.authUserMiddleware, utils.authRoleMiddleware("ger_us
 router.get('/:id', utils.authUserMiddleware, utils.authRoleMiddleware("ger_usuarios"), controller.listOne);
 // edit a aluno
 router.patch('/:id', utils.authUserMiddleware, utils.authRoleMiddleware("ger_usuarios"), controller.edit);
-// delete a aluno
-router.delete('/:id', utils.authUserMiddleware, utils.authRoleMiddleware("cad_usuarios"), controller.delete);
 // delete all alunos
 router.delete('/truncate', utils.authUserMiddleware, utils.authRoleMiddleware("cad_usuarios"), controller.deleteAll);
+// delete a aluno
+router.delete('/:id', utils.authUserMiddleware, utils.authRoleMiddleware("cad_usuarios"), controller.delete);
 
 
 module.exports = router;

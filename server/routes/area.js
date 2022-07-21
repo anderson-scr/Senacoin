@@ -15,10 +15,10 @@ router.get('/active', utils.authUserMiddleware, utils.authRoleMiddleware("cad_ar
 router.get('/:id', utils.authUserMiddleware, utils.authRoleMiddleware("cad_areas"), controller.listOne);
 // edit a area
 router.patch('/:id', utils.authUserMiddleware, utils.authRoleMiddleware("cad_areas"), controller.edit);
-// delete a area
-router.delete('/:id', utils.authUserMiddleware, utils.authRoleMiddleware("cad_areas"), controller.delete);
 // delete all areas
 router.delete('/truncate', utils.authUserMiddleware, utils.authRoleMiddleware("cad_areas"), controller.deleteAll);
+// delete a area
+router.delete('/:id', utils.authUserMiddleware, utils.authRoleMiddleware("cad_areas"), controller.delete);
 
 
 module.exports = router;
