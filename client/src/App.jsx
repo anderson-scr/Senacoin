@@ -5,10 +5,10 @@ import RequireAuth from 'auth/protectedRoutes/protectedRoutes';
 import { AuthContext } from 'contexts/authContext';
 
 // Components
-import TelaLogin from './pages/login/login';
-import EsqueceuSenha from './pages/login/components/esqueceuSenha/esqueceuSenha';
-import FormLogin from './pages/login/components/formLogin/formLogin';
-import Dashboard from './pages/dashboard/dashboard';
+import TelaLogin from 'pages/login/login';
+import EsqueceuSenha from 'pages/login/components/esqueceuSenha/esqueceuSenha';
+import FormLogin from 'pages/login/components/formLogin/formLogin';
+import Dashboard from 'pages/dashboard/dashboard';
 import CadUsuario from 'pages/cadUsuario/cadUsuario';
 import CadItem from 'pages/cadItem/cadItem';
 import CadPromocao from 'pages/cadPromocao/carPromocao';

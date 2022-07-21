@@ -2,14 +2,15 @@ const mongoose = require('mongoose');
 
 exports.ItemSchema = new mongoose.Schema({
 	nome: {type: String, required: true},
-	descricao: String,
-	pontos: {type: Number, required: true},
-	imagem: String,
-	data_inicio: Date,
-	data_fim: Date,
-	id_area: {type: mongoose.SchemaTypes.ObjectId, ref: "Area"},
-	id_categoria: {type: mongoose.SchemaTypes.ObjectId, ref: "Categoria"},
-	id_subcategoria: {type: mongoose.SchemaTypes.ObjectId, ref: "SubCategoria"},
-	id_status: {type: mongoose.SchemaTypes.ObjectId, ref: "Status"},
-	id_unidade: {type: mongoose.SchemaTypes.ObjectId, ref: "Unidade"}
-});
+	descricao: {type: String, default: null},
+	pontos: {type: Number, min: 0, default: 0},
+	quantidade: {type: Number, min: 0, default: 0},
+	imagem: {type: String, default: null},
+	data_inicio: {type: Date, required: false},
+	data_fim: {type: Date, required: false},
+	id_area: {type: mongoose.Types.ObjectId, ref: "Area", required: true},
+	id_categoria: {type: mongoose.Types.ObjectId, ref: "Categoria", required: true},
+	id_subcategoria: {type: mongoose.Types.ObjectId, ref: "SubCategoria", required: true},
+	id_unidade: [{type: mongoose.Types.ObjectId, ref: "Unidade", required: true}],
+	id_status: {type: mongoose.Types.ObjectId, ref: "Status", required: true}
+}, { versionKey: false });

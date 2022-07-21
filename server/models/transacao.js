@@ -1,14 +1,13 @@
 const mongoose = require('mongoose');
 
 exports.TransacaoSchema = new mongoose.Schema({
-	id_aluno: {type: mongoose.SchemaTypes.ObjectId, ref: "Aluno"},
-	id_senacoin: {type: mongoose.SchemaTypes.ObjectId, ref: "SenaCoin"},
-	id_item: {type: mongoose.SchemaTypes.ObjectId, ref: "Item"},
-	id_promocao: {type: mongoose.SchemaTypes.ObjectId, ref: "Promocao"},
-});
-
-exports.HistoricoTransacaoSchema = new mongoose.Schema({
-	id_transacao: {type: mongoose.SchemaTypes.ObjectId, ref: "Transacao"},
-	data: {type: Date, immutable: true, default: () => Date.now()},
-	tipo: Boolean
-});
+	id_aluno: {type: mongoose.Types.ObjectId, ref: "Aluno", required: true},
+	id_senacoin: {type: mongoose.Types.ObjectId, ref: "SenaCoin", required: true},
+	
+	id_item: {type: mongoose.Types.ObjectId, ref: "Item", default: null}, // quantidade gerada pela compra é igual a quantidade gasta para comprar?
+	id_qrcode: {type: mongoose.Types.ObjectId, ref: "QrCode", default: null},
+	id_promocao: {type: mongoose.Types.ObjectId, ref: "Promocao", default: null},
+	
+	tipo: {type: Boolean, required: true},  // 1 entrada e 0 saida
+	data: {type: Date, immutable: true, default: () => Date.now(Date.now()-3600*1000*4)}, //fuso horario gmt-4
+}, { versionKey: false });

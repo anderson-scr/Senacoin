@@ -1,19 +1,19 @@
-.containerForm {
-  margin: auto;
-}
 .textObrigatorio {
   opacity: 0;
+  color: rgb(135, 10, 10);
 }
-.teste2 {
-  padding-left: 2%;
-  padding-right: 2%;
+.btnCancelar {
+  border-color: var(--senac-azul-dark);
+  color: var(--senac-azul-dark);
 }
-.btnRadio {
-  border: 1px solid red;
+.btnCancelar:hover {
+  background-color: var(--senac-azul-dark);
 }
-.arrumaSapoha {
-  margin-bottom: 35px;
+.btnSalvar {
+  background-color: var(--senac-azul);
+  border-color: var(--senac-azul);
 }
-.arrumaSapoha2 {
-  margin-bottom: 57px;
+.btnSalvar:hover {
+  background-color: var(--senac-amarelo-dark);
+  border-color: var(--senac-amarelo-dark);
 }

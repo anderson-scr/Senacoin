@@ -3,14 +3,24 @@ const controller = require('../controller/colaboradorController');
 const utils = require('../libs/utils');
 
 
-// Validate an existing user and issue a JWT
+// Validate an existing colaborador and issue a JWT
 router.post('/login', controller.login);
-// Register a new user
-router.post('/register', controller.register);
-// list all users
-router.get('/all', utils.authMiddleware, controller.listAll);
-// list single user
-router.get('/:id', utils.authMiddleware, controller.listOne);
+// Register a new colaborador
+router.post('/register', utils.authUserMiddleware, utils.authRoleMiddleware("cad_usuarios"), controller.new);
+// add a new colaborador list
+router.post('/populate', utils.authUserMiddleware, utils.authRoleMiddleware("cad_usuarios"), controller.newList);
+// list all colaboradores
+router.get('/all', utils.authUserMiddleware, utils.authRoleMiddleware("ger_usuarios"), controller.listAll);
+// list all active colaboradores
+router.get('/active', utils.authUserMiddleware, utils.authRoleMiddleware("ger_usuarios"), controller.listActive);
+// list single colaborador
+router.get('/:id', utils.authUserMiddleware, utils.authRoleMiddleware("ger_usuarios"), controller.listOne);
+// edit a colaborador
+router.patch('/:id', utils.authUserMiddleware, utils.authRoleMiddleware("ger_usuarios"), controller.edit);
+// delete all colaborador
+router.delete('/truncate', utils.authUserMiddleware, utils.authRoleMiddleware("cad_usuarios"), controller.deleteAll);
+// delete a colaborador
+router.delete('/:id', utils.authUserMiddleware, utils.authRoleMiddleware("cad_usuarios"), controller.delete);
 
 
 module.exports = router;
