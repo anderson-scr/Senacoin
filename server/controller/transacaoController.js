@@ -98,7 +98,7 @@ exports.listAll = (req, res, next) => {
         if (!transacoes.length)
             return res.status(204).json({ success: false, msg: "nenhuma transação encontrada." });  
         else
-			res.status(200).json(transacoes);
+			res.status(200).json({total: transacoes.length, ...transacoes});
     })
     .catch((err) => {
         res.status(500).json(err);
@@ -116,7 +116,7 @@ exports.listAllByAluno = (req, res, next) => {
         if (!transacoes.length)
             return res.status(204).json({ success: false, msg: "nenhuma transação encontrada para este aluno." });  
         else
-			res.status(200).json(transacoes);
+			res.status(200).json({total: transacoes.length, ...transacoes});
     })
     .catch((err) => {
         res.status(500).json(err);
@@ -170,5 +170,7 @@ exports.delete = (req, res, nxt) => {
 }
 
 exports.deleteAll = (req, res, nxt) => {
-    Transacao.deleteMany({});
+    Transacao.deleteMany({})
+    .then((n) => (res.status(200).json(n)))
+    .catch((err) => (res.status(500).json(err)));
 }

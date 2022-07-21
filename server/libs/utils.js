@@ -1,5 +1,5 @@
 const crypto = require('crypto');
-const jsonwebtoken = require('jsonwebtoken');
+const jwt = require('jsonwebtoken');
 const fs = require('fs');
 const path = require('path');
 const mongoose = require('mongoose');
@@ -54,16 +54,13 @@ function genPassword(password) {
  * @param {*} user - The user object.  We need this to set the JWT `sub` payload property to the MongoDB user ID
  */
 function issueJWT(user) {
-	const _id = user._id;
 
-	const expiresIn = '5m'; //DateTime.UtcNow.AddMinutes(10)
-
+	const expiresIn = '1d';
 	const payload = {
-		sub: _id,
-		iat: Date.now()
+		sub: user.email,
 	};
 
-	const signedToken = jsonwebtoken.sign(payload, PRIV_KEY, { expiresIn: expiresIn, algorithm: 'RS256' });
+	const signedToken = jwt.sign(payload, PRIV_KEY, { expiresIn: expiresIn, algorithm: 'RS256' });
 
 	return {
 		token: "Bearer " + signedToken,
@@ -77,15 +74,14 @@ function authUserMiddleware(req, res, next) {
 		return res.status(401).json({ success: false, msg: "You are not authenticated to visit this route" });
 
 	const tokenParts = req.headers.authorization.split(' ');
-	if (tokenParts[0] === 'Bearer' && tokenParts[1].match(/\S+\.\S+\.\S+/) !== null) {
-
-		try {
-			const verification = jsonwebtoken.verify(tokenParts[1], PUB_KEY, { algorithms: ['RS256'] });
-			req.jwt = verification;
+	if (tokenParts[0] === 'Bearer' && /\S+\.\S+\.\S+/.test(tokenParts[1])) {
+		jwt.verify(tokenParts[1], PUB_KEY, { algorithms: ['RS256'] }, (err, decoded) => {
+			if (err)
+				return res.status(401).json({ success: false, msg: "You are not authenticated to visit this route" });
+			
+			req.jwt = decoded;
 			next();
-		} catch(err) {
-			res.status(401).json({ success: false, msg: "You are not authenticated to visit this route" });
-		}
+		});
 	} 
 	else
 		res.status(401).json({ success: false, msg: "You are not authenticated to visit this route" });
@@ -94,11 +90,8 @@ function authUserMiddleware(req, res, next) {
 function authRoleMiddleware(role) {
 	return (req, res, next) => {
 		
-		// console.log(req);
-		if (!("x-user-email" in req.headers))
-			return res.status(403).json({ success: false, msg: "You are not authorized to visit this route" });
-		
-		Colaborador.findOne({ email: req.headers["x-user-email"] })
+		const token = jwt.decode(req.headers.authorization.split(' ')[1]);
+		Colaborador.findOne({ email: token.sub })
 		.then((colab) => {
 			if (!colab)
 				return res.status(403).json({ success: false, msg: "You are not authorized to visit this route" });

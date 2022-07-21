@@ -41,7 +41,7 @@ exports.listAll = (req, res, next) => {
         if (!promocoes.length)
             return res.status(204).json({ success: false, msg: "nenhuma promoção encontrada." });  
         else
-            res.status(200).json(promocoes);
+            res.status(200).json({total: promocoes.length, ...promocoes});
     })
     .catch((err) => {
         res.status(500).json(err);
@@ -60,7 +60,7 @@ exports.listActive = (req, res, next) => {
         if (!promocoes.length)
             return res.status(204).json({ success: false, msg: "nenhuma promoção encontrada." });  
         else
-            res.status(200).json(promocoes);
+            res.status(200).json({total: promocoes.length, ...promocoes});
     })
     .catch((err) => {
         res.status(500).json(err);
@@ -106,5 +106,7 @@ exports.delete = (req, res, nxt) => {
 }
 
 exports.deleteAll = (req, res, nxt) => {
-    Promocao.deleteMany({});
+    Promocao.deleteMany({})
+    .then((n) => (res.status(200).json(n)))
+    .catch((err) => (res.status(500).json(err)));
 }

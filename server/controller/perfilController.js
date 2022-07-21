@@ -40,7 +40,7 @@ exports.listAll = (req, res, next) => {
         if (!perfis.length)
             return res.status(204).json({ success: false, msg: "nenhum perfil encontrado." });  
         else
-            res.status(200).json(perfis);
+            res.status(200).json({total: perfis.length, ...perfis});
     })
     .catch((err) => {
         res.status(500).json(err);
@@ -56,7 +56,7 @@ exports.listActive = (req, res, next) => {
         if (!perfis.length)
             return res.status(204).json({ success: false, msg: "nenhum perfil encontrado." });  
         else
-            res.status(200).json(perfis);
+            res.status(200).json({total: perfis.length, ...perfis});
     })
     .catch((err) => {
         res.status(500).json(err);
@@ -99,5 +99,7 @@ exports.delete = (req, res, nxt) => {
 }
 
 exports.deleteAll = (req, res, nxt) => {
-    Perfil.deleteMany({});
+    Perfil.deleteMany({})
+    .then((n) => (res.status(200).json(n)))
+    .catch((err) => (res.status(500).json(err)));
 }

@@ -47,7 +47,7 @@ exports.new = (req, res, next) => {
 exports.newList = (req, res, next) => {
 
     req.body.forEach(aluno => {
-        const saltHash = utils.genPassword(req.body.senha);
+        const saltHash = utils.genPassword(aluno.senha);
         delete aluno.id_status;
 
         if (!("id_status" in aluno))
@@ -76,7 +76,7 @@ exports.listAll = (req, res, next) => {
         if (!alunos.length)
             return res.status(204).json({ success: false, msg: "nenhum aluno encontrado." });  
         else
-            res.status(200).json(alunos);
+            res.status(200).json({total: alunos.length, ...alunos});
     })
     .catch((err) => {
         res.status(500).json(err);
@@ -93,7 +93,7 @@ exports.listActive = (req, res, next) => {
         if (!alunos.length)
             return res.status(204).json({ success: false, msg: "nenhum aluno encontrado." });  
         else
-            res.status(200).json(alunos);
+            res.status(200).json({total: alunos.length, ...alunos});
     })
     .catch((err) => {
         res.status(500).json(err);
@@ -138,5 +138,7 @@ exports.delete = (req, res, nxt) => {
 }
 
 exports.deleteAll = (req, res, nxt) => {
-    Aluno.deleteMany({});
+    Aluno.deleteMany({})
+    .then((n) => (res.status(200).json(n)))
+    .catch((err) => (res.status(500).json(err)));
 }

@@ -50,7 +50,7 @@ exports.newList = (req, res, next) => {
 
 exports.listAll = (req, res, next) => {
 
-	Item.find({})
+	Item.find({}).skip(req.params.offset).limit(15)
     .select("nome id_area id_categoria id_unidade pontos id_status")
 	.populate({path : 'id_area', select: 'nome -_id'})   //.populate('id_unidade id_perfil id_status')
     .populate({path : 'id_categoria', select: 'nome -_id'})
@@ -61,7 +61,7 @@ exports.listAll = (req, res, next) => {
         if (!itens.length)
             return res.status(204).json({ success: false, msg: 'nenhum item encontrado' });  
         else
-			res.status(200).json(itens);
+			res.status(200).json({total: itens.length, ...itens});
     })
     .catch((err) => {
         res.status(500).json(err);
@@ -71,7 +71,7 @@ exports.listAll = (req, res, next) => {
 exports.listActive = (req, res, next) => {
 
 
-	Item.find({id_status: "62cec6c463187bb9b498687b"})
+	Item.find({id_status: "62cec6c463187bb9b498687b"}).skip(req.params.offset).limit(15)
     .select("nome id_area id_categoria id_subcategoria id_unidade")
 	.populate({path : 'id_area', select: 'nome -_id'})   //.populate('id_unidade id_perfil id_status')
     .populate({path : 'id_categoria', select: 'nome -_id'})
@@ -82,7 +82,7 @@ exports.listActive = (req, res, next) => {
         if (!itens.length)
             return res.status(204).json({ success: false, msg: `nenhum ${categoria} encontrado.` });  
         else
-			res.status(200).json(itens);
+			res.status(200).json({total: itens.length, ...itens});
     })
     .catch((err) => {
         res.status(500).json(err);
@@ -95,7 +95,7 @@ exports.listAllByCategory = (req, res, next) => {
 	if (!categoria)
 		return res.status(400).json({msg: "categoria de item inexistente."});
 
-	Item.find({id_categoria: categoria})
+	Item.find({id_categoria: categoria}).skip(req.params.offset).limit(15)
     .select("nome id_area id_unidade pontos id_status")
 	.populate({path : 'id_area', select: 'nome -_id'})   //.populate('id_unidade id_perfil id_status')
     .populate({path : 'id_unidade', select: 'nome -_id'})
@@ -105,7 +105,7 @@ exports.listAllByCategory = (req, res, next) => {
         if (!itens.length)
             return res.status(204).json({ success: false, msg: `nenhum ${categoria} encontrado.` });  
         else
-			res.status(200).json(itens);
+			res.status(200).json({total: itens.length, ...itens});
     })
     .catch((err) => {
         res.status(500).json(err);
@@ -127,7 +127,7 @@ exports.listActiveByCategory = (req, res, next) => {
         if (!itens.length)
             return res.status(204).json({ success: false, msg: `nenhum ${categoria} encontrado.` });  
         else
-			res.status(200).json(itens);
+			res.status(200).json({total: itens.length, ...itens});
     })
     .catch((err) => {
         res.status(500).json(err);
@@ -182,5 +182,7 @@ exports.delete = (req, res, nxt) => {
 }
 
 exports.deleteAll = (req, res, nxt) => {
-    Item.deleteMany({});
+    Item.deleteMany({})
+    .then((n) => (res.status(200).json(n)))
+    .catch((err) => (res.status(500).json(err)));
 }
