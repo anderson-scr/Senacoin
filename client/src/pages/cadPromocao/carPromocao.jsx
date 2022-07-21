@@ -33,57 +33,87 @@ const CadPromocao = () => {
     evt.preventDefault()
     ModalService.open(ModalSelecionarItem)
   }
+  function salvarInfo(data) {
+    console.log(data)
+  }
+  function deuRuim(data) {
+    console.log(data)
+  }
 
   return (
-    <form className='container'>
+    <form className='container' onSubmit={handleSubmit(salvarInfo, deuRuim)}>
 
       <div className='row'>
         <div className='mb-3 col-6'>
           <label htmlFor="dropArea" className="form-label">Item(s) vinculado a promoção</label>
           <input type="button" onClick={evt => teste(evt)} className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value="Selecionar item(s)" />
-          <div id="emailHelp" className="form-text">Este campo e obrigatório.</div>
+          <div style={{height: '25px'}}>
+            {errors?.item?.type &&
+              <div className="form-text text-danger">Preencha o campo corretamente.</div>
+            }
+          </div>
         </div>
         <div className="mb-3 col-6">
           <label htmlFor="exampleInputEmail1" className="form-label">Desconto Senacoin</label>
-          <input type="number" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder='200 Senacoins' />
-          <div id="emailHelp" className="form-text">1800 Senacoins (Valor original: 2000 Senacoins)</div>
+          <input type="number" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder='200 Senacoins' {...register("desconto")}/>
+          <div style={{height: '25px'}}>
+            {errors?.desconto?.type &&
+              <div className="form-text text-danger">Preencha o campo corretamente.</div>
+            }
+          </div>
         </div>
       </div>
 
       <div className='row'>
         <div className="mb-3 col-6">
           <label htmlFor="exampleInputPassword1" className="form-label" >Titulo promoção</label>
-          <input type="text" className="form-control" id="exampleInputPassword1" placeholder="100" />
-          <div id="emailHelp" className="form-text">Este campo e obrigatório.</div>
+          <input type="text" className="form-control" id="exampleInputPassword1" placeholder="100" {...register("nome")}/>
+          <div style={{height: '25px'}}>
+            {errors?.nome?.type &&
+              <div className="form-text text-danger">Preencha o campo corretamente.</div>
+            }
+          </div>
         </div>
         <div className="mb-3 col-6">
           <label htmlFor="exampleInputPassword1" className="form-label" >Quantidade</label>
-          <input type="number" className="form-control" id="exampleInputPassword1" placeholder="300" />
-          <div id="emailHelp" className="form-text">Este campo e obrigatório.</div>
+          <input type="number" className="form-control" id="exampleInputPassword1" placeholder="300" {...register("quantidade")} />
+          <div style={{height: '25px'}}>
+            {errors?.quantidade?.type &&
+              <div className="form-text text-danger">Preencha o campo corretamente.</div>
+            }
+          </div>
         </div>
       </div>
 
       <div className='row'>
         <div className="mb-3 col-6">
           <label htmlFor="exampleInputPassword1" className="form-label" >Data inicial</label>
-          <input type="date" className="form-control" id="exampleInputPassword1" />
-          <div id="emailHelp" className="form-text">Este campo e obrigatório.</div>
+          <input type="date" className="form-control" id="exampleInputPassword1" {...register("data_inicio")} />
+          <div style={{height: '25px'}}>
+            {errors?.data_inicio?.type &&
+              <div className="form-text text-danger">Preencha o campo corretamente.</div>
+            }
+          </div>
         </div>
         <div className="mb-3 col-6">
           <label htmlFor="exampleInputPassword1" className="form-label" >Data final</label>
-          <input type="date" className="form-control" id="exampleInputPassword1" />
-          <div id="emailHelp" className="form-text">Este campo e obrigatório.</div>
+          <input type="date" className="form-control" id="exampleInputPassword1" {...register("data_fim")} />
+          <div style={{height: '25px'}}>
+            {errors?.data_fim?.type &&
+              <div className="form-text text-danger">Preencha o campo corretamente.</div>
+            }
+          </div>
         </div>
       </div>
 
       <div className='row'>
         <div className="mb-3 flex-grow-1" >
           <label htmlFor="exampleInputEmail1" className="form-label">Descrição</label>
-          <textarea type="text" className="iptDescricao form-control" id="exampleInputEmail1" aria-describedby="emailHelp" />
+          <textarea type="text" className="iptDescricao form-control" id="exampleInputEmail1" aria-describedby="emailHelp" {...register("descricao")} />
         </div>
         <div className="mb-3 ">
           <label htmlFor="formFile" className="form-label">Imagem da promoção</label> 
-          <input className="form-control" type="file" id="formFile" />
+          <input className="form-control" type="file" id="formFile" {...register("imagem")} />
         </div>
       </div>
 

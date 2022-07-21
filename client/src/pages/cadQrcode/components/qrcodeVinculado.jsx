@@ -1,6 +1,16 @@
 import React from 'react'
+import ModalSelecionarItem from './modal/modalSelecionaItem';
+import ModalService from 'common/modal/services/modalService';
+
 
 const QrcodeVinculado = () => {
+
+  const abrirModal = (evt) => {
+    evt.preventDefault()
+    ModalService.open(ModalSelecionarItem)
+  }
+
+
   return (
     <form className='form container'>
 
@@ -13,7 +23,7 @@ const QrcodeVinculado = () => {
         </div>
         <div className="mb-2">
           <label htmlFor="iptNome" className="form-label">Item vinculado</label>
-          <input type="text" className="form-control" id="iptNome" />
+          <input type="button" value="Selecionar item" onClick={evt => abrirModal(evt)} className="form-control" id="iptNome" />
           <div id="iptNomeNeeded" className="textObrigatorio form-text">Campo obrigatório.</div>
         </div>
 
@@ -23,27 +33,27 @@ const QrcodeVinculado = () => {
           </div>
           <div className='d-flex justify-content-between mb-2'>
             <div className="form-check  ">
-              <input className="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" />
+              <input className="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" defaultChecked/>
               <label className="form-check-label" htmlFor="flexRadioDefault1">
-                Uso único
+                Único
               </label>
             </div>
             <div className="form-check">
-              <input className="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" defaultChecked />
+              <input className="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" />
               <label className="form-check-label" htmlFor="flexRadioDefault2">
-                Uso diário
+                Diário
               </label>
             </div>
             <div className="form-check">
-              <input className="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" defaultChecked />
+              <input className="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" />
               <label className="form-check-label" htmlFor="flexRadioDefault2">
-                Uso semanal
+                Semanal
               </label>
             </div>
             <div className="form-check">
-              <input className="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" defaultChecked />
+              <input className="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" />
               <label className="form-check-label" htmlFor="flexRadioDefault2">
-                Uso ilimitado
+                Mensal
               </label>
             </div>
           </div>
