@@ -1,6 +1,7 @@
 const express = require('express');
 const path = require('path');
 const cors = require('cors');
+const fileUpload = require('express-fileupload');
 require('dotenv').config();
 
 const app = express();
@@ -24,10 +25,10 @@ app.use(cors());
 
 //arq estaticos
 app.use(express.static(path.join(__dirname, 'public')));
-// app.use('/uploads', express.static(__dirname +'public/uploads/'));
+app.use('/uploads', express.static(__dirname +'public/uploads/'));
 
 //upload de arquivos
-//app.use(fileUpload());
+app.use(fileUpload());
 
 //importa todas as rotas
 app.use(require('./routes'));

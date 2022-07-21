@@ -19,12 +19,28 @@ exports.new = (req, res, next) => {
 
     categoria = getIdbyName(req.params.categoria);
 	if (!categoria)
-		return res.status(400).json({msg: "categoria de item inexistente."});
+    return res.status(400).json({msg: "categoria de item inexistente."});
     
     req.body["id_categoria"] = categoria;
     if (!("id_status" in req.body))
-        req.body["id_status"] = "62cec6c463187bb9b498687b";
+    req.body["id_status"] = "62cec6c463187bb9b498687b";
+/* 
+    if(!req.files || Object.keys(req.files).length === 0)
+		console.log("Não subiu nenhum arquivo.");
 
+	//nome e caminho do arquivo
+	const img = req.files.img;
+	const caminho = path.join(__basedir, 'uploads', `${randomUUID()}${path.extname(img.name)}`);
+	console.log(caminho);
+
+	//mv() é usada para colocar o arquivo na pasta do servidor
+	img.mv(caminho, (err) =>{
+		if(err)
+			console.log(err);
+		else
+			console.log("Arquivo salvo com sucesso!");
+	});
+*/
     Item.create(req.body, (err, item) =>  {
         if (err)
             return res.status(500).json({ success: false, ...err });
@@ -182,7 +198,7 @@ exports.delete = (req, res, nxt) => {
 }
 
 exports.deleteAll = (req, res, nxt) => {
-    
+
     Item.deleteMany({})
     .then((n) => (res.status(200).json({success: true, total: n.deletedCount})))
     .catch((err) => (res.status(500).json(err)));
