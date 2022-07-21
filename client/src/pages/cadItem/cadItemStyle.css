@@ -1,0 +1,30 @@
+.navCadItem {
+  height: 8%;
+  font-size: 1.1vw;
+}
+.containerForm {
+  height: 92%;
+}
+
+.containerTabOption {
+  text-decoration: none;
+  color: var(--senac-azul);
+  display: flex;
+  flex-grow: 1;
+  justify-content: center;
+  box-sizing: border-box;
+}
+.navCadItem > .active {
+  color: var(--senac-amarelo);
+  border-bottom: 2px solid var(--senac-amarelo);
+}
+.tabCenter {
+  margin-left: 2%;
+  margin-right: 2%;
+}
+.containerForm a {
+  border: 1px solid green;
+}
+.containerDouble {
+  gap: 1vw;
+}
