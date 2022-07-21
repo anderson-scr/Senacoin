@@ -1,14 +1,12 @@
-import api from '../routes/default';
-import { routes } from "api/routes/routes";
+import { routes } from "api/routes/routes"
+import api from '../routes/default'
 
 export const callUnidadeAPI = {
   ativo: async () => {
-
     try {
-      const call = await api.get(routes.unidade.ativo)
-        return call.data
-  
-  
+      const unidades = await api.get(routes.unidade.ativo)
+      return unidades.data
+
     } catch (error) {
       console.log(error)
     }
