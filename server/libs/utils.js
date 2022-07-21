@@ -1,8 +1,10 @@
 const crypto = require('crypto');
-const jsonwebtoken = require('jsonwebtoken');
+const jwt = require('jsonwebtoken');
 const fs = require('fs');
 const path = require('path');
+const mongoose = require('mongoose');
 
+const Colaborador = mongoose.model('Colaborador');
 const PRIV_KEY = fs.readFileSync(path.join(__dirname, 'id_rsa_priv.pem'), 'utf8');
 const PUB_KEY = fs.readFileSync(path.join(__dirname, 'id_rsa_pub.pem'), 'utf8');
 
@@ -52,16 +54,13 @@ function genPassword(password) {
  * @param {*} user - The user object.  We need this to set the JWT `sub` payload property to the MongoDB user ID
  */
 function issueJWT(user) {
-	const _id = user._id;
 
 	const expiresIn = '1d';
-
 	const payload = {
-		sub: _id,
-		iat: Date.now()
+		sub: user.email,
 	};
 
-	const signedToken = jsonwebtoken.sign(payload, PRIV_KEY, { expiresIn: expiresIn, algorithm: 'RS256' });
+	const signedToken = jwt.sign(payload, PRIV_KEY, { expiresIn: expiresIn, algorithm: 'RS256' });
 
 	return {
 		token: "Bearer " + signedToken,
@@ -69,32 +68,46 @@ function issueJWT(user) {
 	}
 }
 
-function authMiddleware(req, res, next) {
+function authUserMiddleware(req, res, next) {
 
 	if(!req.headers.authorization)
-	{
-		res.status(401).json({ success: false, msg: "You are not authorized to visit this route" });
-		return
-	}
+		return res.status(401).json({ success: false, msg: "You are not authenticated to visit this route" });
 
 	const tokenParts = req.headers.authorization.split(' ');
-	if (tokenParts[0] === 'Bearer' && tokenParts[1].match(/\S+\.\S+\.\S+/) !== null) {
-
-		try {
-			const verification = jsonwebtoken.verify(tokenParts[1], PUB_KEY, { algorithms: ['RS256'] });
-			req.jwt = verification;
+	if (tokenParts[0] === 'Bearer' && /\S+\.\S+\.\S+/.test(tokenParts[1])) {
+		jwt.verify(tokenParts[1], PUB_KEY, { algorithms: ['RS256'] }, (err, decoded) => {
+			if (err)
+				return res.status(401).json({ success: false, msg: "You are not authenticated to visit this route" });
+			
+			req.jwt = decoded;
 			next();
-		} catch(err) {
-			res.status(401).json({ success: false, msg: "You are not authorized to visit this route" });
-		}
-
-	} else {
-		res.status(401).json({ success: false, msg: "You are not authorized to visit this route" });
-	}
+		});
+	} 
+	else
+		res.status(401).json({ success: false, msg: "You are not authenticated to visit this route" });
 }
 
+function authRoleMiddleware(role) {
+	return (req, res, next) => {
+		
+		const token = jwt.decode(req.headers.authorization.split(' ')[1]);
+		Colaborador.findOne({ email: token.sub })
+		.then((colab) => {
+			if (!colab)
+				return res.status(403).json({ success: false, msg: "You are not authorized to visit this route" });
+			if (!colab.permissoes[role])
+				return res.status(403).json({ success: false, msg: "You are not authorized to visit this route" });
+			
+			next()
+		})
+		.catch((err) => {
+			res.status(500).json(err);
+		});
+	}
+}
 
 module.exports.validPassword = validPassword;
 module.exports.genPassword = genPassword;
 module.exports.issueJWT = issueJWT;
-module.exports.authMiddleware = authMiddleware;
+module.exports.authUserMiddleware = authUserMiddleware;
+module.exports.authRoleMiddleware = authRoleMiddleware;

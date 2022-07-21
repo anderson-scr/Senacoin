@@ -98,7 +98,7 @@ exports.listAll = (req, res, next) => {
         if (!transacoes.length)
             return res.status(204).json({ success: false, msg: "nenhuma transação encontrada." });  
         else
-			res.status(200).json(transacoes);
+			res.status(200).json({total: transacoes.length, ...transacoes});
     })
     .catch((err) => {
         res.status(500).json(err);
@@ -116,7 +116,7 @@ exports.listAllByAluno = (req, res, next) => {
         if (!transacoes.length)
             return res.status(204).json({ success: false, msg: "nenhuma transação encontrada para este aluno." });  
         else
-			res.status(200).json(transacoes);
+			res.status(200).json({total: transacoes.length, ...transacoes});
     })
     .catch((err) => {
         res.status(500).json(err);
@@ -142,26 +142,33 @@ exports.listOne = (req, res, next) => {
         res.status(500).json(err);
     });
 }
-/*
 
-* >>> não sabemos se essas funções podem ser usadas <<<
+exports.edit = (req, res, nxt) => {
 
-*	exports.edit = (req, res, nxt) => {
+	Transacao.findOnedAndUpdate({_id: req.params.id}, {$set: req.body}, {new: true})
+	.select('-_id')
+	.populate({path : 'id_aluno', select: '-_id'})
+	.populate({path : 'id_senacoin', select: '-_id'})
+	.populate({path : 'id_item', select: '-_id'}) // provavelmente algum desses precisa popular em profundidade
+	.populate({path : 'id_qrcode', select: '-_id'})
+	.populate({path : 'id_promocao', select: '-_id'})
+	.then((doc) => (res.status(200).json(doc)))
+	.catch((err) => (res.status(500).json(err)));
+}
 
-		Transacao.findOnedAndUpdate({_id: req.params.id, id_categoria: categoria}, {$set: req.body}, {new: true})
-		.select('-_id')
-		.populate({path : 'id_status', select: '-_id'})
-		.then((doc) => (res.status(200).json(doc)))
-		.catch((err) => (res.status(500).json(err)));
-	}
+exports.delete = (req, res, nxt) => {
 
-*	exports.delete = (req, res, nxt) => {
+	Transacao.findOneAndDelete({_id: req.params.id}, {new: true})
+	.select('-_id')
+	.populate({path : 'id_aluno', select: '-_id'})
+	.populate({path : 'id_senacoin', select: '-_id'})
+	.populate({path : 'id_item', select: '-_id'}) // provavelmente algum desses precisa popular em profundidade
+	.populate({path : 'id_qrcode', select: '-_id'})
+	.populate({path : 'id_promocao', select: '-_id'})
+	.then((doc) => (res.status(200).json(doc)))
+	.catch((err) => (res.status(500).json(err)));
+}
 
-		Transacao.findOneAndUpdate({_id: req.params.id, id_categoria: categoria}, {id_status: mongoose.Types.ObjectId("62cec7b263187bb9b498687e")}, {new: true})
-		.select('-_id')
-		.populate({path : 'id_status', select: '-_id'})
-		.then((doc) => (res.status(200).json(doc)))
-		.catch((err) => (res.status(500).json(err)));
-	}
-	
-*/
+exports.deleteAll = (req, res, nxt) => {
+    Transacao.deleteMany({});
+}

@@ -1,0 +1,367 @@
+[
+    {
+        "_id": {
+            "$oid":  "62cecc1405509c21bdeea371"
+        },
+        "nome": "Pedro Filipe",
+        "email": "pedrofilipeob112@gmail.com",
+        "cpf": "697.158.650-62 ",
+        "matricula": "28821482-0",
+        "hash": "04d4c08db9cbfaf07cb496f7511507b1ae15b4b95fb05789407548fa3adbdd731fdee342d893ff3f4b8921671d23a42cb3a15127b97c08a4b186e83bcacc32cd",
+        "salt": "2ec6f07d215fc29c79d6e7ddda459406f29e5f77d9418fba8c28095db70ed3dd",
+        "permissoes":{
+            "cad_usuarios": false,
+            "cad_itens": false,
+            "cad_perfis": false,
+            "cad_areas": false,
+            "cad_subcategorias": false,
+            "cad_promocoes": false,
+            "cad_unidades": false,
+            "cad_qrcodes": false,
+            "cad_status": false,
+            "ger_usuarios": false,
+            "ger_itens": false,
+            "ger_promocoes": false,
+            "ger_qrcodes": false,
+            "relatorios": false
+        },
+        "id_status":  {
+            "$oid":  "62cec6c463187bb9b498687b"
+        },
+        "id_unidade": [
+            {"$oid": "62d06f2c181c3910cc1f8268"}
+        ]
+    },
+    {
+        "_id": {
+            "$oid":  "62cecca805509c21bdeea373"
+        },
+        "nome": "Rato Firulinha",
+        "email": "rato@firulinha.com",
+        "cpf": "367.237.170-07 ",
+        "matricula": "28312491-1",
+        "hash": "425eb018016594d07a005d7a0d5e177f5285a27d758dcee7d07feac11a0c998b9eaae9474f4d5037d96117bd2ed58603434a7a596858889855650394c1312aa5",
+        "salt": "0b8cc54d0e7e40bf59ff953b46157694e7a061eb32882962edc658ff8e571f2f",
+        "permissoes":{
+            "cad_usuarios": true,
+            "cad_itens": true,
+            "cad_perfis": true,
+            "cad_areas": true,
+            "cad_subcategorias": true,
+            "cad_promocoes": true,
+            "cad_unidades": true,
+            "cad_qrcodes": true,
+            "cad_status": false,
+            "ger_usuarios": true,
+            "ger_itens": true,
+            "ger_promocoes": true,
+            "ger_qrcodes": true,
+            "relatorios": true
+        },
+        "id_status":  {
+            "$oid":  "62cec6c463187bb9b498687b"
+        },
+        "id_unidade": [
+            {"$oid": "62d06f2c181c3910cc1f8269"}
+        ]
+    },
+    {
+        "_id": {
+            "$oid":  "62cecd9905509c21bdeea375"
+        },
+        "nome": "Bruno Moura",
+        "email": "tirazoio10@mail.com",
+        "cpf": "600.165.060-81 ",
+        "matricula": "28513999-1",
+        "hash": "84ac856105e3021726313d4354894ab82217f26ff203a069d5179caf45f284a7f3fb37b9e002c1bdfa050e657d55a0fb117c4da4b697813ea8eb7c28dc907110",
+        "salt": "13c1bbdfcf4a94832656cb28fc608b84d1de90c3669406db455f2cbb345885d2",
+        "permissoes":{
+            "cad_usuarios": false,
+            "cad_itens": false,
+            "cad_perfis": false,
+            "cad_areas": false,
+            "cad_subcategorias": false,
+            "cad_promocoes": false,
+            "cad_unidades": false,
+            "cad_qrcodes": false,
+            "cad_status": false,
+            "ger_usuarios": false,
+            "ger_itens": false,
+            "ger_promocoes": false,
+            "ger_qrcodes": false,
+            "relatorios": false
+        },
+        "id_status":  {
+            "$oid":  "62cec6c463187bb9b498687b"
+        },
+        "id_unidade": [
+            {"$oid": "62d06f2c181c3910cc1f8268"}
+        ]
+    },
+    {
+        "_id": {
+            "$oid":  "62cecdce05509c21bdeea377"
+        },
+        "nome": "kku tobias",
+        "email": "kku0@mail.com",
+        "cpf": "997.210.840-69 ",
+        "matricula": "28908172-6",
+        "hash": "17690013b83aa6e31cb9cbf3d12a4ed7c39522b0682918c5d33ce6f5906ee3466a5504fefe11a686c28fd7bbcaab6891fd292c3726d865abe4672f73fd5a17b5",
+        "salt": "e94288e72502a71c2c24ea4a2bd3412bf7db643a5a19014b33586e3be07c0daa",
+        "permissoes":{
+            "cad_usuarios": false,
+            "cad_itens": false,
+            "cad_perfis": false,
+            "cad_areas": false,
+            "cad_subcategorias": false,
+            "cad_promocoes": false,
+            "cad_unidades": false,
+            "cad_qrcodes": false,
+            "cad_status": false,
+            "ger_usuarios": false,
+            "ger_itens": false,
+            "ger_promocoes": false,
+            "ger_qrcodes": false,
+            "relatorios": false
+        },
+        "id_status":  {
+            "$oid":  "62cec6c463187bb9b498687b"
+        },
+        "id_unidade": [
+            {"$oid": "62d06f2c181c3910cc1f826a"}
+        ]
+    },
+    {
+        "_id": {
+            "$oid":  "62cece2f05509c21bdeea379"
+        },
+        "nome": "Gabriel Malta",
+        "email": "chocotonyy@gmail.com",
+        "cpf": "399.139.110-44 ",
+        "matricula": "28738022-0",
+        "hash": "bbc29e1aedbd488d7ba7cc04119332595de6f492a0e73ad6daeca06f87328c4f368081b8f589ce8799a17de470c1ab65ef5bcb43a618461b3b00ef0b768972c7",
+        "salt": "8b5978f2884f2df76ff4abadd5b08e8c04b5cc31fcc4968484d4cbbcb228a38c",
+        "permissoes":{
+            "cad_usuarios": false,
+            "cad_itens": false,
+            "cad_perfis": false,
+            "cad_areas": false,
+            "cad_subcategorias": false,
+            "cad_promocoes": false,
+            "cad_unidades": false,
+            "cad_qrcodes": false,
+            "cad_status": false,
+            "ger_usuarios": false,
+            "ger_itens": false,
+            "ger_promocoes": false,
+            "ger_qrcodes": false,
+            "relatorios": false
+        },
+        "id_status":  {
+            "$oid":  "62cec6c463187bb9b498687b"
+        },
+        "id_unidade": [
+            {"$oid": "62d06f2c181c3910cc1f8269"}
+        ]
+    },
+    {
+        "_id": {
+            "$oid":  "62cecfb605509c21bdeea37b"
+        },
+        "nome": "Diego Franco",
+        "email": "diego@mail.com",
+        "cpf": "271.167.820-28 ",
+        "matricula": "28943315-0",
+        "hash": "39860d71b6ba79797971bf5510c3fe91ee2f2ef842759d1071a33d7f97cddae7afad2784f39b273c32408c672dc64240c97287fd5af1d1a1c99601ae88bb684d",
+        "salt": "6f8d997843fab981478be3b44556ad8cdfa4a919abc7bbadf6aa6f7f7b9ea1e8",
+        "permissoes":{
+
+            
+            "cad_usuarios": true,
+            "cad_itens": true,
+            "cad_perfis": true,
+            "cad_areas": true,
+            "cad_subcategorias": true,
+            "cad_promocoes": true,
+            "cad_unidades": true,
+            "cad_qrcodes": true,
+            "cad_status": false,
+            "ger_usuarios": true,
+            "ger_itens": true,
+            "ger_promocoes": true,
+            "ger_qrcodes": true,
+            "relatorios": true
+        },
+        "id_status":  {
+            "$oid":  "62cec6c463187bb9b498687b"
+        },
+        "id_unidade": [
+            {"$oid": "62d06f2c181c3910cc1f826d"}
+        ]
+    },
+    {
+        "_id": {
+            "$oid":  "62cee70813ab9efd1d6144e7"
+        },
+        "nome": "Gaikko Alves",
+        "email": "gaikko@gmail.com",
+        "cpf": "800.094.400-62 ",
+        "matricula": "28716314-8",
+        "hash": "c8c6afa24f8fe79f0693b8392c834d82eb87a47ac205b2dca79738253a3d5dc3668ae3c8c2317a2475e8e8b3a2ee055f1d4521aaebbe53dc4c8d0a94540e6fff",
+        "salt": "be045f8024367c80c669b421ecc516e48e62bd3380eedd4a94a65ca1a675e99a",
+        "permissoes":{
+            "cad_usuarios": false,
+            "cad_itens": true,
+            "cad_perfis": true,
+            "cad_areas": true,
+            "cad_subcategorias": true,
+            "cad_promocoes": true,
+            "cad_unidades": true,
+            "cad_qrcodes": true,
+            "cad_status": false,
+            "ger_usuarios": true,
+            "ger_itens": true,
+            "ger_promocoes": true,
+            "ger_qrcodes": true,
+            "relatorios": true
+        },
+        "id_status":  {
+            "$oid":  "62cec6c463187bb9b498687b"
+        },
+        "id_unidade": [
+            {"$oid": "62d06f2c181c3910cc1f826e"}
+        ]
+    },
+    {
+        "_id": {
+            "$oid":  "62d16590167912d2c68bc902"
+        },
+        "nome": "Odair Fernandes",
+        "email": "odair@teste.com",
+        "cpf": "640.754.670-23 ",
+        "matricula": "28950554-2",
+        "hash": "22d3a31331bca7fddcd186ceb17d794e8c2b660de974f91062d598345821168afa7936ccdadbcba5254b097e56bf5738e0dcfce03db41dd13f275807e23c1aff",
+        "salt": "c2eb77097cfe59099816d614a2b02cb25f1936ca9f9cb473f4a6af324b2e7304",
+        "permissoes":{
+            "cad_usuarios": false,
+            "cad_itens": true,
+            "cad_perfis": false,
+            "cad_areas": true,
+            "cad_subcategorias": true,
+            "cad_promocoes": true,
+            "cad_unidades": false,
+            "cad_qrcodes": true,
+            "cad_status": false,
+            "ger_usuarios": false,
+            "ger_itens": true,
+            "ger_promocoes": true,
+            "ger_qrcodes": true,
+            "relatorios": true
+        },
+        "id_status":  {
+            "$oid":  "62cec6c463187bb9b498687b"
+        },
+        "id_unidade": [
+            {"$oid": "62d06f2c181c3910cc1f826d"}
+        ]
+    },
+    {
+        "_id": {
+            "$oid":  "62d17921d05522d51409f0ca"
+        },
+        "nome": "Joãozinho Games",
+        "email": "joaozinho@games.com",
+        "cpf": "598.467.490-40 ",
+        "matricula": "28494737-7",
+        "hash": "eeb2c5ae1915d7e1bee16c6b7799df42e11fcaa1857f56e4d13751406b7bfc2056299a577cf567bc85400f1d0b496ea50f52ce45ee0f2f7fa383dc7a8c9a166e",
+        "salt": "3255551927b446e2465853e60fe6c7a1ad9bff312423cfef6153feee41ae6228",
+        "permissoes":{
+            "cad_usuarios": false,
+            "cad_itens": false,
+            "cad_perfis": false,
+            "cad_areas": false,
+            "cad_subcategorias": false,
+            "cad_promocoes": false,
+            "cad_unidades": false,
+            "cad_qrcodes": false,
+            "cad_status": false,
+            "ger_usuarios": false,
+            "ger_itens": false,
+            "ger_promocoes": false,
+            "ger_qrcodes": false,
+            "relatorios": false
+        },
+        "id_status":  {
+            "$oid":  "62cec6c463187bb9b498687b"
+        },
+        "id_unidade": [
+            {"$oid": "62d06f2c181c3910cc1f8269"}
+        ]
+    },
+    {
+        "_id": {
+            "$oid":  "62d17982d05522d51409f0cc"
+        },
+        "nome": "Leandro Rivas",
+        "email": "leandrorivas@teste.com",
+        "cpf": "302.119.830-98 ",
+        "matricula": "28053395-0",
+        "hash": "6b4efb58a85dcc8b61469f73478d56c5f7d7ac23314fd35f1a9ce2f66131604ef8cea45fb286b4d645ae5290c19316ad6ba7ee4062fdf5c9ae39a0bbda62eb79",
+        "salt": "60d6be5044a551b4d976bf94261afeb4198e27087f30a234abe20787e7bbd0ea",
+        "permissoes":{
+            "cad_usuarios": false,
+            "cad_itens": true,
+            "cad_perfis": true,
+            "cad_areas": true,
+            "cad_subcategorias": true,
+            "cad_promocoes": true,
+            "cad_unidades": true,
+            "cad_qrcodes": true,
+            "cad_status": false,
+            "ger_usuarios": true,
+            "ger_itens": true,
+            "ger_promocoes": true,
+            "ger_qrcodes": true,
+            "relatorios": true
+        },
+        "id_status":  {
+            "$oid":  "62cec6c463187bb9b498687b"
+        },
+        "id_unidade": [
+            {"$oid": "62d06f2c181c3910cc1f8270"}
+        ]
+    },
+    {
+        "_id": {
+            "$oid":  "62d55f6b40b8c4d87661c8e2"
+        },
+        "nome": "Anderson Carrion",
+        "email": "anderson.scr@outlook.com",
+        "cpf": "458.748.748-85 ",
+        "matricula": "28464657-1",
+        "hash": "d9069f602b0fedc77102c3cc3898e19fb7fbafa19842a5ded34b1072621a5f5c5115290173482f46d78ebed910bf1621d9e77670d03861faa54a0f92f547b59f",
+        "salt": "d6156e101a4b691620b335eb3370952e9993ec41ff03758bc4680c056910e8e8",
+        "permissoes":{
+            "cad_usuarios": true,
+            "cad_itens": true,
+            "cad_perfis": true,
+            "cad_areas": true,
+            "cad_subcategorias": true,
+            "cad_promocoes": true,
+            "cad_unidades": true,
+            "cad_qrcodes": true,
+            "cad_status": false,
+            "ger_usuarios": true,
+            "ger_itens": true,
+            "ger_promocoes": true,
+            "ger_qrcodes": true,
+            "relatorios": true
+        },
+        "id_status":  {
+            "$oid":  "62cec6c463187bb9b498687b"
+        },
+        "id_unidade": [
+            {"$oid": "62d06f2c181c3910cc1f8268"}
+        ]
+    }
+]
