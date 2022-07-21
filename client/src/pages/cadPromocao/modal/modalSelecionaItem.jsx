@@ -4,7 +4,7 @@ import { callSubcategoriaAPI } from "api/common/callSubcategoria";
 import { callUnidadeAPI } from "api/common/callUnidades";
 import { useForm } from "react-hook-form";
 import { callTodosItemsAPI } from "api/item/apiTodos";
-import { useTable, usePagination, useSortBy } from "react-table";
+import { useTable } from "react-table";
 import { colunasSchema } from "./table/tableSchema";
 import { useNavigate } from "react-router-dom";
 import { verificaSessao } from "auth/login/verificaSessao";
@@ -18,7 +18,7 @@ import ModalFooter from "common/modal/components/modalFooter";
 import './modalSelecionaItemStyle.css'
 
 
-export default function ModalSelecionarItem() {
+export default function ModalSelecionarItem(props) {
   const effectOnce = useRef(true)
   const [areas, setAreas] = useState([])
   const [subcategorias, setSubcategorias] = useState([])
@@ -58,6 +58,16 @@ export default function ModalSelecionarItem() {
     data: dataTabela
   })
 
+  const adicionaCheckbox = (cell) => {
+    if(cell.column.Header === "Check") {
+      return (
+        <input className="form-check-input" type="checkbox" onClick={evt => ver(evt)} defaultValue id="flexCheckDefault" />
+      )
+    } else {
+      return cell.render('Cell')  
+    }
+  }
+
   // Descontruindo algumas props da instancia da tabela.
   const { 
     getTableProps,
@@ -67,8 +77,9 @@ export default function ModalSelecionarItem() {
     rows
   } = tableInstance
 
-  const ver = () => {
-    console.log(dataTabela)
+  const ver = (evt) => {
+    const vamoVe = (evt.target.parentElement).parentElement
+    console.log(vamoVe)
   }
 
 
@@ -146,9 +157,9 @@ export default function ModalSelecionarItem() {
           {rows.map(row => {
             prepareRow(row)
             return (
-              <tr {...row.getRowProps()} >
+              <tr className="rowTabela" {...row.getRowProps()} >
                 {row.cells.map(cell => {
-                  return <td {...cell.getCellProps()}> {cell.render('Cell')} </td>
+                  return <td {...cell.getCellProps()}> {adicionaCheckbox(cell)} </td>
                 })}
               </tr>
             )
@@ -158,7 +169,10 @@ export default function ModalSelecionarItem() {
         </table>
       </ModalBody>
       <ModalFooter>
-        <button className="btn btn-primary btnConfirmaSenhaModal" onClick={ver} >Ok</button>
+        <div className="w-100 d-flex justify-content-around">
+          <button className="btn btn-outline-secondary w-25" onClick={ props.close } >Cancelar</button>
+          <button className="btn btn-primary w-25" onClick={ver} >Salvar</button>
+        </div>
       </ModalFooter>
     </Modal>
   );

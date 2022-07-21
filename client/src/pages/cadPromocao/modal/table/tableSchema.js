@@ -1,6 +1,5 @@
 export const colunasSchema = [
   { Header: "Check", 
-    accessor: "check",
     className: "checkBox"
   },
   { Header: "Nome",
@@ -10,5 +9,10 @@ export const colunasSchema = [
   { Header: "Senacoins",
     accessor: "pontos",
     className: "senacoins"
+  },
+  {
+    Header: "Categoria",
+    accessor: "id_categoria.nome",
+    className: "categoria"
   }
 ]

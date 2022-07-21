@@ -79,7 +79,7 @@ const CadPromocao = () => {
       <div className='row'>
         <div className="mb-3 flex-grow-1" >
           <label htmlFor="exampleInputEmail1" className="form-label">Descrição</label>
-          <input type="text" className="iptDescricao form-control" id="exampleInputEmail1" aria-describedby="emailHelp" />
+          <textarea type="text" className="iptDescricao form-control" id="exampleInputEmail1" aria-describedby="emailHelp" />
         </div>
         <div className="mb-3 ">
           <label htmlFor="formFile" className="form-label">Imagem da promoção</label> 
@@ -89,7 +89,7 @@ const CadPromocao = () => {
 
       <div className='containerBtns row mt-5'>
         <div className='col d-flex'>
-          <button type="submit" onClick={evt => teste(evt)} className="btn btn-outline-secondary w-50">Cancelar</button>
+          <button type="submit" className="btn btn-outline-secondary w-50">Cancelar</button>
         </div>
         <div className='col d-flex justify-content-end'>
           <button type="submit" className="btn btn-primary w-50">Salvar</button>
