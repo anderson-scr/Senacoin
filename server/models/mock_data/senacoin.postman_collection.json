@@ -1,9 +1,9 @@
 {
 	"info": {
-		"_postman_id": "b6b923b5-1527-4173-b92d-d5eda30f9780",
+		"_postman_id": "fba0a3d1-b057-408f-a6c8-324033043dda",
 		"name": "senacoin",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "21978815"
+		"_exporter_id": "21994731"
 	},
 	"item": [
 		{
@@ -41,6 +41,15 @@
 					"request": {
 						"method": "POST",
 						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nome\": \"Maicon Rafael Djéquison Flores\",\r\n    \"email\": \"maicon@mail.com\",\r\n    \"cpf\": \"365.823.770-86 \",\r\n    \"matricula\": \"28541864-5\",\r\n    \"senha\": \"maicon123\",\r\n\r\n    \"apelido\": \"Maicon Djéquison\",\r\n    \"telefone\": \"67 99933 7788\",\r\n    \"data_nasc\": \"1990-04-13\",\r\n\r\n    \"id_unidade\": [\"62d06f2c181c3910cc1f8269\", \"62d06f2c181c3910cc1f826d\"]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
 						"url": {
 							"raw": "{{URL}}/aluno/register",
 							"host": [
@@ -179,6 +188,24 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "All",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/aluno/truncate",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"aluno",
+								"truncate"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
@@ -192,7 +219,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \r\n}",
+							"raw": "",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -337,160 +364,20 @@
 						}
 					},
 					"response": []
-				}
-			]
-		},
-		{
-			"name": "Categoria",
-			"item": [
-				{
-					"name": "Add",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{URL}}/categoria/add",
-							"host": [
-								"{{URL}}"
-							],
-							"path": [
-								"categoria",
-								"add"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Populate",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "[\r\n    {\r\n        \r\n    }\r\n]",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{URL}}/categoria/populate",
-							"host": [
-								"{{URL}}"
-							],
-							"path": [
-								"categoria",
-								"populate"
-							]
-						}
-					},
-					"response": []
 				},
 				{
 					"name": "All",
 					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{URL}}/categoria/all",
-							"host": [
-								"{{URL}}"
-							],
-							"path": [
-								"categoria",
-								"all"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Active",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{URL}}/categoria/active",
-							"host": [
-								"{{URL}}"
-							],
-							"path": [
-								"categoria",
-								"active"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "One",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{URL}}/categoria/id",
-							"host": [
-								"{{URL}}"
-							],
-							"path": [
-								"categoria",
-								"id"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "One",
-					"request": {
-						"method": "PATCH",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{URL}}/categoria/id",
-							"host": [
-								"{{URL}}"
-							],
-							"path": [
-								"categoria",
-								"id"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "One",
-					"request": {
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "{{URL}}/categoria/id",
+							"raw": "{{URL}}/area/truncate",
 							"host": [
 								"{{URL}}"
 							],
 							"path": [
-								"categoria",
-								"id"
+								"area",
+								"truncate"
 							]
 						}
 					},
@@ -508,7 +395,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"email\": \"\",\r\n    \"senha\":\"\"\r\n}",
+							"raw": "{\r\n    \"email\": \"diego@mail.com\",\r\n    \"senha\":\"0264\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -535,7 +422,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \r\n}",
+							"raw": "{\r\n    \"nome\": \"Rato Firulinha\",\r\n    \"email\": \"rato@firulinha.com\",\r\n    \"cpf\": \"367.237.170-07 \",\r\n    \"matricula\": \"28312491-1\",\r\n    \"senha\": \"2818\",\r\n    \"permissoes\":{\r\n        \"cad_usuarios\": true,\r\n        \"cad_itens\": true,\r\n        \"cad_perfis\": true,\r\n        \"cad_areas\": true,\r\n        \"cad_subcategorias\": true,\r\n        \"cad_promocoes\": true,\r\n        \"cad_unidades\": true,\r\n        \"cad_qrcodes\": true,\r\n        \"ger_usuarios\": true,\r\n        \"ger_itens\": true,\r\n        \"ger_promocoes\": true,\r\n        \"ger_qrcodes\": true,\r\n        \"relatorios\": true\r\n    },\r\n    \"id_unidade\": [\r\n        \"62d06f2c181c3910cc1f8269\"\r\n    ]\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -559,7 +446,13 @@
 					"name": "Populate",
 					"request": {
 						"method": "POST",
-						"header": [],
+						"header": [
+							{
+								"key": "x-user-email",
+								"value": "diego@mail.com",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "raw",
 							"raw": "[\r\n    {\r\n        \r\n    }\r\n]",
@@ -588,13 +481,14 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{URL}}/colaborador/all",
+							"raw": "{{URL}}/colaborador/all/0",
 							"host": [
 								"{{URL}}"
 							],
 							"path": [
 								"colaborador",
-								"all"
+								"all",
+								"0"
 							]
 						}
 					},
@@ -606,13 +500,14 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{URL}}/colaborador/active",
+							"raw": "{{URL}}/colaborador/active/0",
 							"host": [
 								"{{URL}}"
 							],
 							"path": [
 								"colaborador",
-								"active"
+								"active",
+								"0"
 							]
 						}
 					},
@@ -622,15 +517,21 @@
 					"name": "One",
 					"request": {
 						"method": "GET",
-						"header": [],
+						"header": [
+							{
+								"key": "x-user-email",
+								"value": "diego@mail.com",
+								"type": "text"
+							}
+						],
 						"url": {
-							"raw": "{{URL}}/colaborador/id",
+							"raw": "{{URL}}/colaborador/62cecd9905509c21bdeea375",
 							"host": [
 								"{{URL}}"
 							],
 							"path": [
 								"colaborador",
-								"id"
+								"62cecd9905509c21bdeea375"
 							]
 						}
 					},
@@ -676,6 +577,30 @@
 							"path": [
 								"colaborador",
 								"id"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "All",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "x-user-email",
+								"value": "diego@mail.com",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{URL}}/colaborador/truncate",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"colaborador",
+								"truncate"
 							]
 						}
 					},
@@ -719,13 +644,57 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{URL}}/item/all",
+							"raw": "{{URL}}/item/all/0",
 							"host": [
 								"{{URL}}"
 							],
 							"path": [
 								"item",
-								"all"
+								"all",
+								"0"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Active",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-user-email",
+								"value": "diego@mail.com",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{URL}}/item/active/0",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"item",
+								"active",
+								"0"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "All",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/item/truncate",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"item",
+								"truncate"
 							]
 						}
 					},
@@ -770,14 +739,15 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{URL}}/item/produto/all",
+							"raw": "{{URL}}/item/produto/all/0",
 							"host": [
 								"{{URL}}"
 							],
 							"path": [
 								"item",
 								"produto",
-								"all"
+								"all",
+								"0"
 							]
 						}
 					},
@@ -789,14 +759,15 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{URL}}/item/produto/active",
+							"raw": "{{URL}}/item/produto/active/0",
 							"host": [
 								"{{URL}}"
 							],
 							"path": [
 								"item",
 								"produto",
-								"active"
+								"active",
+								"0"
 							]
 						}
 					},
@@ -907,14 +878,15 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{URL}}/item/evento/all",
+							"raw": "{{URL}}/item/evento/all/0",
 							"host": [
 								"{{URL}}"
 							],
 							"path": [
 								"item",
 								"evento",
-								"all"
+								"all",
+								"0"
 							]
 						}
 					},
@@ -926,14 +898,15 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{URL}}/item/evento/active",
+							"raw": "{{URL}}/item/evento/active/0",
 							"host": [
 								"{{URL}}"
 							],
 							"path": [
 								"item",
 								"evento",
-								"active"
+								"active",
+								"0"
 							]
 						}
 					},
@@ -1044,14 +1017,15 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{URL}}/item/servico/all",
+							"raw": "{{URL}}/item/servico/all/0",
 							"host": [
 								"{{URL}}"
 							],
 							"path": [
 								"item",
 								"servico",
-								"all"
+								"all",
+								"0"
 							]
 						}
 					},
@@ -1063,14 +1037,15 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{URL}}/item/servico/active",
+							"raw": "{{URL}}/item/servico/active/0",
 							"host": [
 								"{{URL}}"
 							],
 							"path": [
 								"item",
 								"servico",
-								"active"
+								"active",
+								"0"
 							]
 						}
 					},
@@ -1299,6 +1274,24 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "All",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/perfil/truncate",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"perfil",
+								"truncate"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
@@ -1457,6 +1450,24 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "All",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/promocao/truncate",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"promocao",
+								"truncate"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
@@ -1523,13 +1534,14 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{URL}}/qrcode/all",
+							"raw": "{{URL}}/qrcode/all/0",
 							"host": [
 								"{{URL}}"
 							],
 							"path": [
 								"qrcode",
-								"all"
+								"all",
+								"0"
 							]
 						}
 					},
@@ -1541,13 +1553,14 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{URL}}/qrcode/active",
+							"raw": "{{URL}}/qrcode/active/0",
 							"host": [
 								"{{URL}}"
 							],
 							"path": [
 								"qrcode",
-								"active"
+								"active",
+								"0"
 							]
 						}
 					},
@@ -1611,6 +1624,24 @@
 							"path": [
 								"qrcode",
 								"id"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "All",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/qrcode/truncate",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"qrcode",
+								"truncate"
 							]
 						}
 					},
@@ -1751,6 +1782,377 @@
 							"path": [
 								"status",
 								"id"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "All",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/status/truncate",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"status",
+								"truncate"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "SubCategoria",
+			"item": [
+				{
+					"name": "Add",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/subcategoria/add",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"subcategoria",
+								"add"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Populate",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "[\r\n    {\r\n        \r\n    }\r\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/subcategoria/populate",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"subcategoria",
+								"populate"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "All",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/subcategoria/all",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"subcategoria",
+								"all"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Active",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/subcategoria/active",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"subcategoria",
+								"active"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "One",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/subcategoria/id",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"subcategoria",
+								"id"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "One",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/subcategoria/id",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"subcategoria",
+								"id"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "One",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/subcategoria/id",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"subcategoria",
+								"id"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "All",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/subcategoria/truncate",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"subcategoria",
+								"truncate"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Transação",
+			"item": [
+				{
+					"name": "Add",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/transacao/add",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"transacao",
+								"add"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Populate",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "[\r\n    {\r\n        \r\n    }\r\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/transacao/populate",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"transacao",
+								"populate"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "All",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/transacao/all",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"transacao",
+								"all"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Aluno",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/transacao/aluno/id",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"transacao",
+								"aluno",
+								"id"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "One",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/transacao/id",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"transacao",
+								"id"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "One",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/transacao/id",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"transacao",
+								"id"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "One",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/transacao/id",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"transacao",
+								"id"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "All",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/transacao/truncate",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"transacao",
+								"truncate"
 							]
 						}
 					},
@@ -1913,6 +2315,24 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "All",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/unidade/truncate",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"unidade",
+								"truncate"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		}
@@ -1922,7 +2342,7 @@
 		"bearer": [
 			{
 				"key": "token",
-				"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2MmNlY2ZiNjA1NTA5YzIxYmRlZWEzN2IiLCJpYXQiOjE2NTgxNTg1NDE4NDQsImV4cCI6MTY1ODE1ODYyODI0NH0.U9UW2464fSqQsCorUUlKCoJIbl3Sfb5Pyr7o4VZ7wskiypKYlK4kkw6nFiVO-GTumQVkbRwAb0n-MWX16fA4x3fDmDqEH1BKaLlq7VTK0pu91LgwAN09DWU4Y8yvsstuJNCPvnFsxPfzvQwWcDr7Tpx027XP0bEzwiQqweNoWKY2pilg2kkMge-ZAz6Q-TaFnO54cs9qihgzcMR9WBDxn73U81HqvAIbnbg2iMx-fevxWKWEAcq5JHzoG8Spimq5zqtTTkhFSr5Q-rJ14vht0hwhWroeYqwl9_W4quTAwUkcdf2ouW7AejnHpW5oxM7fxlKf72ugmFOwotHtKghSE1jEISHdvK9-0EdV2v_noxwx5PTBpX6rpQE1JZN5h5mr5f5b6K1CUWyvjzFJlQ1jYPbOhhxcBR4Dri5v23SARgH1iKlkytgP7xDpo2vJ0FngtK3EcMxTvJHc0yM03pFK2LuMVT0EyYfVK6rL_YJ039TfmoHxqUlDjz0_bao8DDIg17nO08-QYGyMqoyyv1ctcHdqZrJNupkmu2gcQx6Al_-KkzK23SvDKk4yTIAzvTDLOWs0mmo4REJgWVLik37rGoH8kn7PeA8L9sKEgjrxJNPAaokXEfPbJXj2l6pKLz8vFqy4G0ddYg5OIN8fVvL5Acxv7CIXeTjw0vOWevz_vJQ",
+				"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkaWVnb0BtYWlsLmNvbSIsImlhdCI6MTY1ODM0MDA1MiwiZXhwIjoxNjU4NDI2NDUyfQ.NMJ58tQ-kRsqbKbuSLaJsOrASfo1LT9Uesq0Q3woHqJrkmpCcq4G0_0hjzp-SyO9KAYHF5uzzCQMTxPLzf0liCZnwLg4ra3OzpUxiuNQNgLctKlkkXuSWws-68nkABDdvNK4nzjsQM7Gs5QhmhqiBI86XVl_HYSHyG-2w0ITQtmsNypOZwynzhqnu486AQi323vFdLq-ynh00by_AUqldA4JQqWmQXEZCrEg_bH4XvEflkwHXLKSWyEtnqaAyQnj3g9N8qiSTxHwatPHlspjuTHtcnlKzk3eIw9YpgmphS9YGHVMJYZkwMqeEb04pRrSyuF-ImXx7NjMf78q_N4FY5N6r6s7ODFCb_HjOk4f0ktbf40GBl3pf6zFQUCHXQz1xkMdvmwgfhKNd9a-H5eEnOAILMQtiAm3lPUYUZlOfpoYuAsQ3SPAzxPA3aAemp2zLJEVk3rLqwS9lQR1FgNpF1qkeQVXlJfPvgZ_45TvTiQigFJjz3C9UKtpymsO19ajkG_e6ms5utXSTv1AnoKd9ZjgREc0TTSb2zlxrEeEklW002SF2-zsmpYU822mtjSAiOs0Kasvmj7zKWbNAE5PlZxRwWhkS4FRn8cI-7XkBmo-wJ-9c6Fi4WvVTtSqPXaPIPkdU7EUDL8NtbNC3EM7PISVWKYVWtmJt0fyp9B_tOM",
 				"type": "string"
 			}
 		]
