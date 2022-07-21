@@ -15,10 +15,10 @@ router.get('/active', utils.authUserMiddleware, utils.authRoleMiddleware("cad_su
 router.get('/:id', utils.authUserMiddleware, utils.authRoleMiddleware("cad_subcategorias"), controller.listOne);
 // edit a categoria
 router.patch('/:id', utils.authUserMiddleware, utils.authRoleMiddleware("cad_subcategorias"), controller.edit);
-// delete a categoria
-router.delete('/:id', utils.authUserMiddleware, utils.authRoleMiddleware("cad_subcategorias"), controller.delete);
 // delete all categoria
 router.delete('/truncate', utils.authUserMiddleware, utils.authRoleMiddleware("cad_subcategoria"), controller.deleteAll);
+// delete a categoria
+router.delete('/:id', utils.authUserMiddleware, utils.authRoleMiddleware("cad_subcategorias"), controller.delete);
 
 
 module.exports = router;
