@@ -23,7 +23,8 @@ import CadProduto from 'pages/cadItem/components/cadProdutos/cadProduto';
 import CadServico from 'pages/cadItem/components/cadServico/cadServico';
 import QrcodeLivre from 'pages/cadQrcode/components/qrcodeLivre';
 import QrcodeVinculado from 'pages/cadQrcode/components/qrcodeVinculado';
-
+import teste from 'pages/teste/teste';
+import Teste from 'pages/teste/teste';
 
 function App() {
   const [userAuth, setUserAuth] = useState(localStorage.accessToken? true : false);
@@ -65,6 +66,7 @@ function App() {
               <Route path='/GerenciarItems' element={<GerItem />} />
               <Route path='/GerenciarQrcodes' element={<GerQrcode />} />
               <Route path='/Relatorios' element={<Relatorios />} />
+              <Route path='/Teste' element={<Teste />} />
             </Route>
           </Route>
         </Routes>

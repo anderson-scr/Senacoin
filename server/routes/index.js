@@ -12,7 +12,7 @@ router.use('/api/v1/perfil', require('./perfil'));
 
 router.use('/api/v1/area', require('./area'));
 
-router.use('/api/v1/categoria', require('./subcategoria'));
+router.use('/api/v1/subcategoria', require('./subcategoria'));
 
 router.use('/api/v1/promocao', require('./promocao'));
 
