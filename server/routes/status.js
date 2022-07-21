@@ -13,6 +13,8 @@ router.get('/all', utils.authUserMiddleware, utils.authRoleMiddleware("cad_statu
 router.patch('/:id', utils.authUserMiddleware, utils.authRoleMiddleware("cad_status"), controller.edit);
 // delete a status
 router.delete('/:id', utils.authUserMiddleware, utils.authRoleMiddleware("cad_status"), controller.delete);
+// delete all status
+router.delete('/truncate', utils.authUserMiddleware, utils.authRoleMiddleware("cad_status"), controller.deleteAll);
 
 
 module.exports = router;

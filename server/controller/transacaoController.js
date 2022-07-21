@@ -98,7 +98,7 @@ exports.listAll = (req, res, next) => {
         if (!transacoes.length)
             return res.status(204).json({ success: false, msg: "nenhuma transação encontrada." });  
         else
-			res.status(200).json(transacoes);
+			res.status(200).json({total: transacoes.length, ...transacoes});
     })
     .catch((err) => {
         res.status(500).json(err);
@@ -116,7 +116,7 @@ exports.listAllByAluno = (req, res, next) => {
         if (!transacoes.length)
             return res.status(204).json({ success: false, msg: "nenhuma transação encontrada para este aluno." });  
         else
-			res.status(200).json(transacoes);
+			res.status(200).json({total: transacoes.length, ...transacoes});
     })
     .catch((err) => {
         res.status(500).json(err);
@@ -167,4 +167,8 @@ exports.delete = (req, res, nxt) => {
 	.populate({path : 'id_promocao', select: '-_id'})
 	.then((doc) => (res.status(200).json(doc)))
 	.catch((err) => (res.status(500).json(err)));
+}
+
+exports.deleteAll = (req, res, nxt) => {
+    Transacao.deleteMany({});
 }

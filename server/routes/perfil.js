@@ -17,6 +17,8 @@ router.get('/:id', utils.authUserMiddleware, utils.authRoleMiddleware("cad_perfi
 router.patch('/:id', utils.authUserMiddleware, utils.authRoleMiddleware("cad_perfis"), controller.edit);
 // delete a perfil
 router.delete('/:id', utils.authUserMiddleware, utils.authRoleMiddleware("cad_perfis"), controller.delete);
+// delete all perfil
+router.delete('/truncate', utils.authUserMiddleware, utils.authRoleMiddleware("cad_perfis"), controller.deleteAll);
 
 
 module.exports = router;

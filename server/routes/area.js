@@ -17,6 +17,8 @@ router.get('/:id', utils.authUserMiddleware, utils.authRoleMiddleware("cad_areas
 router.patch('/:id', utils.authUserMiddleware, utils.authRoleMiddleware("cad_areas"), controller.edit);
 // delete a area
 router.delete('/:id', utils.authUserMiddleware, utils.authRoleMiddleware("cad_areas"), controller.delete);
+// delete all areas
+router.delete('/truncate', utils.authUserMiddleware, utils.authRoleMiddleware("cad_areas"), controller.deleteAll);
 
 
 module.exports = router;

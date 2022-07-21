@@ -17,6 +17,8 @@ router.get('/:id', utils.authUserMiddleware, utils.authRoleMiddleware("ger_promo
 router.patch('/:id', utils.authUserMiddleware, utils.authRoleMiddleware("ger_promocoes"), controller.edit);
 // delete a promocao
 router.delete('/:id', utils.authUserMiddleware, utils.authRoleMiddleware("cad_promocoes"), controller.delete);
+// delete all promocao
+router.delete('/truncate', utils.authUserMiddleware, utils.authRoleMiddleware("cad_promocoes"), controller.deleteAll);
 
 
 module.exports = router;

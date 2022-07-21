@@ -30,7 +30,7 @@ exports.listAll = (req, res, next) => {
         if (!status.length)
             return res.status(204).json({ success: false, msg: "nenhum status encontrado." });  
         else
-			res.status(200).json(status);
+			res.status(200).json({total: status.length, ...status});
     })
     .catch((err) => {
         res.status(500).json(err);
@@ -53,4 +53,8 @@ exports.delete = (req, res, nxt) => {
 		else
 			res.status(200).json(doc);
 	});
+}
+
+exports.deleteAll = (req, res, nxt) => {
+    Status.deleteMany({});
 }

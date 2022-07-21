@@ -1,6 +1,8 @@
 [
     {
-        "_id": "62cecc1405509c21bdeea371",
+        "_id": {
+            "$oid":  "62cecc1405509c21bdeea371"
+        },
         "nome": "Pedro Filipe",
         "email": "pedrofilipeob112@gmail.com",
         "cpf": "697.158.650-62 ",
@@ -16,19 +18,24 @@
             "cad_promocoes": false,
             "cad_unidades": false,
             "cad_qrcodes": false,
+            "cad_status": false,
             "ger_usuarios": false,
             "ger_itens": false,
             "ger_promocoes": false,
             "ger_qrcodes": false,
             "relatorios": false
         },
-        "id_status": "62cec6c463187bb9b498687b",
+        "id_status":  {
+            "$oid":  "62cec6c463187bb9b498687b"
+        },
         "id_unidade": [
-            "62d06f2c181c3910cc1f8268"
+            {"$oid": "62d06f2c181c3910cc1f8268"}
         ]
     },
     {
-        "_id": "62cecca805509c21bdeea373",
+        "_id": {
+            "$oid":  "62cecca805509c21bdeea373"
+        },
         "nome": "Rato Firulinha",
         "email": "rato@firulinha.com",
         "cpf": "367.237.170-07 ",
@@ -44,19 +51,24 @@
             "cad_promocoes": true,
             "cad_unidades": true,
             "cad_qrcodes": true,
+            "cad_status": false,
             "ger_usuarios": true,
             "ger_itens": true,
             "ger_promocoes": true,
             "ger_qrcodes": true,
             "relatorios": true
         },
-        "id_status": "62cec6c463187bb9b498687b",
+        "id_status":  {
+            "$oid":  "62cec6c463187bb9b498687b"
+        },
         "id_unidade": [
-            "62d06f2c181c3910cc1f8269"
+            {"$oid": "62d06f2c181c3910cc1f8269"}
         ]
     },
     {
-        "_id": "62cecd9905509c21bdeea375",
+        "_id": {
+            "$oid":  "62cecd9905509c21bdeea375"
+        },
         "nome": "Bruno Moura",
         "email": "tirazoio10@mail.com",
         "cpf": "600.165.060-81 ",
@@ -72,19 +84,24 @@
             "cad_promocoes": false,
             "cad_unidades": false,
             "cad_qrcodes": false,
+            "cad_status": false,
             "ger_usuarios": false,
             "ger_itens": false,
             "ger_promocoes": false,
             "ger_qrcodes": false,
             "relatorios": false
         },
-        "id_status": "62cec6c463187bb9b498687b",
+        "id_status":  {
+            "$oid":  "62cec6c463187bb9b498687b"
+        },
         "id_unidade": [
-            "62d06f2c181c3910cc1f8268"
+            {"$oid": "62d06f2c181c3910cc1f8268"}
         ]
     },
     {
-        "_id": "62cecdce05509c21bdeea377",
+        "_id": {
+            "$oid":  "62cecdce05509c21bdeea377"
+        },
         "nome": "kku tobias",
         "email": "kku0@mail.com",
         "cpf": "997.210.840-69 ",
@@ -100,19 +117,24 @@
             "cad_promocoes": false,
             "cad_unidades": false,
             "cad_qrcodes": false,
+            "cad_status": false,
             "ger_usuarios": false,
             "ger_itens": false,
             "ger_promocoes": false,
             "ger_qrcodes": false,
             "relatorios": false
         },
-        "id_status": "62cec6c463187bb9b498687b",
+        "id_status":  {
+            "$oid":  "62cec6c463187bb9b498687b"
+        },
         "id_unidade": [
-            "62d06f2c181c3910cc1f826a"
+            {"$oid": "62d06f2c181c3910cc1f826a"}
         ]
     },
     {
-        "_id": "62cece2f05509c21bdeea379",
+        "_id": {
+            "$oid":  "62cece2f05509c21bdeea379"
+        },
         "nome": "Gabriel Malta",
         "email": "chocotonyy@gmail.com",
         "cpf": "399.139.110-44 ",
@@ -128,19 +150,24 @@
             "cad_promocoes": false,
             "cad_unidades": false,
             "cad_qrcodes": false,
+            "cad_status": false,
             "ger_usuarios": false,
             "ger_itens": false,
             "ger_promocoes": false,
             "ger_qrcodes": false,
             "relatorios": false
         },
-        "id_status": "62cec6c463187bb9b498687b",
+        "id_status":  {
+            "$oid":  "62cec6c463187bb9b498687b"
+        },
         "id_unidade": [
-            "62d06f2c181c3910cc1f8269"
+            {"$oid": "62d06f2c181c3910cc1f8269"}
         ]
     },
     {
-        "_id": "62cecfb605509c21bdeea37b",
+        "_id": {
+            "$oid":  "62cecfb605509c21bdeea37b"
+        },
         "nome": "Diego Franco",
         "email": "diego@mail.com",
         "cpf": "271.167.820-28 ",
@@ -148,6 +175,8 @@
         "hash": "39860d71b6ba79797971bf5510c3fe91ee2f2ef842759d1071a33d7f97cddae7afad2784f39b273c32408c672dc64240c97287fd5af1d1a1c99601ae88bb684d",
         "salt": "6f8d997843fab981478be3b44556ad8cdfa4a919abc7bbadf6aa6f7f7b9ea1e8",
         "permissoes":{
+
+            
             "cad_usuarios": true,
             "cad_itens": true,
             "cad_perfis": true,
@@ -156,19 +185,24 @@
             "cad_promocoes": true,
             "cad_unidades": true,
             "cad_qrcodes": true,
+            "cad_status": false,
             "ger_usuarios": true,
             "ger_itens": true,
             "ger_promocoes": true,
             "ger_qrcodes": true,
             "relatorios": true
         },
-        "id_status": "62cec6c463187bb9b498687b",
+        "id_status":  {
+            "$oid":  "62cec6c463187bb9b498687b"
+        },
         "id_unidade": [
-            "62d06f2c181c3910cc1f826d"
+            {"$oid": "62d06f2c181c3910cc1f826d"}
         ]
     },
     {
-        "_id": "62cee70813ab9efd1d6144e7",
+        "_id": {
+            "$oid":  "62cee70813ab9efd1d6144e7"
+        },
         "nome": "Gaikko Alves",
         "email": "gaikko@gmail.com",
         "cpf": "800.094.400-62 ",
@@ -184,19 +218,24 @@
             "cad_promocoes": true,
             "cad_unidades": true,
             "cad_qrcodes": true,
+            "cad_status": false,
             "ger_usuarios": true,
             "ger_itens": true,
             "ger_promocoes": true,
             "ger_qrcodes": true,
             "relatorios": true
         },
-        "id_status": "62cec6c463187bb9b498687b",
+        "id_status":  {
+            "$oid":  "62cec6c463187bb9b498687b"
+        },
         "id_unidade": [
-            "62d06f2c181c3910cc1f826e"
+            {"$oid": "62d06f2c181c3910cc1f826e"}
         ]
     },
     {
-        "_id": "62d16590167912d2c68bc902",
+        "_id": {
+            "$oid":  "62d16590167912d2c68bc902"
+        },
         "nome": "Odair Fernandes",
         "email": "odair@teste.com",
         "cpf": "640.754.670-23 ",
@@ -212,19 +251,24 @@
             "cad_promocoes": true,
             "cad_unidades": false,
             "cad_qrcodes": true,
+            "cad_status": false,
             "ger_usuarios": false,
             "ger_itens": true,
             "ger_promocoes": true,
             "ger_qrcodes": true,
             "relatorios": true
         },
-        "id_status": "62cec6c463187bb9b498687b",
+        "id_status":  {
+            "$oid":  "62cec6c463187bb9b498687b"
+        },
         "id_unidade": [
-            "62d06f2c181c3910cc1f826d"
+            {"$oid": "62d06f2c181c3910cc1f826d"}
         ]
     },
     {
-        "_id": "62d17921d05522d51409f0ca",
+        "_id": {
+            "$oid":  "62d17921d05522d51409f0ca"
+        },
         "nome": "Joãozinho Games",
         "email": "joaozinho@games.com",
         "cpf": "598.467.490-40 ",
@@ -240,19 +284,24 @@
             "cad_promocoes": false,
             "cad_unidades": false,
             "cad_qrcodes": false,
+            "cad_status": false,
             "ger_usuarios": false,
             "ger_itens": false,
             "ger_promocoes": false,
             "ger_qrcodes": false,
             "relatorios": false
         },
-        "id_status": "62cec6c463187bb9b498687b",
+        "id_status":  {
+            "$oid":  "62cec6c463187bb9b498687b"
+        },
         "id_unidade": [
-            "62d06f2c181c3910cc1f8269"
+            {"$oid": "62d06f2c181c3910cc1f8269"}
         ]
     },
     {
-        "_id": "62d17982d05522d51409f0cc",
+        "_id": {
+            "$oid":  "62d17982d05522d51409f0cc"
+        },
         "nome": "Leandro Rivas",
         "email": "leandrorivas@teste.com",
         "cpf": "302.119.830-98 ",
@@ -268,19 +317,24 @@
             "cad_promocoes": true,
             "cad_unidades": true,
             "cad_qrcodes": true,
+            "cad_status": false,
             "ger_usuarios": true,
             "ger_itens": true,
             "ger_promocoes": true,
             "ger_qrcodes": true,
             "relatorios": true
         },
-        "id_status": "62cec6c463187bb9b498687b",
+        "id_status":  {
+            "$oid":  "62cec6c463187bb9b498687b"
+        },
         "id_unidade": [
-            "62d06f2c181c3910cc1f8270"
+            {"$oid": "62d06f2c181c3910cc1f8270"}
         ]
     },
     {
-        "_id": "62d55f6b40b8c4d87661c8e2",
+        "_id": {
+            "$oid":  "62d55f6b40b8c4d87661c8e2"
+        },
         "nome": "Anderson Carrion",
         "email": "anderson.scr@outlook.com",
         "cpf": "458.748.748-85 ",
@@ -296,15 +350,18 @@
             "cad_promocoes": true,
             "cad_unidades": true,
             "cad_qrcodes": true,
+            "cad_status": false,
             "ger_usuarios": true,
             "ger_itens": true,
             "ger_promocoes": true,
             "ger_qrcodes": true,
             "relatorios": true
         },
-        "id_status": "62cec6c463187bb9b498687b",
+        "id_status":  {
+            "$oid":  "62cec6c463187bb9b498687b"
+        },
         "id_unidade": [
-            "62d06f2c181c3910cc1f8268"
+            {"$oid": "62d06f2c181c3910cc1f8268"}
         ]
     }
 ]
