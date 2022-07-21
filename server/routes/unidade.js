@@ -15,10 +15,10 @@ router.get('/active', utils.authUserMiddleware, utils.authRoleMiddleware("cad_un
 router.get('/:id', utils.authUserMiddleware, utils.authRoleMiddleware("cad_unidades"), controller.listOne);
 // edit a unidade
 router.patch('/:id', utils.authUserMiddleware, utils.authRoleMiddleware("cad_unidades"), controller.edit);
-// delete a unidade
-router.delete('/:id', utils.authUserMiddleware, utils.authRoleMiddleware("cad_unidades"), controller.delete);
 // delete all unidades
 router.delete('/truncate', utils.authUserMiddleware, utils.authRoleMiddleware("cad_unidades"), controller.deleteAll);
+// delete a unidade
+router.delete('/:id', utils.authUserMiddleware, utils.authRoleMiddleware("cad_unidades"), controller.delete);
 
 
 module.exports = router;
