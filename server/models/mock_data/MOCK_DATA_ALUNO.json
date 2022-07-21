@@ -2,7 +2,7 @@
     {
         "nome": "Glennie Bolitho",
         "email": "gbolitho0@drupal.org",
-        "cpf": "669.931.810-10 ",
+        "cpf": "704.528.910-35 ",
         "matricula": "60.575.179-0",
         "senha": "RrI5XzCVe9",
         "apelido": "Glennie",
@@ -14,7 +14,7 @@
     {
         "nome": "Roz Nye",
         "email": "rnye1@prlog.org",
-        "cpf": "700.953.680-51 ",
+        "cpf": "376.114.160-22 ",
         "matricula": "59.179.640-6",
         "senha": "3FW1A9SNrO",
         "apelido": "Roz",
@@ -26,7 +26,7 @@
     {
         "nome": "Kaspar Loren",
         "email": "kloren2@delicious.com",
-        "cpf": "250.115.200-05 ",
+        "cpf": "907.412.530-11 ",
         "matricula": "23.968.920-8",
         "senha": "aUSOonZ",
         "apelido": "Kaspar",
@@ -38,7 +38,7 @@
     {
         "nome": "Kissiah Paddison",
         "email": "kpaddison3@e-recht24.de",
-        "cpf": "834.031.240-53 ",
+        "cpf": "239.414.840-36 ",
         "matricula": "94.768.459-0",
         "senha": "x5JBQwI51Vh",
         "apelido": "Kissiah",
@@ -47,18 +47,7 @@
         "id_unidade": "62d06f2c181c3910cc1f8270",
         "id_status": "62cec6c463187bb9b498687b"
     },
-    {
-        "nome": "Rainer Millhill",
-        "email": "rmillhill4@columbia.edu",
-        "cpf": "700.953.680-51 ",
-        "matricula": "45.329.784-6",
-        "senha": "ZI7mLx6xzuGq",
-        "apelido": "Rainer",
-        "telefone": "(163) 9300251",
-        "data_nasc": "2020-09-29T17:17:39.000Z",
-        "id_unidade": "62d57c95e439169b73a0fe01",
-        "id_status": "62d0083d632fc3444969d77f"
-    },
+   
     {
         "nome": "Denyse Hainey",
         "email": "dhainey5@plala.or.jp",
@@ -74,7 +63,7 @@
     {
         "nome": "Anthe Smalridge",
         "email": "asmalridge6@msn.com",
-        "cpf": "318.295.630-25 ",
+        "cpf": "757.001.920-20 ",
         "matricula": "73.859.381-8",
         "senha": "4RmWx6s7ix3",
         "apelido": "Anthe",
@@ -86,7 +75,7 @@
     {
         "nome": "Celene Mozzi",
         "email": "cmozzi7@infoseek.co.jp",
-        "cpf": "700.953.680-51 ",
+        "cpf": "076.373.280-07 ",
         "matricula": "14.015.278-4",
         "senha": "m4oNPVnIms",
         "apelido": "Celene",
@@ -98,7 +87,7 @@
     {
         "nome": "Kristel Hare",
         "email": "khare8@ox.ac.uk",
-        "cpf": "700.953.680-51 ",
+        "cpf": "138.591.070-46 ",
         "matricula": "81.323.969-9",
         "senha": "u0KFKf",
         "apelido": "Kristel",
@@ -110,7 +99,7 @@
     {
         "nome": "Marillin Lowsely",
         "email": "mlowsely9@meetup.com",
-        "cpf": "318.295.630-25 ",
+        "cpf": "559.576.030-31 ",
         "matricula": "93.760.669-3",
         "senha": "mf2V07ZTFPSC",
         "apelido": "Marillin",
@@ -122,7 +111,7 @@
     {
         "nome": "Law Kingsbury",
         "email": "lkingsburya@usda.gov",
-        "cpf": "364.883.420-70 ",
+        "cpf": "606.999.860-01 ",
         "matricula": "63.202.680-4",
         "senha": "7zaPhBT9YQ",
         "apelido": "Law",
@@ -134,7 +123,7 @@
     {
         "nome": "Eirena Troyes",
         "email": "etroyesb@slashdot.org",
-        "cpf": "318.295.630-25 ",
+        "cpf": "967.376.440-90 ",
         "matricula": "69.020.441-8",
         "senha": "CG6SmGC",
         "apelido": "Eirena",
@@ -147,7 +136,7 @@
     {
         "nome": "Darla Grumbridge",
         "email": "dgrumbridgec@sun.com",
-        "cpf": "250.115.200-05 ",
+        "cpf": "304.905.110-82 ",
         "matricula": "53.400.833-0",
         "senha": "sP08rOpEc7m",
         "apelido": "Darla",
@@ -183,7 +172,7 @@
     {
         "nome": "Barbaraanne Oxbe",
         "email": "boxbef@plala.or.jp",
-        "cpf": "318.295.630-25 ",
+        "cpf": "507.862.220-93 ",
         "matricula": "94.736.956-2",
         "senha": "pUWoLxw",
         "apelido": "Barbaraanne",
@@ -195,7 +184,7 @@
     {
         "nome": "Kayne Wash",
         "email": "kwashg@xrea.com",
-        "cpf": "250.115.200-05 ",
+        "cpf": "780.652.740-05 ",
         "matricula": "99.440.642-8",
         "senha": "cBfwEbJTq6hJ",
         "apelido": "Kayne",
@@ -219,7 +208,7 @@
     {
         "nome": "Alford Chelley",
         "email": "achelleyi@cam.ac.uk",
-        "cpf": "700.953.680-51 ",
+        "cpf": "959.849.050-51 ",
         "matricula": "88.037.782-8",
         "senha": "8DwesHFfnAz",
         "apelido": "Alford",
@@ -243,7 +232,7 @@
     {
         "nome": "Paige Korneichuk",
         "email": "pkorneichukk@ask.com",
-        "cpf": "454.719.590-00 ",
+        "cpf": "809.362.660-31 ",
         "matricula": "08.497.168-1",
         "senha": "Z6mgYBLg",
         "apelido": "Paige",
@@ -267,7 +256,7 @@
     {
         "nome": "Gwenni Grabert",
         "email": "ggrabertm@cyberchimps.com",
-        "cpf": "700.953.680-51 ",
+        "cpf": "869.141.070-17 ",
         "matricula": "61.384.278-2",
         "senha": "unTXAR",
         "apelido": "Gwenni",
@@ -279,7 +268,7 @@
     {
         "nome": "Rene Bruniges",
         "email": "rbrunigesn@taobao.com",
-        "cpf": "700.953.680-51 ",
+        "cpf": "300.274.170-18 ",
         "matricula": "26.435.762-0",
         "senha": "7UZstiJJLVek",
         "apelido": "Rene",
@@ -303,7 +292,7 @@
     {
         "nome": "Robin Scrivens",
         "email": "rscrivensp@list-manage.com",
-        "cpf": "318.295.630-25 ",
+        "cpf": "630.506.390-75 ",
         "matricula": "36.341.480-0",
         "senha": "tNRUujz",
         "apelido": "Robin",
@@ -315,7 +304,7 @@
     {
         "nome": "Elnore Sommer",
         "email": "esommerq@ed.gov",
-        "cpf": "318.295.630-25 ",
+        "cpf": "353.311.490-22 ",
         "matricula": "52.652.013-2",
         "senha": "wx5CYdbrotlX",
         "apelido": "Elnore",
