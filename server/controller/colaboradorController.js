@@ -27,7 +27,7 @@ exports.login = (req, res, next) => {
 
 // Register a new user
 exports.new = (req, res, next) => {
-    console.log(req.body)
+    
     const saltHash = utils.genPassword(req.body.senha);
     delete req.body.id_status;
     
@@ -66,7 +66,8 @@ exports.newList = (req, res, next) => {
 }
 
 exports.listAll = (req, res, next) => {
-    Colaborador.find({})
+
+    Colaborador.find({}).skip(req.params.offset).limit(15)
     .populate({path : 'id_unidade', select: 'nome -_id'})   //.populate('id_unidade id_perfil id_status')
     .populate({path : 'id_status', select: '-_id'})
     .then((colabs) => {
@@ -74,7 +75,7 @@ exports.listAll = (req, res, next) => {
         if (!colabs.length)
             return res.status(204).json({ success: false, msg: "nenhum colaborador encontrado." });  
         else
-            res.status(200).json(colabs);
+            res.status(200).json({total: colabs.length, ...colabs});
     })
     .catch((err) => {
         res.status(500).json(err);
@@ -83,7 +84,7 @@ exports.listAll = (req, res, next) => {
 
 exports.listActive = (req, res, next) => {
 
-    Colaborador.find({id_status: "62cec6c463187bb9b498687b"})
+    Colaborador.find({id_status: "62cec6c463187bb9b498687b"}).skip(req.params.offset).limit(15)
     .select("nome email cpf matricula id_unidade")
     .populate({path : 'id_unidade', select: 'nome -_id'})   //.populate('id_unidade id_perfil id_status')
     .then((colabs) => {
@@ -91,7 +92,7 @@ exports.listActive = (req, res, next) => {
         if (!colabs.length)
             return res.status(204).json({ success: false, msg: "nenhum colaborador encontrado." });  
         else
-            res.status(200).json(colabs);
+            res.status(200).json({total: colabs.length, ...colabs});
     })
     .catch((err) => {
         res.status(500).json(err);

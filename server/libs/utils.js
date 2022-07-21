@@ -74,7 +74,7 @@ function authUserMiddleware(req, res, next) {
 		return res.status(401).json({ success: false, msg: "You are not authenticated to visit this route" });
 
 	const tokenParts = req.headers.authorization.split(' ');
-	if (tokenParts[0] === 'Bearer' && tokenParts[1].match(/\S+\.\S+\.\S+/) !== null) {
+	if (tokenParts[0] === 'Bearer' && /\S+\.\S+\.\S+/.test(tokenParts[1])) {
 		jwt.verify(tokenParts[1], PUB_KEY, { algorithms: ['RS256'] }, (err, decoded) => {
 			if (err)
 				return res.status(401).json({ success: false, msg: "You are not authenticated to visit this route" });

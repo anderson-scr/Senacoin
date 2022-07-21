@@ -41,7 +41,7 @@ exports.listAll = (req, res, next) => {
         if (!areas.length)
             return res.status(204).json({ success: false, msg: "nenhuma area encontrada." });  
         else
-            res.status(200).json(areas);
+            res.status(200).json({total: areas.length, ...areas});
     })
     .catch((err) => {
         res.status(500).json(err);
@@ -57,7 +57,7 @@ exports.listActive = (req, res, next) => {
         if (!areas.length)
             return res.status(204).json({ success: false, msg: "nenhuma area encontrada." });  
         else
-            res.status(200).json(areas);
+            res.status(200).json({total: areas.length, ...areas});
     })
     .catch((err) => {
         res.status(500).json(err);

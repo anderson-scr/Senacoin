@@ -76,7 +76,7 @@ exports.listAll = (req, res, next) => {
         if (!alunos.length)
             return res.status(204).json({ success: false, msg: "nenhum aluno encontrado." });  
         else
-            res.status(200).json(alunos);
+            res.status(200).json({total: alunos.length, ...alunos});
     })
     .catch((err) => {
         res.status(500).json(err);
@@ -93,7 +93,7 @@ exports.listActive = (req, res, next) => {
         if (!alunos.length)
             return res.status(204).json({ success: false, msg: "nenhum aluno encontrado." });  
         else
-            res.status(200).json(alunos);
+            res.status(200).json({total: alunos.length, ...alunos});
     })
     .catch((err) => {
         res.status(500).json(err);

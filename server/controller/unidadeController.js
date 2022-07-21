@@ -40,7 +40,7 @@ exports.listAll = (req, res, next) => {
         if (!unidades.length)
             return res.status(204).json({ success: false, msg: "nenhuma unidade encontrada." });  
         else
-            res.status(200).json(unidades);
+            res.status(200).json({total: unidades.length, ...unidades});
     })
     .catch((err) => {
         res.status(500).json(err);
@@ -56,7 +56,7 @@ exports.listActive = (req, res, next) => {
         if (!unidades.length)
             return res.status(204).json({ success: false, msg: "nenhuma unidade encontrada." });  
         else
-            res.status(200).json(unidades);
+            res.status(200).json({total: unidades.length, ...unidades});
     })
     .catch((err) => {
         res.status(500).json(err);
