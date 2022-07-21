@@ -73,7 +73,7 @@ function issueJWT(user) {
 function authUserMiddleware(req, res, next) {
 
 	if(!req.headers.authorization)
-		return res.status(401).json({ success: false, msg: "You are not authenticated to visit this route" });
+		return res.status(401).json({ success: false, msg: "Voce não esta autenticado a acessar essa rota" });
 
 	const tokenParts = req.headers.authorization.split(' ');
 	if (tokenParts[0] === 'Bearer' && /\S+\.\S+\.\S+/.test(tokenParts[1])) {
@@ -82,33 +82,35 @@ function authUserMiddleware(req, res, next) {
 			{
 				Colaborador.findOne({ email: decoded.sub })
 				.then((colab) => {
-					if (colab.status === "62cec6c463187bb9b498687b")
+					if (colab.id_status.toString() === "62cec6c463187bb9b498687b")
 					{
 						req.jwt = decoded;
 						next();
 					}
+					else
+						res.status(401).json({ success: false, msg: "Usuário não encontrado" });
 				})
 				.catch((err) => {
-					return res.status(500).json(err);
+					res.status(500).json(err);
 				});
 			}
-			res.status(401).json({ success: false, msg: "You are not authenticated to visit this route" });
+			else
+				res.status(401).json({ success: false, msg: "Voce não esta autenticado a acessar essa rota" });
 		});
-	} 
+	}
 	else
-		res.status(401).json({ success: false, msg: "You are not authenticated to visit this route" });
+		res.status(401).json({ success: false, msg: "Voce não esta autenticado a acessar essa rota" });
 }
 
 function authRoleMiddleware(role) {
 
 	return (req, res, next) => {
-
 		Colaborador.findOne({ email: req.jwt.sub })
 		.then((colab) => {
 			if (!colab)
-				return res.status(403).json({ success: false, msg: "You are not authorized to visit this route" });
+				return res.status(403).json({ success: false, msg: "Voce não esta autorizado a acessar essa rota" });
 			if (!colab.permissoes[role])
-				return res.status(403).json({ success: false, msg: "You are not authorized to visit this route" });
+				return res.status(403).json({ success: false, msg: "Voce não esta autorizado a acessar essa rota" });
 			
 			next()
 		})
