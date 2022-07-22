@@ -69,7 +69,7 @@ const BarraLateral = () => {
             <GenericOption icon={<BsPencilSquare className='icon' size={30} />} dataToolTip="Gerenciar Items" path="/GerenciarItems" isOpen={isOpen} click={changePageTitle} />
             <GenericOption icon={<HiQrcode className='icon' size={30} />} dataToolTip="Gerenciar Qrcodes" path="/GerenciarQrcodes" isOpen={isOpen} click={changePageTitle} />
             <GenericOption icon={<BsClipboardCheck className='icon' size={30} />} dataToolTip="Relatórios" path="/Relatorios" isOpen={isOpen} click={changePageTitle} />
-            <GenericOption icon={<BsClipboardCheck className='icon' size={30} />} dataToolTip="Teste" path="/Teste" isOpen={isOpen} click={changePageTitle} />
+            <GenericOption icon={<BsClipboardCheck className='icon' size={30} />} dataToolTip="Cadastro de Unidades" path="/Teste" isOpen={isOpen} click={changePageTitle} />
 
           </ul>
         </nav>
