@@ -32,7 +32,7 @@ exports.newList = (req, res, next) => {
 
 exports.listAll = (req, res, next) => {
 
-	QrCode.find({}).skip(req.params.offset).limit(15)
+	QrCode.find({}).skip(req.params.offset).limit(60)
     .select("titulo descricao id_unidade id_status")
 	.populate({path : 'id_unidade', select: 'nome cidade uf -_id'})
     .populate({path : 'id_status', select: '-_id'})
@@ -53,7 +53,7 @@ exports.listActive = (req, res, next) => {
 	const today = new Date(new Date()-3600*1000*4); //fuso horario gmt-4 talvez .toISOString() no final
 	console.log(today)
 
-	QrCode.find({$and: [{id_status: "62cec6c463187bb9b498687b"}, {data_inicio: {$gte: today}}, {data_fim: {$lt: today}}]}).skip(req.params.offset).limit(15)
+	QrCode.find({$and: [{id_status: "62cec6c463187bb9b498687b"}, {data_inicio: {$gte: today}}, {data_fim: {$lt: today}}]}).skip(req.params.offset).limit(60)
     .select("-id_status -_id")
 	.populate({path : 'id_item', select: 'nome area id_categoria -_id', populate: {path: 'id_categoria', select: 'nome -_id'}})
 	.populate({path : 'id_unidade', select: 'nome -_id'})

@@ -67,7 +67,7 @@ exports.newList = (req, res, next) => {
 
 exports.listAll = (req, res, next) => {
 
-    Colaborador.find({}).skip(req.params.offset).limit(15)
+    Colaborador.find({}).skip(req.params.offset).limit(60)
     .populate({path : 'id_unidade', select: 'nome -_id'})   //.populate('id_unidade id_perfil id_status')
     .populate({path : 'id_status', select: '-_id'})
     .then((colabs) => {
@@ -84,7 +84,7 @@ exports.listAll = (req, res, next) => {
 
 exports.listActive = (req, res, next) => {
 
-    Colaborador.find({id_status: "62cec6c463187bb9b498687b"}).skip(req.params.offset).limit(15)
+    Colaborador.find({id_status: "62cec6c463187bb9b498687b"}).skip(req.params.offset).limit(60)
     .select("nome email cpf matricula id_unidade")
     .populate({path : 'id_unidade', select: 'nome -_id'})   //.populate('id_unidade id_perfil id_status')
     .then((colabs) => {
