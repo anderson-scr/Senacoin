@@ -4,14 +4,33 @@ const Promocao = mongoose.model('Promocao');
 
 exports.new = (req, res, next) => {
 
+    // >>> só ta aqui por causa do postman <<<
+    req.body = {...JSON.parse(req.body.data)}
+
     if (!("id_status" in req.body))
         req.body["id_status"] = "62cec6c463187bb9b498687b";
+
+    if(!req.files || Object.keys(req.files).length === 0)
+		return res.status(418).json({success: false, msg:"Não subiu nenhuma imagem."});
+
+    // nome e caminho do arquivo
+	const img = req.files.imagem;
+	const caminho = path.join('uploads', `${randomUUID()}${path.extname(img.name)}`);
+	req.body.imagem = caminho;
 
     Promocao.create(req.body, (err, promocao) =>  {
         if (err)
             return res.status(500).json({ success: false, ...err });
 
         res.status(201).json({ success: true, ...promocao["_doc"]});
+    });
+
+    // mv() é usada para colocar o arquivo na pasta do servidor
+    img.mv(path.join(__basedir, caminho), (err) =>{
+        if(err)
+            console.log(err);
+        else
+            console.log("Arquivo salvo com sucesso!");
     });
 }
 
@@ -34,7 +53,7 @@ exports.listAll = (req, res, next) => {
 
 	Promocao.find({})
     .select("titulo descricao desconto id_unidade id_status")
-	.populate({path : 'id_unidade', select: 'nome -_id'})
+	.populate({path : 'id_unidade', select: 'nome cidade uf -_id'})
     .populate({path : 'id_status', select: '-_id'})
     .then((promocoes) => {
         
@@ -72,7 +91,7 @@ exports.listOne = (req, res, next) => {
     Promocao.findOne({ _id: req.params.id})
     .select('-_id')
     .populate({path : 'id_item' , select: 'nome area id_categoria -_id', populate: {path: 'id_categoria', select: 'nome -_id'}})
-	.populate({path : 'id_unidade', select: 'nome -_id'})
+	.populate({path : 'id_unidade', select: 'nome cidade uf -_id'})
     .populate({path : 'id_status', select: '-_id'})
     .then((promocao) => {
         

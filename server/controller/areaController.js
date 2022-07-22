@@ -67,6 +67,7 @@ exports.listActive = (req, res, next) => {
 exports.listOne = (req, res, next) => {
 
 	Area.findOne({ _id: req.params.id })
+    .populate({path : 'id_unidade', select: 'nome cidade uf -_id'})
     .populate({path : 'id_status', select: '-_id'})
     .then((area) => {
         
