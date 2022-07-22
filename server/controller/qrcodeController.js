@@ -34,7 +34,7 @@ exports.listAll = (req, res, next) => {
 
 	QrCode.find({}).skip(req.params.offset).limit(15)
     .select("titulo descricao id_unidade id_status")
-	.populate({path : 'id_unidade', select: 'nome -_id'})
+	.populate({path : 'id_unidade', select: 'nome cidade uf -_id'})
     .populate({path : 'id_status', select: '-_id'})
     .then((qrcodes) => {
         
@@ -74,7 +74,7 @@ exports.listOne = (req, res, next) => {
     QrCode.findOne({ _id: req.params.id})
     .select('-_id')
     .populate({path : 'id_item', select: 'nome area id_categoria -_id', populate: {path: 'id_categoria', select: 'nome -_id'}})
-	.populate({path : 'id_unidade', select: 'nome -_id'})
+	.populate({path : 'id_unidade', select: 'nome cidade uf -_id'})
     .populate({path : 'id_status', select: '-_id'})
     .then((qrcode) => {
         

@@ -544,7 +544,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \r\n}",
+							"raw": "{\r\n    \"permissoes\": {\r\n        \"cad_usuarios\": true,\r\n        \"cad_itens\": true,\r\n        \"cad_perfis\": true,\r\n        \"cad_areas\": true,\r\n        \"cad_subcategorias\": true,\r\n        \"cad_promocoes\": true,\r\n        \"cad_unidades\": true,\r\n        \"cad_qrcodes\": true,\r\n        \"cad_status\": true,\r\n        \"ger_usuarios\": true,\r\n        \"ger_itens\": true,\r\n        \"ger_promocoes\": true,\r\n        \"ger_qrcodes\": true,\r\n        \"relatorios\": true\r\n    }\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -552,13 +552,13 @@
 							}
 						},
 						"url": {
-							"raw": "{{URL}}/colaborador/id",
+							"raw": "{{URL}}/colaborador/62cecfb605509c21bdeea37b",
 							"host": [
 								"{{URL}}"
 							],
 							"path": [
 								"colaborador",
-								"id"
+								"62cecfb605509c21bdeea37b"
 							]
 						}
 					},
@@ -683,6 +683,69 @@
 					"response": []
 				},
 				{
+					"name": "One",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/item/id",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"item",
+								"id"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "One",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/item/id",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"item",
+								"id"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "One",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/item/id",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"item",
+								"id"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "All",
 					"request": {
 						"method": "DELETE",
@@ -711,13 +774,19 @@
 						"method": "POST",
 						"header": [],
 						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "imagem",
+									"type": "file",
+									"src": "/D:/Files/Desktop/Immagine 2022-07-09 232643.png"
+								},
+								{
+									"key": "data",
+									"value": "{ \"nome\": \"dropbox.com\",\"descricao\": \"Other contact with mouse\",\"pontos\": 23,\"quantidade\": 28,\"data_inicio\": \"2020-07-17T18:01:13.000Z\",\"data_fim\": \"2022-03-24T08:41:52.000Z\",\"id_area\": \"62d1ccc2181c3910cca13832\",\"id_categoria\": \"62d017a1181c3910ccfd43d3\",\"id_subcategoria\": \"62d01865181c3910ccfd8d2f\",\"id_unidade\": \"62d06f2c181c3910cc1f826e\"}",
+									"type": "text"
 								}
-							}
+							]
 						},
 						"url": {
 							"raw": "{{URL}}/item/produto/add",
@@ -768,72 +837,6 @@
 								"produto",
 								"active",
 								"0"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "One",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{URL}}/item/produto/id",
-							"host": [
-								"{{URL}}"
-							],
-							"path": [
-								"item",
-								"produto",
-								"id"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "One",
-					"request": {
-						"method": "PATCH",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{URL}}/item/produto/id",
-							"host": [
-								"{{URL}}"
-							],
-							"path": [
-								"item",
-								"produto",
-								"id"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "One",
-					"request": {
-						"method": "DELETE",
-						"header": [],
-						"url": {
-							"raw": "{{URL}}/item/produto/id",
-							"host": [
-								"{{URL}}"
-							],
-							"path": [
-								"item",
-								"produto",
-								"id"
 							]
 						}
 					},
@@ -911,72 +914,6 @@
 						}
 					},
 					"response": []
-				},
-				{
-					"name": "One",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{URL}}/item/evento/id",
-							"host": [
-								"{{URL}}"
-							],
-							"path": [
-								"item",
-								"evento",
-								"id"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "One",
-					"request": {
-						"method": "PATCH",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{URL}}/item/evento/id",
-							"host": [
-								"{{URL}}"
-							],
-							"path": [
-								"item",
-								"evento",
-								"id"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "One",
-					"request": {
-						"method": "DELETE",
-						"header": [],
-						"url": {
-							"raw": "{{URL}}/item/evento/id",
-							"host": [
-								"{{URL}}"
-							],
-							"path": [
-								"item",
-								"evento",
-								"id"
-							]
-						}
-					},
-					"response": []
 				}
 			]
 		},
@@ -1046,72 +983,6 @@
 								"servico",
 								"active",
 								"0"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "One",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{URL}}/item/servico/id",
-							"host": [
-								"{{URL}}"
-							],
-							"path": [
-								"item",
-								"servico",
-								"id"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "One",
-					"request": {
-						"method": "PATCH",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{URL}}/item/servico/id",
-							"host": [
-								"{{URL}}"
-							],
-							"path": [
-								"item",
-								"servico",
-								"id"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "One",
-					"request": {
-						"method": "DELETE",
-						"header": [],
-						"url": {
-							"raw": "{{URL}}/item/servico/id",
-							"host": [
-								"{{URL}}"
-							],
-							"path": [
-								"item",
-								"servico",
-								"id"
 							]
 						}
 					},
@@ -2342,7 +2213,7 @@
 		"bearer": [
 			{
 				"key": "token",
-				"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkaWVnb0BtYWlsLmNvbSIsImlhdCI6MTY1ODM0MDA1MiwiZXhwIjoxNjU4NDI2NDUyfQ.NMJ58tQ-kRsqbKbuSLaJsOrASfo1LT9Uesq0Q3woHqJrkmpCcq4G0_0hjzp-SyO9KAYHF5uzzCQMTxPLzf0liCZnwLg4ra3OzpUxiuNQNgLctKlkkXuSWws-68nkABDdvNK4nzjsQM7Gs5QhmhqiBI86XVl_HYSHyG-2w0ITQtmsNypOZwynzhqnu486AQi323vFdLq-ynh00by_AUqldA4JQqWmQXEZCrEg_bH4XvEflkwHXLKSWyEtnqaAyQnj3g9N8qiSTxHwatPHlspjuTHtcnlKzk3eIw9YpgmphS9YGHVMJYZkwMqeEb04pRrSyuF-ImXx7NjMf78q_N4FY5N6r6s7ODFCb_HjOk4f0ktbf40GBl3pf6zFQUCHXQz1xkMdvmwgfhKNd9a-H5eEnOAILMQtiAm3lPUYUZlOfpoYuAsQ3SPAzxPA3aAemp2zLJEVk3rLqwS9lQR1FgNpF1qkeQVXlJfPvgZ_45TvTiQigFJjz3C9UKtpymsO19ajkG_e6ms5utXSTv1AnoKd9ZjgREc0TTSb2zlxrEeEklW002SF2-zsmpYU822mtjSAiOs0Kasvmj7zKWbNAE5PlZxRwWhkS4FRn8cI-7XkBmo-wJ-9c6Fi4WvVTtSqPXaPIPkdU7EUDL8NtbNC3EM7PISVWKYVWtmJt0fyp9B_tOM",
+				"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkaWVnb0BtYWlsLmNvbSIsImlhdCI6MTY1ODQzNzg1MSwiZXhwIjoxNjU4NTI0MjUxfQ.P1YRJW9q-151jBk6Hl3SeIyma-GDnzM6VNASN4mto9rn34A9ocqiJnA1yj6ZXb2pYOm6fU2KW8Lo4VbPC29YA1SoNHCTceIfDb8h5rIgHdUihRcOgyqTOGDUHkQ_2XDaw1qz_1rre420DhuGaf0IgvgwUNkd3MaRHWMpCEaacd6BN7puHQQbaCdLg7V-HNT1wo2gMDwHA1DkrVQ6uMMbf0WN8je6sXf6-GImy9yE-hyHmXXhTB1jZ_rwF9M7qB00WRLUBGnVu5XI27KLpOWhZjfFwDK7cSYVVGk9cLJn2g29JP6-cQimXS3l8Fqk-YFQm4fGXS7pgzd1Z0Z_7_3WJ7l0G50G--kKQ28yvJD_lNqPtNKZE7_WA6zDUFt_5I4vp6AUMgf1-b4UtsNnQJQteVmOA4sNaAembTUk1rtNXUx3HmUMIBYJF-nBegQvJeMeXd2pEIs1WMVcOtJIZJ-t4Zc0eTOPtTtMff30_UzL9knLQQg4gh6yIBPWKFnjl4Ja6KHeyG2f--jFnr9XlPE9XCTiEnbZ_yXmO_7Zj1UcPrKmm0O784nT2mBACA4IO5GCYzJLZUplAFIsgYL_ePPurxOMVeIq39DhBanMYWVn8xaBcoP-1svND2sUpxWPYQZupUkXaJqCg4vMVN5B4VrGYaMEB0SxDxYnBExQB0_wj5s",
 				"type": "string"
 			}
 		]
