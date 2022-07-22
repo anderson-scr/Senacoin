@@ -1,4 +1,6 @@
+const { randomUUID } = require('crypto');
 const mongoose = require('mongoose');
+const path = require('path');
 const Promocao = mongoose.model('Promocao');
 
 
