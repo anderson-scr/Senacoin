@@ -1,5 +1,7 @@
 import React from 'react'
 import { useState } from "react"
+import clientesPDF from './relatorios/alunos/clientes'
+import { BsFileEarmarkPdf } from "react-icons/bs";
 // import styles from "stylesRelatorios.modules.css";
 
 const Relatorios = () => {
@@ -15,7 +17,7 @@ const Relatorios = () => {
   return (
     <>
       <div className='formRelatorios'>
-        <form onSubmit={test()} className="col-6">
+        <form className="col-6">
           <select className="form-select mb-3" aria-label="Default select example" onChange={(e) => setTipo(e.target.value)}>
             <option selected>Selecione seu relatôrio</option>
             <option value="1">Alunos</option>
@@ -34,7 +36,13 @@ const Relatorios = () => {
             </div>
           </div>
 
-          <input type="submit" className='btn btn-primary col-12 w-50 m-3' value="Gerar relatório" />
+          {/* BsFileEarmarkPdf */}
+
+          <input onClick={clientesPDF} type="button" className='btn btn-danger col-12 w-50 m-3' value="Gerar PDF" />
+          
+          <input onClick={clientesPDF} type="button" className='btn btn-success col-12 w-50 m-3' value="Gerar Excel" />
+          
+          <input type="submit" className='btn btn-primary col-12 w-50 m-3' value="Visualizar Relatório" />
 
         </form>
 
