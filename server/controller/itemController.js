@@ -1,4 +1,6 @@
+const { randomUUID } = require('crypto');
 const mongoose = require('mongoose');
+const path = require('path');
 const Item = mongoose.model('Item');
 
 
@@ -16,36 +18,39 @@ function getIdbyName(item) {
 }
 
 exports.new = (req, res, next) => {
-
+    
+    // >>> só ta aqui por causa do postman <<<
+    req.body = {...JSON.parse(req.body.data)}
+    
     categoria = getIdbyName(req.params.categoria);
 	if (!categoria)
-    return res.status(400).json({msg: "categoria de item inexistente."});
+        return res.status(400).json({msg: "categoria de item inexistente."});
     
     req.body["id_categoria"] = categoria;
     if (!("id_status" in req.body))
     req.body["id_status"] = "62cec6c463187bb9b498687b";
-/* 
+
     if(!req.files || Object.keys(req.files).length === 0)
-		console.log("Não subiu nenhum arquivo.");
+		return res.status(418).json({success: false, msg:"Não subiu nenhuma imagem."});
 
-	//nome e caminho do arquivo
-	const img = req.files.img;
-	const caminho = path.join(__basedir, 'uploads', `${randomUUID()}${path.extname(img.name)}`);
-	console.log(caminho);
+	// nome e caminho do arquivo
+	const img = req.files.imagem;
+	const caminho = path.join('uploads', `${randomUUID()}${path.extname(img.name)}`);
+	req.body.imagem = caminho;
 
-	//mv() é usada para colocar o arquivo na pasta do servidor
-	img.mv(caminho, (err) =>{
-		if(err)
-			console.log(err);
-		else
-			console.log("Arquivo salvo com sucesso!");
-	});
-*/
     Item.create(req.body, (err, item) =>  {
         if (err)
             return res.status(500).json({ success: false, ...err });
-
+        
         res.status(201).json({ success: true, ...item["_doc"]});
+    });
+    
+    // mv() é usada para colocar o arquivo na pasta do servidor
+    img.mv(path.join(__basedir, caminho), (err) =>{
+        if(err)
+            console.log(err);
+        else
+            console.log("Arquivo salvo com sucesso!");
     });
 }
 
@@ -179,6 +184,7 @@ exports.edit = (req, res, nxt) => {
     // delete req.body.id_status; // impede de enviar opcoes que não devem ser alteradas
     Item.findOnedAndUpdate({_id: req.params.id, id_categoria: categoria}, {$set: req.body}, {new: true})
     .select('-_id')
+    .populate({path : 'id_unidade', select: 'nome cidade uf -_id'})
     .populate({path : 'id_status', select: '-_id'})
     .then((doc) => (res.status(200).json(doc)))
     .catch((err) => (res.status(500).json(err)));
@@ -190,8 +196,9 @@ exports.delete = (req, res, nxt) => {
 	if (!categoria)
 		return res.status(400).json({msg: "categoria de item inexistente."});
 
-    Item.findOneAndUpdate({_id: req.params.id, id_categoria: categoria}, {id_status: mongoose.Types.ObjectId("62cec7b263187bb9b498687e")}, {new: true})
+    Item.findOneAndUpdate({_id: req.params.id}, {id_status: mongoose.Types.ObjectId("62cec7b263187bb9b498687e")}, {new: true})
     .select('-_id')
+    .populate({path : 'id_unidade', select: 'nome cidade uf -_id'})
     .populate({path : 'id_status', select: '-_id'})
     .then((doc) => (res.status(200).json(doc)))
     .catch((err) => (res.status(500).json(err)));
