@@ -19,8 +19,9 @@ const Relatorios = () => {
           <select className="form-select mb-3" aria-label="Default select example" onChange={(e) => setTipo(e.target.value)}>
             <option selected>Selecione seu relatôrio</option>
             <option value="1">Alunos</option>
-            <option value="2">Unidades</option>
-            <option value="3">Administradores</option>
+            <option value="2">Unidades*</option>
+            <option value="3">Administradores*</option>
+            <option value="4">Matrículas</option>
           </select>
           <div className='d-flex col-4'>            
             <div>
