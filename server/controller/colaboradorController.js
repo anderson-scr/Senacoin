@@ -27,7 +27,7 @@ exports.login = (req, res, next) => {
 }
 
 // Register a new user
-exports.new = async (req, res, next) => {
+exports.new = (req, res, next) => {
     
     const saltHash = utils.genPassword(req.body.senha);
     delete req.body.senha;
@@ -37,21 +37,8 @@ exports.new = async (req, res, next) => {
     
     // console.log(req.body);
 
-    console.log('comeca auditoria');
-    await AuditoriaColaborador.create({colaborador: req.jwt.sub, ...req.body}, (err, colab) =>  {
-        console.log('entrei aud 1');
-        if (err)
-        {
-            console.log('entrei aud 2');
-            console.log(err);
-            return res.status(500).json({ success: false, ...err });
-        }
-        console.log('entrei aud 3');
-    });
-    
-    
     console.log('comeca colaborador');
-    await Colaborador.create({...req.body, hash: saltHash.hash, salt: saltHash.salt}, (err, colab) =>  {
+    Colaborador.create({...req.body, hash: saltHash.hash, salt: saltHash.salt}, (err, colab) =>  {
         console.log('entrei col 1');
         if (err)
         {
@@ -59,6 +46,19 @@ exports.new = async (req, res, next) => {
             console.log(err);
             return res.status(500).json({ success: false, ...err });
         }
+        
+        console.log('comeca auditoria');
+        timestamp = Date.now(Date.now()-3600*1000*4)
+        AuditoriaColaborador.create({colaborador: req.jwt.sub, criado_em: timestamp, modificado_em: timestamp, ...req.body}, (err, colab) =>  {
+            console.log('entrei aud 1');
+            if (err)
+            {
+                console.log('entrei aud 2');
+                console.log(err);
+                return res.status(500).json({ success: false, ...err });
+            }
+            console.log('entrei aud 3');
+        });
         console.log('entrei col 3');
         res.status(201).json({ success: true, ...colab["_doc"]}); // ["_doc"] é a posicao do obj de retorno onde se encontra o documento criado // ["_doc"] é a posicao do obj de retorno onde se encontra o documento criado
     });
