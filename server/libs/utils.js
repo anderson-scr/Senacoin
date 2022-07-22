@@ -22,6 +22,7 @@ const PUB_KEY = fs.readFileSync(path.join(__dirname, 'id_rsa_pub.pem'), 'utf8');
  * the decrypted hash/salt with the password that the user provided at login
  */
 function validPassword(password, hash, salt) {
+
 	if(!password)
 		return false
 		
@@ -40,6 +41,7 @@ function validPassword(password, hash, salt) {
  * You would then store the hashed password in the database and then re-hash it to verify later (similar to what we do here)
  */
 function genPassword(password) {
+
 	var salt = crypto.randomBytes(32).toString('hex');
 	var genHash = crypto.pbkdf2Sync(password, salt, 10000, 64, 'sha512').toString('hex');
 	
@@ -71,32 +73,44 @@ function issueJWT(user) {
 function authUserMiddleware(req, res, next) {
 
 	if(!req.headers.authorization)
-		return res.status(401).json({ success: false, msg: "You are not authenticated to visit this route" });
+		return res.status(401).json({ success: false, msg: "Voce não esta autenticado a acessar essa rota" });
 
 	const tokenParts = req.headers.authorization.split(' ');
 	if (tokenParts[0] === 'Bearer' && /\S+\.\S+\.\S+/.test(tokenParts[1])) {
 		jwt.verify(tokenParts[1], PUB_KEY, { algorithms: ['RS256'] }, (err, decoded) => {
-			if (err)
-				return res.status(401).json({ success: false, msg: "You are not authenticated to visit this route" });
-			
-			req.jwt = decoded;
-			next();
+			if (!err)
+			{
+				Colaborador.findOne({ email: decoded.sub })
+				.then((colab) => {
+					if (colab.id_status.toString() === "62cec6c463187bb9b498687b")
+					{
+						req.jwt = decoded;
+						next();
+					}
+					else
+						res.status(401).json({ success: false, msg: "Usuário não encontrado" });
+				})
+				.catch((err) => {
+					res.status(500).json(err);
+				});
+			}
+			else
+				res.status(401).json({ success: false, msg: "Voce não esta autenticado a acessar essa rota" });
 		});
-	} 
+	}
 	else
-		res.status(401).json({ success: false, msg: "You are not authenticated to visit this route" });
+		res.status(401).json({ success: false, msg: "Voce não esta autenticado a acessar essa rota" });
 }
 
 function authRoleMiddleware(role) {
+
 	return (req, res, next) => {
-		
-		const token = jwt.decode(req.headers.authorization.split(' ')[1]);
-		Colaborador.findOne({ email: token.sub })
+		Colaborador.findOne({ email: req.jwt.sub })
 		.then((colab) => {
 			if (!colab)
-				return res.status(403).json({ success: false, msg: "You are not authorized to visit this route" });
+				return res.status(403).json({ success: false, msg: "Voce não esta autorizado a acessar essa rota" });
 			if (!colab.permissoes[role])
-				return res.status(403).json({ success: false, msg: "You are not authorized to visit this route" });
+				return res.status(403).json({ success: false, msg: "Voce não esta autorizado a acessar essa rota" });
 			
 			next()
 		})
