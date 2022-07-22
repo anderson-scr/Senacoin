@@ -29,10 +29,12 @@ export const routes = {
     ativo: 'subcategoria/active',
     todos: 'subcategoria/all'
   },
+  
   items: {
-    todos: 'item/active',
-    ativo: 'item/all'
+    todos: 'item/all',
+    ativo: 'item/active'
   },
+
   produto: {
     novo: /* Id antes */ 'item/produto/add',
     ativo: /* Id antes */ 'item/produto/active',

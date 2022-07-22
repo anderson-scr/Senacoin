@@ -58,7 +58,7 @@ const QrcodeLivre = () => {
           </div>
         </div>
 
-        <div className='mb-2'>
+        <div className='mb-4'>
           <div className='mb-2'>
             <p>Tipo de uso</p>
           </div>
@@ -88,7 +88,6 @@ const QrcodeLivre = () => {
               </label>
             </div>
           </div>
-          <div id="emailHelp" className="textObrigatorio form-text">Campo obrigatório.</div>
         </div>
 
         <div className='containerDouble d-flex'>

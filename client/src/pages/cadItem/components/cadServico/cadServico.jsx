@@ -69,9 +69,11 @@ const CadServico = () => {
               })
             }
           </select>
-          {errors?.id_area?.type &&
+          <div style={{height: '25px'}}>
+            {errors?.id_area?.type &&
               <div className="form-text text-danger m-0">Preencha o campo corretamente.</div>
             }
+          </div>
         </div>
         <div className='mb-3 col-4 '>
           <label htmlFor="dropSubcategoria" className="form-label">Subcategoria</label>
@@ -83,9 +85,11 @@ const CadServico = () => {
               })
             }
           </select>
-          {errors?.id_subcategoria?.type &&
+          <div style={{height: '25px'}}>
+            {errors?.id_subcategoria?.type &&
               <div className="form-text text-danger m-0">Preencha o campo corretamente.</div>
             }
+          </div>
         </div>
         <div className='mb-3 col-4 '>
           <label htmlFor="dropSubcategoria" className="form-label">Unidade</label>
@@ -97,9 +101,11 @@ const CadServico = () => {
               })
             }
           </select>
-          {errors?.id_unidade?.type &&
+          <div style={{height: '25px'}}>
+            {errors?.id_unidade?.type &&
               <div className="form-text text-danger m-0">Preencha o campo corretamente.</div>
             }
+          </div>
         </div>
       </div>
 
@@ -107,16 +113,20 @@ const CadServico = () => {
         <div className="mb-3 col-6 ">
           <label htmlFor="exampleInputEmail1" className="form-label">Titulo</label>
           <input type="text" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" {...register("nome")} />
-          {errors?.nome?.type &&
-            <div className="form-text text-danger m-0">Preencha o campo corretamente.</div>
-          }
+          <div style={{height: '25px'}}>
+            {errors?.nome?.type &&
+              <div className="form-text text-danger m-0">Preencha o campo corretamente.</div>
+            }
+          </div>
         </div>
         <div className="mb-3 col-6 ">
           <label htmlFor="exampleInputPassword1" className="form-label" >Quantidade</label>
           <input type="number" className="form-control" id="exampleInputPassword1" {...register("quantidade")} />
-          {errors?.quantidade?.type &&
+          <div style={{height: '25px'}}>
+            {errors?.quantidade?.type &&
               <div className="form-text text-danger m-0">Preencha o campo corretamente.</div>
             }
+          </div>
         </div>
 
       </div>
@@ -125,23 +135,29 @@ const CadServico = () => {
         <div className="mb-3 col-4 ">
           <label htmlFor="exampleInputPassword1" className="form-label" >Senacoins</label>
           <input type="number" className="form-control" id="exampleInputPassword1" {...register("pontos")} />
-          {errors?.pontos?.type &&
+          <div style={{height: '25px'}}>
+            {errors?.pontos?.type &&
               <div className="form-text text-danger m-0">Preencha o campo corretamente.</div>
             }
+          </div>
         </div>
         <div className="mb-3 col-4 ">
           <label htmlFor="exampleInputPassword1" className="form-label" >Data inicial</label>
           <input type="date" className="form-control" id="exampleInputPassword1" {...register("data_inicio")} />
-          {errors?.data_inicio?.type &&
+          <div style={{height: '25px'}}>
+            {errors?.data_inicio?.type &&
               <div className="form-text text-danger m-0">Preencha o campo corretamente.</div>
             }
+          </div>
         </div>
         <div className="mb-3 col-4 ">
           <label htmlFor="exampleInputPassword1" className="form-label" >Data final</label>
           <input type="date" className="form-control" id="exampleInputPassword1" {...register("data_fim")} />
-          {errors?.data_fim?.type &&
+          <div style={{height: '25px'}}>
+            {errors?.data_fim?.type &&
               <div className="form-text text-danger m-0">Preencha o campo corretamente.</div>
             }
+          </div>
         </div>
       </div>
 

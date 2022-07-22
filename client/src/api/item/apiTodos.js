@@ -3,9 +3,18 @@ import { routes } from "api/routes/routes";
 
 export const callTodosItemsAPI = {
   ativos: async () => {
-
     try {
       const todosItems = await api.get(routes.items.ativo)
+        return todosItems.data
+
+    } catch (error) {
+      console.log(error)
+    }
+  },
+  todos: async () => {
+    try {
+      const todosItems = await api.get(routes.items.todos)
+        console.log(todosItems.data)
         return todosItems.data
 
     } catch (error) {

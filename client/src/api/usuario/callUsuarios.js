@@ -11,5 +11,14 @@ export const callUsuarioAPI = {
     } catch (error) {
       console.log(error)
     }
+  },
+  todos: async () => {
+    try {
+      const todosColaboradores = await api.get(routes.colaborador.todos)
+        return todosColaboradores.data
+
+    } catch (error) {
+      console.log(error)
+    }
   }
 }

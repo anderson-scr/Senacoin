@@ -37,7 +37,7 @@ export default function ModalSelecionarItem(props) {
         navigate("/Login", {replace: true})
       }
 
-      // Fill dropDows unidades
+      // Preenche os state das informacoes do dropdown
       (async () => {
         setUnidades(await callUnidadeAPI.ativo())
         setAreas(await callAreaAPI.ativo())
@@ -154,17 +154,17 @@ export default function ModalSelecionarItem(props) {
             ))}
           </thead>
           <tbody className="table-group-divider">
-          {rows.map(row => {
-            prepareRow(row)
-            return (
-              <tr className="rowTabela" {...row.getRowProps()} >
-                {row.cells.map(cell => {
-                  return <td {...cell.getCellProps()}> {adicionaCheckbox(cell)} </td>
-                })}
-              </tr>
-            )
-          })
-          }
+            {rows.map(row => {
+              prepareRow(row)
+              return (
+                <tr className="rowTabela" {...row.getRowProps()} >
+                  {row.cells.map(cell => {
+                    return <td {...cell.getCellProps()}> {adicionaCheckbox(cell)} </td>
+                  })}
+                </tr>
+              )
+            })
+            }
           </tbody>
         </table>
       </ModalBody>
