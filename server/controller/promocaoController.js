@@ -24,15 +24,14 @@ exports.new = (req, res, next) => {
         if (err)
             return res.status(500).json({ success: false, ...err });
 
+        // mv() é usada para colocar o arquivo na pasta do servidor
+        img.mv(path.join(__basedir, caminho), (err) =>{
+            if(err)
+                console.log(err);
+            else
+                console.log("Arquivo salvo com sucesso!");
+        });
         res.status(201).json({ success: true, ...promocao["_doc"]});
-    });
-
-    // mv() é usada para colocar o arquivo na pasta do servidor
-    img.mv(path.join(__basedir, caminho), (err) =>{
-        if(err)
-            console.log(err);
-        else
-            console.log("Arquivo salvo com sucesso!");
     });
 }
 

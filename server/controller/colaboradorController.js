@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const Colaborador = mongoose.model('Colaborador');
+const AuditoriaColaborador = mongoose.model('AuditoriaColaborador');
 const utils = require('../libs/utils');
 
 // logs the user
@@ -26,20 +27,42 @@ exports.login = (req, res, next) => {
 }
 
 // Register a new user
-exports.new = (req, res, next) => {
+exports.new = async (req, res, next) => {
     
     const saltHash = utils.genPassword(req.body.senha);
-    delete req.body.id_status;
+    delete req.body.senha;
     
     if (!("id_status" in req.body))
         req.body["id_status"] = "62cec6c463187bb9b498687b";
+    
+    // console.log(req.body);
 
-    Colaborador.create({...req.body, hash: saltHash.hash, salt: saltHash.salt, id_status: "62cec6c463187bb9b498687b"}, (err, colab) =>  {
+    console.log('comeca auditoria');
+    await AuditoriaColaborador.create({colaborador: req.jwt.sub, ...req.body}, (err, colab) =>  {
+        console.log('entrei aud 1');
         if (err)
+        {
+            console.log('entrei aud 2');
+            console.log(err);
             return res.status(500).json({ success: false, ...err });
-        
-        res.status(201).json({ success: true, ...colab["_doc"]}); // ["_doc"] é a posicao do obj de retorno onde se encontra o documento criado
+        }
+        console.log('entrei aud 3');
     });
+    
+    
+    console.log('comeca colaborador');
+    await Colaborador.create({...req.body, hash: saltHash.hash, salt: saltHash.salt}, (err, colab) =>  {
+        console.log('entrei col 1');
+        if (err)
+        {
+            console.log('entrei col 2');
+            console.log(err);
+            return res.status(500).json({ success: false, ...err });
+        }
+        console.log('entrei col 3');
+        res.status(201).json({ success: true, ...colab["_doc"]}); // ["_doc"] é a posicao do obj de retorno onde se encontra o documento criado // ["_doc"] é a posicao do obj de retorno onde se encontra o documento criado
+    });
+    console.log('cheguei fim');
 }
 
 // Register a new user list
