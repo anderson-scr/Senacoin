@@ -38,7 +38,7 @@ exports.listAll = (req, res, next) => {
     .then((subcats) => {
         
         if (!subcats.length)
-            return res.status(204).json({ success: false, msg: "nenhuma subcategoria encontrada." });  
+            return res.status(204);  
         else
             res.status(200).json({total: subcats.length, ...subcats});
     })
@@ -54,7 +54,7 @@ exports.listActive = (req, res, next) => {
     .then((subcats) => {
         
         if (!subcats.length)
-            return res.status(204).json({ success: false, msg: "nenhuma subcategoria encontrada." });  
+            return res.status(204);  
         else
             res.status(200).json({total: subcats.length, ...subcats});
     })
@@ -70,7 +70,7 @@ exports.listOne = (req, res, next) => {
     .then((subcat) => {
         
         if (!subcat)
-            return res.status(204).json({ success: false, msg: "subcategoria não encontrada." });  
+            return res.status(204);  
         else
             res.status(200).json(subcat);
     })

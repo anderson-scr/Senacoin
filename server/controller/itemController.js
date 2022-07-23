@@ -78,7 +78,7 @@ exports.listAll = (req, res, next) => {
     .populate({path : 'id_status', select: '-_id'})
     .then((itens) => {  
         if (!itens.length)
-            return res.status(204).json({ success: false, msg: 'nenhum item encontrado' });  
+            return res.status(204);  
         else
 			res.status(200).json({total: itens.length, ...itens});
     })
@@ -100,7 +100,7 @@ exports.listAllByCategory = (req, res, next) => {
     .populate({path : 'id_status', select: '-_id'})
     .then((itens) => {
         if (!itens.length)
-            return res.status(204).json({ success: false, msg: `nenhum ${categoria} encontrado.` });  
+            return res.status(204);  
         else
 			res.status(200).json({total: itens.length, ...itens});
     })
@@ -119,7 +119,7 @@ exports.listActive = (req, res, next) => {
     .populate({path : 'id_unidade', select: 'nome -_id'})
     .then((itens) => {   
         if (!itens.length)
-            return res.status(204).json({ success: false, msg: `nenhum ${categoria} encontrado.` });  
+            return res.status(204);  
         else
 			res.status(200).json({total: itens.length, ...itens});
     })
@@ -140,7 +140,7 @@ exports.listActiveByCategory = (req, res, next) => {
     .populate({path : 'id_unidade', select: 'nome -_id'})
     .then((itens) => {
         if (!itens.length)
-            return res.status(204).json({ success: false, msg: `nenhum ${categoria} encontrado.` });  
+            return res.status(204);  
         else
 			res.status(200).json({total: itens.length, ...itens});
     })
@@ -159,7 +159,7 @@ exports.listOne = (req, res, next) => {
     .populate({path : 'id_status', select: '-_id'})
     .then((item) => {   
         if (!item)
-			return res.status(204).json({ success: false, msg: 'item não encontrado.' });
+			return res.status(204);
         
 		res.status(200).json({ success: true, item});
     })
@@ -171,7 +171,7 @@ exports.listOne = (req, res, next) => {
 exports.edit = (req, res, nxt) => {
 
     // delete req.body.id_status; // impede de enviar opcoes que não devem ser alteradas
-    Item.findOnedAndUpdate({ _id: req.params.id }, {$set: req.body}, {new: true})
+    Item.findOneAndUpdate({ _id: req.params.id }, {$set: req.body}, {new: true})
     .select('-_id')
     .populate({path : 'id_area', select: 'nome -_id'})
     .populate({path : 'id_categoria', select: 'nome -_id'})

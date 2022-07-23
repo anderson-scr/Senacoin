@@ -39,7 +39,7 @@ exports.listAll = (req, res, next) => {
     .then((qrcodes) => {
         
         if (!qrcodes.length)
-            return res.status(204).json({ success: false, msg: "nenhum qr code encontrado." });  
+            return res.status(204);  
         else
             res.status(200).json({total: qrcodes.length, ...qrcodes});
     })
@@ -60,7 +60,7 @@ exports.listActive = (req, res, next) => {
     .then((qrcodes) => {
         
         if (!qrcodes.length)
-            return res.status(204).json({ success: false, msg: "nenhum qr code encontrado." });  
+            return res.status(204);  
         else
             res.status(200).json({total: qrcodes.length, ...qrcodes});
     })
@@ -79,7 +79,7 @@ exports.listOne = (req, res, next) => {
     .then((qrcode) => {
         
         if (!qrcode)
-            return res.status(204).json({ success: false, msg: "qr code não encontrado." });  
+            return res.status(204);  
             else
             res.status(200).json(qrcode);
     })

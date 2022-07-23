@@ -27,7 +27,7 @@ exports.login = (req, res, next) => {
 }
 
 // Register a new user
-exports.new = (req, res, next) => {
+exports.new = async (req, res, next) => {
     
     const saltHash = utils.genPassword(req.body.senha);
     delete req.body.senha;
@@ -35,32 +35,25 @@ exports.new = (req, res, next) => {
     if (!("id_status" in req.body))
         req.body["id_status"] = "62cec6c463187bb9b498687b";
     
-    // console.log(req.body);
-
     console.log('comeca colaborador');
-    Colaborador.create({...req.body, hash: saltHash.hash, salt: saltHash.salt}, (err, colab) =>  {
-        console.log('entrei col 1');
-        if (err)
-        {
-            console.log('entrei col 2');
-            console.log(err);
-            return res.status(500).json({ success: false, ...err });
-        }
-        
+    await Colaborador.create({...req.body, hash: saltHash.hash, salt: saltHash.salt})
+    .then(async (colab) => {
+        console.log('entrei colab');
         console.log('comeca auditoria');
-        timestamp = Date.now(Date.now()-3600*1000*4)
-        AuditoriaColaborador.create({colaborador: req.jwt.sub, criado_em: timestamp, modificado_em: timestamp, ...req.body}, (err, colab) =>  {
-            console.log('entrei aud 1');
-            if (err)
-            {
-                console.log('entrei aud 2');
-                console.log(err);
-                return res.status(500).json({ success: false, ...err });
-            }
-            console.log('entrei aud 3');
+        await AuditoriaColaborador.create({colaborador: req.jwt.sub, ...req.body})
+        .then((audcolab) =>{
+            console.log('entrei aud');
+            console.log(audcolab);
+            res.status(201).json({ success: true, ...colab["_doc"]}) // ["_doc"] é a posicao do obj de retorno onde se encontra o documento criado));
+        })
+        .catch((err) => {
+            console.log('entrei aud err');
+            res.status(500).json({ success: false, ...err });
         });
-        console.log('entrei col 3');
-        res.status(201).json({ success: true, ...colab["_doc"]}); // ["_doc"] é a posicao do obj de retorno onde se encontra o documento criado // ["_doc"] é a posicao do obj de retorno onde se encontra o documento criado
+    })
+    .catch((err) => {
+        console.log('entrei colab err');
+        res.status(500).json({ success: false, ...err })
     });
     console.log('cheguei fim');
 }
@@ -84,7 +77,6 @@ exports.newList = (req, res, next) => {
             return res.status(500).json({ success: false, ...err });
     
         res.status(201).json({ success: true, total: docs.length});
-
     });   
 }
 
@@ -96,7 +88,7 @@ exports.listAll = (req, res, next) => {
     .then((colabs) => {
         
         if (!colabs.length)
-            return res.status(204).json({ success: false, msg: "nenhum colaborador encontrado." });  
+            return res.status(204);  
         else
             res.status(200).json({total: colabs.length, ...colabs});
     })
@@ -113,7 +105,7 @@ exports.listActive = (req, res, next) => {
     .then((colabs) => {
         
         if (!colabs.length)
-            return res.status(204).json({ success: false, msg: "nenhum colaborador encontrado." });  
+            return res.status(204);  
         else
             res.status(200).json({total: colabs.length, ...colabs});
     })
@@ -131,7 +123,7 @@ exports.listOne = (req, res, next) => {
     .then((colab) => {
         
         if (!colab)
-            return res.status(204).json({ success: false, msg: "colaborador não encontrado." });  
+            return res.status(204);  
         else
             res.status(200).json(colab);
     })
@@ -140,23 +132,46 @@ exports.listOne = (req, res, next) => {
     });
 }
 
-exports.edit = (req, res, nxt) => {
-
-    // delete req.body.id_status; // impede de enviar opcoes que não devem ser alteradas
-    Colaborador.findByIdAndUpdate(req.params.id, {$set: req.body}, {new: true})
+exports.edit = async (req, res, nxt) => {
+    
+    await Colaborador.findByIdAndUpdate(req.params.id, {$set: req.body}, {new: true})
     .select('-_id')
-    .populate({path : 'id_status', select: '-_id'})
-    .then((doc) => (res.status(200).json(doc)))
-    .catch((err) => (res.status(500).json(err)));
+    .then(async (colab) => {
+        if (!colab)
+            return res.status(204);
+
+        await AuditoriaColaborador.create({colaborador: req.jwt.sub,  ...colab._doc})
+        .then((audcolab) =>{
+            res.status(200).json({ success: true, ...audcolab["_doc"]}) // ["_doc"] é a posicao do obj de retorno onde se encontra o documento criado));
+        })
+        .catch((err) => {
+            res.status(500).json({ success: false, ...err });
+        });
+    })
+    .catch((err) => {
+        res.status(500).json({ success: false, ...err })
+    });
 }
 
-exports.delete = (req, res, nxt) => {
+exports.delete = async (req, res, nxt) => {
 
-    Colaborador.findByIdAndUpdate(req.params.id, {id_status: mongoose.Types.ObjectId("62cec7b263187bb9b498687e")}, {new: true})
+    await Colaborador.findByIdAndUpdate(req.params.id, {id_status: mongoose.Types.ObjectId("62cec7b263187bb9b498687e")}, {new: true})
     .select('-_id')
-    .populate({path : 'id_status', select: '-_id'})
-    .then((doc) => (res.status(200).json(doc)))
-    .catch((err) => (res.status(500).json(err)));
+    .then(async (colab) => {
+        if (!colab)
+            return res.status(204);
+
+        await AuditoriaColaborador.create({colaborador: req.jwt.sub, ...colab._doc})
+        .then((audcolab) =>{
+            res.status(200).json({ success: true, ...audcolab["_doc"]}) // ["_doc"] é a posicao do obj de retorno onde se encontra o documento criado));
+        })
+        .catch((err) => {
+            res.status(500).json({ success: false, ...err });
+        });
+    })
+    .catch((err) => {
+        res.status(500).json({ success: false, ...err })
+    });
 }
 
 exports.deleteAll = (req, res, nxt) => {

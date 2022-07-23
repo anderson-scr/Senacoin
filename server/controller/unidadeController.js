@@ -38,7 +38,7 @@ exports.listAll = (req, res, next) => {
     .then((unidades) => {
         
         if (!unidades.length)
-            return res.status(204).json({ success: false, msg: "nenhuma unidade encontrada." });  
+            return res.status(204);  
         else
             res.status(200).json({total: unidades.length, ...unidades});
     })
@@ -54,7 +54,7 @@ exports.listActive = (req, res, next) => {
     .then((unidades) => {
         
         if (!unidades.length)
-            return res.status(204).json({ success: false, msg: "nenhuma unidade encontrada." });  
+            return res.status(204);  
         else
             res.status(200).json({total: unidades.length, ...unidades});
     })
@@ -70,7 +70,7 @@ exports.listOne = (req, res, next) => { // colocar um && pra procurar por id tbm
     .then((unidade) => {
         
         if (!unidade)
-			return res.status(204).json({ success: false, msg: "unidade não encontrada." });
+			return res.status(204);
         
 		res.status(200).json({ success: true, 'unidade': unidade});
     })

@@ -28,7 +28,7 @@ exports.listAll = (req, res, next) => {
     .then((status) => {
         
         if (!status.length)
-            return res.status(204).json({ success: false, msg: "nenhum status encontrado." });  
+            return res.status(204);  
         else
 			res.status(200).json({total: status.length, ...status});
     })
