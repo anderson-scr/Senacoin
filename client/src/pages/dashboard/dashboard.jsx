@@ -14,7 +14,7 @@ const Dashboard = () => {
   
       return () => effectOnce.current = false
     }
-  }, [])
+  }, [navigate])
 
   return (
     <div>Dashboard</div>

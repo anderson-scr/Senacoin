@@ -1,0 +1,17 @@
+/* default colors for btnSalvar and btnCancelar classes */
+.btnCancelar {
+  border-color: var(--senac-azul-dark);
+  color: var(--senac-azul-dark);
+}
+.btnCancelar:hover {
+  background-color: var(--senac-azul-dark);
+}
+.btnSalvar {
+  background-color: var(--senac-azul);
+  border-color: var(--senac-azul);
+}
+.btnSalvar:hover {
+  background-color: var(--senac-amarelo-dark);
+  border-color: var(--senac-amarelo-dark);
+}
+

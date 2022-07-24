@@ -1,7 +1,4 @@
-export const colunasSchema = [
-  { Header: "Check", 
-    className: "checkBox"
-  },
+export const selectItemTableSchema = [
   { Header: "Nome",
     accessor: "nome",
     className: "nome"

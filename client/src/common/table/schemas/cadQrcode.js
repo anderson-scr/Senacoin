@@ -1,7 +1,4 @@
-export const colunasSchema = [
-  { Header: "Editar",
-    className: "colunaEditar"
-  },
+export const cadQrcodeTableSchema = [
   { Header: "Nome",
     accessor: "nome",
     className: "nome"
@@ -14,9 +11,5 @@ export const colunasSchema = [
     Header: "Categoria",
     accessor: "id_categoria.nome",
     className: "categoria"
-  },
-  {
-    Header: "Status",
-    accessor: "id_status.nome"
   }
 ]

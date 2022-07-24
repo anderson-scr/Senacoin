@@ -7,7 +7,7 @@ export const routes = {
   },
 
   unidade: {
-    novo: 'unidade/new',
+    novo: 'unidade/add',
     ativo: 'unidade/active',
     todos: 'unidade/all'
   },
@@ -19,13 +19,13 @@ export const routes = {
   },
 
   perfil: {
-    novo: 'perfil/new',
+    novo: 'perfil/add',
     ativo: 'perfil/active',
     todos: 'perfil/all'
   },
 
   subcategoria: {
-    novo: 'subcategoria/new',
+    novo: 'subcategoria/add',
     ativo: 'subcategoria/active',
     todos: 'subcategoria/all'
   },
@@ -51,5 +51,11 @@ export const routes = {
     novo: /* Id antes */ 'item/servico/add',
     ativo: /* Id antes */ 'item/servico/active',
     todos: /* Id antes */ 'item/servico/all'
+  },
+
+  qrcode: {
+    novo: 'qrcode/add',
+    ativo: 'qrcode/active',
+    todos: 'qrcode/all'
   }
 }

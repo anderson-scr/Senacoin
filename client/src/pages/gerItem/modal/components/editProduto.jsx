@@ -1,26 +1,15 @@
 import React, {useState, useEffect, useRef} from 'react'
-import { useNavigate } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { yupSchemaCadProduto } from 'utils/validation/schemas/itens/cadProduto'
 import { callUnidadeAPI } from 'api/common/callUnidades'
-import { verificaSessao } from 'auth/login/verificaSessao'
 import { callAreaAPI } from 'api/common/callArea'
 import { callSubcategoriaAPI } from 'api/common/callSubcategoria'
 import { callProdutoAPI } from 'api/item/apiProduto'
 import QuestionTooltip from 'common/tooltips/questionTooltip'
-import AddTooltip from 'common/tooltips/addTooltip'
-import './cadProdutoStyle.css'
 
-// Modal imports
-import ModalService from 'common/modal/services/modalService'
-import ModalCadArea from 'common/preMadeModal/cadArea'
-import ModalCadSubcategoria from 'common/preMadeModal/cadSubcategoria'
-import ModalCadUnidade from 'common/preMadeModal/cadUnidade'
-
-const CadProduto = () => {
+const EditProduto = ({closeModal}) => {
   const effectOnce = useRef(true)
-  const navigate = useNavigate()
   const [unidades, setUnidades] = useState([])
   const [areas, setAreas] = useState([])
   const [subcategorias, setSubcategorias] = useState([])
@@ -33,9 +22,6 @@ const CadProduto = () => {
   
   useEffect(() => {
     if(effectOnce.current) {
-      if(!verificaSessao()) {
-        navigate("/Login", {replace: true})
-      }
 
       // Fill dropDows unidades
       (async () => {
@@ -46,21 +32,7 @@ const CadProduto = () => {
 
       return () => effectOnce.current = false
     }
-  }, [navigate])
-
-  const modalCadArea = (evt) => {
-    evt.preventDefault()
-    ModalService.open(ModalCadArea)
-  }
-  const modalCadSubcategoria = (evt) => {
-    evt.preventDefault()
-    ModalService.open(ModalCadSubcategoria)
-  }
-  const modalCadUnidade = (evt) => {
-    evt.preventDefault()
-    ModalService.open(ModalCadUnidade)
-  }
-
+  }, [])
 
   const certo = (dados) => {
     dados.id_unidade = unidades[(parseInt(dados.id_unidade) - 1)]._id
@@ -76,10 +48,10 @@ const CadProduto = () => {
 
   return (
     <form className='container mt-3' onSubmit={handleSubmit(certo, errado)}>
-      <div className='row'>
 
+      <div className='row'>
         <div className='mb-3 col'>
-          <AddTooltip label='Areas' onClickFunc={modalCadArea} msg='Criar uma nova area para cadastros.' />
+          <label htmlFor="exampleInputEmail1" className="form-label">Areas</label>
           <select className="form-select" id='dropArea' aria-label="Default select example" defaultValue="DEFAULT" {...register('id_area')}>
             <option value="DEFAULT" disabled style={{display: "none"}}>Selecione uma area</option>
             {areas.length > 1 &&
@@ -95,7 +67,7 @@ const CadProduto = () => {
           </div>
         </div>
         <div className='mb-3 col'>
-          <AddTooltip label='Subcategoria' onClickFunc={modalCadSubcategoria} msg='Criar nova subcategoria para cadastros.' /> 
+          <label htmlFor="exampleInputEmail1" className="form-label">Subcategoria</label>
           <select className="form-select" id='dropSubcategoria' aria-label="Default select example" defaultValue="DEFAULT" {...register('id_subcategoria')}>
             <option value="DEFAULT" disabled style={{display: "none"}}>Selecione uma subcategoria</option>
             {subcategorias.length > 1 &&
@@ -121,7 +93,7 @@ const CadProduto = () => {
           }
         </div>
         <div className='mb-3 col'>
-          <AddTooltip label='Unidade' onClickFunc={modalCadUnidade} msg='Criar uma nova unidade para cadastros.' />
+          <label htmlFor="exampleInputEmail1" className="form-label">Unidades</label>
           <select className="form-select" id='dropSubcategoria' aria-label="Default select example" defaultValue="DEFAULT" {...register('id_unidade')}>
             <option value="DEFAULT" disabled style={{display: "none"}}>Selecione uma unidade</option>
             {unidades.length > 1 &&
@@ -173,7 +145,7 @@ const CadProduto = () => {
 
       <div className='containerBtns row mt-5'>
         <div className='col d-flex'>
-          <button type="submit" className="btn btnCancelar btn-outline-secondary w-50">Cancelar</button>
+          <button type="submit" onClick={closeModal} className="btn btnCancelar btn-outline-secondary w-50">Cancelar</button>
         </div>
         <div className='col d-flex justify-content-end'>
           <button type="submit" className="btn btnSalvar btn-primary w-50">Salvar</button>
@@ -183,4 +155,4 @@ const CadProduto = () => {
   )
 }
 
-export default CadProduto
+export default EditProduto

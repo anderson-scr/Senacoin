@@ -1,6 +1,5 @@
-export const colunasSchema = [
+export const gerUsuarioTabelaSchema = [
   { Header: "Editar",
-    className: "colunaEditar"
   },
   { Header: "Nome",
     accessor: "nome",

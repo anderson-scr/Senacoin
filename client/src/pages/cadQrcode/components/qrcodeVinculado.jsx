@@ -1,11 +1,13 @@
 import React, { useRef, useEffect, useState } from 'react'
-import ModalSelecionarItem from './modal/modalSelecionaItem';
-import ModalService from 'common/modal/services/modalService';
+import ModalSelecionarItem from './modal/modalSelecionaItem'
+import ModalService from 'common/modal/services/modalService'
 import { useNavigate } from 'react-router-dom'
 import { verificaSessao } from 'auth/login/verificaSessao'
 import { yupResolver } from '@hookform/resolvers/yup';
-import { useForm } from "react-hook-form";
-import { yupSchemaCadQrcodeVinculado } from 'utils/validation/schemas/qrcode/vinculado';
+import { useForm } from "react-hook-form"
+import { yupSchemaCadQrcodeVinculado } from 'utils/validation/schemas/qrcode/vinculado'
+import QuestionTooltip from 'common/tooltips/questionTooltip'
+
 
 const QrcodeVinculado = () => {
   const navigate = useNavigate()
@@ -56,7 +58,7 @@ const QrcodeVinculado = () => {
           </div>
         </div>
         <div className="mb-2">
-          <label htmlFor="iptNome" className="form-label">Item vinculado</label>
+          <QuestionTooltip label='Item(s) vinculado ao Qrcode' msg='Selecionar quais items irão receberem a promoção.' />
           <input type="button" value="Selecionar item" onClick={evt => abrirModal(evt)} className="form-control" id="iptNome" {...register("item_vinculado")}/>
           <div style={{height: '25px'}}>
             {errors?.item_vinculado?.type &&
@@ -72,34 +74,26 @@ const QrcodeVinculado = () => {
           <div className='d-flex justify-content-between mb-4'>
             <div className="form-check  ">
               <input className="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" {...register("unico")} defaultChecked/>
-              <label className="form-check-label" htmlFor="flexRadioDefault1">
-                Único
-              </label>
+              <QuestionTooltip label='Único' msg='O Qrcode so pode ser utilizado uma unica vez.' />
             </div>
             <div className="form-check">
               <input className="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" {...register("diario")} />
-              <label className="form-check-label" htmlFor="flexRadioDefault2">
-                Diário
-              </label>
+              <QuestionTooltip label='Diário' msg='O Qrcode poderá ser utilizado uma vez por dia por cada usuário.' />
             </div>
             <div className="form-check">
               <input className="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" {...register("semanal")} />
-              <label className="form-check-label" htmlFor="flexRadioDefault2">
-                Semanal
-              </label>
+              <QuestionTooltip label='Semanal' msg='O Qrcode poderá ser semanalmente por cada usuário.' />
             </div>
             <div className="form-check">
               <input className="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" {...register("mensal")} />
-              <label className="form-check-label" htmlFor="flexRadioDefault2">
-                Mensal
-              </label>
+              <QuestionTooltip label='Mensal' msg='O Qrcode poderá ser utilizado uma vez por mes por cada usuário.' />
             </div>
           </div>
         </div>
 
         <div className='containerDouble d-flex'>
           <div className="mb-2 flex-grow-1">
-            <label htmlFor="exampleInputPassword1" className="form-label" >Data inicial</label>
+            <QuestionTooltip label='Data inicial' msg='Define a data inicial do período em que o Qrcode estará disponível.' />
             <input type="date" className="form-control" id="exampleInputPassword1" {...register("data_inicial")} />
             <div style={{height: '25px'}}>
               {errors?.data_inicio?.type &&
@@ -108,7 +102,7 @@ const QrcodeVinculado = () => {
             </div>
           </div>
           <div className="mb-2 flex-grow-1">
-            <label htmlFor="exampleInputPassword1" className="form-label" >Data final</label>
+            <QuestionTooltip label='Data final' msg='Define a data final do período em que o Qrcode estará disponível.' />
             <input type="date" className="form-control" id="exampleInputPassword1" {...register("data_final")} />
             <div style={{height: '25px'}}>
               {errors?.data_fim?.type &&
@@ -127,10 +121,10 @@ const QrcodeVinculado = () => {
       {/* Second row */}
       <div className='containerBtns row mt-5'>
         <div className='col d-flex'>
-          <button type="submit" className="btn btn-outline-secondary w-50">Cancelar</button>
+          <button type="submit" className="btn btnCancelar btn-outline-secondary w-50">Cancelar</button>
         </div>
         <div className='col d-flex justify-content-end'>
-          <button type="submit" className="btn btn-primary w-50">Salvar</button>
+          <button type="submit" className="btn btnSalvar   btn-primary w-50">Salvar</button>
         </div>
       </div>
 
