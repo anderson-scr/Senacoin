@@ -96,7 +96,7 @@ exports.listAll = (req, res, next) => {
     .then((transacoes) => {
         
         if (!transacoes.length)
-            return res.status(204);  
+            return res.status(204).json();  
         else
 			res.status(200).json({total: transacoes.length, ...transacoes});
     })
@@ -114,7 +114,7 @@ exports.listAllByAluno = (req, res, next) => {
     .then((transacoes) => {
         
         if (!transacoes.length)
-            return res.status(204);  
+            return res.status(204).json();  
         else
 			res.status(200).json({total: transacoes.length, ...transacoes});
     })
@@ -134,7 +134,7 @@ exports.listOne = (req, res, next) => {
     .then((transacao) => {
         
         if (!transacao)
-			return res.status(204);
+			return res.status(204).json();
         
 		res.status(200).json({ success: true, [categoria]: transacao});
     })

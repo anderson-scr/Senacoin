@@ -74,7 +74,7 @@ exports.listAll = (req, res, next) => {
     .then((alunos) => {
         
         if (!alunos.length)
-            return res.status(204);  
+            return res.status(204).json();  
         else
             res.status(200).json({total: alunos.length, ...alunos});
     })
@@ -91,7 +91,7 @@ exports.listActive = (req, res, next) => {
     .then((alunos) => {
         
         if (!alunos.length)
-            return res.status(204);  
+            return res.status(204).json();  
         else
             res.status(200).json({total: alunos.length, ...alunos});
     })
@@ -109,7 +109,7 @@ exports.listOne = (req, res, next) => {
     .then((aluno) => {
         
         if (!aluno)
-            return res.status(204);  
+            return res.status(204).json();  
         else
             res.status(200).json(aluno);
     })

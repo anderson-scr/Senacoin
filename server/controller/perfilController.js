@@ -38,7 +38,7 @@ exports.listAll = (req, res, next) => {
     .then((perfis) => {
         
         if (!perfis.length)
-            return res.status(204);  
+            return res.status(204).json();  
         else
             res.status(200).json({total: perfis.length, ...perfis});
     })
@@ -54,7 +54,7 @@ exports.listActive = (req, res, next) => {
     .then((perfis) => {
         
         if (!perfis.length)
-            return res.status(204);  
+            return res.status(204).json();  
         else
             res.status(200).json({total: perfis.length, ...perfis});
     })
@@ -70,7 +70,7 @@ exports.listOne = (req, res, next) => {
     .then((perfil) => {
         
         if (!perfil)
-			return res.status(204);
+			return res.status(204).json();
         
 		res.status(200).json({ success: true, 'perfil': perfil});
     })

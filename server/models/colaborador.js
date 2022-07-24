@@ -14,7 +14,7 @@ exports.ColaboradorSchema = new mongoose.Schema({
 }, { versionKey: false });
 
 exports.AuditoriaColaboradorSchema = new mongoose.Schema({
-	colaborador: {type: String},
+	colaborador: {type: String, unique: false},
 	data: {type: Date, immutable: true, default: () => Date.now(Date.now()-3600*1000*4)}, //fuso horario gmt-4,
 	
 	nome: {type: String, required: true},

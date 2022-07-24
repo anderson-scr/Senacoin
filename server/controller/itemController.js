@@ -78,7 +78,7 @@ exports.listAll = (req, res, next) => {
     .populate({path : 'id_status', select: '-_id'})
     .then((itens) => {  
         if (!itens.length)
-            return res.status(204);  
+            return res.status(204).json();  
         else
 			res.status(200).json({total: itens.length, ...itens});
     })
@@ -100,7 +100,7 @@ exports.listAllByCategory = (req, res, next) => {
     .populate({path : 'id_status', select: '-_id'})
     .then((itens) => {
         if (!itens.length)
-            return res.status(204);  
+            return res.status(204).json();  
         else
 			res.status(200).json({total: itens.length, ...itens});
     })
@@ -119,7 +119,7 @@ exports.listActive = (req, res, next) => {
     .populate({path : 'id_unidade', select: 'nome -_id'})
     .then((itens) => {   
         if (!itens.length)
-            return res.status(204);  
+            return res.status(204).json();  
         else
 			res.status(200).json({total: itens.length, ...itens});
     })
@@ -140,7 +140,7 @@ exports.listActiveByCategory = (req, res, next) => {
     .populate({path : 'id_unidade', select: 'nome -_id'})
     .then((itens) => {
         if (!itens.length)
-            return res.status(204);  
+            return res.status(204).json();  
         else
 			res.status(200).json({total: itens.length, ...itens});
     })
@@ -159,7 +159,7 @@ exports.listOne = (req, res, next) => {
     .populate({path : 'id_status', select: '-_id'})
     .then((item) => {   
         if (!item)
-			return res.status(204);
+			return res.status(204).json();
         
 		res.status(200).json({ success: true, item});
     })
