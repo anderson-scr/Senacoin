@@ -4,7 +4,10 @@ const AuditoriaAluno = mongoose.model('AuditoriaAluno');
 const utils = require('../libs/utils');
 
 // logs the user
-exports.login = (req, res, next) => {
+exports.login = (req, res, _next) => {
+
+    if (!Object.keys(req.body).length)
+		return res.status(400).json({ success: false, msg: "solicitação mal construída, informações faltando ou incorretas" });
 
     Aluno.findOne({ email: req.body.email })
     .then((aluno) => {
@@ -27,7 +30,10 @@ exports.login = (req, res, next) => {
 }
 
 // Register a new user
-exports.new = async (req, res, next) => {
+exports.new = async (req, res, _next) => {
+
+    if (!Object.keys(req.body).length)
+		return res.status(400).json({ success: false, msg: "solicitação mal construída, informações faltando ou incorretas" });
 
     const saltHash = utils.genPassword(req.body.senha);
     delete req.body.senha;
@@ -63,7 +69,10 @@ exports.new = async (req, res, next) => {
 }
 
 // Register a new user list
-exports.newList = (req, res, next) => {
+exports.newList = (req, res, _next) => {
+
+    if (!Object.keys(req.body).length)
+		return res.status(400).json({ success: false, msg: "solicitação mal construída, informações faltando ou incorretas" });
 
     req.body.forEach(aluno => {
         const saltHash = utils.genPassword(aluno.senha);
@@ -84,7 +93,7 @@ exports.newList = (req, res, next) => {
     });   
 }
 
-exports.listAll = (req, res, next) => {
+exports.listAll = (_req, res, _next) => {
 
     Aluno.find({})
     .select("nome email cpf id_unidade id_status")
@@ -102,7 +111,7 @@ exports.listAll = (req, res, next) => {
     });
 }
 
-exports.listActive = (req, res, next) => {
+exports.listActive = (_req, res, _next) => {
 
     Aluno.find({id_status: "62cec6c463187bb9b498687b"})
     .select("nome email cpf matricula id_unidade")
@@ -119,9 +128,9 @@ exports.listActive = (req, res, next) => {
     });
 }
 
-exports.listOne = (req, res, next) => {
+exports.listOne = (req, res, _next) => {
     
-    Aluno.findOne({ _id: "62d5a9a164b3535ce5594d6b"})
+    Aluno.findById(req.params.id)
     .select('-hash -salt')
     .populate({path : 'id_unidade', select: 'nome cidade uf -_id'})   //.populate('id_unidade id_perfil id_status')
     .populate({path : 'id_status', select: '-_id'})
@@ -137,8 +146,59 @@ exports.listOne = (req, res, next) => {
     });
 }
 
-exports.edit = async (req, res, nxt) => {
+exports.studentReport = (req, res, _next) => {
 
+    Aluno.findById(req.params.id)
+    .select('nome email matricula id_unidade id_status -_id')
+    .populate({path : 'id_unidade', select: 'nome cidade uf -_id'})   //.populate('id_unidade id_perfil id_status')
+    .populate({path : 'id_status', select: '-_id'})
+    .then((aluno) => {
+        if (!aluno)
+            res.status(204).json();
+
+        res.status(200).json({success: true, ...aluno._doc});
+    })
+    .catch((err) => {
+        res.status(500).json({success: false, msg: `${err}`})
+    })
+}
+
+exports.enrollmentReport = (req, res, _next) => {
+    
+    Aluno.findById(req.params.id)
+    .select('nome email matricula id_unidade id_status -_id')
+    .populate({path : 'id_unidade', select: 'nome cidade uf -_id'})   //.populate('id_unidade id_perfil id_status')
+    .populate({path : 'id_status', select: '-_id'})
+    .then((aluno) => {
+        if (!aluno)
+            return res.status(204).json();
+
+        console.log(aluno.email);
+        AuditoriaAluno.findOne({email: aluno.email})
+        .select('data -_id')
+        .then((audaluno) => {
+            console.log(audaluno);
+            if (!audaluno)
+            {
+                console.log('204 - 2');
+                return res.status (204).json();
+            }
+            res.status(200).json({success: true, ...aluno._doc, ...audaluno._doc})
+        })
+        .catch((err)=>{
+            res.status(500).json({success: false, msg: `${err}`})
+        })
+    })
+    .catch((err) => {
+        res.status(500).json({success: false, msg: `${err}`})
+    })
+}
+
+exports.edit = async (req, res, _nxt) => {
+    
+    if (!Object.keys(req.body).length)
+        return res.status(400).json({ success: false, msg: "solicitação mal construída, informações faltando ou incorretas" });
+    
     const session = await mongoose.startSession();
 	try {    
 		await session.withTransaction(async () => {
@@ -170,7 +230,7 @@ exports.edit = async (req, res, nxt) => {
 	}
 }
 
-exports.delete = async (req, res, nxt) => {
+exports.delete = async (req, res, _nxt) => {
 
     const session = await mongoose.startSession();
 	try {
@@ -203,7 +263,7 @@ exports.delete = async (req, res, nxt) => {
 	}
 }
 
-exports.deleteAll = (req, res, nxt) => {
+exports.deleteAll = (_req, res, _nxt) => {
     
     Aluno.deleteMany({})
     .then((n) => (res.status(200).json({success: true, total: n.deletedCount})))

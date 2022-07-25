@@ -6,6 +6,9 @@ const utils = require('../libs/utils');
 // logs the user
 exports.login = (req, res, _next) => {
 
+    if (!Object.keys(req.body).length)
+		return res.status(400).json({ success: false, msg: "solicitação mal construída, informações faltando ou incorretas" });
+
 	Colaborador.findOne({ email: req.body.email })
 	.then((colab) => {
 		
@@ -28,6 +31,9 @@ exports.login = (req, res, _next) => {
 
 // Register a new user
 exports.new = async (req, res, _next) => {
+
+    if (!Object.keys(req.body).length)
+		return res.status(400).json({ success: false, msg: "solicitação mal construída, informações faltando ou incorretas" });
 	
 	const saltHash = utils.genPassword(req.body.senha);
 	delete req.body.senha;
@@ -64,6 +70,9 @@ exports.new = async (req, res, _next) => {
 
 // Register a new user list
 exports.newList = (req, res, _next) => {
+
+    if (!Object.keys(req.body).length)
+		return res.status(400).json({ success: false, msg: "solicitação mal construída, informações faltando ou incorretas" });
 
 	req.body.forEach(colab => {
 		const saltHash = utils.genPassword(colab.senha);
@@ -120,7 +129,7 @@ exports.listActive = (req, res, _next) => {
 
 exports.listOne = (req, res, _next) => {
 	
-	Colaborador.findOne({ _id: req.params.id})
+	Colaborador.findById(req.params.id)
 	.select('-hash -salt')
 	.populate({path : 'id_unidade', select: 'nome cidade uf -_id'}) //.populate('id_unidade id_perfil id_status')
 	.populate({path : 'id_status', select: '-_id'})
@@ -137,6 +146,9 @@ exports.listOne = (req, res, _next) => {
 }
 
 exports.edit = async (req, res, _nxt) => {
+
+    if (!Object.keys(req.body).length)
+		return res.status(400).json({ success: false, msg: "solicitação mal construída, informações faltando ou incorretas" });
 	
 	const session = await mongoose.startSession();
 	try {    

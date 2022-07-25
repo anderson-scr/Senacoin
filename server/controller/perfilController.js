@@ -2,7 +2,10 @@ const mongoose = require('mongoose');
 const Perfil = mongoose.model('Perfil');
 
 
-exports.new = (req, res, next) => {
+exports.new = (req, res, _next) => {
+
+    if (!Object.keys(req.body).length)
+		return res.status(400).json({ success: false, msg: "solicitação mal construída, informações faltando ou incorretas" });
 
     if (!("id_status" in req.body))
         req.body["id_status"] = "62cec6c463187bb9b498687b";
@@ -15,7 +18,10 @@ exports.new = (req, res, next) => {
     });
 }
 
-exports.newList = (req, res, next) => {
+exports.newList = (req, res, _next) => {
+    
+    if (!Object.keys(req.body).length)
+		return res.status(400).json({ success: false, msg: "solicitação mal construída, informações faltando ou incorretas" });
 
     req.body.forEach(perfil => {
         if (!("id_status" in perfil))
@@ -30,7 +36,7 @@ exports.newList = (req, res, next) => {
     });
 }
 
-exports.listAll = (req, res, next) => {
+exports.listAll = (_req, res, _next) => {
 
 	Perfil.find({})
     .select("nome id_status")
@@ -47,7 +53,7 @@ exports.listAll = (req, res, next) => {
     });
 }
 
-exports.listActive = (req, res, next) => {
+exports.listActive = (_req, res, _next) => {
 
 	Perfil.find({id_status: "62cec6c463187bb9b498687b"})
     .select("-id_status")
@@ -63,9 +69,9 @@ exports.listActive = (req, res, next) => {
     });
 }
 
-exports.listOne = (req, res, next) => {
+exports.listOne = (req, res, _next) => {
 
-    Perfil.findOne({ _id: req.params.id })// colocar um && pra procurar por id tbm
+    Perfil.findById(req.params.id)// colocar um && pra procurar por id tbm
     .populate({path : 'id_status', select: '-_id'})
     .then((perfil) => {
         
@@ -79,9 +85,11 @@ exports.listOne = (req, res, next) => {
     });
 }
 
-exports.edit = (req, res, nxt) => {
+exports.edit = (req, res, _nxt) => {
 
-    // delete req.body.id_status; // impede de enviar opcoes que não devem ser alteradas
+    if (!Object.keys(req.body).length)
+		return res.status(400).json({ success: false, msg: "solicitação mal construída, informações faltando ou incorretas" });
+        
     Perfil.findByIdAndUpdate(req.params.id, {$set: req.body}, {new: true})
     .select('-_id')
     .populate({path : 'id_status', select: '-_id'})
@@ -89,7 +97,7 @@ exports.edit = (req, res, nxt) => {
     .catch((err) => (res.status(500).json({ success: false, msg: `${err}` })));
 }
 
-exports.delete = (req, res, nxt) => {
+exports.delete = (req, res, _nxt) => {
     
     Perfil.findByIdAndUpdate(req.params.id, {id_status: mongoose.Types.ObjectId("62cec7b263187bb9b498687e")}, {new: true})
     .select('-_id')
@@ -98,7 +106,7 @@ exports.delete = (req, res, nxt) => {
     .catch((err) => (res.status(500).json({ success: false, msg: `${err}` })));
 }
 
-exports.deleteAll = (req, res, nxt) => {
+exports.deleteAll = (_req, res, _nxt) => {
     
     Perfil.deleteMany({})
     .then((n) => (res.status(200).json({success: true, total: n.deletedCount})))

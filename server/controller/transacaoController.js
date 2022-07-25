@@ -7,31 +7,33 @@ const QrCode = mongoose.model('QrCode');
 const Promocao = mongoose.model('Promocao');
 
 
-exports.new = (req, res, next) => {
+exports.new = (req, res, _next) => {
 	
+	if (!Object.keys(req.body).length)
+		return res.status(400).json({ success: false, msg: "solicitação mal construída, informações faltando ou incorretas" });
+
 	if (!("tipo" in req.body))
 		return res.status(400).json({ success: false, msg: "informe o tipo da transação." });
 	
-	else if (req.body.tipo && "id_promocao" in req.body)
+	if (req.body.tipo && "id_promocao" in req.body)
 		return res.status(400).json({ success: false, msg: "promoção só pode ser aplicada a transações do tipo saída." });
 	
-	else if (!req.body.tipo && "id_qrcode" in req.body)
+	if (!req.body.tipo && "id_qrcode" in req.body)
 		return res.status(400).json({ success: false, msg: "qr code só pode ser utilizado em transações do tipo entrada." });
 
-	else if (!req.body.tipo && !("id_item" in req.body))
+	if (!req.body.tipo && !("id_item" in req.body))
 		return res.status(400).json({ success: false, msg: "transações do tipo saída necessitam de um item." });
 
-	else if ("id_item" in req.body && "id_qrcode" in req.body)
+	if ("id_item" in req.body && "id_qrcode" in req.body)
 		return res.status(400).json({ success: false, msg: "mais de uma fonte de senacoins informada, a transação deve ser atômica." });
 
-	else if ("id_item" in req.body)
+	if ("id_item" in req.body)
 		Item.findById(req.body.id_item) // busca a quantidade de senacoins a serem gerados ou gastos
 
 	else if ("id_qrcode" in req.body)
 		QrCode.findById(req.body.id_qrcode) // busca a quantidade de senacoins a serem gerados
 	else
 		return res.status(400).json({ success: false, msg: "erro de BIOS muito grave nunca deveria chegar aqui." });
-
 
 	if ("id_promocao" in req.body)
 		Promocao.findById(req.body.id_promocao) // busca a a valor do desconto
@@ -53,20 +55,23 @@ exports.new = (req, res, next) => {
     });
 }
 
-exports.newList = (req, res, next) => {
+exports.newList = (req, res, _next) => {
+
+	if (!Object.keys(req.body).length)
+		return res.status(400).json({ success: false, msg: "solicitação mal construída, informações faltando ou incorretas" });
 
     req.body.forEach(transacao => {
 		if (!("tipo" in transacao))
 			return res.status(400).json({ success: false, msg: "informe o tipo da transação." });
-		else if (transacao.tipo && "id_promocao" in transacao)
+		if (transacao.tipo && "id_promocao" in transacao)
 			return res.status(400).json({ success: false, msg: "promoção só pode ser aplicada a transações do tipo saída." });
-		else if (!transacao.tipo && "id_qrcode" in transacao)
+		if (!transacao.tipo && "id_qrcode" in transacao)
 			return res.status(400).json({ success: false, msg: "qr code só pode ser utilizado em transações do tipo entrada." });
-		else if (!transacao.tipo && !("id_item" in transacao))
+		if (!transacao.tipo && !("id_item" in transacao))
 			return res.status(400).json({ success: false, msg: "transações do tipo saída necessitam de um item." });
-		else if ("id_item" in transacao && "id_qrcode" in transacao)
+		if ("id_item" in transacao && "id_qrcode" in transacao)
 			return res.status(400).json({ success: false, msg: "mais de uma fonte de senacoins informada, a transação deve ser atômica." });
-		else if ("id_item" in transacao)
+		if ("id_item" in transacao)
 			Item.findById(transacao.id_item) // busca a quantidade de senacoins a serem gerados ou gastos
 		else if ("id_qrcode" in transacao)
 			QrCode.findById(transacao.id_qrcode) // busca a quantidade de senacoins a serem gerados
@@ -87,7 +92,7 @@ exports.newList = (req, res, next) => {
     });
 }
 
-exports.listAll = (req, res, next) => {
+exports.listAll = (_req, res, _next) => {
 
 	Transacao.find({})
     .select("id_aluno tipo id_senacoin data")
@@ -105,9 +110,9 @@ exports.listAll = (req, res, next) => {
     });
 }
 
-exports.listAllByAluno = (req, res, next) => {
+exports.listAllByAluno = (_req, res, _next) => {
 
-	Transacao.find({id_aluno: aluno})
+	Transacao.findById(req.params.id_aluno)
 	.select("id_aluno tipo id_senacoin data")
 	.populate({path : 'id_aluno', select: 'nome cpf matricula -_id'})
     .populate({path : 'id_senacoin', select: 'pontos data_inicio data_fim -_id'})
@@ -123,9 +128,9 @@ exports.listAllByAluno = (req, res, next) => {
     });
 }
 
-exports.listOne = (req, res, next) => {
+exports.listOne = (req, res, _next) => {
 	
-	Transacao.findOne({ _id: req.params.id })
+	Transacao.findById(req.params.id)
     .populate({path : 'id_aluno', select: '-_id'})
 	.populate({path : 'id_senacoin', select: '-_id'})
 	.populate({path : 'id_item', select: '-_id'}) // provavelmente algum desses precisa popular em profundidade
@@ -143,9 +148,12 @@ exports.listOne = (req, res, next) => {
     });
 }
 
-exports.edit = (req, res, nxt) => {
+exports.edit = (req, res, _nxt) => {
 
-	Transacao.findOnedAndUpdate({_id: req.params.id}, {$set: req.body}, {new: true})
+	if (!Object.keys(req.body).length)
+		return res.status(400).json({ success: false, msg: "solicitação mal construída, informações faltando ou incorretas" });
+
+	Transacao.findByIdAndUpdate(req.params.id, {$set: req.body}, {new: true})
 	.select('-_id')
 	.populate({path : 'id_aluno', select: '-_id'})
 	.populate({path : 'id_senacoin', select: '-_id'})
@@ -156,7 +164,7 @@ exports.edit = (req, res, nxt) => {
 	.catch((err) => (res.status(500).json({ success: false, msg: `${err}` })));
 }
 
-exports.delete = (req, res, nxt) => {
+exports.delete = (req, res, _nxt) => {
 
 	Transacao.findOneAndDelete({_id: req.params.id}, {new: true})
 	.select('-_id')
@@ -169,7 +177,7 @@ exports.delete = (req, res, nxt) => {
 	.catch((err) => (res.status(500).json({ success: false, msg: `${err}` })));
 }
 
-exports.deleteAll = (req, res, nxt) => {
+exports.deleteAll = (_req, res, _nxt) => {
     
     Transacao.deleteMany({})
 	.then((n) => (res.status(200).json({success: true, total: n.deletedCount})))
