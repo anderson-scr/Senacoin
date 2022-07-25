@@ -2,6 +2,7 @@ const { randomUUID } = require('crypto');
 const mongoose = require('mongoose');
 const path = require('path');
 const Item = mongoose.model('Item');
+const AuditoriaItem = mongoose.model('AuditoriaItem');
 
 
 function getIdbyName(item) {
@@ -17,7 +18,7 @@ function getIdbyName(item) {
 	return categoria;
 }
 
-exports.new = (req, res, next) => {
+exports.new = async (req, res, next) => {
     
     // >>> só ta aqui por causa do postman <<<
     req.body = {...JSON.parse(req.body.data)}
@@ -28,29 +29,47 @@ exports.new = (req, res, next) => {
     
     req.body["id_categoria"] = categoria;
     if (!("id_status" in req.body))
-    req.body["id_status"] = "62cec6c463187bb9b498687b";
-
-    if(!req.files || Object.keys(req.files).length === 0)
-		return res.status(418).json({success: false, msg:"Não subiu nenhuma imagem."});
+        req.body["id_status"] = "62cec6c463187bb9b498687b";
 
 	// nome e caminho do arquivo
 	const img = req.files.imagem;
 	const caminho = path.join('uploads', `${randomUUID()}${path.extname(img.name)}`);
 	req.body.imagem = caminho;
 
-    Item.create(req.body, (err, item) =>  {
-        if (err)
-            return res.status(500).json({ success: false, msg: `${err}` });
-        
-        // mv() é usada para colocar o arquivo na pasta do servidor
-        img.mv(path.join(__basedir, caminho), (err) =>{
-            if(err)
-                console.log(err);
-            else
-                console.log("Arquivo salvo com sucesso!");
+    const session = await mongoose.startSession();
+    try {
+        await session.withTransaction(async () => {
+
+            await Item.create([req.body], { session })
+            .then(async (item) => {
+                await AuditoriaItem.create([{colaborador: req.jwt.sub, ...req.body}], { session })
+                .then((_auditem) =>{
+                    // mv() é usada para colocar o arquivo na pasta do servidor
+                    img.mv(path.join(__basedir, caminho), async (err) =>{
+                        if(err)
+                        {
+                            await session.abortTransaction();
+                            res.status(500).json({ success: false, msg: `${err}` });
+                        }
+                        else
+                            res.status(201).json({ success: true, ...item[0]["_doc"]}); // ["_doc"] é a posicao do obj de retorno onde se encontra o documento criado));
+                    });
+                })
+                .catch(async (err) => {
+                    await session.abortTransaction();
+                    res.status(500).json({ success: false, msg: `${err}` });
+                });
+            })
+            .catch(async (err) => {
+                await session.abortTransaction();
+                res.status(500).json({ success: false, msg: `${err}` });
+            })
         });
-        res.status(201).json({ success: true, ...item["_doc"]});
-    });
+    } catch (err) {
+        res.status(500).json({ success: false, msg: `${err}` });
+    } finally {
+        await session.endSession();
+    }
 }
 
 exports.newList = (req, res, next) => {
@@ -168,31 +187,70 @@ exports.listOne = (req, res, next) => {
     });
 }
 
-exports.edit = (req, res, nxt) => {
+exports.edit = async (req, res, nxt) => {
 
-    // delete req.body.id_status; // impede de enviar opcoes que não devem ser alteradas
-    Item.findOneAndUpdate({ _id: req.params.id }, {$set: req.body}, {new: true})
-    .select('-_id')
-    .populate({path : 'id_area', select: 'nome -_id'})
-    .populate({path : 'id_categoria', select: 'nome -_id'})
-    .populate({path : 'id_subcategoria', select: 'nome -_id'})
-    .populate({path : 'id_unidade', select: 'nome cidade uf -_id'})
-    .populate({path : 'id_status', select: '-_id'})
-    .then((doc) => (res.status(200).json(doc)))
-    .catch((err) => (res.status(500).json({ success: false, msg: `${err}` })));
+    const session = await mongoose.startSession();
+	try {    
+		await session.withTransaction(async () => {
+		
+			await Item.findByIdAndUpdate(req.params.id, {$set: req.body}, { session: session, new: true})
+			.select('-_id')
+			.then(async (item) => {
+				if (!item)
+					return res.status(204).json();
+
+				await AuditoriaItem.create([{responsavel: req.jwt.sub,  ...item._doc}], { session })
+				.then((auditem) =>{
+					res.status(200).json({ success: true, ...auditem[0]["_doc"]}); // ["_doc"] é a posicao do obj de retorno onde se encontra o documento criado));
+				})
+				.catch(async (err) => {
+					await session.abortTransaction();
+					res.status(500).json({ success: false, msg: `${err}` });
+				});
+			})
+			.catch(async (err) => {
+				await session.abortTransaction();
+				res.status(500).json({ success: false, msg: `${err}` });
+			})
+		});
+	} catch (err) {
+		res.status(500).json({ success: false, msg: `${err}` });
+	} finally {
+		await session.endSession();
+	}
 }
 
-exports.delete = (req, res, nxt) => {
+exports.delete = async (req, res, nxt) => {
 
-    Item.findOneAndUpdate({ _id: req.params.id }, {id_status: mongoose.Types.ObjectId("62cec7b263187bb9b498687e")}, {new: true})
-    .select('-_id')
-    .populate({path : 'id_area', select: 'nome -_id'})
-    .populate({path : 'id_categoria', select: 'nome -_id'})
-    .populate({path : 'id_subcategoria', select: 'nome -_id'})
-    .populate({path : 'id_unidade', select: 'nome cidade uf -_id'})
-    .populate({path : 'id_status', select: '-_id'})
-    .then((doc) => (res.status(200).json(doc)))
-    .catch((err) => (res.status(500).json({ success: false, msg: `${err}` })));
+    const session = await mongoose.startSession();
+	try {    
+		await session.withTransaction(async () => {
+		
+			await Item.findByIdAndUpdate(req.params.id, {id_status: mongoose.Types.ObjectId("62cec7b263187bb9b498687e")}, { session: session, new: true})
+			.select('-_id')
+			.then(async (item) => {
+				if (!item)
+					return res.status(204).json();
+
+				await AuditoriaItem.create([{responsavel: req.jwt.sub,  ...item._doc}], { session })
+				.then((auditem) =>{
+					res.status(200).json({ success: true, ...auditem[0]["_doc"]}); // ["_doc"] é a posicao do obj de retorno onde se encontra o documento criado));
+				})
+				.catch(async (err) => {
+					await session.abortTransaction();
+					res.status(500).json({ success: false, msg: `${err}` });
+				});
+			})
+			.catch(async (err) => {
+				await session.abortTransaction();
+				res.status(500).json({ success: false, msg: `${err}` });
+			})
+		});
+	} catch (err) {
+		res.status(500).json({ success: false, msg: `${err}` });
+	} finally {
+		await session.endSession();
+	}
 }
 
 exports.deleteAll = (req, res, nxt) => {

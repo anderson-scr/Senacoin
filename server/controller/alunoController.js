@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const Aluno = mongoose.model('Aluno');
+const AuditoriaAluno = mongoose.model('AuditoriaAluno');
 const utils = require('../libs/utils');
 
 // logs the user
@@ -27,7 +28,7 @@ exports.login = (req, res, next) => {
 
 // Register a new user
 exports.new = async (req, res, next) => {
-    
+
     const saltHash = utils.genPassword(req.body.senha);
     delete req.body.senha;
     
@@ -40,7 +41,7 @@ exports.new = async (req, res, next) => {
 
             await Aluno.create([{...req.body, hash: saltHash.hash, salt: saltHash.salt}], { session })
             .then(async (aluno) => {
-                await Aluno.create([{responsavel: req.jwt.sub, ...req.body}], { session })
+                await AuditoriaAluno.create([{responsavel: !req.jwt? req.body.email: req.jwt.sub, ...req.body}], { session })
                 .then((_audaluno) =>{
                     res.status(201).json({ success: true, ...aluno[0]["_doc"]}) // ["_doc"] é a posicao do obj de retorno onde se encontra o documento criado));
                 })

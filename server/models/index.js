@@ -20,6 +20,7 @@ mongoose.model("Aluno", aluno.AlunoSchema);
 mongoose.model("AuditoriaAluno", aluno.AuditoriaAlunoSchema);
 
 mongoose.model("Area", area.AreaSchema);
+mongoose.model("AuditoriaArea", area.AuditoriaAreaSchema);
 
 mongoose.model("Categoria", categoria.CategoriaSchema);
 
@@ -30,6 +31,7 @@ mongoose.model("Estoque", estoque.EstoqueSchema);
 mongoose.model("HistoricoEstoque", estoque.HistoricoEstoqueSchema);
 
 mongoose.model("Item", item.ItemSchema);
+mongoose.model("AuditoriaItem", item.AuditoriaItemSchema);
 
 mongoose.model("Perfil", perfil.PerfilSchema);
 
