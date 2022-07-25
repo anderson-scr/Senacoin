@@ -23,7 +23,7 @@ exports.AuditoriaAlunoSchema = new mongoose.Schema({
 	email: {type: String, required: true},
 	cpf: {type: String, required: true},
 	matricula: {type: String},  // precisa trocar isso pra required true
-	saldo: [{type: mongoose.Types.ObjectId, ref: "SenaCoin", default: null}], // precisa trocar isso??
+	saldo: [{type: mongoose.Types.ObjectId, ref: "SenaCoin"}], // precisa trocar isso??
 	data_nasc: {type: Date, required: true},
 	id_unidade: [{type: mongoose.Types.ObjectId, ref: "Unidade", required: true}],
 	id_status: {type: mongoose.Types.ObjectId, ref: "Status", required: true}

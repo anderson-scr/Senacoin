@@ -15,3 +15,22 @@ exports.QrCodeSchema = new mongoose.Schema({
 	id_unidade: [{type: mongoose.Types.ObjectId, ref: "Unidade", required: true}],
 	id_status: {type: mongoose.Types.ObjectId, ref: "Status", required: true}
 }, { versionKey: false });
+
+exports.AuditoriaQrCodeSchema = new mongoose.Schema({
+	colaborador: {type: String},
+	data: {type: Date, immutable: true, default: () => Date.now(Date.now()-3600*1000*4)}, //fuso horario gmt-4
+
+	titulo: {type: String, required: true},
+	descricao: {type: String},
+	unico: {type: Boolean},
+	diario: {type: Boolean},
+	semanal: {type: Boolean},
+	ilimitado: {type: Boolean},
+	url: {type: String},
+	data_inicio: {type: Date, required: true},
+	data_fim: {type: Date, required: true},
+	quantidade: {type: Number, min: 0},
+	id_item: {type: mongoose.Types.ObjectId, ref: "Item"},
+	id_unidade: [{type: mongoose.Types.ObjectId, ref: "Unidade", required: true}],
+	id_status: {type: mongoose.Types.ObjectId, ref: "Status", required: true}
+}, { versionKey: false });

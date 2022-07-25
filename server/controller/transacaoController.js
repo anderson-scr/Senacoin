@@ -1,10 +1,16 @@
 const mongoose = require('mongoose');
 const Transacao = mongoose.model('Transacao');
+const AuditoriaTransacao = mongoose.model('AuditoriaTransacao');
 const Aluno = mongoose.model('Aluno');
+const AuditoriaAluno = mongoose.model('AuditoriaAluno');
 const Senacoin = mongoose.model('SenaCoin');
+const AuditoriaSenacoin = mongoose.model('AuditoriaSenaCoin');
 const Item = mongoose.model('Item');
+const AuditoriaItem = mongoose.model('AuditoriaItem');
 const QrCode = mongoose.model('QrCode');
+const AuditoriaQrCode = mongoose.model('AuditoriaQrCode');
 const Promocao = mongoose.model('Promocao');
+const AuditoriaPromocao = mongoose.model('AuditoriaPromocao');
 
 
 exports.new = (req, res, _next) => {

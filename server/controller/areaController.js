@@ -20,7 +20,7 @@ exports.new = async (req, res, _next) => {
             .then(async (area) => {
                 await AuditoriaArea.create([{colaborador: req.jwt.sub, ...req.body}], { session })
                 .then((_audarea) =>{
-                    res.status(201).json({ success: true, ...area[0]["_doc"]}) // ["_doc"] é a posicao do obj de retorno onde se encontra o documento criado));
+                    res.status(201).json({ success: true, ...area[0]["_doc"]}); // ["_doc"] é a posicao do obj de retorno onde se encontra o documento criado));
                 })
                 .catch(async (err) => {
                     await session.abortTransaction();
