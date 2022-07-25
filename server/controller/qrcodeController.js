@@ -9,7 +9,7 @@ exports.new = (req, res, next) => {
     
     QrCode.create(req.body, (err, qrcode) =>  {
         if (err)
-            return res.status(500).json({ success: false, ...err });
+            return res.status(500).json({ success: false, msg: `${err}` });
 
         res.status(201).json({ success: true, ...qrcode["_doc"]});
     });
@@ -24,7 +24,7 @@ exports.newList = (req, res, next) => {
     
     QrCode.insertMany(req.body, (err, docs) => {
         if (err)
-            return res.status(500).json({ success: false, ...err });
+            return res.status(500).json({ success: false, msg: `${err}` });
     
         res.status(201).json({ success: true, total: docs.length});
     });
@@ -44,7 +44,7 @@ exports.listAll = (req, res, next) => {
             res.status(200).json({total: qrcodes.length, ...qrcodes});
     })
     .catch((err) => {
-        res.status(500).json(err);
+        res.status(500).json({success: false, msg: `${err}`});
     });
 }
 
@@ -65,7 +65,7 @@ exports.listActive = (req, res, next) => {
             res.status(200).json({total: qrcodes.length, ...qrcodes});
     })
     .catch((err) => {
-        res.status(500).json(err);
+        res.status(500).json({success: false, msg: `${err}`});
     });
 }
 
@@ -84,7 +84,7 @@ exports.listOne = (req, res, next) => {
             res.status(200).json(qrcode);
     })
     .catch((err) => {
-        res.status(500).json(err);
+        res.status(500).json({success: false, msg: `${err}`});
     });
 }
 
@@ -95,7 +95,7 @@ exports.edit = (req, res, nxt) => {
     .select('-_id')
     .populate({path : 'id_status', select: '-_id'})
     .then((doc) => (res.status(200).json(doc)))
-    .catch((err) => (res.status(500).json(err)));
+    .catch((err) => (res.status(500).json({ success: false, msg: `${err}` })));
 }
 
 exports.delete = (req, res, nxt) => {
@@ -104,12 +104,12 @@ exports.delete = (req, res, nxt) => {
     .select('-_id')
     .populate({path : 'id_status', select: '-_id'})
     .then((doc) => (res.status(200).json(doc)))
-    .catch((err) => (res.status(500).json(err)));
+    .catch((err) => (res.status(500).json({ success: false, msg: `${err}` })));
 }
 
 exports.deleteAll = (req, res, nxt) => {
     
     QrCode.deleteMany({})
     .then((n) => (res.status(200).json({success: true, total: n.deletedCount})))
-    .catch((err) => (res.status(500).json(err)));
+    .catch((err) => (res.status(500).json({ success: false, msg: `${err}` })));
 }

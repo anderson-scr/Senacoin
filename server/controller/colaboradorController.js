@@ -4,13 +4,13 @@ const AuditoriaColaborador = mongoose.model('AuditoriaColaborador');
 const utils = require('../libs/utils');
 
 // logs the user
-exports.login = (req, res, next) => {
+exports.login = (req, res, _next) => {
 
 	Colaborador.findOne({ email: req.body.email })
 	.then((colab) => {
 		
 		if (!colab)
-			return res.status(401).json({ success: false, msg: "colaborador não encontrado." });
+			return res.status(401).json({ success: false, msg: "email/senha inválidos!" });
 		
 		const isValid = utils.validPassword(req.body.senha, colab.hash, colab.salt);  
 		if (isValid)
@@ -19,15 +19,15 @@ exports.login = (req, res, next) => {
 			res.status(200).json({ success: true, email: colab.email, token: tokenObject.token, expiresIn: tokenObject.expires});
 		}
 		else 
-			res.status(401).json({ success: false, msg: "colaborador/senha inválidos!" });
+			res.status(401).json({ success: false, msg: "email/senha inválidos!" });
 	})
 	.catch((err) => {
-		res.status(500).json(err);
+		res.status(500).json({success: false, msg: `${err}`});
 	});
 }
 
 // Register a new user
-exports.new = async (req, res, next) => {
+exports.new = async (req, res, _next) => {
 	
 	const saltHash = utils.genPassword(req.body.senha);
 	delete req.body.senha;
@@ -42,17 +42,17 @@ exports.new = async (req, res, next) => {
 			await Colaborador.create([{...req.body, hash: saltHash.hash, salt: saltHash.salt}], { session })
 			.then(async (colab) => {
 				await AuditoriaColaborador.create([{colaborador: req.jwt.sub, ...req.body}], { session })
-				.then((audcolab) =>{
+				.then((_audcolab) =>{
 					res.status(201).json({ success: true, ...colab[0]["_doc"]}) // ["_doc"] é a posicao do obj de retorno onde se encontra o documento criado));
 				})
 				.catch(async (err) => {
 					await session.abortTransaction();
-					res.status(500).json({ success: false, ...err });
+					res.status(500).json({ success: false, msg: `${err}` });
 				});
 			})
 			.catch(async (err) => {
 				await session.abortTransaction();
-				res.status(500).json({ success: false, ...err })
+				res.status(500).json({ success: false, msg: `${err}` });
 			})
 		});
 	} catch (err) {
@@ -63,7 +63,7 @@ exports.new = async (req, res, next) => {
 }
 
 // Register a new user list
-exports.newList = (req, res, next) => {
+exports.newList = (req, res, _next) => {
 
 	req.body.forEach(colab => {
 		const saltHash = utils.genPassword(colab.senha);
@@ -78,13 +78,13 @@ exports.newList = (req, res, next) => {
 	
 	Colaborador.insertMany(req.body, (err, docs) => {
 		if (err)
-			return res.status(500).json({ success: false, ...err });
+			return res.status(500).json({ success: false, msg: `${err}` });
 	
 		res.status(201).json({ success: true, total: docs.length});
 	});   
 }
 
-exports.listAll = (req, res, next) => {
+exports.listAll = (req, res, _next) => {
 
 	Colaborador.find({}).skip(req.params.offset).limit(60)
 	.populate({path : 'id_unidade', select: 'nome -_id'})   //.populate('id_unidade id_perfil id_status')
@@ -97,11 +97,11 @@ exports.listAll = (req, res, next) => {
 			res.status(200).json({total: colabs.length, ...colabs});
 	})
 	.catch((err) => {
-		res.status(500).json(err);
+		res.status(500).json({success: false, msg: `${err}`});
 	});
 }
 
-exports.listActive = (req, res, next) => {
+exports.listActive = (req, res, _next) => {
 
 	Colaborador.find({id_status: "62cec6c463187bb9b498687b"}).skip(req.params.offset).limit(60)
 	.select("nome email cpf matricula id_unidade")
@@ -114,11 +114,11 @@ exports.listActive = (req, res, next) => {
 			res.status(200).json({total: colabs.length, ...colabs});
 	})
 	.catch((err) => {
-		res.status(500).json(err);
+		res.status(500).json({success: false, msg: `${err}`});
 	});
 }
 
-exports.listOne = (req, res, next) => {
+exports.listOne = (req, res, _next) => {
 	
 	Colaborador.findOne({ _id: req.params.id})
 	.select('-hash -salt')
@@ -132,11 +132,11 @@ exports.listOne = (req, res, next) => {
 			res.status(200).json(colab);
 	})
 	.catch((err) => {
-		res.status(500).json(err);
+		res.status(500).json({success: false, msg: `${err}`});
 	});
 }
 
-exports.edit = async (req, res, nxt) => {
+exports.edit = async (req, res, _nxt) => {
 	
 	const session = await mongoose.startSession();
 	try {    
@@ -154,12 +154,12 @@ exports.edit = async (req, res, nxt) => {
 				})
 				.catch(async (err) => {
 					await session.abortTransaction();
-					res.status(500).json({ success: false, ...err });
+					res.status(500).json({ success: false, msg: `${err}` });
 				});
 			})
 			.catch(async (err) => {
 				await session.abortTransaction();
-				res.status(500).json({ success: false, ...err });
+				res.status(500).json({ success: false, msg: `${err}` });
 			})
 		});
 	} catch (err) {
@@ -169,7 +169,7 @@ exports.edit = async (req, res, nxt) => {
 	}
 }
 
-exports.delete = async (req, res, nxt) => {
+exports.delete = async (req, res, _nxt) => {
 
 	const session = await mongoose.startSession();
 	try {
@@ -187,12 +187,12 @@ exports.delete = async (req, res, nxt) => {
 				})
 				.catch(async (err) => {
 					await session.abortTransaction();
-					res.status(500).json({ success: false, ...err });
+					res.status(500).json({ success: false, msg: `${err}` });
 				});
 			})
 			.catch(async (err) => {
 				await session.abortTransaction();
-				res.status(500).json({ success: false, ...err });
+				res.status(500).json({ success: false, msg: `${err}` });
 			})
 		});
 	} catch (err) {
@@ -202,9 +202,9 @@ exports.delete = async (req, res, nxt) => {
 	}
 }
 
-exports.deleteAll = (req, res, nxt) => {
+exports.deleteAll = (_req, res, _nxt) => {
 	
 	Colaborador.deleteMany({})  
 	.then((n) => (res.status(200).json({success: true, total: n.deletedCount})))
-	.catch((err) => (res.status(500).json(err)));
+	.catch((err) => (res.status(500).json({ success: false, msg: `${err}` })));
 }

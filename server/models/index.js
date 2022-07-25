@@ -17,6 +17,7 @@ const unidade = require('./unidade');
 
 
 mongoose.model("Aluno", aluno.AlunoSchema);
+mongoose.model("AuditoriaAluno", aluno.AuditoriaAlunoSchema);
 
 mongoose.model("Area", area.AreaSchema);
 

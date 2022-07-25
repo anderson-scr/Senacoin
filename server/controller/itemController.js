@@ -40,7 +40,7 @@ exports.new = (req, res, next) => {
 
     Item.create(req.body, (err, item) =>  {
         if (err)
-            return res.status(500).json({ success: false, ...err });
+            return res.status(500).json({ success: false, msg: `${err}` });
         
         // mv() é usada para colocar o arquivo na pasta do servidor
         img.mv(path.join(__basedir, caminho), (err) =>{
@@ -62,7 +62,7 @@ exports.newList = (req, res, next) => {
     
     Item.insertMany(req.body, (err, docs) => {
         if (err)
-            return res.status(500).json({ success: false, ...err });
+            return res.status(500).json({ success: false, msg: `${err}` });
     
         res.status(201).json({ success: true, total: docs.length});
     });
@@ -83,7 +83,7 @@ exports.listAll = (req, res, next) => {
 			res.status(200).json({total: itens.length, ...itens});
     })
     .catch((err) => {
-        res.status(500).json(err);
+        res.status(500).json({success: false, msg: `${err}`});
     });
 }
 
@@ -105,7 +105,7 @@ exports.listAllByCategory = (req, res, next) => {
 			res.status(200).json({total: itens.length, ...itens});
     })
     .catch((err) => {
-        res.status(500).json(err);
+        res.status(500).json({success: false, msg: `${err}`});
     });
 }
 
@@ -124,7 +124,7 @@ exports.listActive = (req, res, next) => {
 			res.status(200).json({total: itens.length, ...itens});
     })
     .catch((err) => {
-        res.status(500).json(err);
+        res.status(500).json({success: false, msg: `${err}`});
     });
 }
 
@@ -145,7 +145,7 @@ exports.listActiveByCategory = (req, res, next) => {
 			res.status(200).json({total: itens.length, ...itens});
     })
     .catch((err) => {
-        res.status(500).json(err);
+        res.status(500).json({success: false, msg: `${err}`});
     });
 }
 
@@ -164,7 +164,7 @@ exports.listOne = (req, res, next) => {
 		res.status(200).json({ success: true, item});
     })
     .catch((err) => {
-        res.status(500).json(err);
+        res.status(500).json({success: false, msg: `${err}`});
     });
 }
 
@@ -179,7 +179,7 @@ exports.edit = (req, res, nxt) => {
     .populate({path : 'id_unidade', select: 'nome cidade uf -_id'})
     .populate({path : 'id_status', select: '-_id'})
     .then((doc) => (res.status(200).json(doc)))
-    .catch((err) => (res.status(500).json(err)));
+    .catch((err) => (res.status(500).json({ success: false, msg: `${err}` })));
 }
 
 exports.delete = (req, res, nxt) => {
@@ -192,12 +192,12 @@ exports.delete = (req, res, nxt) => {
     .populate({path : 'id_unidade', select: 'nome cidade uf -_id'})
     .populate({path : 'id_status', select: '-_id'})
     .then((doc) => (res.status(200).json(doc)))
-    .catch((err) => (res.status(500).json(err)));
+    .catch((err) => (res.status(500).json({ success: false, msg: `${err}` })));
 }
 
 exports.deleteAll = (req, res, nxt) => {
 
     Item.deleteMany({})
     .then((n) => (res.status(200).json({success: true, total: n.deletedCount})))
-    .catch((err) => (res.status(500).json(err)));
+    .catch((err) => (res.status(500).json({ success: false, msg: `${err}` })));
 }

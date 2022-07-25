@@ -14,13 +14,13 @@ exports.ColaboradorSchema = new mongoose.Schema({
 }, { versionKey: false });
 
 exports.AuditoriaColaboradorSchema = new mongoose.Schema({
-	colaborador: {type: String, unique: false},
+	colaborador: {type: String},
 	data: {type: Date, immutable: true, default: () => Date.now(Date.now()-3600*1000*4)}, //fuso horario gmt-4,
 	
 	nome: {type: String, required: true},
 	email: {type: String, required: true},
 	cpf: {type: String, required: true},
-	matricula: {type: String, default: null},
+	matricula: {type: String, default: null}, // precisa trocar isso pra required true
 	permissoes: {type: PermissoesSchema, required: true},
 	id_unidade: [{type: mongoose.Types.ObjectId, ref: "Unidade", required: true}],
 	id_status: {type: mongoose.Types.ObjectId, ref: "Status", required: true}

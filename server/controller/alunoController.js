@@ -9,38 +9,56 @@ exports.login = (req, res, next) => {
     .then((aluno) => {
         
         if (!aluno)
-            return res.status(401).json({ success: false, msg: "aluno não encontrado." });
+            return res.status(401).json({ success: false, msg: "email/senha inválidos!" });
         
         const isValid = utils.validPassword(req.body.senha, aluno.hash, aluno.salt);  
         if (isValid)
         {
             const tokenObject = utils.issueJWT(aluno);
             res.status(200).json({ success: true, token: tokenObject.token, expiresIn: tokenObject.expires });
-            console.log(aluno)
         }
         else 
-            res.status(401).json({ success: false, msg: "aluno/senha inválidos!" });
+            res.status(401).json({ success: false, msg: "email/senha inválidos!" });
     })
     .catch((err) => {
-        res.status(500).json(err);
+        res.status(500).json({success: false, msg: `${err}`});
     });
 }
 
 // Register a new user
-exports.new = (req, res, next) => {
-    console.log(req.body)
+exports.new = async (req, res, next) => {
+    
     const saltHash = utils.genPassword(req.body.senha);
-    delete req.body.id_status;
+    delete req.body.senha;
     
     if (!("id_status" in req.body))
         req.body["id_status"] = "62cec6c463187bb9b498687b";
 
-    Aluno.create({...req.body, hash: saltHash.hash, salt: saltHash.salt, id_status: "62cec6c463187bb9b498687b"}, (err, aluno) =>  {
-        if (err)
-            return res.status(500).json({ success: false, ...err });
-        
-        res.status(201).json({ success: true, ...aluno["_doc"]}); // ["_doc"] é a posicao do obj de retorno onde se encontra o documento criado
-    });
+    const session = await mongoose.startSession();
+    try {
+        await session.withTransaction(async () => {
+
+            await Aluno.create([{...req.body, hash: saltHash.hash, salt: saltHash.salt}], { session })
+            .then(async (aluno) => {
+                await Aluno.create([{responsavel: req.jwt.sub, ...req.body}], { session })
+                .then((_audaluno) =>{
+                    res.status(201).json({ success: true, ...aluno[0]["_doc"]}) // ["_doc"] é a posicao do obj de retorno onde se encontra o documento criado));
+                })
+                .catch(async (err) => {
+                    await session.abortTransaction();
+                    res.status(500).json({ success: false, msg: `${err}` });
+                });
+            })
+            .catch(async (err) => {
+                await session.abortTransaction();
+                res.status(500).json({ success: false, msg: `${err}` });
+            })
+        });
+    } catch (err) {
+        res.status(500).json({ success: false, msg: `${err}` });
+    } finally {
+        await session.endSession();
+    }
 }
 
 // Register a new user list
@@ -59,7 +77,7 @@ exports.newList = (req, res, next) => {
     
     Aluno.insertMany(req.body, (err, docs) => {
         if (err)
-            return res.status(500).json({ success: false, ...err });
+            return res.status(500).json({ success: false, msg: `${err}` });
     
         res.status(201).json({ success: true, total: docs.length});
     });   
@@ -79,7 +97,7 @@ exports.listAll = (req, res, next) => {
             res.status(200).json({total: alunos.length, ...alunos});
     })
     .catch((err) => {
-        res.status(500).json(err);
+        res.status(500).json({success: false, msg: `${err}`});
     });
 }
 
@@ -96,7 +114,7 @@ exports.listActive = (req, res, next) => {
             res.status(200).json({total: alunos.length, ...alunos});
     })
     .catch((err) => {
-        res.status(500).json(err);
+        res.status(500).json({success: false, msg: `${err}`});
     });
 }
 
@@ -114,32 +132,79 @@ exports.listOne = (req, res, next) => {
             res.status(200).json(aluno);
     })
     .catch((err) => {
-        res.status(500).json(err);
+        res.status(500).json({success: false, msg: `${err}`});
     });
 }
 
-exports.edit = (req, res, nxt) => {
+exports.edit = async (req, res, nxt) => {
 
-    // delete req.body.id_status; // impede de enviar opcoes que não devem ser alteradas
-    Aluno.findByIdAndUpdate(req.params.id, {$set: req.body}, {new: true})
-    .select('-_id')
-    .populate({path : 'id_status', select: '-_id'})
-    .then((doc) => (res.status(200).json(doc)))
-    .catch((err) => (res.status(500).json(err)));
+    const session = await mongoose.startSession();
+	try {    
+		await session.withTransaction(async () => {
+		
+			await Aluno.findByIdAndUpdate(req.params.id, {$set: req.body}, { session: session, new: true})
+			.select('-_id')
+			.then(async (aluno) => {
+				if (!aluno)
+					return res.status(204).json();
+
+				await AuditoriaAluno.create([{responsavel: req.jwt.sub,  ...aluno._doc}], { session })
+				.then((audaluno) =>{
+					res.status(200).json({ success: true, ...audaluno[0]["_doc"]}); // ["_doc"] é a posicao do obj de retorno onde se encontra o documento criado));
+				})
+				.catch(async (err) => {
+					await session.abortTransaction();
+					res.status(500).json({ success: false, msg: `${err}` });
+				});
+			})
+			.catch(async (err) => {
+				await session.abortTransaction();
+				res.status(500).json({ success: false, msg: `${err}` });
+			})
+		});
+	} catch (err) {
+		res.status(500).json({ success: false, msg: `${err}` });
+	} finally {
+		await session.endSession();
+	}
 }
 
-exports.delete = (req, res, nxt) => {
+exports.delete = async (req, res, nxt) => {
 
-    Aluno.findByIdAndUpdate(req.params.id, {id_status: mongoose.Types.ObjectId("62cec7b263187bb9b498687e")}, {new: true})
-    .select('-_id')
-    .populate({path : 'id_status', select: '-_id'})
-    .then((doc) => (res.status(200).json(doc)))
-    .catch((err) => (res.status(500).json(err)));
+    const session = await mongoose.startSession();
+	try {
+		await session.withTransaction(async () => {
+
+			await Aluno.findByIdAndUpdate(req.params.id, {id_status: mongoose.Types.ObjectId("62cec7b263187bb9b498687e")}, { session: session, new: true})
+			.select('-_id')
+			.then(async (aluno) => {
+				if (!aluno)
+					return res.status(204).json();
+				
+				await AuditoriaAluno.create([{responsavel: req.jwt.sub,  ...aluno._doc}], { session })
+				.then((audaluno) =>{
+					res.status(200).json({ success: true, ...audaluno[0]["_doc"]}); // ["_doc"] é a posicao do obj de retorno onde se encontra o documento criado));
+				})
+				.catch(async (err) => {
+					await session.abortTransaction();
+					res.status(500).json({ success: false, msg: `${err}` });
+				});
+			})
+			.catch(async (err) => {
+				await session.abortTransaction();
+				res.status(500).json({ success: false, msg: `${err}` });
+			})
+		});
+	} catch (err) {
+		res.status(500).json({ success: false, msg: `${err}` });
+	} finally {
+		await session.endSession();
+	}
 }
 
 exports.deleteAll = (req, res, nxt) => {
     
     Aluno.deleteMany({})
     .then((n) => (res.status(200).json({success: true, total: n.deletedCount})))
-    .catch((err) => (res.status(500).json(err)));
+    .catch((err) => (res.status(500).json({ success: false, msg: `${err}` })));
 }
