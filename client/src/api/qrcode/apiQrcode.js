@@ -11,11 +11,9 @@ export const callQrcodeAPI = {
       console.log(error)
     }
   },
-
   todos: async () => {
     try {
       const apiResponse = await api.get(routes.qrcode.todos)
-      console.log(apiResponse.data)  
       return apiResponse.data
 
     } catch (error) {

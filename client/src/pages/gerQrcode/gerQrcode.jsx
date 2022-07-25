@@ -21,7 +21,7 @@ const GerQrcode = () => {
 
 
   return (
-    <Table apiRoute={callQrcodeAPI.todos} columnSchema={gerQrcodeTableSchema} rowSize={13} />
+    <Table apiRoute={callQrcodeAPI.todos} columnSchema={gerQrcodeTableSchema} rowSize={12} />
   )
 }
 

@@ -1,17 +1,22 @@
 import React, { useRef, useEffect, useState } from 'react'
-import ModalSelecionarItem from './modal/modalSelecionaItem'
-import ModalService from 'common/modal/services/modalService'
 import { useNavigate } from 'react-router-dom'
 import { verificaSessao } from 'auth/login/verificaSessao'
-import { yupResolver } from '@hookform/resolvers/yup';
+import QuestionTooltip from 'common/tooltips/questionTooltip'
+
+// Table
+import { yupResolver } from '@hookform/resolvers/yup'
 import { useForm } from "react-hook-form"
 import { yupSchemaCadQrcodeVinculado } from 'utils/validation/schemas/qrcode/vinculado'
-import QuestionTooltip from 'common/tooltips/questionTooltip'
+
+// Modal
+import ModalSelecionarItem from 'common/preMadeModal/selects/modalSelecionaItem'
+import ModalService from 'common/modal/services/modalService'
 
 
 const QrcodeVinculado = () => {
   const navigate = useNavigate()
   const effectOnce = useRef(true)
+  const [itemsVinculados, setItemsVinculados] = useState([])
 
   const { register, handleSubmit, formState: {
     errors
@@ -32,7 +37,7 @@ const QrcodeVinculado = () => {
 
   const abrirModal = (evt) => {
     evt.preventDefault()
-    ModalService.open(ModalSelecionarItem)
+    ModalService.open(ModalSelecionarItem, {}, setItemsVinculados)
   }
 
 
@@ -59,7 +64,7 @@ const QrcodeVinculado = () => {
         </div>
         <div className="mb-2">
           <QuestionTooltip label='Item(s) vinculado ao Qrcode' msg='Selecionar quais items irão receberem a promoção.' />
-          <input type="button" value="Selecionar item" onClick={evt => abrirModal(evt)} className="form-control" id="iptNome" {...register("item_vinculado")}/>
+          <input type="button" value={`${itemsVinculados.length} item(s) selecionado(s)`} onClick={evt => abrirModal(evt)} className="form-control" id="iptNome" {...register("item_vinculado")}/>
           <div style={{height: '25px'}}>
             {errors?.item_vinculado?.type &&
               <div className="form-text text-danger">Preencha o campo corretamente.</div>
