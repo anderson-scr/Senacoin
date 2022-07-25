@@ -15,19 +15,43 @@ function clientesPDF() {
         {
             table: {
                 headerRows: 1,
-                width: ['*', '*', '*', '*'],
+                widths: ['*', 55, '*', '*'],
                 body: [
                     [
-                        {text: 'Nome', style: 'tableHeader', fontSize: 10},
-                        {text: 'Matrícula', style: 'tableHeader', fontSize: 10},
-                        {text: 'Unidade', style: 'tableHeader', fontSize: 10},
-                        {text: 'Email', style: 'tableHeader', fontSize: 10 }
+                        {text: 'Nome', style: 'tableHeader', fontSize: 12},
+                        {text: 'Matrícula', style: 'tableHeader', fontSize: 12},
+                        {text: 'Unidade', style: 'tableHeader', fontSize: 12},
+                        {text: 'Email', style: 'tableHeader', fontSize: 12 }
                     ],
                     [
-                        {text: 'Joãozinho Games', fontSize: 8},
-                        {text: '000001', fontSize: 8},
-                        {text: 'Hub Academy', fontSize: 8},
-                        {text: 'Mateus', fontSize: 8},
+                        {text: 'Joãozinho Games', fontSize: 10},
+                        {text: '000001', fontSize: 10},
+                        {text: 'Hub Academy', fontSize: 10},
+                        {text: 'joaozinho@games.com', fontSize: 10},
+                    ],
+                    [
+                        {text: 'Atrobaldo', fontSize: 10},
+                        {text: '000002', fontSize: 10},
+                        {text: 'Hub Academy', fontSize: 10},
+                        {text: 'astrobaldo.astronalta@mail.com', fontSize: 10},
+                    ],
+                    [
+                        {text: 'Michael Jackson', fontSize: 10},
+                        {text: '000003', fontSize: 10},
+                        {text: 'Hub Academy', fontSize: 10},
+                        {text: 'billie_jean@husbe.com', fontSize: 10},
+                    ],
+                    [
+                        {text: 'Michael Jackson Jubilei Jubileu Jubileu', fontSize: 10},
+                        {text: '000003', fontSize: 10},
+                        {text: 'Hub Academy', fontSize: 10},
+                        {text: 'billie_jean@husbe.com', fontSize: 10},
+                    ],
+                    [
+                        {text: 'Michael Jackson', fontSize: 10},
+                        {text: '000003', fontSize: 10},
+                        {text: 'Hub Academy', fontSize: 10},
+                        {text: 'billie_jean@husbe.com', fontSize: 10},
                     ]
                 ]
             },
@@ -40,7 +64,7 @@ function clientesPDF() {
         return(
             {
                 text: `${currentPage} / ${pageCount}`,
-                fontSize: 9,
+                fontSize: 12,
                 aligment: 'right',
                 bold: true,
                 margin: [0, 10, 20, 0]

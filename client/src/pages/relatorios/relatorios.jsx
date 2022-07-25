@@ -17,8 +17,8 @@ const Relatorios = () => {
   return (
     <>
       <div className='formRelatorios'>
-        <form className="col-6">
-          <select className="form-select mb-3" aria-label="Default select example" onChange={(e) => setTipo(e.target.value)}>
+        <form className=''>
+          <select className="form-select mb-3 col-6" aria-label="Default select example" onChange={(e) => setTipo(e.target.value)}>
             <option selected>Selecione seu relatôrio</option>
             <option value="1">Alunos</option>
             <option value="2">Unidades*</option>
@@ -35,17 +35,12 @@ const Relatorios = () => {
               <input onChange={(e) => setDataFim(e.target.value)} type="date" className="form-control col-3" id="fim" />
             </div>
           </div>
-
-          {/* BsFileEarmarkPdf */}
-
-          <input onClick={clientesPDF} type="button" className='btn btn-danger col-12 w-50 m-3' value="Gerar PDF" />
-          
-          <input onClick={clientesPDF} type="button" className='btn btn-success col-12 w-50 m-3' value="Gerar Excel" />
-          
-          <input type="submit" className='btn btn-primary col-12 w-50 m-3' value="Visualizar Relatório" />
-
+          <div className='btns d-flex flex-column mt-3'>
+            <input onClick={clientesPDF} type="button" className='btn btn-danger col-3 mt-3' value="Gerar PDF" />            
+            <input onClick={clientesPDF} type="button" className='btn btn-success col-3 mt-3' value="Gerar Excel" />            
+            <input type="submit" className='btn btn-primary col-3 mt-3' value="Visualizar Relatório" />
+          </div>
         </form>
-
       </div>
     </>
   )
