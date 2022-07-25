@@ -2,7 +2,10 @@ const mongoose = require('mongoose');
 const Status = mongoose.model('Status');
 
 
-exports.new = (req, res, next) => {
+exports.new = (req, res, _next) => {
+
+    if (!Object.keys(req.body).length)
+		return res.status(400).json({ success: false, msg: "solicitação mal construída, informações faltando ou incorretas" });
 
     Status.create(req.body, (err, status) =>  {
         if (err)
@@ -12,7 +15,10 @@ exports.new = (req, res, next) => {
     });
 }
 
-exports.newList = (req, res, next) => {
+exports.newList = (req, res, _next) => {
+
+    if (!Object.keys(req.body).length)
+		return res.status(400).json({ success: false, msg: "solicitação mal construída, informações faltando ou incorretas" });
     
     Status.insertMany(req.body, (err, docs) => {
         if (err)
@@ -22,7 +28,7 @@ exports.newList = (req, res, next) => {
     });
 }
 
-exports.listAll = (req, res, next) => {
+exports.listAll = (_req, res, _next) => {
 
 	Status.find({})
     .then((status) => {
@@ -37,7 +43,10 @@ exports.listAll = (req, res, next) => {
     });
 }
 
-exports.edit = (req, res, nxt) => {
+exports.edit = (req, res, _nxt) => {
+
+    if (!Object.keys(req.body).length)
+		return res.status(400).json({ success: false, msg: "solicitação mal construída, informações faltando ou incorretas" });
 
     Status.findByIdAndUpdate(req.params.id, {$set: req.body}, {new: true})
     .select('-_id')
@@ -45,7 +54,7 @@ exports.edit = (req, res, nxt) => {
     .catch((err) => (res.status(500).json({ success: false, msg: `${err}` })));
 }
 
-exports.delete = (req, res, nxt) => {
+exports.delete = (req, res, _nxt) => {
 
     Status.findByIdAndDelete(req.params.id, (err, doc) => {
 		if (err)
@@ -55,7 +64,7 @@ exports.delete = (req, res, nxt) => {
 	});
 }
 
-exports.deleteAll = (req, res, nxt) => {
+exports.deleteAll = (_req, res, _nxt) => {
     
     Status.deleteMany({})
     .then((n) => (res.status(200).json({success: true, total: n.deletedCount})))

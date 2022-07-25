@@ -4,7 +4,10 @@ const AuditoriaArea = mongoose.model('AuditoriaArea');
 
 
 
-exports.new = async (req, res, next) => {
+exports.new = async (req, res, _next) => {
+
+    if (!Object.keys(req.body).length)
+		return res.status(400).json({ success: false, msg: "solicitação mal construída, informações faltando ou incorretas" });
 
     if (!("id_status" in req.body))
         req.body["id_status"] = "62cec6c463187bb9b498687b";
@@ -36,7 +39,10 @@ exports.new = async (req, res, next) => {
     }
 }
 
-exports.newList = (req, res, next) => {
+exports.newList = (req, res, _next) => {
+
+    if (!Object.keys(req.body).length)
+		return res.status(400).json({ success: false, msg: "solicitação mal construída, informações faltando ou incorretas" });
 
     req.body.forEach(area => {
         if (!("id_status" in area))
@@ -51,7 +57,7 @@ exports.newList = (req, res, next) => {
     });
 }
 
-exports.listAll = (req, res, next) => {
+exports.listAll = (_req, res, _next) => {
 
 	Area.find({})
     .select("nome descricao id_unidade id_status")
@@ -69,7 +75,7 @@ exports.listAll = (req, res, next) => {
     });
 }
 
-exports.listActive = (req, res, next) => {
+exports.listActive = (_req, res, _next) => {
     
 	Area.find({id_status: "62cec6c463187bb9b498687b"})
     .select("nome id_unidade -_id")
@@ -85,7 +91,7 @@ exports.listActive = (req, res, next) => {
     });
 }
 
-exports.listOne = (req, res, next) => {
+exports.listOne = (req, res, _next) => {
 
 	Area.findOne({ _id: req.params.id })
     .populate({path : 'id_unidade', select: 'nome cidade uf -_id'})
@@ -102,7 +108,10 @@ exports.listOne = (req, res, next) => {
     });
 }
 
-exports.edit = async (req, res, nxt) => {
+exports.edit = async (req, res, _nxt) => {
+    
+    if (!Object.keys(req.body).length)
+		return res.status(400).json({ success: false, msg: "solicitação mal construída, informações faltando ou incorretas" });
 
     const session = await mongoose.startSession();
 	try {    
@@ -135,7 +144,7 @@ exports.edit = async (req, res, nxt) => {
 	}
 }
 
-exports.delete = async (req, res, nxt) => {
+exports.delete = async (req, res, _nxt) => {
 
     const session = await mongoose.startSession();
 	try {    
@@ -168,7 +177,7 @@ exports.delete = async (req, res, nxt) => {
 	}
 }
 
-exports.deleteAll = (req, res, nxt) => {
+exports.deleteAll = (_req, res, _nxt) => {
     
     Area.deleteMany({})
     .then((n) => (res.status(200).json({success: true, total: n.deletedCount})))
