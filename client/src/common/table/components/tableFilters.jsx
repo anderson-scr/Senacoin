@@ -4,7 +4,7 @@ import { callUnidadeAPI } from 'api/common/callUnidades';
 import { callAreaAPI } from 'api/common/callArea';
 import { callSubcategoriaAPI } from 'api/common/callSubcategoria';
 
-const TableFilters = () => {
+const TableFilters = ({categoria}) => {
   const effectOnce = useRef(true)
   const [subcategorias, setSubcategorias] = useState([])
   const [unidades, setUnidades] = useState([])
@@ -52,7 +52,7 @@ const TableFilters = () => {
               }
             </select>
           </div>
-          <div className='mb-3 col-3 '>
+          {!categoria && <div className='mb-3 col-3 '>
             <label htmlFor="dropSubcategoria" className="form-label">Unidade</label>
             <select className="form-select" id='dropSubcategoria' aria-label="Default select example" defaultValue="DEFAULT">
               <option value="DEFAULT" disabled style={{display: "none"}}>Selecione</option>
@@ -62,7 +62,18 @@ const TableFilters = () => {
                 })
               }
             </select>
-          </div>
+          </div>}
+          {categoria && <div className='mb-3 col-3 '>
+            <label htmlFor="dropSubcategoria" className="form-label">Categoria</label>
+            <select className="form-select" id='dropSubcategoria' aria-label="Default select example" defaultValue="DEFAULT">
+              <option value="DEFAULT" disabled style={{display: "none"}}>Selecione</option>
+              {unidades.length > 1 &&
+                unidades.map((unidade, idx) => {
+                  return <option key={idx} value={idx + 1}>{unidade.nome}</option>
+                })
+              }
+            </select>
+          </div>}
           <div className="mb-3 col-3">
             <label htmlFor="iptPesquisa" className="form-label">Pesquisar</label>
             <div className="input-group">

@@ -1,7 +1,7 @@
 import React from 'react'
 
 export const RowCheckbox = React.forwardRef(
-  ({ indeterminate, ...rest }, ref) => {
+  ({ indeterminate, onClickFunc, ...rest }, ref) => {
     const defaultRef = React.useRef()
     const resolvedRef = ref || defaultRef
 
@@ -11,7 +11,7 @@ export const RowCheckbox = React.forwardRef(
 
     return (
       <>
-        <input className="form-check-input" type="checkbox" ref={resolvedRef} {...rest} />
+        <input className="form-check-input" onClick={onClickFunc} type="checkbox" ref={resolvedRef} {...rest} />
       </>
     )
   }

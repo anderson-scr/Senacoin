@@ -13,20 +13,18 @@ import { useTable, usePagination, useRowSelect } from 'react-table'
 import { RowCheckbox } from './components/rowSelection'
 import { RowEdit } from './components/rowEdit'
 
-//Modal imports
+// Modal imports
 import ModalService from 'common/modal/services/modalService' 
 import ModalEditItem from 'pages/gerItem/modal/modalEditItem'
 
 // CSS
 import './tableStyle.css'
 
-const Table = ({apiRoute, columnSchema, rowSize, setCurrentState}) => {
+const Table = ({apiRoute, columnSchema, rowSize, setCurrentState, filters = true, categoria = false}) => {
   const effectOnce = useRef(true)
   const [dataTabela, setDataTabela] = useState([])
   const navigate = useNavigate()
   
-
-
   useEffect(() => {
     if(effectOnce.current) {
       // Verify user session
@@ -41,12 +39,11 @@ const Table = ({apiRoute, columnSchema, rowSize, setCurrentState}) => {
 
       // Defines the amount of lines in the page
       setPageSize(rowSize)
-  
       return () => effectOnce.current = false
     }
   }, [navigate])
 
-
+  
   // Definindo as configs da tabela
   const tableInstance = useTable({
     columns: columnSchema,
@@ -79,7 +76,7 @@ const Table = ({apiRoute, columnSchema, rowSize, setCurrentState}) => {
               )
             },
             Cell: ( ({row}) => (
-              <RowCheckbox {...row.getToggleRowSelectedProps()} />
+              <RowCheckbox onClickFunc={updateState} {...row.getToggleRowSelectedProps()} />
             ))
           },
           ...columns
@@ -106,17 +103,18 @@ const Table = ({apiRoute, columnSchema, rowSize, setCurrentState}) => {
   const {  pageIndex } = state
 
   // Save current selected rows
-  useEffect(() => {
+  const updateState = () => {
+    console.log('update')
     const selectedIDs = []
     selectedFlatRows.forEach(selected => {
       selectedIDs.push(selected.original._id)
     })
     setCurrentState.funcs(selectedIDs)
-  }, [selectedFlatRows])
-
+  }
+ 
   return (
     <div>
-      <TableFilters />
+      {filters && <TableFilters categoriaOrUnidade={categoria} />}
       <div className='container mt-4 containerTable'>
         <table className="table">
           <thead className='tableHead'>
