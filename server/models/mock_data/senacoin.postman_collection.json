@@ -41,8 +41,6 @@
 					"request": {
 						"method": "POST",
 						"header": [],
-<<<<<<< HEAD
-=======
 						"body": {
 							"mode": "raw",
 							"raw": "{\r\n    \"nome\": \"Maicon Rafael Djéquison Flores\",\r\n    \"email\": \"maicon@mail.com\",\r\n    \"cpf\": \"365.823.770-86 \",\r\n    \"matricula\": \"28541864-5\",\r\n    \"senha\": \"maicon123\",\r\n\r\n    \"apelido\": \"Maicon Djéquison\",\r\n    \"telefone\": \"67 99933 7788\",\r\n    \"data_nasc\": \"1990-04-13\",\r\n\r\n    \"id_unidade\": [\"62d06f2c181c3910cc1f8269\", \"62d06f2c181c3910cc1f826d\"]\r\n}",
@@ -52,7 +50,6 @@
 								}
 							}
 						},
->>>>>>> Diego
 						"url": {
 							"raw": "{{URL}}/aluno/register",
 							"host": [
@@ -191,8 +188,6 @@
 						}
 					},
 					"response": []
-<<<<<<< HEAD
-=======
 				},
 				{
 					"name": "All",
@@ -211,7 +206,6 @@
 						}
 					},
 					"response": []
->>>>>>> Diego
 				}
 			]
 		},
@@ -225,11 +219,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-<<<<<<< HEAD
-							"raw": "{\r\n    \r\n}",
-=======
 							"raw": "",
->>>>>>> Diego
 							"options": {
 								"raw": {
 									"language": "json"
@@ -374,175 +364,20 @@
 						}
 					},
 					"response": []
-<<<<<<< HEAD
-				}
-			]
-		},
-		{
-			"name": "Categoria",
-			"item": [
-				{
-					"name": "Add",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{URL}}/categoria/add",
-							"host": [
-								"{{URL}}"
-							],
-							"path": [
-								"categoria",
-								"add"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Populate",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "[\r\n    {\r\n        \r\n    }\r\n]",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{URL}}/categoria/populate",
-							"host": [
-								"{{URL}}"
-							],
-							"path": [
-								"categoria",
-								"populate"
-							]
-						}
-					},
-					"response": []
-=======
->>>>>>> Diego
 				},
 				{
 					"name": "All",
 					"request": {
-<<<<<<< HEAD
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{URL}}/categoria/all",
-							"host": [
-								"{{URL}}"
-							],
-							"path": [
-								"categoria",
-								"all"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Active",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{URL}}/categoria/active",
-							"host": [
-								"{{URL}}"
-							],
-							"path": [
-								"categoria",
-								"active"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "One",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{URL}}/categoria/id",
-							"host": [
-								"{{URL}}"
-							],
-							"path": [
-								"categoria",
-								"id"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "One",
-					"request": {
-						"method": "PATCH",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{URL}}/categoria/id",
-							"host": [
-								"{{URL}}"
-							],
-							"path": [
-								"categoria",
-								"id"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "One",
-					"request": {
-						"method": "DELETE",
-						"header": [],
-						"url": {
-							"raw": "{{URL}}/categoria/id",
-=======
 						"method": "DELETE",
 						"header": [],
 						"url": {
 							"raw": "{{URL}}/area/truncate",
->>>>>>> Diego
 							"host": [
 								"{{URL}}"
 							],
 							"path": [
-<<<<<<< HEAD
-								"categoria",
-								"id"
-=======
 								"area",
 								"truncate"
->>>>>>> Diego
 							]
 						}
 					},
@@ -560,11 +395,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-<<<<<<< HEAD
-							"raw": "{\r\n    \"email\": \"\",\r\n    \"senha\":\"\"\r\n}",
-=======
 							"raw": "{\r\n    \"email\": \"diego@mail.com\",\r\n    \"senha\":\"0264\"\r\n}",
->>>>>>> Diego
 							"options": {
 								"raw": {
 									"language": "json"
@@ -591,11 +422,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-<<<<<<< HEAD
-							"raw": "{\r\n    \r\n}",
-=======
 							"raw": "{\r\n    \"nome\": \"Rato Firulinha\",\r\n    \"email\": \"rato@firulinha.com\",\r\n    \"cpf\": \"367.237.170-07 \",\r\n    \"matricula\": \"28312491-1\",\r\n    \"senha\": \"2818\",\r\n    \"permissoes\":{\r\n        \"cad_usuarios\": true,\r\n        \"cad_itens\": true,\r\n        \"cad_perfis\": true,\r\n        \"cad_areas\": true,\r\n        \"cad_subcategorias\": true,\r\n        \"cad_promocoes\": true,\r\n        \"cad_unidades\": true,\r\n        \"cad_qrcodes\": true,\r\n        \"ger_usuarios\": true,\r\n        \"ger_itens\": true,\r\n        \"ger_promocoes\": true,\r\n        \"ger_qrcodes\": true,\r\n        \"relatorios\": true\r\n    },\r\n    \"id_unidade\": [\r\n        \"62d06f2c181c3910cc1f8269\"\r\n    ]\r\n}",
->>>>>>> Diego
 							"options": {
 								"raw": {
 									"language": "json"
@@ -619,9 +446,6 @@
 					"name": "Populate",
 					"request": {
 						"method": "POST",
-<<<<<<< HEAD
-						"header": [],
-=======
 						"header": [
 							{
 								"key": "x-user-email",
@@ -629,7 +453,6 @@
 								"type": "text"
 							}
 						],
->>>>>>> Diego
 						"body": {
 							"mode": "raw",
 							"raw": "[\r\n    {\r\n        \r\n    }\r\n]",
@@ -658,22 +481,14 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-<<<<<<< HEAD
-							"raw": "{{URL}}/colaborador/all",
-=======
 							"raw": "{{URL}}/colaborador/all/0",
->>>>>>> Diego
 							"host": [
 								"{{URL}}"
 							],
 							"path": [
 								"colaborador",
-<<<<<<< HEAD
-								"all"
-=======
 								"all",
 								"0"
->>>>>>> Diego
 							]
 						}
 					},
@@ -685,22 +500,14 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-<<<<<<< HEAD
-							"raw": "{{URL}}/colaborador/active",
-=======
 							"raw": "{{URL}}/colaborador/active/0",
->>>>>>> Diego
 							"host": [
 								"{{URL}}"
 							],
 							"path": [
 								"colaborador",
-<<<<<<< HEAD
-								"active"
-=======
 								"active",
 								"0"
->>>>>>> Diego
 							]
 						}
 					},
@@ -710,11 +517,6 @@
 					"name": "One",
 					"request": {
 						"method": "GET",
-<<<<<<< HEAD
-						"header": [],
-						"url": {
-							"raw": "{{URL}}/colaborador/id",
-=======
 						"header": [
 							{
 								"key": "x-user-email",
@@ -724,17 +526,12 @@
 						],
 						"url": {
 							"raw": "{{URL}}/colaborador/62cecd9905509c21bdeea375",
->>>>>>> Diego
 							"host": [
 								"{{URL}}"
 							],
 							"path": [
 								"colaborador",
-<<<<<<< HEAD
-								"id"
-=======
 								"62cecd9905509c21bdeea375"
->>>>>>> Diego
 							]
 						}
 					},
@@ -747,11 +544,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-<<<<<<< HEAD
-							"raw": "{\r\n    \r\n}",
-=======
 							"raw": "{\r\n    \"permissoes\": {\r\n        \"cad_usuarios\": true,\r\n        \"cad_itens\": true,\r\n        \"cad_perfis\": true,\r\n        \"cad_areas\": true,\r\n        \"cad_subcategorias\": true,\r\n        \"cad_promocoes\": true,\r\n        \"cad_unidades\": true,\r\n        \"cad_qrcodes\": true,\r\n        \"cad_status\": true,\r\n        \"ger_usuarios\": true,\r\n        \"ger_itens\": true,\r\n        \"ger_promocoes\": true,\r\n        \"ger_qrcodes\": true,\r\n        \"relatorios\": true\r\n    }\r\n}",
->>>>>>> Diego
 							"options": {
 								"raw": {
 									"language": "json"
@@ -759,21 +552,13 @@
 							}
 						},
 						"url": {
-<<<<<<< HEAD
-							"raw": "{{URL}}/colaborador/id",
-=======
 							"raw": "{{URL}}/colaborador/62cecfb605509c21bdeea37b",
->>>>>>> Diego
 							"host": [
 								"{{URL}}"
 							],
 							"path": [
 								"colaborador",
-<<<<<<< HEAD
-								"id"
-=======
 								"62cecfb605509c21bdeea37b"
->>>>>>> Diego
 							]
 						}
 					},
@@ -796,8 +581,6 @@
 						}
 					},
 					"response": []
-<<<<<<< HEAD
-=======
 				},
 				{
 					"name": "All",
@@ -822,7 +605,6 @@
 						}
 					},
 					"response": []
->>>>>>> Diego
 				}
 			]
 		},
@@ -862,74 +644,14 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-<<<<<<< HEAD
-							"raw": "{{URL}}/item/all",
-=======
 							"raw": "{{URL}}/item/all/0",
->>>>>>> Diego
 							"host": [
 								"{{URL}}"
 							],
 							"path": [
 								"item",
-<<<<<<< HEAD
-								"all"
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		},
-		{
-			"name": "Produto",
-			"item": [
-				{
-					"name": "Add",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{URL}}/item/produto/add",
-							"host": [
-								"{{URL}}"
-							],
-							"path": [
-								"item",
-								"produto",
-								"add"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "All",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{URL}}/item/produto/all",
-							"host": [
-								"{{URL}}"
-							],
-							"path": [
-								"item",
-								"produto",
-								"all"
-=======
 								"all",
 								"0"
->>>>>>> Diego
 							]
 						}
 					},
@@ -939,11 +661,6 @@
 					"name": "Active",
 					"request": {
 						"method": "GET",
-<<<<<<< HEAD
-						"header": [],
-						"url": {
-							"raw": "{{URL}}/item/produto/active",
-=======
 						"header": [
 							{
 								"key": "x-user-email",
@@ -953,19 +670,13 @@
 						],
 						"url": {
 							"raw": "{{URL}}/item/active/0",
->>>>>>> Diego
 							"host": [
 								"{{URL}}"
 							],
 							"path": [
 								"item",
-<<<<<<< HEAD
-								"produto",
-								"active"
-=======
 								"active",
 								"0"
->>>>>>> Diego
 							]
 						}
 					},
@@ -977,20 +688,12 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-<<<<<<< HEAD
-							"raw": "{{URL}}/item/produto/id",
-=======
 							"raw": "{{URL}}/item/id",
->>>>>>> Diego
 							"host": [
 								"{{URL}}"
 							],
 							"path": [
 								"item",
-<<<<<<< HEAD
-								"produto",
-=======
->>>>>>> Diego
 								"id"
 							]
 						}
@@ -1012,20 +715,12 @@
 							}
 						},
 						"url": {
-<<<<<<< HEAD
-							"raw": "{{URL}}/item/produto/id",
-=======
 							"raw": "{{URL}}/item/id",
->>>>>>> Diego
 							"host": [
 								"{{URL}}"
 							],
 							"path": [
 								"item",
-<<<<<<< HEAD
-								"produto",
-=======
->>>>>>> Diego
 								"id"
 							]
 						}
@@ -1038,9 +733,6 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-<<<<<<< HEAD
-							"raw": "{{URL}}/item/produto/id",
-=======
 							"raw": "{{URL}}/item/id",
 							"host": [
 								"{{URL}}"
@@ -1098,16 +790,12 @@
 						},
 						"url": {
 							"raw": "{{URL}}/item/produto/add",
->>>>>>> Diego
 							"host": [
 								"{{URL}}"
 							],
 							"path": [
 								"item",
 								"produto",
-<<<<<<< HEAD
-								"id"
-=======
 								"add"
 							]
 						}
@@ -1149,7 +837,6 @@
 								"produto",
 								"active",
 								"0"
->>>>>>> Diego
 							]
 						}
 					},
@@ -1194,23 +881,15 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-<<<<<<< HEAD
-							"raw": "{{URL}}/item/evento/all",
-=======
 							"raw": "{{URL}}/item/evento/all/0",
->>>>>>> Diego
 							"host": [
 								"{{URL}}"
 							],
 							"path": [
 								"item",
 								"evento",
-<<<<<<< HEAD
-								"all"
-=======
 								"all",
 								"0"
->>>>>>> Diego
 							]
 						}
 					},
@@ -1222,89 +901,15 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-<<<<<<< HEAD
-							"raw": "{{URL}}/item/evento/active",
-=======
 							"raw": "{{URL}}/item/evento/active/0",
->>>>>>> Diego
 							"host": [
 								"{{URL}}"
 							],
 							"path": [
 								"item",
 								"evento",
-<<<<<<< HEAD
-								"active"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "One",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{URL}}/item/evento/id",
-							"host": [
-								"{{URL}}"
-							],
-							"path": [
-								"item",
-								"evento",
-								"id"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "One",
-					"request": {
-						"method": "PATCH",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{URL}}/item/evento/id",
-							"host": [
-								"{{URL}}"
-							],
-							"path": [
-								"item",
-								"evento",
-								"id"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "One",
-					"request": {
-						"method": "DELETE",
-						"header": [],
-						"url": {
-							"raw": "{{URL}}/item/evento/id",
-							"host": [
-								"{{URL}}"
-							],
-							"path": [
-								"item",
-								"evento",
-								"id"
-=======
 								"active",
 								"0"
->>>>>>> Diego
 							]
 						}
 					},
@@ -1349,23 +954,15 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-<<<<<<< HEAD
-							"raw": "{{URL}}/item/servico/all",
-=======
 							"raw": "{{URL}}/item/servico/all/0",
->>>>>>> Diego
 							"host": [
 								"{{URL}}"
 							],
 							"path": [
 								"item",
 								"servico",
-<<<<<<< HEAD
-								"all"
-=======
 								"all",
 								"0"
->>>>>>> Diego
 							]
 						}
 					},
@@ -1377,89 +974,15 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-<<<<<<< HEAD
-							"raw": "{{URL}}/item/servico/active",
-=======
 							"raw": "{{URL}}/item/servico/active/0",
->>>>>>> Diego
 							"host": [
 								"{{URL}}"
 							],
 							"path": [
 								"item",
 								"servico",
-<<<<<<< HEAD
-								"active"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "One",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{URL}}/item/servico/id",
-							"host": [
-								"{{URL}}"
-							],
-							"path": [
-								"item",
-								"servico",
-								"id"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "One",
-					"request": {
-						"method": "PATCH",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{URL}}/item/servico/id",
-							"host": [
-								"{{URL}}"
-							],
-							"path": [
-								"item",
-								"servico",
-								"id"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "One",
-					"request": {
-						"method": "DELETE",
-						"header": [],
-						"url": {
-							"raw": "{{URL}}/item/servico/id",
-							"host": [
-								"{{URL}}"
-							],
-							"path": [
-								"item",
-								"servico",
-								"id"
-=======
 								"active",
 								"0"
->>>>>>> Diego
 							]
 						}
 					},
@@ -1622,8 +1145,6 @@
 						}
 					},
 					"response": []
-<<<<<<< HEAD
-=======
 				},
 				{
 					"name": "All",
@@ -1642,7 +1163,6 @@
 						}
 					},
 					"response": []
->>>>>>> Diego
 				}
 			]
 		},
@@ -1801,8 +1321,6 @@
 						}
 					},
 					"response": []
-<<<<<<< HEAD
-=======
 				},
 				{
 					"name": "All",
@@ -1821,7 +1339,6 @@
 						}
 					},
 					"response": []
->>>>>>> Diego
 				}
 			]
 		},
@@ -1888,22 +1405,14 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-<<<<<<< HEAD
-							"raw": "{{URL}}/qrcode/all",
-=======
 							"raw": "{{URL}}/qrcode/all/0",
->>>>>>> Diego
 							"host": [
 								"{{URL}}"
 							],
 							"path": [
 								"qrcode",
-<<<<<<< HEAD
-								"all"
-=======
 								"all",
 								"0"
->>>>>>> Diego
 							]
 						}
 					},
@@ -1915,22 +1424,14 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-<<<<<<< HEAD
-							"raw": "{{URL}}/qrcode/active",
-=======
 							"raw": "{{URL}}/qrcode/active/0",
->>>>>>> Diego
 							"host": [
 								"{{URL}}"
 							],
 							"path": [
 								"qrcode",
-<<<<<<< HEAD
-								"active"
-=======
 								"active",
 								"0"
->>>>>>> Diego
 							]
 						}
 					},
@@ -1998,8 +1499,6 @@
 						}
 					},
 					"response": []
-<<<<<<< HEAD
-=======
 				},
 				{
 					"name": "All",
@@ -2018,7 +1517,6 @@
 						}
 					},
 					"response": []
->>>>>>> Diego
 				}
 			]
 		},
@@ -2159,8 +1657,6 @@
 						}
 					},
 					"response": []
-<<<<<<< HEAD
-=======
 				},
 				{
 					"name": "All",
@@ -2532,7 +2028,6 @@
 						}
 					},
 					"response": []
->>>>>>> Diego
 				}
 			]
 		},
@@ -2691,8 +2186,6 @@
 						}
 					},
 					"response": []
-<<<<<<< HEAD
-=======
 				},
 				{
 					"name": "All",
@@ -2711,7 +2204,6 @@
 						}
 					},
 					"response": []
->>>>>>> Diego
 				}
 			]
 		}
@@ -2721,11 +2213,7 @@
 		"bearer": [
 			{
 				"key": "token",
-<<<<<<< HEAD
-				"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2MmNlY2ZiNjA1NTA5YzIxYmRlZWEzN2IiLCJpYXQiOjE2NTgxNTg1NDE4NDQsImV4cCI6MTY1ODE1ODYyODI0NH0.U9UW2464fSqQsCorUUlKCoJIbl3Sfb5Pyr7o4VZ7wskiypKYlK4kkw6nFiVO-GTumQVkbRwAb0n-MWX16fA4x3fDmDqEH1BKaLlq7VTK0pu91LgwAN09DWU4Y8yvsstuJNCPvnFsxPfzvQwWcDr7Tpx027XP0bEzwiQqweNoWKY2pilg2kkMge-ZAz6Q-TaFnO54cs9qihgzcMR9WBDxn73U81HqvAIbnbg2iMx-fevxWKWEAcq5JHzoG8Spimq5zqtTTkhFSr5Q-rJ14vht0hwhWroeYqwl9_W4quTAwUkcdf2ouW7AejnHpW5oxM7fxlKf72ugmFOwotHtKghSE1jEISHdvK9-0EdV2v_noxwx5PTBpX6rpQE1JZN5h5mr5f5b6K1CUWyvjzFJlQ1jYPbOhhxcBR4Dri5v23SARgH1iKlkytgP7xDpo2vJ0FngtK3EcMxTvJHc0yM03pFK2LuMVT0EyYfVK6rL_YJ039TfmoHxqUlDjz0_bao8DDIg17nO08-QYGyMqoyyv1ctcHdqZrJNupkmu2gcQx6Al_-KkzK23SvDKk4yTIAzvTDLOWs0mmo4REJgWVLik37rGoH8kn7PeA8L9sKEgjrxJNPAaokXEfPbJXj2l6pKLz8vFqy4G0ddYg5OIN8fVvL5Acxv7CIXeTjw0vOWevz_vJQ",
-=======
 				"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkaWVnb0BtYWlsLmNvbSIsImlhdCI6MTY1ODQzNzg1MSwiZXhwIjoxNjU4NTI0MjUxfQ.P1YRJW9q-151jBk6Hl3SeIyma-GDnzM6VNASN4mto9rn34A9ocqiJnA1yj6ZXb2pYOm6fU2KW8Lo4VbPC29YA1SoNHCTceIfDb8h5rIgHdUihRcOgyqTOGDUHkQ_2XDaw1qz_1rre420DhuGaf0IgvgwUNkd3MaRHWMpCEaacd6BN7puHQQbaCdLg7V-HNT1wo2gMDwHA1DkrVQ6uMMbf0WN8je6sXf6-GImy9yE-hyHmXXhTB1jZ_rwF9M7qB00WRLUBGnVu5XI27KLpOWhZjfFwDK7cSYVVGk9cLJn2g29JP6-cQimXS3l8Fqk-YFQm4fGXS7pgzd1Z0Z_7_3WJ7l0G50G--kKQ28yvJD_lNqPtNKZE7_WA6zDUFt_5I4vp6AUMgf1-b4UtsNnQJQteVmOA4sNaAembTUk1rtNXUx3HmUMIBYJF-nBegQvJeMeXd2pEIs1WMVcOtJIZJ-t4Zc0eTOPtTtMff30_UzL9knLQQg4gh6yIBPWKFnjl4Ja6KHeyG2f--jFnr9XlPE9XCTiEnbZ_yXmO_7Zj1UcPrKmm0O784nT2mBACA4IO5GCYzJLZUplAFIsgYL_ePPurxOMVeIq39DhBanMYWVn8xaBcoP-1svND2sUpxWPYQZupUkXaJqCg4vMVN5B4VrGYaMEB0SxDxYnBExQB0_wj5s",
->>>>>>> Diego
 				"type": "string"
 			}
 		]
