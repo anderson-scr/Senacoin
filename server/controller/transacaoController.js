@@ -38,7 +38,7 @@ exports.new = (req, res, next) => {
 
 	Senacoin.create({qnt_senacoins, validade_inicio, validade_fim}, (err, senacoin) =>  {
         if (err)
-            return res.status(500).json({ success: false, ...err });
+            return res.status(500).json({ success: false, msg: `${err}` });
 
         res.status(201).json({ success: true, ...senacoin["_doc"]});
     });
@@ -47,7 +47,7 @@ exports.new = (req, res, next) => {
 
     Transacao.create(req.body, (err, transacao) =>  {
         if (err)
-            return res.status(500).json({ success: false, ...err });
+            return res.status(500).json({ success: false, msg: `${err}` });
 
         res.status(201).json({ success: true, ...transacao["_doc"]});
     });
@@ -81,7 +81,7 @@ exports.newList = (req, res, next) => {
     
     Transacao.insertMany({obj_gerado_no_forEach}, (err, docs) => {
         if (err)
-            return res.status(500).json({ success: false, ...err });
+            return res.status(500).json({ success: false, msg: `${err}` });
     
         res.status(201).json({ success: true, total: docs.length});
     });
@@ -96,12 +96,12 @@ exports.listAll = (req, res, next) => {
     .then((transacoes) => {
         
         if (!transacoes.length)
-            return res.status(204).json({ success: false, msg: "nenhuma transação encontrada." });  
+            return res.status(204).json();  
         else
 			res.status(200).json({total: transacoes.length, ...transacoes});
     })
     .catch((err) => {
-        res.status(500).json(err);
+        res.status(500).json({success: false, msg: `${err}`});
     });
 }
 
@@ -114,12 +114,12 @@ exports.listAllByAluno = (req, res, next) => {
     .then((transacoes) => {
         
         if (!transacoes.length)
-            return res.status(204).json({ success: false, msg: "nenhuma transação encontrada para este aluno." });  
+            return res.status(204).json();  
         else
 			res.status(200).json({total: transacoes.length, ...transacoes});
     })
     .catch((err) => {
-        res.status(500).json(err);
+        res.status(500).json({success: false, msg: `${err}`});
     });
 }
 
@@ -134,12 +134,12 @@ exports.listOne = (req, res, next) => {
     .then((transacao) => {
         
         if (!transacao)
-			return res.status(204).json({ success: false, msg: "transação não encontrada." });
+			return res.status(204).json();
         
 		res.status(200).json({ success: true, [categoria]: transacao});
     })
     .catch((err) => {
-        res.status(500).json(err);
+        res.status(500).json({success: false, msg: `${err}`});
     });
 }
 
@@ -153,7 +153,7 @@ exports.edit = (req, res, nxt) => {
 	.populate({path : 'id_qrcode', select: '-_id'})
 	.populate({path : 'id_promocao', select: '-_id'})
 	.then((doc) => (res.status(200).json(doc)))
-	.catch((err) => (res.status(500).json(err)));
+	.catch((err) => (res.status(500).json({ success: false, msg: `${err}` })));
 }
 
 exports.delete = (req, res, nxt) => {
@@ -166,12 +166,12 @@ exports.delete = (req, res, nxt) => {
 	.populate({path : 'id_qrcode', select: '-_id'})
 	.populate({path : 'id_promocao', select: '-_id'})
 	.then((doc) => (res.status(200).json(doc)))
-	.catch((err) => (res.status(500).json(err)));
+	.catch((err) => (res.status(500).json({ success: false, msg: `${err}` })));
 }
 
 exports.deleteAll = (req, res, nxt) => {
     
     Transacao.deleteMany({})
 	.then((n) => (res.status(200).json({success: true, total: n.deletedCount})))
-    .catch((err) => (res.status(500).json(err)));
+    .catch((err) => (res.status(500).json({ success: false, msg: `${err}` })));
 }

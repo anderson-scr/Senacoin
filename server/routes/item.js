@@ -16,13 +16,13 @@ router.get('/:categoria/all/:offset', utils.authUserMiddleware, utils.authRoleMi
 // list all active items of a categoria
 router.get('/:categoria/active/:offset', utils.authUserMiddleware, utils.authRoleMiddleware("ger_itens"), controller.listActiveByCategory);
 // list single item
-router.get('/:categoria/:id', utils.authUserMiddleware, utils.authRoleMiddleware("ger_itens"), controller.listOne);
+router.get('/:id', utils.authUserMiddleware, utils.authRoleMiddleware("ger_itens"), controller.listOne);
 // edit a item
-router.patch('/:categoria/:id', utils.authUserMiddleware, utils.authRoleMiddleware("ger_itens"), controller.edit);
+router.patch('/:id', utils.authUserMiddleware, utils.authRoleMiddleware("ger_itens"), controller.edit);
 // delete all item
 router.delete('/truncate', utils.authUserMiddleware, utils.authRoleMiddleware("cad_itens"), controller.deleteAll);
 // delete a item
-router.delete('/:categoria/:id', utils.authUserMiddleware, utils.authRoleMiddleware("cad_itens"), controller.delete);
+router.delete('/:id', utils.authUserMiddleware, utils.authRoleMiddleware("cad_itens"), controller.delete);
 
 
 module.exports = router;

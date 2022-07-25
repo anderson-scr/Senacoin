@@ -9,7 +9,7 @@ exports.new = (req, res, next) => {
 
     Unidade.create(req.body, (err, unidade) =>  {
         if (err)
-            return res.status(500).json({ success: false, ...err });
+            return res.status(500).json({ success: false, msg: `${err}` });
 
         res.status(201).json({ success: true, ...unidade["_doc"]});
     });
@@ -24,7 +24,7 @@ exports.newList = (req, res, next) => {
     
     Unidade.insertMany(req.body, (err, docs) => {
         if (err)
-            return res.status(500).json({ success: false, ...err });
+            return res.status(500).json({ success: false, msg: `${err}` });
     
         res.status(201).json({ success: true, total: docs.length});
     });
@@ -38,12 +38,12 @@ exports.listAll = (req, res, next) => {
     .then((unidades) => {
         
         if (!unidades.length)
-            return res.status(204).json({ success: false, msg: "nenhuma unidade encontrada." });  
+            return res.status(204).json();  
         else
             res.status(200).json({total: unidades.length, ...unidades});
     })
     .catch((err) => {
-        res.status(500).json(err);
+        res.status(500).json({success: false, msg: `${err}`});
     });
 }
 
@@ -54,12 +54,12 @@ exports.listActive = (req, res, next) => {
     .then((unidades) => {
         
         if (!unidades.length)
-            return res.status(204).json({ success: false, msg: "nenhuma unidade encontrada." });  
+            return res.status(204).json();  
         else
             res.status(200).json({total: unidades.length, ...unidades});
     })
     .catch((err) => {
-        res.status(500).json(err);
+        res.status(500).json({success: false, msg: `${err}`});
     });
 }
 
@@ -70,12 +70,12 @@ exports.listOne = (req, res, next) => { // colocar um && pra procurar por id tbm
     .then((unidade) => {
         
         if (!unidade)
-			return res.status(204).json({ success: false, msg: "unidade não encontrada." });
+			return res.status(204).json();
         
 		res.status(200).json({ success: true, 'unidade': unidade});
     })
     .catch((err) => {
-        res.status(500).json(err);
+        res.status(500).json({success: false, msg: `${err}`});
     });
 }
 
@@ -86,7 +86,7 @@ exports.edit = (req, res, nxt) => {
     .select('-_id')
     .populate({path : 'id_status', select: '-_id'})
     .then((doc) => (res.status(200).json(doc)))
-    .catch((err) => (res.status(500).json(err)));
+    .catch((err) => (res.status(500).json({ success: false, msg: `${err}` })));
 }
 
 exports.delete = (req, res, nxt) => {
@@ -95,12 +95,12 @@ exports.delete = (req, res, nxt) => {
     .select('-_id')
     .populate({path : 'id_status', select: '-_id'})
     .then((doc) => (res.status(200).json(doc)))
-    .catch((err) => (res.status(500).json(err)));
+    .catch((err) => (res.status(500).json({ success: false, msg: `${err}` })));
 }
 
 exports.deleteAll = (req, res, nxt) => {
     
     Unidade.deleteMany({})
     .then((n) => (res.status(200).json({success: true, total: n.deletedCount})))
-    .catch((err) => (res.status(500).json(err)));
+    .catch((err) => (res.status(500).json({ success: false, msg: `${err}` })));
 }
