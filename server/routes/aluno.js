@@ -15,6 +15,10 @@ router.get('/all', utils.authUserMiddleware, utils.authRoleMiddleware("ger_usuar
 router.get('/active', utils.authUserMiddleware, utils.authRoleMiddleware("ger_usuarios"), controller.listActive);
 // list single aluno
 router.get('/:id', utils.authUserMiddleware, utils.authRoleMiddleware("ger_usuarios"), controller.listOne);
+// create a report with the requested data
+router.get('/:id/relatorio-aluno', utils.authUserMiddleware, utils.authRoleMiddleware("relatorios"), controller.studentReport);
+// create a report with the requested data
+router.get('/:id/relatorio-matricula', utils.authUserMiddleware, utils.authRoleMiddleware("relatorios"), controller.enrollmentReport);
 // edit a aluno
 router.patch('/:id', utils.authUserMiddleware, utils.authRoleMiddleware("ger_usuarios"), controller.edit);
 // delete all alunos

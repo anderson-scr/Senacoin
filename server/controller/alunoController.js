@@ -146,6 +146,54 @@ exports.listOne = (req, res, _next) => {
     });
 }
 
+exports.studentReport = (req, res, _next) => {
+
+    Aluno.findById(req.params.id)
+    .select('nome email matricula id_unidade id_status -_id')
+    .populate({path : 'id_unidade', select: 'nome cidade uf -_id'})   //.populate('id_unidade id_perfil id_status')
+    .populate({path : 'id_status', select: '-_id'})
+    .then((aluno) => {
+        if (!aluno)
+            res.status(204).json();
+
+        res.status(200).json({success: true, ...aluno._doc});
+    })
+    .catch((err) => {
+        res.status(500).json({success: false, msg: `${err}`})
+    })
+}
+
+exports.enrollmentReport = (req, res, _next) => {
+    
+    Aluno.findById(req.params.id)
+    .select('nome email matricula id_unidade id_status -_id')
+    .populate({path : 'id_unidade', select: 'nome cidade uf -_id'})   //.populate('id_unidade id_perfil id_status')
+    .populate({path : 'id_status', select: '-_id'})
+    .then((aluno) => {
+        if (!aluno)
+            return res.status(204).json();
+
+        console.log(aluno.email);
+        AuditoriaAluno.findOne({email: aluno.email})
+        .select('data -_id')
+        .then((audaluno) => {
+            console.log(audaluno);
+            if (!audaluno)
+            {
+                console.log('204 - 2');
+                return res.status (204).json();
+            }
+            res.status(200).json({success: true, ...aluno._doc, ...audaluno._doc})
+        })
+        .catch((err)=>{
+            res.status(500).json({success: false, msg: `${err}`})
+        })
+    })
+    .catch((err) => {
+        res.status(500).json({success: false, msg: `${err}`})
+    })
+}
+
 exports.edit = async (req, res, _nxt) => {
     
     if (!Object.keys(req.body).length)
