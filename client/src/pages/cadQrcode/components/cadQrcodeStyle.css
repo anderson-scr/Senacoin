@@ -24,8 +24,7 @@
     top: 0;
     padding: 10px;
     color: lightgray;
-    transition: 0.5s;
-    
+    transition: 0.5s;    
     
 }
 .testeAnimacao1 input:valid ~ span,
@@ -39,13 +38,48 @@
     letter-spacing: 0.2em;
     border-left: 1px solid #D2691E;
     border-right: 1px solid #D2691E;
-
     opacity: 1;
-    
-
 }
 .testeAnimacao1 input:valid,
 .testeAnimacao1 input:focus
+{
+    border: 1px solid rgb(210,105,30);
+}
+
+.flex-grow-1 input[type="date"]{
+    border: 1px solid rgb(128,128,128);
+    outline: none;
+    box-shadow: 0 0 0 0 ;
+    transition: 0.5s;
+}
+
+.flex-grow-1 input:valid,
+.flex-grow-1 input:focus
+{
+    border: 1px solid rgb(210,105,30);
+}
+
+.containerDesc textarea[type="text"]{
+    border: 1px solid rgb(128,128,128);
+    outline: none;
+    box-shadow: 0 0 0 0 ;
+    transition: 0.5;
+}
+
+.testeAnimacao2 textarea:valid ~ span,
+.testeAnimacao2 textarea:focus ~ span
+{
+    color: #fff;
+    transform: translateX(10px) translateY(-9px);
+    font-size: 14px;
+    padding: 0 10px;
+    background: #D2691E;
+    letter-spacing: 0.2em;
+    
+    
+}
+.testeAnimacao2 textarea:valid,
+.testeAnimacao2 textarea:focus
 {
     border: 1px solid rgb(210,105,30);
 }

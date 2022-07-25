@@ -91,7 +91,7 @@ const QrcodeLivre = () => {
         <div className='containerDouble d-flex'>
           <div className="mb-2 flex-grow-1">
             <QuestionTooltip label='Data inicial' msg='Define a data inicial do período em que o Qrcode estará disponível.' />
-            <input type="date" className="form-control" id="exampleInputPassword1" {...register("data_inicio")} />
+            <input type="date" className="form-control" id="exampleInputPassword1" required="required" {...register("data_inicio")} />
             <div style={{height: '25px'}}>
             {errors?.data_inicio?.type &&
               <div className="form-text text-danger">Preencha o campo corretamente.</div>
@@ -100,7 +100,7 @@ const QrcodeLivre = () => {
           </div>
           <div className="mb-2 flex-grow-1">
             <QuestionTooltip label='Data final' msg='Define a data final do período em que o Qrcode estará disponível.' />
-            <input type="date" className="form-control" id="exampleInputPassword1" {...register("data_fim")} />
+            <input type="date" className="form-control" id="exampleInputPassword1" required="required" {...register("data_fim")} />
             <div style={{height: '25px'}}>
             {errors?.data_fim?.type &&
               <div className="form-text text-danger">Preencha o campo corretamente.</div>
@@ -109,9 +109,11 @@ const QrcodeLivre = () => {
           </div>
         </div>
         
-        <div className="mb-2 flex-grow-1 containerDesc" >
-          <label htmlFor="exampleInputEmail1" className="form-label">Descrição</label>
-          <textarea type="text" className="iptDescricao form-control" id="exampleInputEmail1" aria-describedby="emailHelp" {...register("descricao")} />
+        <div className="mb-2 flex-grow-1 containerDesc">
+          <div className='testeAnimacao2'>
+            <textarea type="text" className="iptDescricao form-control" id="exampleInputEmail1" aria-describedby="emailHelp" required="required" {...register("descricao")} />
+            <span htmlFor="exampleInputEmail1" className="form-label">Descrição</span>
+          </div>
         </div>
       </div>
 

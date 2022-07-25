@@ -49,8 +49,10 @@ const QrcodeVinculado = () => {
       {/* First row */}
       <div className='col'>
         <div className="mb-2">
-          <label htmlFor="iptNome" className="form-label">Titulo</label>
-          <input type="text" className="form-control" id="iptNome" {...register("nome")} />
+          <div className='testeAnimacao1'>         
+            <input type="text" className="form-control" id="iptNome" required="required" {...register("nome")} />
+            <span htmlFor="iptNome" className="form-label">Titulo</span>
+          </div> 
           <div style={{height: '25px'}}>
             {errors?.nome?.type &&
               <div className="form-text text-danger">Preencha o campo corretamente.</div>
@@ -94,7 +96,7 @@ const QrcodeVinculado = () => {
         <div className='containerDouble d-flex'>
           <div className="mb-2 flex-grow-1">
             <QuestionTooltip label='Data inicial' msg='Define a data inicial do período em que o Qrcode estará disponível.' />
-            <input type="date" className="form-control" id="exampleInputPassword1" {...register("data_inicial")} />
+            <input type="date" className="form-control" id="exampleInputPassword1" required="required" {...register("data_inicial")} />
             <div style={{height: '25px'}}>
               {errors?.data_inicio?.type &&
                 <div className="form-text text-danger">Preencha o campo corretamente.</div>
@@ -103,7 +105,7 @@ const QrcodeVinculado = () => {
           </div>
           <div className="mb-2 flex-grow-1">
             <QuestionTooltip label='Data final' msg='Define a data final do período em que o Qrcode estará disponível.' />
-            <input type="date" className="form-control" id="exampleInputPassword1" {...register("data_final")} />
+            <input type="date" className="form-control" id="exampleInputPassword1" required="required" {...register("data_final")} />
             <div style={{height: '25px'}}>
               {errors?.data_fim?.type &&
                 <div className="form-text text-danger">Preencha o campo corretamente.</div>
@@ -113,8 +115,10 @@ const QrcodeVinculado = () => {
         </div>
         
         <div className="mb-2 flex-grow-1 containerDesc" >
-          <label htmlFor="exampleInputEmail1" className="form-label">Descrição</label>
-          <input type="text" className="iptDescricao form-control" id="exampleInputEmail1" aria-describedby="emailHelp" {...register("descricao")} />
+          <div className='testeAnimacao2'>
+            <textarea type="text" className="iptDescricao form-control" id="exampleInputEmail1" aria-describedby="emailHelp" required="required" {...register("descricao")} />
+            <span htmlFor="exampleInputEmail1" className="form-label">Descrição</span>
+          </div>
         </div>
       </div>
 
