@@ -1,5 +1,10 @@
-import { routes } from "api/routes/routes"
+import { routes } from 'api/routes/routes'
 import api from '../routes/default'
+
+// Modal
+import ModalService from 'common/modal/services/modalService'
+import ModalCadErro from 'common/preMadeModal/resultados/cadErro'
+import ModalCadCorreto from 'common/preMadeModal/resultados/cadCorreto'
 
 export const callUnidadeAPI = {
   ativo: async () => {
@@ -8,7 +13,16 @@ export const callUnidadeAPI = {
       return unidades.data
 
     } catch (error) {
-      console.log(error)
+      ModalService.open(ModalCadErro)
     }
-  }
+  },
+  novo: async (unidadeInfo) => {
+    try {
+      const register = await api.post(routes.unidade.novo, JSON.stringify(unidadeInfo))
+        ModalService.open(ModalCadCorreto)
+        return register.data
+    } catch (error) {
+      ModalService.open(ModalCadErro)
+    }
+  },
 }

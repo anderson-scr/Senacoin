@@ -5,9 +5,8 @@ export const callEventoAPI = {
   novo: async (dadosEvento) => {
 
     try {
-      const call = await api.post(routes.evento.novo, JSON.stringify(dadosEvento))
-      console.log(call)  
-      return call.data
+      const apiResponse = await api.post(routes.evento.novo, JSON.stringify(dadosEvento))
+      return apiResponse.data
 
     } catch (error) {
       console.log(error)

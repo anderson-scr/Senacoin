@@ -12,5 +12,5 @@ export const regexUtils = {
   idUnidadePerfil: /^[0-9]*$/,
 
   // Confirmar que o que foi enviado do form esta no padrao YYYY-MM-DD
-  data: /^\d{4}\-(0?[1-9]|1[012])\-(0?[1-9]|[12][0-9]|3[01])$/
+  data: /^\d{4}-(0?[1-9]|1[012])-(0?[1-9]|[12][0-9]|3[01])$/
 }
