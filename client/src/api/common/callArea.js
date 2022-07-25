@@ -19,7 +19,6 @@ export const callAreaAPI = {
   novo: async (areaInfo) => {
     try {
       const register = await api.post(routes.area.novo, JSON.stringify(areaInfo))
-        console.log(register)
         ModalService.open(ModalCadCorreto)
     } catch (error) {
       ModalService.open(ModalCadErro)

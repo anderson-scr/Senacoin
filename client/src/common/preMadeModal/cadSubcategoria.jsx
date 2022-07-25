@@ -22,7 +22,6 @@ const ModalCadSubcategoria = (props) => {
   })
 
   function cadastrarSubcategoria(data) {
-    console.log(data)
     callSubcategoriaAPI.novo(data)
   }
 

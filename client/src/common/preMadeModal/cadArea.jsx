@@ -38,7 +38,6 @@ const ModalCadArea = (props) => {
 
   function cadastrarArea(data) {
     data.id_unidade = [unidades[data.id_unidade - 1]._id]
-    console.log(data)
     callAreaAPI.novo(data)
   }
 

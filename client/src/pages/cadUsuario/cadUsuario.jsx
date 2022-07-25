@@ -89,7 +89,6 @@ const CadUsuario = () => {
     delete dados.sobrenome
     delete dados.perfil
 
-    console.log(dados)
     callUsuarioAPI.novo(dados)
   }
 

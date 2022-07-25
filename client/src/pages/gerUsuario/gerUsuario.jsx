@@ -22,7 +22,7 @@ const GerUsuario = () => {
   }, [navigate])
 
   return (
-    <Table apiRoute={callUsuarioAPI.todos} columnSchema={gerUsuarioTabelaSchema} rowSize={13} />
+    <Table apiRoute={callUsuarioAPI.todos} columnSchema={gerUsuarioTabelaSchema} rowSize={12} />
   )
 }
 

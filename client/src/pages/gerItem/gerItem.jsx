@@ -20,7 +20,7 @@ const GerItem = () => {
 
   return (
     <div>
-      <Table apiRoute={callTodosItemsAPI.todos} columnSchema={gerItemTableSchema} rowSize={25} />
+      <Table apiRoute={callTodosItemsAPI.todos} columnSchema={gerItemTableSchema} rowSize={12} />
     </div>
   )
 }

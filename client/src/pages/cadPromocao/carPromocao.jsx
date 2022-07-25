@@ -28,6 +28,9 @@ const CadPromocao = () => {
       return () => effectOnce.current = false
     }
   }, [navigate])
+  useEffect(() => {
+    console.log(selectedItems)
+  }, [selectedItems])
 
   const teste = (evt) => {
     evt.preventDefault()

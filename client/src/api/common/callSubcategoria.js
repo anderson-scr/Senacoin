@@ -11,9 +11,8 @@ export const callSubcategoriaAPI = {
     try {
       const call = await api.get(routes.subcategoria.ativo)
       return call.data
-  
     } catch (error) {
-      console.log(error)
+      ModalService.open(ModalCadErro)
     }
   },
   novo: async (subcategoriaInfo) => {

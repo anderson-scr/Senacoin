@@ -20,7 +20,7 @@ import ModalEditItem from 'pages/gerItem/modal/modalEditItem'
 // CSS
 import './tableStyle.css'
 
-const Table = ({apiRoute, columnSchema, rowSize, setCurrentState, filters = true, categoria = false}) => {
+const Table = ({apiRoute, columnSchema, rowSize, setCurrentState = false, filters = true, categoria = false}) => {
   const effectOnce = useRef(true)
   const [dataTabela, setDataTabela] = useState([])
   const navigate = useNavigate()
@@ -76,7 +76,7 @@ const Table = ({apiRoute, columnSchema, rowSize, setCurrentState, filters = true
               )
             },
             Cell: ( ({row}) => (
-              <RowCheckbox onClickFunc={updateState} {...row.getToggleRowSelectedProps()} />
+              <RowCheckbox {...row.getToggleRowSelectedProps()} />
             ))
           },
           ...columns
@@ -103,14 +103,13 @@ const Table = ({apiRoute, columnSchema, rowSize, setCurrentState, filters = true
   const {  pageIndex } = state
 
   // Save current selected rows
-  const updateState = () => {
-    console.log('update')
+  useEffect(() => {
     const selectedIDs = []
     selectedFlatRows.forEach(selected => {
       selectedIDs.push(selected.original._id)
     })
-    setCurrentState.funcs(selectedIDs)
-  }
+    if(setCurrentState !== false) setCurrentState.funcs(selectedIDs)
+  }, [selectedFlatRows])
  
   return (
     <div>
