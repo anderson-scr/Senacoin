@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom'
 import { NavLink, Outlet } from 'react-router-dom'
 
 
+
 const CadQrcode = () => {
   const effectOnce = useRef(true)
   const navigate = useNavigate()

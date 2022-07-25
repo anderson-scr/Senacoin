@@ -5,6 +5,7 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import { useForm } from 'react-hook-form'
 import { yupSchemaCadQrcodeLivre } from 'utils/validation/schemas/qrcode/livre'
 import QuestionTooltip from 'common/tooltips/questionTooltip'
+import './cadQrcodeStyle.css'
 
 const QrcodeLivre = () => {
   const navigate = useNavigate()
@@ -41,8 +42,10 @@ const QrcodeLivre = () => {
       {/* First row */}
       <div className='col'>
         <div className="mb-2">
-          <label htmlFor="iptNome" className="form-label">Titulo</label>
-          <input type="text" className="form-control" id="iptNome" {...register("nome")} />
+          <div className='testeAnimacao1'>
+            <input type="text" className="form-control" id="iptNome" required="required" {...register("nome")} />
+            <span htmlFor="iptNome" className="form-label">Título</span>
+           </div>
           <div style={{height: '25px'}}>
             {errors?.nome?.type &&
               <div className="form-text text-danger">Preencha o campo corretamente.</div>
@@ -50,8 +53,10 @@ const QrcodeLivre = () => {
           </div>
         </div>
         <div className="mb-2">
-          <label htmlFor="iptNome" className="form-label">Senacoins</label>
-          <input type="text" className="form-control" id="iptNome" {...register("pontos")} />
+        <div className='testeAnimacao1'>
+          <input type="text" className="form-control" id="iptNome" required="required" {...register("pontos")} />
+          <span htmlFor="iptNome" className="form-label">Senacoins</span>
+          </div>
           <div style={{height: '25px'}}>
             {errors?.pontos?.type &&
               <div className="form-text text-danger">Preencha o campo corretamente.</div>
