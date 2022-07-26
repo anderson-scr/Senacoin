@@ -3,8 +3,7 @@ const mongoose = require('mongoose');
 exports.PromocaoSchema = new mongoose.Schema({
 	nome: {type: String, required: true},
 	descricao: {type: String, default: null},
-	pontos: {type: Number, min: 0, required: true}, // talvez troque
-	desconto: {type: Number, min: 0, required: true},// talvez troque
+	multiplicador: {type: Number, min: 0, required: true}, // talvez troque
 	quantidade: {type: Number, min: 0, default: 0}, // que isso?
 	data_inicio: {type: Date, required: true},
 	data_fim: {type: Date, required: true},
@@ -20,8 +19,7 @@ exports.AuditoriaPromocaoSchema = new mongoose.Schema({
 
 	nome: {type: String, immutable: true},
 	descricao: {type: String, immutable: true},
-	pontos: {type: Number, immutable: true},
-	desconto: {type: Number, immutable: true},
+	multiplicador: {type: Number, immutable: true},
 	quantidade: {type: Number, immutable: true},
 	data_inicio: {type: Date, immutable: true},
 	data_fim: {type: Date, immutable: true},

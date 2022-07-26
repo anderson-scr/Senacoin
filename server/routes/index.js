@@ -14,8 +14,6 @@ router.use('/api/v1/promocao', require('./promocao'));
 
 router.use('/api/v1/qrcode', require('./qrcode'));
 
-router.use('/api/v1/status', require('./status'));
-
 router.use('/api/v1/subcategoria', require('./subcategoria'));
 
 router.use('/api/v1/unidade', require('./unidade'));
