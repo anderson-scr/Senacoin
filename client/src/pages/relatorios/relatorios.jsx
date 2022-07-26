@@ -38,7 +38,7 @@ const Relatorios = () => {
           <div className='btns d-flex flex-column mt-3'>
             <input onClick={clientesPDF} type="button" className='btn btn-danger col-3 mt-3' value="Gerar PDF" />            
             <input onClick={clientesPDF} type="button" className='btn btn-success col-3 mt-3' value="Gerar Excel" />            
-            <input type="submit" className='btn btn-primary col-3 mt-3' value="Visualizar Relatório" />
+            {/* <input type="submit" className='btn btn-primary col-3 mt-3' value="Visualizar Relatório" /> */}
           </div>
         </form>
       </div>
