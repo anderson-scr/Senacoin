@@ -1,0 +1,2241 @@
+{
+	"info": {
+		"_postman_id": "fba0a3d1-b057-408f-a6c8-324033043dda",
+		"name": "senacoin",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "21994731"
+	},
+	"item": [
+		{
+			"name": "Aluno",
+			"item": [
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"\",\r\n    \"senha\":\"\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/aluno/login",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"aluno",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Register",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nome\": \"Maicon Rafael Djéquison Flores\",\r\n    \"email\": \"maicon@mail.com\",\r\n    \"cpf\": \"365.823.770-86 \",\r\n    \"matricula\": \"28541864-5\",\r\n    \"senha\": \"maicon123\",\r\n\r\n    \"apelido\": \"Maicon Djéquison\",\r\n    \"telefone\": \"67 99933 7788\",\r\n    \"data_nasc\": \"1990-04-13\",\r\n\r\n    \"id_unidade\": [\"62d06f2c181c3910cc1f8269\", \"62d06f2c181c3910cc1f826d\"]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/aluno/register",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"aluno",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Populate",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "[\r\n    {\r\n        \r\n    }\r\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/aluno/populate",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"aluno",
+								"populate"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "All",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/aluno/all",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"aluno",
+								"all"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Active",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/aluno/active",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"aluno",
+								"active"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "One",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/aluno/id",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"aluno",
+								"id"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "One",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/aluno/id",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"aluno",
+								"id"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "One",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/aluno/id",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"aluno",
+								"id"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "All",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/aluno/truncate",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"aluno",
+								"truncate"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Area",
+			"item": [
+				{
+					"name": "Add",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/area/add",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"area",
+								"add"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Populate",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "[\r\n    {\r\n        \r\n    }\r\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/area/populate",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"area",
+								"populate"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "All",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/area/all",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"area",
+								"all"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Active",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/area/active",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"area",
+								"active"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "One",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/area/id",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"area",
+								"id"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "One",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/area/id",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"area",
+								"id"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "One",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/area/id",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"area",
+								"id"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "All",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/area/truncate",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"area",
+								"truncate"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Colaborador",
+			"item": [
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"diego@mail.com\",\r\n    \"senha\":\"0264\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/colaborador/login",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"colaborador",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Register",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nome\": \"Rato Firulinha\",\r\n    \"email\": \"rato@firulinha.com\",\r\n    \"cpf\": \"367.237.170-07 \",\r\n    \"matricula\": \"28312491-1\",\r\n    \"senha\": \"2818\",\r\n    \"permissoes\":{\r\n        \"cad_usuarios\": true,\r\n        \"cad_itens\": true,\r\n        \"cad_perfis\": true,\r\n        \"cad_areas\": true,\r\n        \"cad_subcategorias\": true,\r\n        \"cad_promocoes\": true,\r\n        \"cad_unidades\": true,\r\n        \"cad_qrcodes\": true,\r\n        \"ger_usuarios\": true,\r\n        \"ger_itens\": true,\r\n        \"ger_promocoes\": true,\r\n        \"ger_qrcodes\": true,\r\n        \"relatorios\": true\r\n    },\r\n    \"id_unidade\": [\r\n        \"62d06f2c181c3910cc1f8269\"\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/colaborador/register",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"colaborador",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Populate",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "x-user-email",
+								"value": "diego@mail.com",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[\r\n    {\r\n        \r\n    }\r\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/colaborador/populate",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"colaborador",
+								"populate"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "All",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/colaborador/all/0",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"colaborador",
+								"all",
+								"0"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Active",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/colaborador/active/0",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"colaborador",
+								"active",
+								"0"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "One",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-user-email",
+								"value": "diego@mail.com",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{URL}}/colaborador/62cecd9905509c21bdeea375",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"colaborador",
+								"62cecd9905509c21bdeea375"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "One",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"permissoes\": {\r\n        \"cad_usuarios\": true,\r\n        \"cad_itens\": true,\r\n        \"cad_perfis\": true,\r\n        \"cad_areas\": true,\r\n        \"cad_subcategorias\": true,\r\n        \"cad_promocoes\": true,\r\n        \"cad_unidades\": true,\r\n        \"cad_qrcodes\": true,\r\n        \"cad_status\": true,\r\n        \"ger_usuarios\": true,\r\n        \"ger_itens\": true,\r\n        \"ger_promocoes\": true,\r\n        \"ger_qrcodes\": true,\r\n        \"relatorios\": true\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/colaborador/62cecfb605509c21bdeea37b",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"colaborador",
+								"62cecfb605509c21bdeea37b"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "One",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/colaborador/id",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"colaborador",
+								"id"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "All",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "x-user-email",
+								"value": "diego@mail.com",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{URL}}/colaborador/truncate",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"colaborador",
+								"truncate"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Item",
+			"item": [
+				{
+					"name": "Populate",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "[\r\n    {\r\n        \r\n    }\r\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/item/populate",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"item",
+								"populate"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "All",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/item/all/0",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"item",
+								"all",
+								"0"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Active",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-user-email",
+								"value": "diego@mail.com",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{URL}}/item/active/0",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"item",
+								"active",
+								"0"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "One",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/item/id",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"item",
+								"id"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "One",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/item/id",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"item",
+								"id"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "One",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/item/id",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"item",
+								"id"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "All",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/item/truncate",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"item",
+								"truncate"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Produto",
+			"item": [
+				{
+					"name": "Add",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "imagem",
+									"type": "file",
+									"src": "/D:/Files/Desktop/Immagine 2022-07-09 232643.png"
+								},
+								{
+									"key": "data",
+									"value": "{ \"nome\": \"dropbox.com\",\"descricao\": \"Other contact with mouse\",\"pontos\": 23,\"quantidade\": 28,\"data_inicio\": \"2020-07-17T18:01:13.000Z\",\"data_fim\": \"2022-03-24T08:41:52.000Z\",\"id_area\": \"62d1ccc2181c3910cca13832\",\"id_categoria\": \"62d017a1181c3910ccfd43d3\",\"id_subcategoria\": \"62d01865181c3910ccfd8d2f\",\"id_unidade\": \"62d06f2c181c3910cc1f826e\"}",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{URL}}/item/produto/add",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"item",
+								"produto",
+								"add"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "All",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/item/produto/all/0",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"item",
+								"produto",
+								"all",
+								"0"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Active",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/item/produto/active/0",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"item",
+								"produto",
+								"active",
+								"0"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Evento",
+			"item": [
+				{
+					"name": "Add",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/item/evento/add",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"item",
+								"evento",
+								"add"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "All",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/item/evento/all/0",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"item",
+								"evento",
+								"all",
+								"0"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Active",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/item/evento/active/0",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"item",
+								"evento",
+								"active",
+								"0"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Serviço",
+			"item": [
+				{
+					"name": "Add",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/item/servico/add",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"item",
+								"servico",
+								"add"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "All",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/item/servico/all/0",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"item",
+								"servico",
+								"all",
+								"0"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Active",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/item/servico/active/0",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"item",
+								"servico",
+								"active",
+								"0"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Perfil",
+			"item": [
+				{
+					"name": "Add",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/perfil/add",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"perfil",
+								"add"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Populate",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "[\r\n    {\r\n        \r\n    }\r\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/perfil/populate",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"perfil",
+								"populate"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "All",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/perfil/all",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"perfil",
+								"all"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Active",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/perfil/active",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"perfil",
+								"active"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "One",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/perfil/id",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"perfil",
+								"id"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "One",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/perfil/id",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"perfil",
+								"id"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "One",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/perfil/id",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"perfil",
+								"id"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "All",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/perfil/truncate",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"perfil",
+								"truncate"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Promoção",
+			"item": [
+				{
+					"name": "Add",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/promocao/add",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"promocao",
+								"add"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Populate",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "[\r\n    {\r\n        \r\n    }\r\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/promocao/populate",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"promocao",
+								"populate"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "All",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/promocao/all",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"promocao",
+								"all"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Active",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/promocao/active",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"promocao",
+								"active"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "One",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/promocao/id",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"promocao",
+								"id"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "One",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/promocao/id",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"promocao",
+								"id"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "One",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/promocao/id",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"promocao",
+								"id"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "All",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/promocao/truncate",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"promocao",
+								"truncate"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Qr Code",
+			"item": [
+				{
+					"name": "Add",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/qrcode/add",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"qrcode",
+								"add"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Populate",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "[\r\n    {\r\n        \r\n    }\r\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/qrcode/populate",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"qrcode",
+								"populate"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "All",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/qrcode/all/0",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"qrcode",
+								"all",
+								"0"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Active",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/qrcode/active/0",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"qrcode",
+								"active",
+								"0"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "One",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/qrcode/id",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"qrcode",
+								"id"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "One",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/qrcode/id",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"qrcode",
+								"id"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "One",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/qrcode/id",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"qrcode",
+								"id"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "All",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/qrcode/truncate",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"qrcode",
+								"truncate"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Status",
+			"item": [
+				{
+					"name": "Add",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/status/add",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"status",
+								"add"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Populate",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "[\r\n    {\r\n        \r\n    }\r\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/status/populate",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"status",
+								"populate"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "All",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/status/all",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"status",
+								"all"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Active",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/status/active",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"status",
+								"active"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "One",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/status/id",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"status",
+								"id"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "One",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/status/id",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"status",
+								"id"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "All",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/status/truncate",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"status",
+								"truncate"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "SubCategoria",
+			"item": [
+				{
+					"name": "Add",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/subcategoria/add",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"subcategoria",
+								"add"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Populate",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "[\r\n    {\r\n        \r\n    }\r\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/subcategoria/populate",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"subcategoria",
+								"populate"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "All",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/subcategoria/all",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"subcategoria",
+								"all"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Active",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/subcategoria/active",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"subcategoria",
+								"active"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "One",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/subcategoria/id",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"subcategoria",
+								"id"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "One",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/subcategoria/id",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"subcategoria",
+								"id"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "One",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/subcategoria/id",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"subcategoria",
+								"id"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "All",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/subcategoria/truncate",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"subcategoria",
+								"truncate"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Transação",
+			"item": [
+				{
+					"name": "Add",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/transacao/add",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"transacao",
+								"add"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Populate",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "[\r\n    {\r\n        \r\n    }\r\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/transacao/populate",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"transacao",
+								"populate"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "All",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/transacao/all",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"transacao",
+								"all"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Aluno",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/transacao/aluno/id",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"transacao",
+								"aluno",
+								"id"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "One",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/transacao/id",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"transacao",
+								"id"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "One",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/transacao/id",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"transacao",
+								"id"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "One",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/transacao/id",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"transacao",
+								"id"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "All",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/transacao/truncate",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"transacao",
+								"truncate"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Unidade",
+			"item": [
+				{
+					"name": "Add",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/unidade/add",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"unidade",
+								"add"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Populate",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "[\r\n    {\r\n        \r\n    }\r\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/unidade/populate",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"unidade",
+								"populate"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "All",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/unidade/all",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"unidade",
+								"all"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Active",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/unidade/active",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"unidade",
+								"active"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "One",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/unidade/id",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"unidade",
+								"id"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "One",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/unidade/id",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"unidade",
+								"id"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "One",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/unidade/id",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"unidade",
+								"id"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "All",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/unidade/truncate",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"unidade",
+								"truncate"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkaWVnb0BtYWlsLmNvbSIsImlhdCI6MTY1ODQzNzg1MSwiZXhwIjoxNjU4NTI0MjUxfQ.P1YRJW9q-151jBk6Hl3SeIyma-GDnzM6VNASN4mto9rn34A9ocqiJnA1yj6ZXb2pYOm6fU2KW8Lo4VbPC29YA1SoNHCTceIfDb8h5rIgHdUihRcOgyqTOGDUHkQ_2XDaw1qz_1rre420DhuGaf0IgvgwUNkd3MaRHWMpCEaacd6BN7puHQQbaCdLg7V-HNT1wo2gMDwHA1DkrVQ6uMMbf0WN8je6sXf6-GImy9yE-hyHmXXhTB1jZ_rwF9M7qB00WRLUBGnVu5XI27KLpOWhZjfFwDK7cSYVVGk9cLJn2g29JP6-cQimXS3l8Fqk-YFQm4fGXS7pgzd1Z0Z_7_3WJ7l0G50G--kKQ28yvJD_lNqPtNKZE7_WA6zDUFt_5I4vp6AUMgf1-b4UtsNnQJQteVmOA4sNaAembTUk1rtNXUx3HmUMIBYJF-nBegQvJeMeXd2pEIs1WMVcOtJIZJ-t4Zc0eTOPtTtMff30_UzL9knLQQg4gh6yIBPWKFnjl4Ja6KHeyG2f--jFnr9XlPE9XCTiEnbZ_yXmO_7Zj1UcPrKmm0O784nT2mBACA4IO5GCYzJLZUplAFIsgYL_ePPurxOMVeIq39DhBanMYWVn8xaBcoP-1svND2sUpxWPYQZupUkXaJqCg4vMVN5B4VrGYaMEB0SxDxYnBExQB0_wj5s",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}

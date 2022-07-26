@@ -8,17 +8,17 @@ router.post('/add', utils.authUserMiddleware, utils.authRoleMiddleware("cad_qrco
 // add a new qr code list
 router.post('/populate', utils.authUserMiddleware, utils.authRoleMiddleware("cad_qrcodes"), controller.newList);
 // list all qr codes
-router.get('/all', utils.authUserMiddleware, utils.authRoleMiddleware("ger_qrcodes"), controller.listAll);
+router.get('/all/:offset', utils.authUserMiddleware, utils.authRoleMiddleware("ger_qrcodes"), controller.listAll);
 // list all active qr codes
-router.get('/active', utils.authUserMiddleware, utils.authRoleMiddleware("ger_qrcodes"), controller.listActive);
+router.get('/active/:offset', utils.authUserMiddleware, utils.authRoleMiddleware("ger_qrcodes"), controller.listActive);
 // list single qr code
 router.get('/:id', utils.authUserMiddleware, utils.authRoleMiddleware("ger_qrcodes"), controller.listOne);
 // edit a qr code
 router.patch('/:id', utils.authUserMiddleware, utils.authRoleMiddleware("ger_qrcodes"), controller.edit);
-// delete a qr code
-router.delete('/:id', utils.authUserMiddleware, utils.authRoleMiddleware("cad_qrcodes"), controller.delete);
 // delete all qr code
 router.delete('/truncate', utils.authUserMiddleware, utils.authRoleMiddleware("cad_qrcodes"), controller.deleteAll);
+// delete a qr code
+router.delete('/:id', utils.authUserMiddleware, utils.authRoleMiddleware("cad_qrcodes"), controller.delete);
 
 
 module.exports = router;
