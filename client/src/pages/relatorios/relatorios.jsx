@@ -1,7 +1,7 @@
 import React from 'react'
 import { useState } from "react"
 import { useEffect } from "react";
-import alunosPDF from './relatorios/alunos/alunos'
+import generatePDF from './relatorios/alunos/generatePDF'
 import { BsFileEarmarkPdf } from "react-icons/bs";
 import { AiFillPicture } from 'react-icons/ai';
 // import styles from "stylesRelatorios.modules.css";
@@ -38,9 +38,7 @@ const Relatorios = () => {
             </div>
           </div>
           <div className='btns d-flex flex-column mt-3'>
-            <input onClick={alunosPDF} type="button" className='btn btn-danger col-3 mt-3' value="Gerar PDF" />            
-            {/* <input onClick={clientesPDF} type="button" className='btn btn-success col-3 mt-3' value="Gerar Excel" />             */}
-            {/* <input type="submit" className='btn btn-primary col-3 mt-3' value="Visualizar Relatório" /> */}
+            <input onClick={generatePDF} type="button" className='btn btn-danger col-3 mt-3' value="Gerar PDF" />
           </div>
         </form>
       </div>
