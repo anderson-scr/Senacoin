@@ -8,8 +8,8 @@ exports.new = async (req, res, _next) => {
     if (!Object.keys(req.body).length)
 		return res.status(400).json({ success: false, msg: "solicitação mal construída, informações faltando ou incorretas" });
     
-    if (!("id_status" in req.body))
-        req.body["id_status"] = "62cec6c463187bb9b498687b";
+    if (!("ativo" in req.body))
+        req.body["ativo"] = true;
     
     const session = await mongoose.startSession();
     try {
@@ -44,8 +44,8 @@ exports.newList = (req, res, _next) => {
 		return res.status(400).json({ success: false, msg: "solicitação mal construída, informações faltando ou incorretas" });
     
     req.body.forEach(qrcode => {
-        if (!("id_status" in qrcode))
-            qrcode["id_status"] = "62cec6c463187bb9b498687b";
+        if (!("ativo" in qrcode))
+            qrcode["ativo"] = true;
     });
     
     QrCode.insertMany(req.body, (err, docs) => {
@@ -59,9 +59,9 @@ exports.newList = (req, res, _next) => {
 exports.listAll = (req, res, _next) => {
 
 	QrCode.find({}).skip(req.params.offset).limit(60)
-    .select("titulo descricao id_unidade id_status")
+    .select("nome descricao id_unidade ativo")
 	.populate({path : 'id_unidade', select: 'nome cidade uf -_id'})
-    .populate({path : 'id_status', select: '-_id'})
+    .populate({path : 'ativo', select: '-_id'})
     .then((qrcodes) => {
         
         if (!qrcodes.length)
@@ -78,8 +78,8 @@ exports.listActive = (req, res, _next) => {
 
 	const today = new Date(new Date()-3600*1000*4); //fuso horario gmt-4 talvez .toISOString() no final
 
-	QrCode.find({$and: [{id_status: "62cec6c463187bb9b498687b"}, {data_inicio: {$gte: today}}, {data_fim: {$lt: today}}]}).skip(req.params.offset).limit(60)
-    .select("-id_status -_id")
+	QrCode.find({$and: [{ativo: true}, {data_inicio: {$gte: today}}, {data_fim: {$lt: today}}]}).skip(req.params.offset).limit(60)
+    .select("-ativo -_id")
 	.populate({path : 'id_item', select: 'nome area id_categoria -_id', populate: {path: 'id_categoria', select: 'nome -_id'}})
 	.populate({path : 'id_unidade', select: 'nome -_id'})
     .then((qrcodes) => {
@@ -100,7 +100,7 @@ exports.listOne = (req, res, _next) => {
     .select('-_id')
     .populate({path : 'id_item', select: 'nome area id_categoria -_id', populate: {path: 'id_categoria', select: 'nome -_id'}})
 	.populate({path : 'id_unidade', select: 'nome cidade uf -_id'})
-    .populate({path : 'id_status', select: '-_id'})
+    .populate({path : 'ativo', select: '-_id'})
     .then((qrcode) => {
         
         if (!qrcode)
@@ -151,7 +151,7 @@ exports.delete = async (req, res, _nxt) => {
     try {
         await session.withTransaction(async () => {
 
-            await QrCode.findByIdAndUpdate(req.params.id, {id_status: mongoose.Types.ObjectId("62cec7b263187bb9b498687e")}, { session: session, new: true})
+            await QrCode.findByIdAndUpdate(req.params.id, {ativo: false}, { session: session, new: true})
             .then(async (qrcode) => {
                 await AuditoriaQrCode.create([{colaborador: req.jwt.sub, ...req.body}], { session })
                 .then((_audqrcode) =>{

@@ -8,8 +8,8 @@ exports.new = async (req, res, _next) => {
     if (!Object.keys(req.body).length)
 		return res.status(400).json({ success: false, msg: "solicitação mal construída, informações faltando ou incorretas" });
 
-    if (!("id_status" in req.body))
-        req.body["id_status"] = "62cec6c463187bb9b498687b";
+    if (!("ativo" in req.body))
+        req.body["ativo"] = true;
 
     const session = await mongoose.startSession();
 	try {
@@ -44,8 +44,8 @@ exports.newList = (req, res, _next) => {
 		return res.status(400).json({ success: false, msg: "solicitação mal construída, informações faltando ou incorretas" });
 
     req.body.forEach(perfil => {
-        if (!("id_status" in perfil))
-            perfil["id_status"] = "62cec6c463187bb9b498687b";
+        if (!("ativo" in perfil))
+            perfil["ativo"] = true;
     });
     
     Perfil.insertMany(req.body, (err, docs) => {
@@ -59,8 +59,8 @@ exports.newList = (req, res, _next) => {
 exports.listAll = (_req, res, _next) => {
 
 	Perfil.find({})
-    .select("nome id_status")
-    .populate({path : 'id_status', select: '-_id'})
+    .select("nome ativo")
+    .populate({path : 'ativo', select: '-_id'})
     .then((perfis) => {
         
         if (!perfis.length)
@@ -75,8 +75,8 @@ exports.listAll = (_req, res, _next) => {
 
 exports.listActive = (_req, res, _next) => {
 
-	Perfil.find({id_status: "62cec6c463187bb9b498687b"})
-    .select("-id_status")
+	Perfil.find({ativo: true})
+    .select("-ativo")
     .then((perfis) => {
         
         if (!perfis.length)
@@ -92,7 +92,7 @@ exports.listActive = (_req, res, _next) => {
 exports.listOne = (req, res, _next) => {
 
     Perfil.findById(req.params.id)// colocar um && pra procurar por id tbm
-    .populate({path : 'id_status', select: '-_id'})
+    .populate({path : 'ativo', select: '-_id'})
     .then((perfil) => {
         
         if (!perfil)
@@ -143,7 +143,7 @@ exports.delete = async (req, res, _nxt) => {
 	try {
 		await session.withTransaction(async () => {
 
-			await Perfil.findByIdAndUpdate(req.params.id, {id_status: mongoose.Types.ObjectId("62cec7b263187bb9b498687e")}, { session: session, new: true})
+			await Perfil.findByIdAndUpdate(req.params.id, {ativo: false}, { session: session, new: true})
 			.then(async (perfil) => {
 				await AuditoriaPerfil.create([{colaborador: req.jwt.sub, ...req.body}], { session })
 				.then((_audperfil) =>{

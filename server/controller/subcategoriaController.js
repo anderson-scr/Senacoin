@@ -8,8 +8,8 @@ exports.new = async (req, res, _next) => {
     if (!Object.keys(req.body).length)
 		return res.status(400).json({ success: false, msg: "solicitação mal construída, informações faltando ou incorretas" });
     
-    if (!("id_status" in req.body))
-        req.body["id_status"] = "62cec6c463187bb9b498687b";
+    if (!("ativo" in req.body))
+        req.body["ativo"] = true;
     
     const session = await mongoose.startSession();
     try {
@@ -44,8 +44,8 @@ exports.newList = (req, res, _next) => {
         return res.status(400).json({ success: false, msg: "solicitação mal construída, informações faltando ou incorretas" });
 
     req.body.forEach(subcat => {
-        if (!("id_status" in subcat))
-            subcat["id_status"] = "62cec6c463187bb9b498687b";
+        if (!("ativo" in subcat))
+            subcat["ativo"] = true;
     });
     
     SubCategoria.insertMany(req.body, (err, docs) => {
@@ -59,8 +59,8 @@ exports.newList = (req, res, _next) => {
 exports.listAll = (_req, res, _next) => {
 
 	SubCategoria.find({})
-    .select("nome descricao id_status")
-    .populate({path : 'id_status', select: '-_id'})
+    .select("nome descricao ativo")
+    .populate({path : 'ativo', select: '-_id'})
     .then((subcats) => {
         
         if (!subcats.length)
@@ -75,7 +75,7 @@ exports.listAll = (_req, res, _next) => {
 
 exports.listActive = (_req, res, _next) => {
 
-	SubCategoria.find({id_status: "62cec6c463187bb9b498687b"})
+	SubCategoria.find({ativo: true})
     .select("nome")
     .then((subcats) => {
         
@@ -92,7 +92,7 @@ exports.listActive = (_req, res, _next) => {
 exports.listOne = (req, res, _next) => {
 
 	SubCategoria.findById(req.params.id)
-    .populate({path : 'id_status', select: '-_id'})
+    .populate({path : 'ativo', select: '-_id'})
     .then((subcat) => {
         
         if (!subcat)
@@ -143,7 +143,7 @@ exports.delete = async (req, res, _nxt) => {
     try {
         await session.withTransaction(async () => {
 
-            await SubCategoria.findByIdAndUpdate(req.params.id, {id_status: mongoose.Types.ObjectId("62cec7b263187bb9b498687e")}, { session: session, new: true})
+            await SubCategoria.findByIdAndUpdate(req.params.id, {ativo: false}, { session: session, new: true})
             .then(async (subcat) => {
                 await AuditoriaSubCategoria.create([{colaborador: req.jwt.sub, ...req.body}], { session })
                 .then((_audsubcat) =>{

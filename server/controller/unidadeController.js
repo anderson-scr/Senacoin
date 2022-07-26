@@ -8,8 +8,8 @@ exports.new = async (req, res, _next) => {
     if (!Object.keys(req.body).length)
 		return res.status(400).json({ success: false, msg: "solicitação mal construída, informações faltando ou incorretas" });
     
-    if (!("id_status" in req.body))
-        req.body["id_status"] = "62cec6c463187bb9b498687b";
+    if (!("ativo" in req.body))
+        req.body["ativo"] = true;
 
     const session = await mongoose.startSession();
     try {
@@ -44,8 +44,8 @@ exports.newList = (req, res, _next) => {
 		return res.status(400).json({ success: false, msg: "solicitação mal construída, informações faltando ou incorretas" });
 
     req.body.forEach(unidade => {
-        if (!("id_status" in unidade))
-            unidade["id_status"] = "62cec6c463187bb9b498687b";
+        if (!("ativo" in unidade))
+            unidade["ativo"] = true;
     });
     
     Unidade.insertMany(req.body, (err, docs) => {
@@ -59,8 +59,8 @@ exports.newList = (req, res, _next) => {
 exports.listAll = (_req, res, _next) => {
 
 	Unidade.find({})
-    .select("nome cidade uf id_status")
-    .populate({path : 'id_status', select: '-_id'})
+    .select("nome cidade uf ativo")
+    .populate({path : 'ativo', select: '-_id'})
     .then((unidades) => {
         
         if (!unidades.length)
@@ -75,7 +75,7 @@ exports.listAll = (_req, res, _next) => {
 
 exports.listActive = (_req, res, _next) => {
 
-	Unidade.find({id_status: "62cec6c463187bb9b498687b"})
+	Unidade.find({ativo: true})
     .select("nome")
     .then((unidades) => {
         
@@ -92,7 +92,7 @@ exports.listActive = (_req, res, _next) => {
 exports.listOne = (req, res, _next) => { // colocar um && pra procurar por id tbm
 
     Unidade.findById(req.params.id)
-    .populate({path : 'id_status', select: '-_id'})
+    .populate({path : 'ativo', select: '-_id'})
     .then((unidade) => {
         
         if (!unidade)
@@ -143,7 +143,7 @@ exports.delete = async (req, res, _nxt) => {
     try {
         await session.withTransaction(async () => {
 
-            await Unidade.findByIdAndUpdate(req.params.id, {id_status: mongoose.Types.ObjectId("62cec7b263187bb9b498687e")}, { session: session, new: true})
+            await Unidade.findByIdAndUpdate(req.params.id, {ativo: false}, { session: session, new: true})
             .then(async (unidade) => {
                 await AuditoriaUnidade.create([{colaborador: req.jwt.sub, ...req.body}], { session })
                 .then((_audunidade) =>{
