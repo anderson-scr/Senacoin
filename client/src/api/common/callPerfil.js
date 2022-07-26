@@ -6,7 +6,7 @@ export const callPerfilAPI = {
     try {
       const perfis = await api.get(routes.perfil.ativo)
         return perfis.data
-
+        
     } catch (error) {
       console.log(error)
     }

@@ -4,14 +4,14 @@ import { useNavigate } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { yupSchemaCadPromocao } from 'utils/validation/schemas/cadPromocao'
-import ModalSelecionarItem from './modal/modalSelecionaItem'
+import ModalSelecionarItem from '../../common/preMadeModal/selects/modalSelecionaItem'
 import ModalService from 'common/modal/services/modalService'
 import QuestionTooltip from 'common/tooltips/questionTooltip'
 
 const CadPromocao = () => {
   const effectOnce = useRef(true)
   const navigate = useNavigate()
-  const [items, setItems] = useState([])
+  const [selectedItems, setSelectedItems] = useState([])
 
   const { register, handleSubmit, formState: {
     errors
@@ -28,10 +28,13 @@ const CadPromocao = () => {
       return () => effectOnce.current = false
     }
   }, [navigate])
+  useEffect(() => {
+    console.log(selectedItems)
+  }, [selectedItems])
 
   const teste = (evt) => {
     evt.preventDefault()
-    ModalService.open(ModalSelecionarItem)
+    ModalService.open(ModalSelecionarItem, {}, setSelectedItems)
   }
   function salvarInfo(data) {
     console.log(data)
@@ -46,7 +49,7 @@ const CadPromocao = () => {
       <div className='row'>
         <div className='mb-3 col-6'>
           <QuestionTooltip label='Item(s) vinculado a promoção' msg='Selecionar quais items irão receberem a promoção.' />
-          <input type="button" onClick={evt => teste(evt)} className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value="Selecionar item(s)" />
+          <input type="button" onClick={evt => teste(evt)} className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value={`${selectedItems.length} item(s) selecionado(s)`} />
           <div style={{height: '25px'}}>
             {errors?.item?.type &&
               <div className="form-text text-danger">Preencha o campo corretamente.</div>

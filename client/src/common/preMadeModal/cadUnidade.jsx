@@ -18,15 +18,10 @@ const ModalCadUnidade = (props) => {
     errors
   } } = useForm({
     resolver: yupResolver(yupSchemaCadUnidade)
-  });
-
+  })
 
   function cadastrarUnidade(data) {
     callUnidadeAPI.novo(data)
-  }
-
-  function deuRuim(data) {
-    console.log(data)
   }
 
   return (
@@ -37,7 +32,7 @@ const ModalCadUnidade = (props) => {
         </div>
       </ModalHeader>
       <ModalBody>
-        <form className='container text-start' onSubmit={handleSubmit(cadastrarUnidade, deuRuim)} style={{width: '50vw'}}>
+        <form className='container text-start' onSubmit={handleSubmit(cadastrarUnidade)} style={{width: '50vw'}}>
           <div className='row'>
             <div className="mb-3 flex-grow-1">
               <label htmlFor="nomeUnidade" className="form-label" >Nome</label>

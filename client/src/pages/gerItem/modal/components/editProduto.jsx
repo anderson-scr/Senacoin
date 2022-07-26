@@ -39,7 +39,6 @@ const EditProduto = ({closeModal}) => {
     dados.id_area = areas[parseInt(dados.id_area) - 1].id_unidade[0]
     dados.id_subcategoria = subcategorias[parseInt(dados.id_subcategoria) - 1]._id
 
-    console.log(`como esta o envio: ${dados}`)
     callProdutoAPI.novo(dados)
   }
   const errado = (dados) => {

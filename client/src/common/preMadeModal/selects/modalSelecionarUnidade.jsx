@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 
 // Table
 import Table from "common/table/tableIndex"
@@ -14,18 +14,16 @@ import ModalFooter from 'common/modal/components/modalFooter'
 import { callUnidadeAPI } from 'api/common/callUnidades'
 
 const ModalSelecionarUnidade = (props) => {
-
-  const atualizarUnidades = () => {
-    console.log(props)
-  }
   return (
     <Modal>
       <ModalHeader>
-        <h3>Selecione um item</h3>
+        <h3>Selecionar Unidade(s)</h3>
       </ModalHeader>
 
       <ModalBody>
-        <Table apiRoute={callUnidadeAPI.ativo} columnSchema={selectUnidadeTableSchema} rowSize={15} setCurrentState={props} />
+        <div className='container' style={{width: '55vw'}}>
+          <Table apiRoute={callUnidadeAPI.ativo} columnSchema={selectUnidadeTableSchema} rowSize={12} setCurrentState={props} filters={false} />
+        </div>
       </ModalBody>
 
       <ModalFooter>

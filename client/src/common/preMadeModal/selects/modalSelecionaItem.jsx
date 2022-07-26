@@ -1,6 +1,4 @@
-import React, { useRef, useEffect } from "react"
-import { useNavigate } from "react-router-dom"
-import { verificaSessao } from "auth/login/verificaSessao"
+import React from "react"
 import Table from "common/table/tableIndex"
 import { selectItemTableSchema } from "common/table/schemas/selectItem"
 import { callTodosItemsAPI } from "api/item/apiTodos"
@@ -20,13 +18,13 @@ export default function ModalSelecionarItem(props) {
       </ModalHeader>
 
       <ModalBody>
-        <Table apiRoute={callTodosItemsAPI.ativos} columnSchema={selectItemTableSchema} rowSize={15} />
+        <Table apiRoute={callTodosItemsAPI.ativos} columnSchema={selectItemTableSchema} rowSize={12} setCurrentState={props} categoria={true} />
       </ModalBody>
 
       <ModalFooter>
         <div className="w-100 d-flex justify-content-between">
           <button className="btn btnCancelar btn-outline-secondary w-25" onClick={ props.close } >Cancelar</button>
-          <button className="btn btnSalvar btn-primary w-25" >Salvar</button>
+          <button className="btn btnSalvar btn-primary w-25" onClick={ props.close } >Salvar</button>
         </div>
       </ModalFooter>
     </Modal>

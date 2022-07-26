@@ -49,10 +49,6 @@ const CadUsuario = () => {
     resolver: yupResolver(yupSchemaCadUsuario)
   });
 
-  useEffect(() => {
-    console.log(selectedUnidades)
-  }, [selectedUnidades])
-
   // Verifica sessão de usuário
   useEffect(() => {
     if(effectOnce.current) {
@@ -78,7 +74,7 @@ const CadUsuario = () => {
   // Modal select unidades
   const openModalSelectUnidade = (evt) => {
     evt.preventDefault()
-    ModalService.open(ModalSelecionarUnidade, {teste: 'teste'}, setSelectedUnidades)
+    ModalService.open(ModalSelecionarUnidade, {}, setSelectedUnidades)
   }
 
 
@@ -87,16 +83,12 @@ const CadUsuario = () => {
     dados.senha = dados.nome.toLowerCase() + '1234'
     dados.nome = dados.nome + ' ' + dados.sobrenome
     dados.cpf = dados.cpf + ' '
-    dados.id_unidade = selectedUnidades[0]
-    dados = {...dados, ...dados.permissoes}
+    dados.id_unidade = selectedUnidades
 
     // Depois dos spreads, deleto os desnecessários
     delete dados.sobrenome
     delete dados.perfil
-    delete dados.permissoes 
 
-
-    console.log(dados)
     callUsuarioAPI.novo(dados)
   }
 

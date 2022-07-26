@@ -69,11 +69,7 @@ const CadEvento = () => {
     dados.id_area = areas[parseInt(dados.id_area) - 1].id_unidade[0]
     dados.id_subcategoria = subcategorias[parseInt(dados.id_subcategoria) - 1]._id
 
-
-    console.log(dados)
-    const returnAPI = callEventoAPI.novo(dados)
-    console.log(returnAPI)
-
+    callEventoAPI.novo(dados)
   }
   const ruim = (dados) => {
     console.log(dados)
