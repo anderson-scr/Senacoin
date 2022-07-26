@@ -20,6 +20,6 @@ router.use('/api/v1/subcategoria', require('./subcategoria'));
 
 router.use('/api/v1/unidade', require('./unidade'));
 
-router.use((req, res, next) => (res.status(404).json({success: false, msg: "page not found"})));
+router.use((req, res, next) => (res.status(404).json({success: false, msg: "página não encontrada"})));
 
 module.exports = router;

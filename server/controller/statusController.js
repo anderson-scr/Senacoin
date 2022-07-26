@@ -56,7 +56,7 @@ exports.listAll = (_req, res, _next) => {
         if (!status.length)
             return res.status(204).json();  
         else
-			res.status(200).json({total: status.length, ...status});
+			res.status(200).json(status);
     })
     .catch((err) => {
         res.status(500).json({success: false, msg: `${err}`});

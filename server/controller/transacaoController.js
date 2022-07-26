@@ -109,7 +109,7 @@ exports.listAll = (_req, res, _next) => {
         if (!transacoes.length)
             return res.status(204).json();  
         else
-			res.status(200).json({total: transacoes.length, ...transacoes});
+			res.status(200).json(transacoes);
     })
     .catch((err) => {
         res.status(500).json({success: false, msg: `${err}`});
@@ -127,7 +127,7 @@ exports.listAllByAluno = (_req, res, _next) => {
         if (!transacoes.length)
             return res.status(204).json();  
         else
-			res.status(200).json({total: transacoes.length, ...transacoes});
+			res.status(200).json(transacoes);
     })
     .catch((err) => {
         res.status(500).json({success: false, msg: `${err}`});

@@ -68,7 +68,7 @@ exports.listAll = (_req, res, _next) => {
         if (!areas.length)
             return res.status(204).json();  
         else
-            res.status(200).json({total: areas.length, ...areas});
+            res.status(200).json(areas);
     })
     .catch((err) => {
         res.status(500).json({success: false, msg: `${err}`});
@@ -84,7 +84,7 @@ exports.listActive = (_req, res, _next) => {
         if (!areas.length)
             return res.status(204).json();  
         else
-            res.status(200).json({total: areas.length, ...areas});
+            res.status(200).json(areas);
     })
     .catch((err) => {
         res.status(500).json({success: false, msg: `${err}`});

@@ -105,7 +105,7 @@ exports.listAll = (req, res, _next) => {
         if (!itens.length)
             return res.status(204).json();  
         else
-			res.status(200).json({total: itens.length, ...itens});
+			res.status(200).json(itens);
     })
     .catch((err) => {
         res.status(500).json({success: false, msg: `${err}`});
@@ -127,7 +127,7 @@ exports.listAllByCategory = (req, res, _next) => {
         if (!itens.length)
             return res.status(204).json();  
         else
-			res.status(200).json({total: itens.length, ...itens});
+			res.status(200).json(itens);
     })
     .catch((err) => {
         res.status(500).json({success: false, msg: `${err}`});
@@ -146,7 +146,7 @@ exports.listActive = (req, res, _next) => {
         if (!itens.length)
             return res.status(204).json();  
         else
-			res.status(200).json({total: itens.length, ...itens});
+			res.status(200).json(itens);
     })
     .catch((err) => {
         res.status(500).json({success: false, msg: `${err}`});
@@ -167,7 +167,7 @@ exports.listActiveByCategory = (req, res, _next) => {
         if (!itens.length)
             return res.status(204).json();  
         else
-			res.status(200).json({total: itens.length, ...itens});
+			res.status(200).json(itens);
     })
     .catch((err) => {
         res.status(500).json({success: false, msg: `${err}`});

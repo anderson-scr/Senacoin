@@ -103,7 +103,7 @@ exports.listAll = (req, res, _next) => {
 		if (!colabs.length)
 			return res.status(204).json();  
 		else
-			res.status(200).json({total: colabs.length, ...colabs});
+			res.status(200).json(colabs);
 	})
 	.catch((err) => {
 		res.status(500).json({success: false, msg: `${err}`});
@@ -120,7 +120,7 @@ exports.listActive = (req, res, _next) => {
 		if (!colabs.length)
 			return res.status(204).json();  
 		else
-			res.status(200).json({total: colabs.length, ...colabs});
+			res.status(200).json(colabs);
 	})
 	.catch((err) => {
 		res.status(500).json({success: false, msg: `${err}`});

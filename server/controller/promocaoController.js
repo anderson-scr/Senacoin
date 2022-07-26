@@ -86,7 +86,7 @@ exports.listAll = (_req, res, _next) => {
         if (!promocoes.length)
             return res.status(204).json();  
         else
-            res.status(200).json({total: promocoes.length, ...promocoes});
+            res.status(200).json(promocoes);
     })
     .catch((err) => {
         res.status(500).json({success: false, msg: `${err}`});
@@ -105,7 +105,7 @@ exports.listActive = (_req, res, _next) => {
         if (!promocoes.length)
             return res.status(204).json();  
         else
-            res.status(200).json({total: promocoes.length, ...promocoes});
+            res.status(200).json(promocoes);
     })
     .catch((err) => {
         res.status(500).json({success: false, msg: `${err}`});

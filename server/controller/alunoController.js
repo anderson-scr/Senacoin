@@ -104,7 +104,7 @@ exports.listAll = (_req, res, _next) => {
         if (!alunos.length)
             return res.status(204).json();  
         else
-            res.status(200).json({total: alunos.length, ...alunos});
+            res.status(200).json(alunos);
     })
     .catch((err) => {
         res.status(500).json({success: false, msg: `${err}`});
@@ -121,7 +121,7 @@ exports.listActive = (_req, res, _next) => {
         if (!alunos.length)
             return res.status(204).json();  
         else
-            res.status(200).json({total: alunos.length, ...alunos});
+            res.status(200).json(alunos);
     })
     .catch((err) => {
         res.status(500).json({success: false, msg: `${err}`});

@@ -66,7 +66,7 @@ exports.listAll = (_req, res, _next) => {
         if (!perfis.length)
             return res.status(204).json();  
         else
-            res.status(200).json({total: perfis.length, ...perfis});
+            res.status(200).json(perfis);
     })
     .catch((err) => {
         res.status(500).json({success: false, msg: `${err}`});
@@ -82,7 +82,7 @@ exports.listActive = (_req, res, _next) => {
         if (!perfis.length)
             return res.status(204).json();  
         else
-            res.status(200).json({total: perfis.length, ...perfis});
+            res.status(200).json(perfis);
     })
     .catch((err) => {
         res.status(500).json({success: false, msg: `${err}`});
