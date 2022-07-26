@@ -1,17 +1,57 @@
-import React, { useEffect, useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { verificaSessao } from 'auth/login/verificaSessao';
-import { getUserFormData } from 'utils/getFormData/cadUsuarioForm';
-import { callRegisterAPI } from 'api/cadastros/cadUsuarios';
-import { getUnidadesAPI } from 'api/cadastros/getUnidades';
-import './cadUsuarioStyle.css';
-import { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { verificaSessao } from 'auth/login/verificaSessao'
 
+// API's
+import { callUsuarioAPI } from 'api/usuario/callUsuarios'
+import { callPerfilAPI } from 'api/common/callPerfil'
+
+// Form validation and more
+import { yupSchemaCadUsuario } from 'utils/validation/schemas/cadUsuario'
+import { useForm } from "react-hook-form"
+import { yupResolver } from '@hookform/resolvers/yup'
+
+// Form tooltip
+import QuestionTooltip from 'common/tooltips/questionTooltip'
+import AddTooltip from 'common/tooltips/addTooltip'
+
+// CSS
+import './cadUsuarioStyle.css'
+
+// Modal Imports
+import ModalService from 'common/modal/services/modalService'
+import ModalCadUnidade from 'common/preMadeModal/cadUnidade'
+import ModalSelecionarUnidade from 'common/preMadeModal/selects/modalSelecionarUnidade'
 
 const CadUsuario = () => {
   const effectOnce = useRef(true)
+  const [selectedUnidades, setSelectedUnidades] = useState([])
+  const [perfis, setPerfil] = useState([])
+  const [permissoes, setPermissoes] = useState({
+    cad_areas: false,
+    cad_itens: false,
+    cad_perfis: false,
+    cad_promocoes: false,
+    cad_qrcodes: false,
+    cad_subcategorias: false,
+    cad_unidades: false,
+    cad_usuarios: false,
+    ger_itens: false,
+    ger_promocoes: false,
+    ger_qrcodes: false,
+    ger_usuarios: false,
+    relatorios: false
+  })
   const navigate = useNavigate()
-  const [unidades, setUnidades] = useState()
+  const { register, handleSubmit, formState: {
+    errors
+  } } = useForm({
+    resolver: yupResolver(yupSchemaCadUsuario)
+  });
+
+  useEffect(() => {
+    console.log(selectedUnidades)
+  }, [selectedUnidades])
 
   // Verifica sessão de usuário
   useEffect(() => {
@@ -20,139 +60,209 @@ const CadUsuario = () => {
         navigate("/Login", {replace: true})
       }
 
-      // Preenche dropdown unidades
-      getDropDownData()
-  
+      // Fill dropDows unidades
+      (async () => {
+        setPerfil(await callPerfilAPI.ativo())
+      })()
+
       return () => effectOnce.current = false
     }
   }, [navigate])
 
 
-  async function getDropDownData() {
-    const drop =  await getUnidadesAPI()
+  // Modal cad unidades
+  const openModalCadUnidade = (evt) => {
+    evt.preventDefault()
+    ModalService.open(ModalCadUnidade)
+  }
+  // Modal select unidades
+  const openModalSelectUnidade = (evt) => {
+    evt.preventDefault()
+    ModalService.open(ModalSelecionarUnidade, {teste: 'teste'}, setSelectedUnidades)
   }
 
-  const getInfo = (evt) => {
-    evt.preventDefault()
-    const formData = getUserFormData()
-    console.log(formData)
 
-    // callRegisterAPI(formData)
+  function cadastrarUsuario(dados) {
+    // Arrumando a estrutura do objeto para enviar pro post de usuario
+    dados.senha = dados.nome.toLowerCase() + '1234'
+    dados.nome = dados.nome + ' ' + dados.sobrenome
+    dados.cpf = dados.cpf + ' '
+    dados.id_unidade = selectedUnidades[0]
+    dados = {...dados, ...dados.permissoes}
+
+    // Depois dos spreads, deleto os desnecessários
+    delete dados.sobrenome
+    delete dados.perfil
+    delete dados.permissoes 
+
+
+    console.log(dados)
+    callUsuarioAPI.novo(dados)
+  }
+
+  // Change the default perfil value
+  const changePerfil = (evt) => {
+    const tempoPerfil = {...perfis[evt.target.value -1]}
+    delete tempoPerfil._id
+    delete tempoPerfil.nome
+    setPermissoes({
+      ...tempoPerfil
+    })
+  }
+
+  // Permits to change the current value of the permissao sate
+  const changePermissao = (evt) => {
+    const tempPermissao = {...permissoes}
+    tempPermissao[evt.target.id] = !tempPermissao[evt.target.id]
+    setPermissoes({...tempPermissao})
+  }
+  const errado = (dados) => {
+    console.log(dados)
   }
 
   return (
     <section>
-      <form>
+      <form onSubmit={handleSubmit(cadastrarUsuario, errado)}>
 
         {/* First row */}
-        <div className='containerForm container row'>
+        <div className='container row mx-auto'>
 
           {/* First col */}
           <div className='col'>
             <div className="mb-2">
               <label htmlFor="iptNome" className="form-label">Nome</label>
-              <input type="text" className="form-control" id="nome" />
-              <div id="iptNomeNeeded" className="textObrigatorio form-text">Este campo e obrigatório.</div>
+              <input type="text" className="form-control" id="nome" {...register('nome')} />
+              <div style={{height: '25px'}}>
+                {errors?.nome?.type &&
+                  <div className="form-text text-danger m-0">Preencha o campo corretamente.</div>
+                }
+              </div>
             </div>
 
             <div className="mb-2">
               <label htmlFor="iptSobrenome" className="form-label">Sobrenome</label>
-              <input type="text" className="form-control" id="sobrenome" />
-              <div id="iptSobrenomeNeeded" className="textObrigatorio form-text">Este campo e obrigatório.</div>
+              <input type="text" className="form-control" id="sobrenome" {...register('sobrenome')} />
+              <div style={{height: '25px'}}>
+                {errors?.sobrenome?.type &&
+                  <div className="form-text text-danger">Preencha o campo corretamente.</div>
+                }
+              </div>
             </div>
 
             <div className="mb-2">
               <label htmlFor="iptEmail" className="form-label">Email</label>
-              <input type="email" className="form-control" id="email" aria-describedby="emailHelp" placeholder='exemplo@email.com' />
-              <div id="iptEmailNeeded" className="textObrigatorio form-text">Este campo e obrigatório.</div>
+              <input type="email" className="form-control" id="email" aria-describedby="emailHelp" placeholder='exemplo@email.com' {...register('email')} />
+              <div style={{height: '25px'}}>
+                {errors?.email?.type &&
+                  <div className="form-text text-danger">Preencha o campo corretamente.</div>
+                }
+              </div>
             </div>
 
             <div className="mb-2">
               <label htmlFor="iptCpf" className="form-label">CPF</label>
-              <input type="number" className="form-control" id="cpf" placeholder='000.000.000-00' />
-              <div id="iptCpfNeeded" className="textObrigatorio form-text">Este campo e obrigatório.</div>
+              <input type="text" className="form-control" id="cpf" placeholder='000.000.000-00' {...register('cpf')} />
+              <div style={{height: '25px'}}>
+                {errors?.cpf?.type &&
+                  <div className="form-text text-danger">Preencha o campo corretamente.</div>
+                }
+              </div>
             </div>
 
             <div className="mb-2">
               <label htmlFor="iptNumeroMatricula" className="form-label">Numero de matricula</label>
-              <input type="number" className="form-control" id="matricula" placeholder='000.000/000.00-00'/>
-              <div id="emailHelp" className="textObrigatorio form-text">Este campo e obrigatório.</div>
+              <input type="text" className="form-control" id="matricula" placeholder='000.000/000.00-00' {...register('matricula')} />
+              <div style={{height: '25px'}}>
+                {errors?.matricula?.type &&
+                  <div className="form-text text-danger">Preencha o campo corretamente.</div>
+                }
+              </div>
             </div>
           </div>
 
           {/* Second Col */}
-          <div className='teste2 col'>
+          <div className='col'>
 
             {/* Second Col - first row */}
-            <div className='row arrumaSapoha'>
-              <label htmlFor="dropPerfil" className="form-label">Unidade</label>
-              <select className="form-select" id='id_unidade' aria-label="Default select example">
-                <option defaultValue={0}>Open this select menu</option>
-                <option value={1}>One</option>
-                <option value={2}>Two</option>
-                <option value={3}>Three</option>
-              </select>
+            <div>
+              <div className='mb-2 overflow-visible'>
+                <AddTooltip label='Unidade' msg='Criar uma nova unidade.' onClickFunc={openModalCadUnidade} />
+                <input type="button" onClick={evt => openModalSelectUnidade(evt)} className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value={`${selectedUnidades.length} unidade(s) selecionada(s)`} />
+                <div style={{height: '25px'}}>
+                {errors?.id_unidade?.type &&
+                  <div className="form-text text-danger">Preencha o campo corretamente.</div>
+                }
+              </div>
+              </div>
+
+              <div className='mb-2 overflow-visible'>
+                <QuestionTooltip label='Perfil' msg='Permissões definidas pelo sistema. Voce pode escolher e editar.' />
+                <select className="form-select" id='perfil' aria-label="Default select example" defaultValue={'DEFAULT'} onChangeCapture={evt => changePerfil(evt)} {...register('perfil')}>
+                  <option value="DEFAULT" disabled style={{display: "none"}}>Selecione um perfil</option>
+                  {perfis.length > 1 &&
+                    perfis.map((perfil, idx) => {
+                      return <option key={idx} value={idx + 1}>{perfil.nome}</option>
+                    })
+                  }
+                </select>
+                <div style={{height: '25px'}}>
+                {errors?.perfil?.type &&
+                  <div className="form-text text-danger">Preencha o campo corretamente.</div>
+                }
+              </div>
+              </div>
             </div>
 
-            <div className='row arrumaSapoha2'>
-              <label htmlFor="dropPerfil" className="form-label">Perfil</label>
-              <select className="form-select" id='perfil' aria-label="Default select example">
-                <option defaultValue={0}>Open this select menu</option>
-                <option value={1}>One</option>
-                <option value={2}>Two</option>
-                <option value={3}>Three</option>
-              </select>
-            </div>
           
             {/* Second Col - second row */}
-            <div className='containerChecks row h-75'>
+            <div className='row d-flex justify-content-center'>
               {/* Second Col - second row - first col */}
-              <div className='columnCheks col-5 mx-auto'>
+              <div className='col-5'>
                 <h4>Cadastros</h4>
                 <div className="form-check mt-2">
-                  <input className="form-check-input" type="checkbox" name="checkboxCadUsuario" id="cad_usuarios" />
+                  <input className="form-check-input" type="checkbox" name="checkboxCadUsuario" id="cad_usuarios" onClick={evt => changePermissao(evt)} checked={permissoes.cad_usuarios} {...register('permissoes.cad_usuarios')} />
                   <label className="form-check-label" htmlFor="checkboxCadUsuario">
                     Usuários
                   </label>
                 </div>
                 <div className="form-check mt-2">
-                  <input className="form-check-input" type="checkbox" name="checkboxCadItems" id="cad_itens" />
+                  <input className="form-check-input" type="checkbox" name="checkboxCadItems" id="cad_itens" onClick={evt => changePermissao(evt)} checked={permissoes.cad_itens} {...register('permissoes.cad_itens')} />
                   <label className="form-check-label" htmlFor="checkboxCadItems">
                     Items
                   </label>
                 </div>
                 <div className="form-check mt-2">
-                  <input className="form-check-input" type="checkbox" name="checkboxCadAreas" id="cad_areas" />
+                  <input className="form-check-input" type="checkbox" name="checkboxCadAreas" id="cad_areas" onClick={evt => changePermissao(evt)} checked={permissoes.cad_areas} {...register('permissoes.cad_areas')} />
                   <label className="form-check-label" htmlFor="checkboxCadAreas">
                     Areas
                   </label>
                 </div>
                 <div className="form-check mt-2">
-                  <input className="form-check-input" type="checkbox" name="checkboxCadSubcategorias" id="cad_subcategorias" />
+                  <input className="form-check-input" type="checkbox" name="checkboxCadSubcategorias" id="cad_subcategorias" onClick={evt => changePermissao(evt)} checked={permissoes.cad_subcategorias} {...register('permissoes.cad_subcategorias')} />
                   <label className="form-check-label" htmlFor="checkboxCadSubcategorias">
                     Subcategorias
                   </label>
                 </div>
                 <div className="form-check mt-2">
-                  <input className="form-check-input" type="checkbox" name="checkboxCadSubcategorias" id="cad_perfis" />
+                  <input className="form-check-input" type="checkbox" name="checkboxCadSubcategorias" id="cad_perfis" onClick={evt => changePermissao(evt)} checked={permissoes.cad_perfis} {...register('permissoes.cad_perfis')} />
                   <label className="form-check-label" htmlFor="checkboxCadSubcategorias">
                     Perfis
                   </label>
                 </div>
                 <div className="form-check mt-2">
-                  <input className="form-check-input" type="checkbox" name="checkboxCadPromocoes" id="cad_promocoes" />
+                  <input className="form-check-input" type="checkbox" name="checkboxCadPromocoes" id="cad_promocoes" onClick={evt => changePermissao(evt)} checked={permissoes.cad_promocoes} {...register('permissoes.cad_promocoes')} />
                   <label className="form-check-label" htmlFor="checkboxCadPromocoes">
                     Promoções
                   </label>
                 </div>
                 <div className="form-check mt-2">
-                  <input className="form-check-input" type="checkbox" name="checkboxCadQRcodes" id="cad_qrcode" />
+                  <input className="form-check-input" type="checkbox" name="checkboxCadQRcodes" id="cad_qrcodes" onClick={evt => changePermissao(evt)} checked={permissoes.cad_qrcodes} {...register('permissoes.cad_qrcodes')} />
                   <label className="form-check-label" htmlFor="checkboxCadQRcodes">
                     QRcodes
                   </label>
                 </div>
                 <div className="form-check mt-2">
-                  <input className="form-check-input" type="checkbox" name="checkboxCadQRcodes" id="cad_unidades" />
+                  <input className="form-check-input" type="checkbox" name="checkboxCadQRcodes" id="cad_unidades" onClick={evt => changePermissao(evt)} checked={permissoes.cad_unidades} {...register('permissoes.cad_unidades')} />
                   <label className="form-check-label" htmlFor="checkboxCadQRcodes">
                     Unidades
                   </label>
@@ -161,34 +271,34 @@ const CadUsuario = () => {
               </div>
 
               {/* Second Col - second row - second col */}
-              <div className='columnCheks col-5 mx-auto'>
+              <div className='col-5'>
                 <h4>Gerenciamento</h4>
                 <div className="form-check mt-2">
-                  <input className="form-check-input" type="checkbox" name="flexcheckboxDefault" id="ger_usuarios" />
+                  <input className="form-check-input" type="checkbox" name="flexcheckboxDefault" id="ger_usuarios" onClick={evt => changePermissao(evt)} checked={permissoes.ger_usuarios} {...register('permissoes.ger_usuarios')} />
                   <label className="form-check-label" htmlFor="flexcheckboxDefault1">
                     Gerenciar usuários
                   </label>
                 </div>
                 <div className="form-check mt-2">
-                  <input className="form-check-input" type="checkbox" name="flexcheckboxDefault" id="ger_items" />
+                  <input className="form-check-input" type="checkbox" name="flexcheckboxDefault" id="ger_itens" onClick={evt => changePermissao(evt)} checked={permissoes.ger_itens} {...register('permissoes.ger_itens')} />
                   <label className="form-check-label" htmlFor="flexcheckboxDefault2">
                     Gerenciar items
                   </label>
                 </div>
                 <div className="form-check mt-2">
-                  <input className="form-check-input" type="checkbox" name="flexcheckboxDefault" id="ger_promocoes" />
+                  <input className="form-check-input" type="checkbox" name="flexcheckboxDefault" id="ger_promocoes" onClick={evt => changePermissao(evt)} checked={permissoes.ger_promocoes} {...register('permissoes.ger_promocoes')} />
                   <label className="form-check-label" htmlFor="flexcheckboxDefault2">
                     Gerenciar Promoções
                   </label>
                 </div> 
                 <div className="form-check mt-2">
-                  <input className="form-check-input" type="checkbox" name="flexcheckboxDefault" id="ger_qrcode" />
+                  <input className="form-check-input" type="checkbox" name="flexcheckboxDefault" id="ger_qrcodes" onClick={evt => changePermissao(evt)} checked={permissoes.ger_qrcodes} {...register('permissoes.ger_qrcodes')} />
                   <label className="form-check-label" htmlFor="flexcheckboxDefault2">
                     Gerenciar Qrcode
                   </label>
                 </div>
                 <div className="form-check mt-2">
-                  <input className="form-check-input" type="checkbox" name="flexcheckboxDefault" id="ger_relatorios" />
+                  <input className="form-check-input" type="checkbox" name="flexcheckboxDefault" id="relatorios" onClick={evt => changePermissao(evt)} checked={permissoes.relatorios} {...register('permissoes.relatorios')} />
                   <label className="form-check-label" htmlFor="flexcheckboxDefault2">
                     Emitir relatórios
                   </label>
@@ -199,12 +309,12 @@ const CadUsuario = () => {
           </div>
 
           {/* Second row */}
-          <div className='containerBtns container row mt-5'>
-            <div className='col d-flex'>
-              <button type="submit" className="btn btn-outline-secondary w-50">Cancelar</button>
+          <div className='row mx-auto mt-5'>
+            <div className='col d-flex p-0'>
+              <button type="button" className="btn btnCancelar btn-outline-secondary w-50">Cancelar</button>
             </div>
-            <div className='col d-flex justify-content-end'>
-              <button type="submit" className="btn btn-primary w-50" onClick={evt => getInfo(evt)}>Salvar</button>
+            <div className='col d-flex justify-content-end p-0'>
+              <button type="submit" className="btn btnSalvar btn-primary w-50">Salvar</button>
             </div>
           </div>
         </div>

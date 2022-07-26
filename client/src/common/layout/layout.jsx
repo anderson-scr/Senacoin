@@ -3,6 +3,8 @@ import BarraLateral from 'common/sideBar'
 import { Outlet } from "react-router-dom";
 import Header from 'common/header/header';
 import Footer from 'common/footer/footer';
+import ModalRoot from 'common/modal/components/modalRoot';
+
 
 // Page in context
 import { pageInContext } from 'contexts/pageInContext';
@@ -13,6 +15,7 @@ const Layout = () => {
 
   return (
     <div className='mainContainer d-flex'>
+      <ModalRoot />
       <pageInContext.Provider value={{pageIn, setPageIn}} >
         <BarraLateral />
         <main className='mainSection d-flex flex-grow-1 justify-content-center'>
