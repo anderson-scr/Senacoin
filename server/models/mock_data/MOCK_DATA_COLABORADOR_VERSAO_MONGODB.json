@@ -357,10 +357,8 @@
             "ger_qrcodes": true,
             "relatorios": true
         },
-        "id_status":  {
-            "$oid":  "62cec6c463187bb9b498687b"
-        },
         "id_unidade": [
-        ]
+        ],
+        "ativo": true
     }
 ]
