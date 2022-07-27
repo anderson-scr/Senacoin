@@ -10,7 +10,7 @@ router.post('/populate', utils.authUserMiddleware, utils.authRoleMiddleware("cad
 // list all unidades
 router.get('/all', utils.authUserMiddleware, utils.authRoleMiddleware("cad_unidades"), controller.listAll);
 // list all active unidades
-router.get('/active', utils.authUserMiddleware, utils.authRoleMiddleware("cad_unidades"), controller.listActive);
+router.get('/active', utils.authUserMiddleware, controller.listActive);
 // list single unidade
 router.get('/:id', utils.authUserMiddleware, utils.authRoleMiddleware("cad_unidades"), controller.listOne);
 // edit a unidade

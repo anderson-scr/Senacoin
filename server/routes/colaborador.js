@@ -12,7 +12,7 @@ router.post('/populate', utils.authUserMiddleware, utils.authRoleMiddleware("cad
 // list all colaboradores
 router.get('/all/:offset?', utils.authUserMiddleware, utils.authRoleMiddleware("ger_usuarios"), controller.listAll);
 // list all active colaboradores
-router.get('/active/:offset?', utils.authUserMiddleware, utils.authRoleMiddleware("ger_usuarios"), controller.listActive);
+router.get('/active/:offset?', utils.authUserMiddleware, controller.listActive);
 // list single colaborador
 router.get('/:id', utils.authUserMiddleware, utils.authRoleMiddleware("ger_usuarios"), controller.listOne);
 // edit a colaborador
