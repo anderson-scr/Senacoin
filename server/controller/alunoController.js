@@ -42,14 +42,11 @@ exports.new = async (req, res, _next) => {
     if (!("ativo" in req.body))
         req.body["ativo"] = true;
     
-        
     const session = await mongoose.startSession();
     try {
-        
+
         responsavel = !req.jwt? req.body.email: req.jwt.sub;
-        const lote  = await senacoin.addSencoins(responsavel, 1000)
-        
-        console.log(lote);    
+        const lote  = await senacoin.new(responsavel, 1000)
         if(!lote)
             throw new Error(`erro na criacao dos senacoins`);
             
@@ -129,9 +126,9 @@ exports.listActive = (_req, res, _next) => {
     .then((alunos) => {
         
         if (!alunos.length)
-        return res.status(204).json();  
+            return res.status(204).json();  
         else
-        res.status(200).json(alunos);
+            res.status(200).json(alunos);
     })
     .catch((err) => {
         res.status(500).json({success: false, msg: `${err}`});
@@ -144,11 +141,16 @@ exports.listOne = (req, res, _next) => {
     .populate({path : 'id_unidade', select: 'nome cidade uf -_id'})
     .populate({path : 'saldo', select: 'pontos data_inicio data_fim -_id'})
     .then((aluno) => {
-        
+        let intAluno = {...aluno._doc};
+        console.log(intAluno);
+
+        intAluno.saldo = senacoin.sum(aluno.saldo);
+        console.log(intAluno);
+
         if (!aluno)
             return res.status(204).json();  
         else
-            res.status(200).json(aluno);
+            res.status(200).json(intAluno);
     })
     .catch((err) => {
         res.status(500).json({success: false, msg: `${err}`});

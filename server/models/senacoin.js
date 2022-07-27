@@ -7,9 +7,10 @@ exports.SenaCoinSchema = new mongoose.Schema({ // lote de senacoins obtidos e su
 }, { versionKey: false });
 
 exports.AuditoriaSenaCoinSchema = new mongoose.Schema({ // lote de senacoins obtidos e sua data de expiração
-	colaborador: {type: String, immutable: true},
+	responsavel: {type: String, immutable: true},
 	data: {type: Date, immutable: true, default: () => Date.now() - 4*60*60*1000}, //fuso horario gmt-4
 
+	id_senacoin:{type: mongoose.Types.ObjectId, ref: "SenaCoin"},
 	data_inicio: {type: Date, immutable: true},
 	data_fim: {type: Date, immutable: true},
 	pontos: {type: Number, immutable: true},
