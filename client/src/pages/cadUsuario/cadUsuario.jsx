@@ -65,7 +65,6 @@ const CadUsuario = () => {
     }
   }, [navigate])
 
-
   // Modal cad unidades
   const openModalCadUnidade = (evt) => {
     evt.preventDefault()
@@ -94,17 +93,18 @@ const CadUsuario = () => {
 
   // Change the default perfil value
   const changePerfil = (evt) => {
-    const tempoPerfil = {...perfis[evt.target.value -1]}
-    delete tempoPerfil._id
-    delete tempoPerfil.nome
-    setPermissoes({
-      ...tempoPerfil
-    })
+    let tempoPerfil = {...perfis[evt.target.value -1].permissoes}
+    setPermissoes(tempoPerfil)
   }
+  useEffect(() => {
+    console.log('aqui')
+    console.log(permissoes)
+  }, [permissoes])
 
   // Permits to change the current value of the permissao sate
   const changePermissao = (evt) => {
     const tempPermissao = {...permissoes}
+    console.log(tempPermissao)
     tempPermissao[evt.target.id] = !tempPermissao[evt.target.id]
     setPermissoes({...tempPermissao})
   }
@@ -189,8 +189,8 @@ const CadUsuario = () => {
 
               <div className='mb-2 overflow-visible'>
                 <QuestionTooltip label='Perfil' msg='Permissões definidas pelo sistema. Voce pode escolher e editar.' />
-                <select className="form-select" id='perfil' aria-label="Default select example" defaultValue={'DEFAULT'} onChangeCapture={evt => changePerfil(evt)} {...register('perfil')}>
-                  <option value="DEFAULT" disabled style={{display: "none"}}>Selecione um perfil</option>
+                <select className="form-select" id='perfil' aria-label="Default select example" defaultValue="DEFAULT" onChangeCapture={evt => changePerfil(evt)} {...register('perfil')}>
+                  <option value="DEFAULT"  disabled style={{display: "none"}}>Selecione um perfil</option>
                   {perfis.length > 1 &&
                     perfis.map((perfil, idx) => {
                       return <option key={idx} value={idx + 1}>{perfil.nome}</option>
