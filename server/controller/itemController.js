@@ -29,47 +29,48 @@ exports.new = async (req, res, _next) => {
     categoria = getIdbyName(req.params.categoria);
 	if (!categoria)
         return res.status(400).json({msg: "categoria de item inexistente."});
-    
     req.body["id_categoria"] = categoria;
-    if (!("id_status" in req.body))
-        req.body["id_status"] = "62cec6c463187bb9b498687b";
-
-	// nome e caminho do arquivo
-	const img = req.files.imagem;
-	const caminho = path.join('uploads', `${randomUUID()}${path.extname(img.name)}`);
-	req.body.imagem = caminho;
+    
+    if (!("ativo" in req.body))
+        req.body["ativo"] = true;
 
     const session = await mongoose.startSession();
     try {
         await session.withTransaction(async () => {
-
+            
             await Item.create([req.body], { session })
             .then(async (item) => {
                 await AuditoriaItem.create([{colaborador: req.jwt.sub, ...req.body}], { session })
-                .then((_auditem) =>{
-                    // mv() é usada para colocar o arquivo na pasta do servidor
-                    img.mv(path.join(__basedir, caminho), async (err) =>{
-                        if(err)
-                        {
-                            await session.abortTransaction();
-                            res.status(500).json({ success: false, msg: `${err}` });
-                        }
-                        else
-                            res.status(201).json({ success: true, ...item[0]["_doc"]}); // ["_doc"] é a posicao do obj de retorno onde se encontra o documento criado));
-                    });
+                .then(async (_auditem) =>{
+                    if (req.files && Object.keys(req.files).length)
+                    {
+                        const img = req.files.imagem;   // nome e caminho do arquivo
+                        const caminho = path.join('uploads', `${randomUUID()}${path.extname(img.name)}`);
+                        req.body.imagem = caminho;
+
+                        // mv() é usada para colocar o arquivo na pasta do servidor
+                        await img.mv(path.join(__basedir, caminho), async (err) =>{
+                            if(err)
+                            {
+                                await session.abortTransaction();
+                                res.status(500).json({ success: false, msg: `${err}1` });
+                            }
+                        });
+                    }
+                    res.status(201).json({ success: true, ...item[0]["_doc"]}); // ["_doc"] é a posicao do obj de retorno onde se encontra o documento criado));
                 })
                 .catch(async (err) => {
                     await session.abortTransaction();
-                    res.status(500).json({ success: false, msg: `${err}` });
+                    res.status(500).json({ success: false, msg: `${err}2` });
                 });
             })
             .catch(async (err) => {
                 await session.abortTransaction();
-                res.status(500).json({ success: false, msg: `${err}` });
+                res.status(500).json({ success: false, msg: `${err}3` });
             })
         });
     } catch (err) {
-        res.status(500).json({ success: false, msg: `${err}` });
+        res.status(500).json({ success: false, msg: `${err}4` });
     } finally {
         await session.endSession();
     }
@@ -81,8 +82,8 @@ exports.newList = (req, res, _next) => {
 		return res.status(400).json({ success: false, msg: "solicitação mal construída, informações faltando ou incorretas" });
 
     req.body.forEach(item => {
-        if (!("id_status" in item))
-            item["id_status"] = "62cec6c463187bb9b498687b";
+        if (!("ativo" in item))
+            item["ativo"] = true;
     });
     
     Item.insertMany(req.body, (err, docs) => {
@@ -94,13 +95,11 @@ exports.newList = (req, res, _next) => {
 }
 
 exports.listAll = (req, res, _next) => {
-
-	Item.find({}).skip(req.params.offset).limit(60)
-    .select("nome id_area id_categoria id_unidade pontos id_status")
-	.populate({path : 'id_area', select: 'nome -_id'})   //.populate('id_unidade id_perfil id_status')
+	Item.find({}).skip(req.params.offset || 0).limit(60)
+    .select("nome id_area id_categoria id_unidade pontos ativo")
+	.populate({path : 'id_area', select: 'nome -_id'})   //.populate('id_unidade id_perfil ativo')
     .populate({path : 'id_categoria', select: 'nome -_id'})
     .populate({path : 'id_unidade', select: 'nome -_id'})
-    .populate({path : 'id_status', select: '-_id'})
     .then((itens) => {  
         if (!itens.length)
             return res.status(204).json();  
@@ -118,11 +117,11 @@ exports.listAllByCategory = (req, res, _next) => {
 	if (!categoria)
 		return res.status(400).json({msg: "categoria de item inexistente."});
 
-	Item.find({id_categoria: categoria}).skip(req.params.offset).limit(60)
-    .select("nome id_area id_unidade pontos id_status")
-	.populate({path : 'id_area', select: 'nome -_id'})   //.populate('id_unidade id_perfil id_status')
+	Item.find({id_categoria: categoria}).skip(req.params.offset || 0).limit(60)
+    .select("nome id_area id_unidade pontos ativo")
+	.populate({path : 'id_area', select: 'nome -_id'})   //.populate('id_unidade id_perfil ativo')
     .populate({path : 'id_unidade', select: 'nome -_id'})
-    .populate({path : 'id_status', select: '-_id'})
+    
     .then((itens) => {
         if (!itens.length)
             return res.status(204).json();  
@@ -136,9 +135,9 @@ exports.listAllByCategory = (req, res, _next) => {
 
 exports.listActive = (req, res, _next) => {
 
-	Item.find({id_status: "62cec6c463187bb9b498687b"}).skip(req.params.offset).limit(60)
-    .select("nome id_area id_categoria id_subcategoria id_unidade")
-	.populate({path : 'id_area', select: 'nome -_id'})   //.populate('id_unidade id_perfil id_status')
+	Item.find({ativo: true}).skip(req.params.offset || 0).limit(60)
+    .select("nome pontos id_area id_categoria id_subcategoria id_unidade")
+	.populate({path : 'id_area', select: 'nome -_id'})   //.populate('id_unidade id_perfil ativo')
     .populate({path : 'id_categoria', select: 'nome -_id'})
     .populate({path : 'id_subcategoria', select: 'nome -_id'})
     .populate({path : 'id_unidade', select: 'nome -_id'})
@@ -159,9 +158,9 @@ exports.listActiveByCategory = (req, res, _next) => {
 	if (!categoria)
 		return res.status(400).json({msg: "categoria de item inexistente."});
 
-	Item.find({id_categoria: categoria, id_status: "62cec6c463187bb9b498687b"})
-    .select("nome id_area id_unidade pontos descricao imagem")
-	.populate({path : 'id_area', select: 'nome -_id'})   //.populate('id_unidade id_perfil id_status')
+	Item.find({id_categoria: categoria, ativo: true})
+    .select("nome pontos id_area id_unidade pontos descricao imagem")
+	.populate({path : 'id_area', select: 'nome -_id'})   //.populate('id_unidade id_perfil ativo')
     .populate({path : 'id_unidade', select: 'nome -_id'})
     .then((itens) => {
         if (!itens.length)
@@ -181,7 +180,7 @@ exports.listOne = (req, res, _next) => {
     .populate({path : 'id_categoria', select: 'nome -_id'})
     .populate({path : 'id_subcategoria', select: 'nome -_id'})
     .populate({path : 'id_unidade', select: 'nome cidade uf -_id'})
-    .populate({path : 'id_status', select: '-_id'})
+    
     .then((item) => {   
         if (!item)
 			return res.status(204).json();
@@ -235,7 +234,7 @@ exports.delete = async (req, res, _nxt) => {
 	try {    
 		await session.withTransaction(async () => {
 		
-			await Item.findByIdAndUpdate(req.params.id, {id_status: mongoose.Types.ObjectId("62cec7b263187bb9b498687e")}, { session: session, new: true})
+			await Item.findByIdAndUpdate(req.params.id, {ativo: false}, { session: session, new: true})
 			.select('-_id')
 			.then(async (item) => {
 				if (!item)

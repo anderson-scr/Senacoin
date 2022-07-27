@@ -38,8 +38,8 @@ exports.new = async (req, res, _next) => {
     const saltHash = utils.genPassword(req.body.senha);
     delete req.body.senha;
     
-    if (!("id_status" in req.body))
-        req.body["id_status"] = "62cec6c463187bb9b498687b";
+    if (!("ativo" in req.body))
+        req.body["ativo"] = true;
 
     const session = await mongoose.startSession();
     try {
@@ -76,10 +76,10 @@ exports.newList = (req, res, _next) => {
 
     req.body.forEach(aluno => {
         const saltHash = utils.genPassword(aluno.senha);
-        delete aluno.id_status;
+        delete aluno.senha;
 
-        if (!("id_status" in aluno))
-            aluno["id_status"] = "62cec6c463187bb9b498687b";
+        if (!("ativo" in aluno))
+            aluno["ativo"] = true;
 
         aluno["hash"] = saltHash.hash;
         aluno["salt"] = saltHash.salt;
@@ -96,9 +96,9 @@ exports.newList = (req, res, _next) => {
 exports.listAll = (_req, res, _next) => {
 
     Aluno.find({})
-    .select("nome email cpf id_unidade id_status")
-    .populate({path : 'id_unidade', select: 'nome -_id'})   //.populate('id_unidade id_perfil id_status')
-    .populate({path : 'id_status', select: '-_id'})
+    .select("nome email cpf id_unidade ativo")
+    .populate({path : 'id_unidade', select: 'nome -_id'})   //.populate('id_unidade id_perfil ativo')
+    
     .then((alunos) => {
         
         if (!alunos.length)
@@ -113,9 +113,9 @@ exports.listAll = (_req, res, _next) => {
 
 exports.listActive = (_req, res, _next) => {
 
-    Aluno.find({id_status: "62cec6c463187bb9b498687b"})
+    Aluno.find({ativo: true})
     .select("nome email cpf matricula id_unidade")
-    .populate({path : 'id_unidade', select: 'nome -_id'})   //.populate('id_unidade id_perfil id_status')
+    .populate({path : 'id_unidade', select: 'nome -_id'})   //.populate('id_unidade id_perfil ativo')
     .then((alunos) => {
         
         if (!alunos.length)
@@ -129,11 +129,10 @@ exports.listActive = (_req, res, _next) => {
 }
 
 exports.listOne = (req, res, _next) => {
-    
     Aluno.findById(req.params.id)
     .select('-hash -salt')
-    .populate({path : 'id_unidade', select: 'nome cidade uf -_id'})   //.populate('id_unidade id_perfil id_status')
-    .populate({path : 'id_status', select: '-_id'})
+    .populate({path : 'id_unidade', select: 'nome cidade uf -_id'})   //.populate('id_unidade id_perfil ativo')
+    
     .then((aluno) => {
         
         if (!aluno)
@@ -147,11 +146,10 @@ exports.listOne = (req, res, _next) => {
 }
 
 exports.studentReport = (req, res, _next) => {
-
     Aluno.findById(req.params.id)
-    .select('nome email matricula id_unidade id_status -_id')
-    .populate({path : 'id_unidade', select: 'nome cidade uf -_id'})   //.populate('id_unidade id_perfil id_status')
-    .populate({path : 'id_status', select: '-_id'})
+    .select('nome email matricula id_unidade ativo -_id')
+    .populate({path : 'id_unidade', select: 'nome cidade uf -_id'})   //.populate('id_unidade id_perfil ativo')
+    
     .then((aluno) => {
         if (!aluno)
             res.status(204).json();
@@ -164,11 +162,10 @@ exports.studentReport = (req, res, _next) => {
 }
 
 exports.enrollmentReport = (req, res, _next) => {
-    
     Aluno.findById(req.params.id)
-    .select('nome email matricula id_unidade id_status -_id')
-    .populate({path : 'id_unidade', select: 'nome cidade uf -_id'})   //.populate('id_unidade id_perfil id_status')
-    .populate({path : 'id_status', select: '-_id'})
+    .select('nome email matricula id_unidade ativo -_id')
+    .populate({path : 'id_unidade', select: 'nome cidade uf -_id'})   //.populate('id_unidade id_perfil ativo')
+    
     .then((aluno) => {
         if (!aluno)
             return res.status(204).json();
@@ -236,7 +233,7 @@ exports.delete = async (req, res, _nxt) => {
 	try {
 		await session.withTransaction(async () => {
 
-			await Aluno.findByIdAndUpdate(req.params.id, {id_status: mongoose.Types.ObjectId("62cec7b263187bb9b498687e")}, { session: session, new: true})
+			await Aluno.findByIdAndUpdate(req.params.id, {ativo: false}, { session: session, new: true})
 			.select('-_id')
 			.then(async (aluno) => {
 				if (!aluno)

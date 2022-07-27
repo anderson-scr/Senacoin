@@ -9,8 +9,8 @@ exports.new = async (req, res, _next) => {
     if (!Object.keys(req.body).length)
 		return res.status(400).json({ success: false, msg: "solicitação mal construída, informações faltando ou incorretas" });
 
-    if (!("id_status" in req.body))
-        req.body["id_status"] = "62cec6c463187bb9b498687b";
+    if (!("ativo" in req.body))
+        req.body["ativo"] = true;
 
     const session = await mongoose.startSession();
     try {
@@ -45,8 +45,8 @@ exports.newList = (req, res, _next) => {
 		return res.status(400).json({ success: false, msg: "solicitação mal construída, informações faltando ou incorretas" });
 
     req.body.forEach(area => {
-        if (!("id_status" in area))
-            area["id_status"] = "62cec6c463187bb9b498687b";
+        if (!("ativo" in area))
+            area["ativo"] = true;
     });
     
     Area.insertMany(req.body, (err,docs) => {
@@ -60,9 +60,8 @@ exports.newList = (req, res, _next) => {
 exports.listAll = (_req, res, _next) => {
 
 	Area.find({})
-    .select("nome descricao id_unidade id_status")
+    .select("nome descricao id_unidade ativo")
     .populate({path : 'id_unidade', select: 'nome -_id'})
-    .populate({path : 'id_status', select: '-_id'})
     .then((areas) => {
         
         if (!areas.length)
@@ -76,8 +75,7 @@ exports.listAll = (_req, res, _next) => {
 }
 
 exports.listActive = (_req, res, _next) => {
-    
-	Area.find({id_status: "62cec6c463187bb9b498687b"})
+	Area.find({ativo: true})
     .select("nome id_unidade -_id")
     .then((areas) => {
         
@@ -92,10 +90,9 @@ exports.listActive = (_req, res, _next) => {
 }
 
 exports.listOne = (req, res, _next) => {
-
 	Area.findOne({ _id: req.params.id })
     .populate({path : 'id_unidade', select: 'nome cidade uf -_id'})
-    .populate({path : 'id_status', select: '-_id'})
+    
     .then((area) => {
         
         if (!area)
@@ -150,7 +147,7 @@ exports.delete = async (req, res, _nxt) => {
 	try {    
 		await session.withTransaction(async () => {
 		
-			await Area.findByIdAndUpdate(req.params.id, {id_status: mongoose.Types.ObjectId("62cec7b263187bb9b498687e")}, { session: session, new: true})
+			await Area.findByIdAndUpdate(req.params.id, {ativo: false}, { session: session, new: true})
 			.select('-_id')
 			.then(async (area) => {
 				if (!area)

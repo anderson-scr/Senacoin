@@ -4,7 +4,7 @@ import { callUnidadeAPI } from 'api/common/callUnidades';
 import { callAreaAPI } from 'api/common/callArea';
 import { callSubcategoriaAPI } from 'api/common/callSubcategoria';
 
-const TableFilters = ({categoria}) => {
+const TableFilters = ({categoriaOrUnidade}) => {
   const effectOnce = useRef(true)
   const [subcategorias, setSubcategorias] = useState([])
   const [unidades, setUnidades] = useState([])
@@ -19,7 +19,7 @@ const TableFilters = ({categoria}) => {
         setAreas(await callAreaAPI.ativo())
         setSubcategorias(await callSubcategoriaAPI.ativo())
       })()
-  
+
       return () => effectOnce.current = false
     }
 
@@ -52,7 +52,7 @@ const TableFilters = ({categoria}) => {
               }
             </select>
           </div>
-          {!categoria && <div className='mb-3 col-3 '>
+          {!categoriaOrUnidade && <div className='mb-3 col-3 '>
             <label htmlFor="dropSubcategoria" className="form-label">Unidade</label>
             <select className="form-select" id='dropSubcategoria' aria-label="Default select example" defaultValue="DEFAULT">
               <option value="DEFAULT" disabled style={{display: "none"}}>Selecione</option>
@@ -63,7 +63,7 @@ const TableFilters = ({categoria}) => {
               }
             </select>
           </div>}
-          {categoria && <div className='mb-3 col-3 '>
+          {categoriaOrUnidade && <div className='mb-3 col-3 '>
             <label htmlFor="dropSubcategoria" className="form-label">Categoria</label>
             <select className="form-select" id='dropSubcategoria' aria-label="Default select example" defaultValue="DEFAULT">
               <option value="DEFAULT" disabled style={{display: "none"}}>Selecione</option>

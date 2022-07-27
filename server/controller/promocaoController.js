@@ -13,8 +13,8 @@ exports.new = async (req, res, _next) => {
     // >>> só ta aqui por causa do postman <<<
     req.body = {...JSON.parse(req.body.data)}
 
-    if (!("id_status" in req.body))
-        req.body["id_status"] = "62cec6c463187bb9b498687b";
+    if (!("ativo" in req.body))
+        req.body["ativo"] = true;
 
    // nome e caminho do arquivo
 	const img = req.files.imagem;
@@ -63,8 +63,8 @@ exports.newList = (req, res, _next) => {
         return res.status(400).json({ success: false, msg: "solicitação mal construída, informações faltando ou incorretas" });
 
     req.body.forEach(promocao => {
-        if (!("id_status" in promocao))
-            promocao["id_status"] = "62cec6c463187bb9b498687b";
+        if (!("ativo" in promocao))
+            promocao["ativo"] = true;
     });
     
     Promocao.insertMany(req.body, (err, docs) => {
@@ -78,9 +78,8 @@ exports.newList = (req, res, _next) => {
 exports.listAll = (_req, res, _next) => {
 
 	Promocao.find({})
-    .select("titulo descricao desconto id_unidade id_status")
+    .select("nome descricao desconto id_unidade ativo")
 	.populate({path : 'id_unidade', select: 'nome cidade uf -_id'})
-    .populate({path : 'id_status', select: '-_id'})
     .then((promocoes) => {
         
         if (!promocoes.length)
@@ -96,8 +95,8 @@ exports.listAll = (_req, res, _next) => {
 exports.listActive = (_req, res, _next) => {
 
 	const today = new Date(new Date()-3600*1000*4); //fuso horario gmt-4 talvez .toISOString() no final
-	Promocao.find({$and: [{id_status: "62cec6c463187bb9b498687b"}, {data_inicio: {$gte: today}}, {data_fim: {$lt: today}}]})
-    .select("titulo pontos desconto id_item id_unidade -_id")
+	Promocao.find({$and: [{ativo: true}, {data_inicio: {$gte: today}}, {data_fim: {$lt: today}}]})
+    .select("nome pontos desconto id_item id_unidade -_id")
 	.populate({path : 'id_item', select: 'nome area id_categoria -_id', populate: {path: 'id_categoria', select: 'nome -_id'}})
 	.populate({path : 'id_unidade', select: 'nome -_id'})
     .then((promocoes) => {
@@ -118,7 +117,6 @@ exports.listOne = (req, res, _next) => {
     .select('-_id')
     .populate({path : 'id_item' , select: 'nome area id_categoria -_id', populate: {path: 'id_categoria', select: 'nome -_id'}})
 	.populate({path : 'id_unidade', select: 'nome cidade uf -_id'})
-    .populate({path : 'id_status', select: '-_id'})
     .then((promocao) => {
         
         if (!promocao)
@@ -173,7 +171,7 @@ exports.delete = async (req, res, _nxt) => {
 	try {    
 		await session.withTransaction(async () => {
 		
-			await Promocao.findByIdAndUpdate(req.params.id, {id_status: mongoose.Types.ObjectId("62cec7b263187bb9b498687e")}, { session: session, new: true})
+			await Promocao.findByIdAndUpdate(req.params.id, {ativo: false}, { session: session, new: true})
 			.select('-_id')
 			.then(async (promocao) => {
 				if (!promocao)

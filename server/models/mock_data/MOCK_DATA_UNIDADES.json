@@ -6,10 +6,7 @@
         "logradouro": "Rua do Parque",
         "numero": "75",
         "telefone": "67 3301-6644",
-        "responsavel": "Gilka Trevisan",
-        "id_status": {
-            "$oid": "62cec6c463187bb9b498687b"
-        }
+        "responsavel": "Gilka Trevisan"
     },
     {
         "nome": "Senac Corumbá",
@@ -18,10 +15,7 @@
         "logradouro": "Rua do Tal",
         "numero": "75",
         "telefone": "67 3301-6644",
-        "responsavel": "Filo Trevisan",
-        "id_status": {
-            "$oid": "62cec6c463187bb9b498687b"
-        }
+        "responsavel": "Filo Trevisan"
     },
     {
         "nome": "Senac Três Lagoas",
@@ -31,9 +25,7 @@
         "numero": "75",
         "telefone": "67 3301-6644",
         "responsavel": "Leandro Trevisan",
-        "id_status": {
-            "$oid": "62cec7b263187bb9b498687e"
-        }
+        "ativo": false
     },
     {
         "nome": "Senac Dourados",
@@ -42,10 +34,7 @@
         "logradouro": "Rua Marcelino Pires",
         "numero": "75",
         "telefone": "67 3301-6644",
-        "responsavel": "Pedrao",
-        "id_status": {
-            "$oid": "62cec6c463187bb9b498687b"
-        }
+        "responsavel": "Pedrao"
     },
     {
         "nome": "Senac Ponta Porã",
@@ -55,9 +44,7 @@
         "numero": "75",
         "telefone": "67 3301-6644",
         "responsavel": "La Muerte",
-        "id_status": {
-            "$oid": "62cec7b263187bb9b498687e"
-        }
+        "ativo": false
     },
     {
         "nome": "Senac Coxim",
@@ -66,10 +53,7 @@
         "logradouro": "Rua Amélio Fedrighi",
         "numero": "75",
         "telefone": "67 3301-6644",
-        "responsavel": "Tião Carreiro",
-        "id_status": {
-            "$oid": "62cec6c463187bb9b498687b"
-        }
+        "responsavel": "Tião Carreiro"
     },
     {
         "nome": "Senac Porto Murtinho",
@@ -78,10 +62,7 @@
         "logradouro": "Rua Pres. Venceslau",
         "numero": "75",
         "telefone": "67 3301-6644",
-        "responsavel": "Pardinho",
-        "id_status": {
-            "$oid": "62cec6c463187bb9b498687b"
-        }
+        "responsavel": "Pardinho"
     },
     {
         "nome": "Senac Chapadão do Sul",
@@ -91,9 +72,7 @@
         "numero": "75",
         "telefone": "67 3301-6644",
         "responsavel": "Ludivico Einaudi",
-        "id_status": {
-            "$oid": "62cec7b263187bb9b498687e"
-        }
+        "ativo": false
     },
     {
         "nome": "Senac Naviraí",
@@ -102,9 +81,6 @@
         "logradouro": "Rua Caturrita",
         "numero": "75",
         "telefone": "67 3301-6644",
-        "responsavel": "Eliott Tordo",
-        "id_status": {
-            "$oid": "62cec6c463187bb9b498687b"
-        }
+        "responsavel": "Eliott Tordo"
     }
 ]
