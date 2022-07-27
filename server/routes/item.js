@@ -14,7 +14,7 @@ router.get('/active/:offset?', utils.authUserMiddleware, utils.authRoleMiddlewar
 // list all items of a categoria
 router.get('/:categoria/all/:offset?', utils.authUserMiddleware, utils.authRoleMiddleware("ger_itens"), controller.listAllByCategory);
 // list all active items of a categoria
-router.get('/:categoria/active/:offset?', utils.authUserMiddleware, utils.authRoleMiddleware("ger_itens"), controller.listActiveByCategory);
+router.get('/:categoria/active/:offset?', utils.authUserMiddleware, controller.listActiveByCategory);
 // list single item
 router.get('/:id', utils.authUserMiddleware, utils.authRoleMiddleware("ger_itens"), controller.listOne);
 // edit a item

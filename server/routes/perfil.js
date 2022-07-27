@@ -10,7 +10,7 @@ router.post('/populate', utils.authUserMiddleware, utils.authRoleMiddleware("cad
 // list all perfis
 router.get('/all', utils.authUserMiddleware, utils.authRoleMiddleware("cad_perfis"), controller.listAll);
 // list all active perfis
-router.get('/active', utils.authUserMiddleware, utils.authRoleMiddleware("cad_perfis"), controller.listActive);
+router.get('/active', utils.authUserMiddleware, controller.listActive);
 // list single perfil
 router.get('/:id', utils.authUserMiddleware, utils.authRoleMiddleware("cad_perfis"), controller.listOne);
 // edit a perfil
