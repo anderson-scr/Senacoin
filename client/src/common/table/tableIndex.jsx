@@ -20,7 +20,7 @@ import ModalEditItem from 'pages/gerItem/modal/modalEditItem'
 // CSS
 import './tableStyle.css'
 
-const Table = ({apiRoute, columnSchema, rowSize, setCurrentState = false, filters = true, categoria = false, offset = ''}) => {
+const Table = ({apiRoute, columnSchema, setCurrentState = false, filters = true, categoria = false, offset = ''}) => {
   const effectOnce = useRef(true)
   const [dataTabela, setDataTabela] = useState([])
   const navigate = useNavigate()
@@ -36,14 +36,14 @@ const Table = ({apiRoute, columnSchema, rowSize, setCurrentState = false, filter
       (async () => {
         setDataTabela(await apiRoute(offset.offset))
       })()
+
       // Defines the amount of lines in the page
-      setPageSize(rowSize)
+      setPageSize(12)
       return () => effectOnce.current = false
     }
-  }, [navigate])
+  }, [navigate, apiRoute, categoria, offset])
   
   // Definindo as configs da tabela
-  console.log(dataTabela)
   const tableInstance = useTable({
     columns: columnSchema,
     data: dataTabela
