@@ -60,7 +60,6 @@ exports.listAll = (_req, res, _next) => {
 
 	Unidade.find({})
     .select("nome cidade uf ativo")
-    .populate({path : 'ativo', select: '-_id'})
     .then((unidades) => {
         
         if (!unidades.length)
@@ -92,7 +91,6 @@ exports.listActive = (_req, res, _next) => {
 exports.listOne = (req, res, _next) => { // colocar um && pra procurar por id tbm
 
     Unidade.findById(req.params.id)
-    .populate({path : 'ativo', select: '-_id'})
     .then((unidade) => {
         
         if (!unidade)

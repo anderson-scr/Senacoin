@@ -62,7 +62,6 @@ exports.listAll = (_req, res, _next) => {
 	Area.find({})
     .select("nome descricao id_unidade ativo")
     .populate({path : 'id_unidade', select: 'nome -_id'})
-    .populate({path : 'ativo', select: '-_id'})
     .then((areas) => {
         
         if (!areas.length)
@@ -76,7 +75,6 @@ exports.listAll = (_req, res, _next) => {
 }
 
 exports.listActive = (_req, res, _next) => {
-    
 	Area.find({ativo: true})
     .select("nome id_unidade -_id")
     .then((areas) => {
@@ -92,10 +90,9 @@ exports.listActive = (_req, res, _next) => {
 }
 
 exports.listOne = (req, res, _next) => {
-
 	Area.findOne({ _id: req.params.id })
     .populate({path : 'id_unidade', select: 'nome cidade uf -_id'})
-    .populate({path : 'ativo', select: '-_id'})
+    
     .then((area) => {
         
         if (!area)

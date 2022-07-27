@@ -24,6 +24,8 @@ exports.AuditoriaAlunoSchema = new mongoose.Schema({
 	cpf: {type: String, immutable: true},
 	matricula: {type: String, immutable: true},  // precisa trocar isso pra required true
 	saldo: [{type: mongoose.Types.ObjectId, ref: "SenaCoin", immutable: true}],
+	apelido: {type: String, default: null}, // devo auditar isso?
+	telefone: {type: String, default: null}, // devo auditar isso?
 	data_nasc: {type: Date, immutable: true},
 	id_unidade: [{type: mongoose.Types.ObjectId, ref: "Unidade", immutable: true}],
 	ativo: {type: Boolean, immutable: true}

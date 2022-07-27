@@ -21,7 +21,6 @@ mongoose.model("Area", area.AreaSchema);
 mongoose.model("AuditoriaArea", area.AuditoriaAreaSchema);
 
 mongoose.model("Categoria", categoria.CategoriaSchema);
-mongoose.model("AuditoriaCategoria", categoria.AuditoriaCategoriaSchema);
 
 mongoose.model("Colaborador", colaborador.ColaboradorSchema);
 mongoose.model("AuditoriaColaborador", colaborador.AuditoriaColaboradorSchema);
