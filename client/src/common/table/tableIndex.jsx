@@ -138,7 +138,7 @@ const Table = ({apiRoute, columnSchema, setCurrentState = false, filters = true,
                   <th {...column.getHeaderProps(column.getSortByToggleProps())}>
                     {column.render('Header')}
                     <span>
-                      {column.isSorted? (column.isSortedDesc? <MdArrowDropDown size={20} /> : <MdArrowDropUp size={20} />) : <BsDot size={20} />}
+                      {column.isSorted? (column.isSortedDesc? <MdArrowDropDown size={20} /> : <MdArrowDropUp size={20} />) : (typeof column.Header === 'function'? '' : <BsDot size={20} />)}
                     </span>
                   </th>
                 ))}
