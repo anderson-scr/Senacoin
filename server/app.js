@@ -19,6 +19,12 @@ require('./models/index');
 //config parsing middleware
 app.use(express.json());
 app.use(express.urlencoded({extended: false}));
+app.use((err, req, res, next) => {
+    if (err instanceof SyntaxError) { // && err.status === 400 && 'body' in err
+        return res.status(400).send({ success: false, message: err.message }); // Bad request
+    }
+    next();
+});
 
 // Allows our React application to make HTTP requests to Express application
 app.use(cors());

@@ -107,8 +107,7 @@ exports.listAll = (_req, res, _next) => {
 
     Aluno.find({})
     .select("nome email cpf id_unidade ativo")
-    .populate({path : 'id_unidade', select: 'nome -_id'})   //.populate('id_unidade id_perfil ativo')
-    
+    .populate({path : 'id_unidade', select: 'nome -_id'}) 
     .then((alunos) => {
         
         if (!alunos.length)
@@ -125,13 +124,14 @@ exports.listActive = (_req, res, _next) => {
 
     Aluno.find({ativo: true})
     .select("nome email cpf matricula id_unidade")
-    .populate({path : 'id_unidade', select: 'nome -_id'})   //.populate('id_unidade id_perfil ativo')
+    .populate({path : 'id_unidade', select: 'nome -_id'})
+    .populate({path : 'saldo', select: 'pontos -_id'})
     .then((alunos) => {
         
         if (!alunos.length)
-            return res.status(204).json();  
+        return res.status(204).json();  
         else
-            res.status(200).json(alunos);
+        res.status(200).json(alunos);
     })
     .catch((err) => {
         res.status(500).json({success: false, msg: `${err}`});
@@ -141,8 +141,8 @@ exports.listActive = (_req, res, _next) => {
 exports.listOne = (req, res, _next) => {
     Aluno.findById(req.params.id)
     .select('-hash -salt')
-    .populate({path : 'id_unidade', select: 'nome cidade uf -_id'})   //.populate('id_unidade id_perfil ativo')
-    
+    .populate({path : 'id_unidade', select: 'nome cidade uf -_id'})
+    .populate({path : 'saldo', select: 'pontos data_inicio data_fim -_id'})
     .then((aluno) => {
         
         if (!aluno)
@@ -158,7 +158,7 @@ exports.listOne = (req, res, _next) => {
 exports.studentReport = (req, res, _next) => {
     Aluno.findById(req.params.id)
     .select('nome email matricula id_unidade ativo -_id')
-    .populate({path : 'id_unidade', select: 'nome cidade uf -_id'})   //.populate('id_unidade id_perfil ativo')
+    .populate({path : 'id_unidade', select: 'nome cidade uf -_id'}) 
     
     .then((aluno) => {
         if (!aluno)
@@ -174,7 +174,7 @@ exports.studentReport = (req, res, _next) => {
 exports.enrollmentReport = (req, res, _next) => {
     Aluno.findById(req.params.id)
     .select('nome email matricula id_unidade ativo -_id')
-    .populate({path : 'id_unidade', select: 'nome cidade uf -_id'})   //.populate('id_unidade id_perfil ativo')
+    .populate({path : 'id_unidade', select: 'nome cidade uf -_id'}) 
     
     .then((aluno) => {
         if (!aluno)

@@ -98,7 +98,7 @@ exports.listAll = (req, res, _next) => {
 
 	Colaborador.find({}).skip(req.params.offset || 0).limit(60)
 	.select("nome email cpf matricula id_unidade ativo")
-	.populate({path : 'id_unidade', select: 'nome -_id'})   //.populate('id_unidade id_perfil ativo')
+	.populate({path : 'id_unidade', select: 'nome -_id'}) 
 	.then((colabs) => {
 		
 		if (!colabs.length)
@@ -115,7 +115,7 @@ exports.listActive = (req, res, _next) => {
 
 	Colaborador.find({ativo: true}).skip(req.params.offset || 0).limit(60)
 	.select("nome email cpf matricula id_unidade")
-	.populate({path : 'id_unidade', select: 'nome -_id'})   //.populate('id_unidade id_perfil ativo')
+	.populate({path : 'id_unidade', select: 'nome -_id'}) 
 	.then((colabs) => {
 		
 		if (!colabs.length)
