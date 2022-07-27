@@ -63,10 +63,11 @@ const CadProduto = () => {
 
 
   const certo = (dados) => {
-    dados.id_unidade = unidades[(parseInt(dados.id_unidade) - 1)]._id
+    dados.id_unidade = [unidades[(parseInt(dados.id_unidade) - 1)]._id]
     dados.id_area = areas[parseInt(dados.id_area) - 1].id_unidade[0]
     dados.id_subcategoria = subcategorias[parseInt(dados.id_subcategoria) - 1]._id
 
+    console.log(dados)
     callProdutoAPI.novo(dados)
   }
   const errado = (dados) => {
@@ -166,7 +167,7 @@ const CadProduto = () => {
         </div>
         <div className="mb-3 col-4">
           <label htmlFor="formFile" className="form-label">Imagem</label>
-          <input className="form-control" type="file" id="formFile" />
+          <input className="form-control" type="file" id="formFile" {...register('imagem')} />
         </div>
       </div>
 

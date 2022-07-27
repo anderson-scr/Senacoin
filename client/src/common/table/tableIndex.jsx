@@ -7,7 +7,7 @@ import { verificaSessao } from 'auth/login/verificaSessao'
 // Table
 import TablePagination from './components/tablePagination'
 import TableFilters from './components/tableFilters'
-import { useTable, usePagination, useRowSelect } from 'react-table'
+import { useTable, usePagination, useRowSelect, useSortBy } from 'react-table'
 
 // Select row type
 import { RowCheckbox } from './components/rowSelection'
@@ -19,11 +19,15 @@ import ModalEditItem from 'pages/gerItem/modal/modalEditItem'
 
 // CSS
 import './tableStyle.css'
+import { MdArrowDropDown, MdArrowDropUp } from "react-icons/md";
+import { BsDot } from "react-icons/bs";
 
-const Table = ({apiRoute, columnSchema, setCurrentState = false, filters = true, categoria = false, offset = ''}) => {
+
+const Table = ({apiRoute, columnSchema, setCurrentState = false, filters = true, categoria = false}) => {
   const effectOnce = useRef(true)
   const [dataTabela, setDataTabela] = useState([])
   const navigate = useNavigate()
+  const [offset, setOffset] = useState(0)
   
   useEffect(() => {
     if(effectOnce.current) {
@@ -31,10 +35,9 @@ const Table = ({apiRoute, columnSchema, setCurrentState = false, filters = true,
       if(!verificaSessao()) {
         navigate("/Login", {replace: true})
       }
-
       // Call the table data on page load        
       (async () => {
-        setDataTabela(await apiRoute(offset.offset))
+        setDataTabela(await apiRoute(offset))
       })()
 
       // Defines the amount of lines in the page
@@ -49,7 +52,7 @@ const Table = ({apiRoute, columnSchema, setCurrentState = false, filters = true,
     data: dataTabela
 
     // useRowSelect adds a new row so we can put checkbox in it
-  }, usePagination, useRowSelect, (hooks) => {
+  }, useSortBy, usePagination, useRowSelect, (hooks) => {
       hooks.visibleColumns.push(columns => {
         if(columns[0].Header === 'Editar') {
           columns.splice(0, 1)
@@ -81,6 +84,7 @@ const Table = ({apiRoute, columnSchema, setCurrentState = false, filters = true,
           ...columns
         ]
       })
+  // useSortBy. Sortering columns.
   })
 
   // Destructuring props
@@ -110,6 +114,17 @@ const Table = ({apiRoute, columnSchema, setCurrentState = false, filters = true,
     if(setCurrentState !== false) setCurrentState.funcs(selectedIDs)
   }, [selectedFlatRows])
  
+  // Verify if it is the status column and change the boolean to text
+  const verificaStatus = (cell) => {
+    if(cell.column.Header === 'Status') {
+      if(cell.row.original.ativo) {
+        return 'Ativo'
+      } else return 'Inativo'
+      
+    } return cell.render('Cell')
+  }
+
+
   return (
     <div>
       {filters && <TableFilters categoriaOrUnidade={categoria} />}
@@ -120,8 +135,11 @@ const Table = ({apiRoute, columnSchema, setCurrentState = false, filters = true,
             headerGroups.map(headerGroup => (
               <tr {...headerGroup.getHeaderGroupProps()}>
                 {headerGroup.headers.map(column => (
-                  <th {...column.getHeaderProps()}>
+                  <th {...column.getHeaderProps(column.getSortByToggleProps())}>
                     {column.render('Header')}
+                    <span>
+                      {column.isSorted? (column.isSortedDesc? <MdArrowDropDown size={20} /> : <MdArrowDropUp size={20} />) : (typeof column.Header === 'function' || column.Header === 'Editar'? '' : <BsDot size={20} />)}
+                    </span>
                   </th>
                 ))}
               </tr>
@@ -135,7 +153,7 @@ const Table = ({apiRoute, columnSchema, setCurrentState = false, filters = true,
                 {row.cells.map(cell => {
                   return <td {...cell.getCellProps(
                     cell.column.Header === 'Editar'? {onClick: () => ModalService.open(ModalEditItem)} : ''
-                  )}> {cell.render('Cell')} </td>
+                  )}> {verificaStatus(cell)} </td>
                 })}
               </tr>
             )
