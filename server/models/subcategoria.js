@@ -8,7 +8,7 @@ exports.SubCategoriaSchema = new mongoose.Schema({
 
 exports.AuditoriaSubCategoriaSchema = new mongoose.Schema({
 	colaborador: {type:String, immutable: true},
-	data: {type: Date, immutable: true, default: () => Date.now(Date.now()-3600*1000*4)}, //fuso horario gmt-4
+	data: {type: Date, immutable: true, default: () => Date.now() - 4*60*60*1000}, //fuso horario gmt-4
 
 	nome: {type: String, immutable: true},
 	descricao: {type: String, immutable: true},
