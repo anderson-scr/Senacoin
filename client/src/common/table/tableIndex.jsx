@@ -43,6 +43,7 @@ const Table = ({apiRoute, columnSchema, rowSize, setCurrentState = false, filter
   }, [navigate])
   
   // Definindo as configs da tabela
+  console.log(dataTabela)
   const tableInstance = useTable({
     columns: columnSchema,
     data: dataTabela

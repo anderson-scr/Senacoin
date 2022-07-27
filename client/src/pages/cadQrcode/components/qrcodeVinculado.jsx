@@ -37,7 +37,7 @@ const QrcodeVinculado = () => {
 
   const abrirModal = (evt) => {
     evt.preventDefault()
-    ModalService.open(ModalSelecionarItem, {}, setItemsVinculados)
+    ModalService.open(ModalSelecionarItem, {}, setItemsVinculados, 0)
   }
 
 

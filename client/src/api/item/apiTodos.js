@@ -12,9 +12,9 @@ export const callTodosItemsAPI = {
       console.log(error)
     }
   },
-  todos: async () => {
+  todos: async (offset) => {
     try {
-      const apiResponse = await api.get(routes.items.todos)
+      const apiResponse = await api.get(routes.items.todos + offset)
         return apiResponse.data
 
     } catch (error) {

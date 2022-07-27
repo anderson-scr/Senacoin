@@ -96,10 +96,6 @@ const CadUsuario = () => {
     let tempoPerfil = {...perfis[evt.target.value -1].permissoes}
     setPermissoes(tempoPerfil)
   }
-  useEffect(() => {
-    console.log('aqui')
-    console.log(permissoes)
-  }, [permissoes])
 
   // Permits to change the current value of the permissao sate
   const changePermissao = (evt) => {
@@ -108,13 +104,10 @@ const CadUsuario = () => {
     tempPermissao[evt.target.id] = !tempPermissao[evt.target.id]
     setPermissoes({...tempPermissao})
   }
-  const errado = (dados) => {
-    console.log(dados)
-  }
 
   return (
     <section>
-      <form onSubmit={handleSubmit(cadastrarUsuario, errado)}>
+      <form onSubmit={handleSubmit(cadastrarUsuario)}>
 
         {/* First row */}
         <div className='container row mx-auto'>
