@@ -1,23 +1,14 @@
 [
     {
         "nome": "Brindes",
-        "descricao": "Gastronomia",
-        "id_status": {
-            "$oid": "62cec6c463187bb9b498687b"
-        }
+        "descricao": "Gastronomia"
     },
     {
         "nome": "Camisetas",
-        "descricao": "Fabrica de Software",
-        "id_status": {
-            "$oid": "62cec6c463187bb9b498687b"
-        }
+        "descricao": "Fabrica de Software"
     },
     {
         "nome": "Squeeze",
-        "descricao": "Comércio",
-        "id_status": {
-            "$oid": "62cec6c463187bb9b498687b"
-        }
+        "descricao": "Comércio"
     }
 ]

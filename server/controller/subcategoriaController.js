@@ -60,7 +60,6 @@ exports.listAll = (_req, res, _next) => {
 
 	SubCategoria.find({})
     .select("nome descricao ativo")
-    .populate({path : 'ativo', select: '-_id'})
     .then((subcats) => {
         
         if (!subcats.length)
@@ -92,7 +91,6 @@ exports.listActive = (_req, res, _next) => {
 exports.listOne = (req, res, _next) => {
 
 	SubCategoria.findById(req.params.id)
-    .populate({path : 'ativo', select: '-_id'})
     .then((subcat) => {
         
         if (!subcat)

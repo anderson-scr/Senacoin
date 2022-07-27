@@ -3,7 +3,7 @@
         "nome": "Pedro Filipe",
         "email": "pedrofilipeob112@gmail.com",
         "cpf": "697.158.650-62 ",
-        "matricula": "28821482-0",
+        "matricula": "28821482",
         "senha": "pedro123",
         "permissoes":{
             "cad_usuarios": false,
@@ -21,13 +21,13 @@
             "ger_qrcodes": false,
             "relatorios": false
         },
-        "id_unidade": []
+        "id_unidade": ["62e079f7839b9960568866a0"]
     },
     {
         "nome": "Rato Firulinha",
         "email": "rato@firulinha.com",
         "cpf": "367.237.170-07 ",
-        "matricula": "28312491-1",
+        "matricula": "28312491",
         "senha": "2818",
         "permissoes":{
             "cad_usuarios": true,
@@ -45,13 +45,13 @@
             "ger_qrcodes": true,
             "relatorios": true
         },
-        "id_unidade": []
+        "id_unidade": ["62e079dd839b99605688669a"]
     },
     {
         "nome": "Bruno Moura",
         "email": "tirazoio10@gmail.com",
         "cpf": "600.165.060-81 ",
-        "matricula": "28513999-1",
+        "matricula": "28513999",
         "senha": "pu745745",
         "permissoes":{
             "cad_usuarios": false,
@@ -69,13 +69,13 @@
             "ger_qrcodes": false,
             "relatorios": false
         },
-        "id_unidade": []
+        "id_unidade": ["62e07a0b839b9960568866a6"]
     },
     {
         "nome": "kku tobias",
         "email": "kku0@mail.com",
         "cpf": "997.210.840-69 ",
-        "matricula": "28908172-6",
+        "matricula": "28908172",
         "senha": "123k",
         "permissoes":{
             "cad_usuarios": false,
@@ -93,13 +93,13 @@
             "ger_qrcodes": false,
             "relatorios": false
         },
-        "id_unidade": []
+        "id_unidade": ["62e07c2a839b9960568866ac"]
     },
     {
         "nome": "Gabriel Malta",
         "email": "chocotony@gmail.com",
         "cpf": "399.139.110-44 ",
-        "matricula": "28738022-0",
+        "matricula": "28738022",
         "senha": "Tobby0103A",
         "permissoes":{
             "cad_usuarios": false,
@@ -117,13 +117,13 @@
             "ger_qrcodes": false,
             "relatorios": false
         },
-        "id_unidade": []
+        "id_unidade": ["62e07c51839b9960568866b2"]
     },
     {
         "nome": "Diego Franco",
         "email": "diego@mail.com",
         "cpf": "271.167.820-28 ",
-        "matricula": "28943315-0",
+        "matricula": "28941350",
         "senha": "0264",
         "permissoes":{
 
@@ -143,13 +143,13 @@
             "ger_qrcodes": true,
             "relatorios": true
         },
-        "id_unidade": []
+        "id_unidade": ["62e07cb2e35f87afaac74ddb"]
     },
     {
         "nome": "Gaikko Alves",
         "email": "gaikko@gmail.com",
         "cpf": "800.094.400-62 ",
-        "matricula": "28716314-8",
+        "matricula": "28716314",
         "senha": "gaikko123",
         "permissoes":{
             "cad_usuarios": false,
@@ -167,13 +167,13 @@
             "ger_qrcodes": true,
             "relatorios": true
         },
-        "id_unidade": []
+        "id_unidade": ["62e07cbfe35f87afaac74de1"]
     },
     {
         "nome": "Odair Fernandes",
         "email": "odair@teste.com",
         "cpf": "640.754.670-23 ",
-        "matricula": "28950554-2",
+        "matricula": "28950554",
         "senha": "2312",
         "permissoes":{
             "cad_usuarios": false,
@@ -191,13 +191,13 @@
             "ger_qrcodes": true,
             "relatorios": true
         },
-        "id_unidade": []
+        "id_unidade": ["62e07ccde35f87afaac74de7"]
     },
     {
         "nome": "Joãozinho Games",
         "email": "joaozinho@games.com",
         "cpf": "598.467.490-40 ",
-        "matricula": "28494737-7",
+        "matricula": "28494737",
         "senha": "123456789",
         "permissoes":{
             "cad_usuarios": false,
@@ -215,13 +215,13 @@
             "ger_qrcodes": false,
             "relatorios": false
         },
-        "id_unidade": []
+        "id_unidade": ["62e07ccde35f87afaac74de7"]
     },
     {
         "nome": "Leandro Rivas",
         "email": "leandrorivas@teste.com",
         "cpf": "302.119.830-98 ",
-        "matricula": "28053395-0",
+        "matricula": "28053395",
         "senha": "122413",
         "permissoes":{
             "cad_usuarios": false,
@@ -239,13 +239,13 @@
             "ger_qrcodes": true,
             "relatorios": true
         },
-        "id_unidade": []
+        "id_unidade": ["62e07cd7e35f87afaac74ded"]
     },
 	{
         "nome": "Kennia Barbosa",
         "email": "kennia@gmail.com",
         "cpf": "861.227.614-43 ",
-        "matricula": "28903161-3",
+        "matricula": "28903161",
         "senha": "1234",
         "permissoes":{
             "cad_usuarios": false,
@@ -263,6 +263,6 @@
             "ger_qrcodes": true,
             "relatorios": true
         },
-        "id_unidade": []
+        "id_unidade": ["62e079dd839b99605688669a"]
     }
 ]

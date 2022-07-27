@@ -58,10 +58,9 @@ exports.newList = (req, res, _next) => {
 
 exports.listAll = (req, res, _next) => {
 
-	QrCode.find({}).skip(req.params.offset).limit(60)
+	QrCode.find({}).skip(req.params.offset || 0).limit(60)
     .select("nome descricao id_unidade ativo")
 	.populate({path : 'id_unidade', select: 'nome cidade uf -_id'})
-    .populate({path : 'ativo', select: '-_id'})
     .then((qrcodes) => {
         
         if (!qrcodes.length)
@@ -78,7 +77,7 @@ exports.listActive = (req, res, _next) => {
 
 	const today = new Date(new Date()-3600*1000*4); //fuso horario gmt-4 talvez .toISOString() no final
 
-	QrCode.find({$and: [{ativo: true}, {data_inicio: {$gte: today}}, {data_fim: {$lt: today}}]}).skip(req.params.offset).limit(60)
+	QrCode.find({$and: [{ativo: true}, {data_inicio: {$gte: today}}, {data_fim: {$lt: today}}]}).skip(req.params.offset || 0).limit(60)
     .select("-ativo -_id")
 	.populate({path : 'id_item', select: 'nome area id_categoria -_id', populate: {path: 'id_categoria', select: 'nome -_id'}})
 	.populate({path : 'id_unidade', select: 'nome -_id'})
@@ -100,7 +99,6 @@ exports.listOne = (req, res, _next) => {
     .select('-_id')
     .populate({path : 'id_item', select: 'nome area id_categoria -_id', populate: {path: 'id_categoria', select: 'nome -_id'}})
 	.populate({path : 'id_unidade', select: 'nome cidade uf -_id'})
-    .populate({path : 'ativo', select: '-_id'})
     .then((qrcode) => {
         
         if (!qrcode)

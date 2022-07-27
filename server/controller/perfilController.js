@@ -60,7 +60,6 @@ exports.listAll = (_req, res, _next) => {
 
 	Perfil.find({})
     .select("nome ativo")
-    .populate({path : 'ativo', select: '-_id'})
     .then((perfis) => {
         
         if (!perfis.length)
@@ -92,7 +91,6 @@ exports.listActive = (_req, res, _next) => {
 exports.listOne = (req, res, _next) => {
 
     Perfil.findById(req.params.id)// colocar um && pra procurar por id tbm
-    .populate({path : 'ativo', select: '-_id'})
     .then((perfil) => {
         
         if (!perfil)

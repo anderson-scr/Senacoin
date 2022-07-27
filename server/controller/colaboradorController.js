@@ -95,9 +95,9 @@ exports.newList = (req, res, _next) => {
 
 exports.listAll = (req, res, _next) => {
 
-	Colaborador.find({}).skip(req.params.offset).limit(60)
+	Colaborador.find({}).skip(req.params.offset || 0).limit(60)
+	.select("nome email cpf matricula id_unidade")
 	.populate({path : 'id_unidade', select: 'nome -_id'})   //.populate('id_unidade id_perfil ativo')
-	.populate({path : 'ativo', select: '-_id'})
 	.then((colabs) => {
 		
 		if (!colabs.length)
@@ -112,7 +112,7 @@ exports.listAll = (req, res, _next) => {
 
 exports.listActive = (req, res, _next) => {
 
-	Colaborador.find({ativo: true}).skip(req.params.offset).limit(60)
+	Colaborador.find({ativo: true}).skip(req.params.offset || 0).limit(60)
 	.select("nome email cpf matricula id_unidade")
 	.populate({path : 'id_unidade', select: 'nome -_id'})   //.populate('id_unidade id_perfil ativo')
 	.then((colabs) => {
@@ -132,7 +132,6 @@ exports.listOne = (req, res, _next) => {
 	Colaborador.findById(req.params.id)
 	.select('-hash -salt')
 	.populate({path : 'id_unidade', select: 'nome cidade uf -_id'}) //.populate('id_unidade id_perfil ativo')
-	.populate({path : 'ativo', select: '-_id'})
 	.then((colab) => {
 		
 		if (!colab)
