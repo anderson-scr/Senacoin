@@ -55,7 +55,13 @@ export const routes = {
 
   qrcode: {
     novo: 'qrcode/add',
-    ativo: 'qrcode/active',
-    todos: 'qrcode/all'
+    ativo: 'qrcode/active/',
+    todos: 'qrcode/all/'
+  },
+
+  promocao: {
+    novo: 'promocao/add',
+    ativo: 'promocao/active/',
+    todos: 'promocao/all/'
   }
 }

@@ -20,8 +20,11 @@ export const callUsuarioAPI = {
   },
   todos: async () => {
     try {
-      const todosColaboradores = await api.get(routes.colaborador.todos)
-        return todosColaboradores.data
+      const apiResponse = await api.get(routes.colaborador.todos)
+      // If there's no data in the apiResponse, return a empty array for react-table
+      if(apiResponse.status === 204) {
+        return []
+      } else return apiResponse.data
 
     } catch (error) {
       ModalService.open(ModalCadErro)

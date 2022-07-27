@@ -9,8 +9,12 @@ import ModalCadCorreto from 'common/preMadeModal/resultados/cadCorreto'
 export const callSubcategoriaAPI = {
   ativo: async () => {
     try {
-      const call = await api.get(routes.subcategoria.ativo)
-      return call.data
+      const apiResponse = await api.get(routes.subcategoria.ativo)
+      
+      // If there's no data in the apiResponse, return a empty array for react-table
+      if(apiResponse.status === 204) {
+        return []
+      } else return apiResponse.data
     } catch (error) {
       ModalService.open(ModalCadErro)
     }

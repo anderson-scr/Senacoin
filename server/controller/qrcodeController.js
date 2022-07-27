@@ -64,7 +64,7 @@ exports.listAll = (req, res, _next) => {
     .then((qrcodes) => {
         
         if (!qrcodes.length)
-            return res.status(204).json();  
+            return res.status(204).json(qrcodes);
         else
             res.status(200).json(qrcodes);
     })
