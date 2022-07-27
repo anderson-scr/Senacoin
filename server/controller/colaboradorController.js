@@ -11,9 +11,10 @@ exports.login = (req, res, _next) => {
 
 	Colaborador.findOne({ email: req.body.email })
 	.then((colab) => {
+    console.log(req.body.email)
 		
 		if (!colab)
-			return res.status(401).json({ success: false, msg: "email/senha inválidos!" });
+			return res.status(401).json({ success: false, msg: "email/senha inválidos!1" });
 		
 		const isValid = utils.validPassword(req.body.senha, colab.hash, colab.salt);  
 		if (isValid)
@@ -22,7 +23,7 @@ exports.login = (req, res, _next) => {
 			res.status(200).json({ success: true, email: colab.email, token: tokenObject.token, expiresIn: tokenObject.expires});
 		}
 		else 
-			res.status(401).json({ success: false, msg: "email/senha inválidos!" });
+			res.status(401).json({ success: false, msg: "email/senha inválidos!2" });
 	})
 	.catch((err) => {
 		res.status(500).json({success: false, msg: `${err}`});

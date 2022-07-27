@@ -31,8 +31,8 @@ export const routes = {
   },
   
   items: {
-    todos: 'item/all',
-    ativo: 'item/active'
+    todos: 'item/all/',
+    ativo: 'item/active/'
   },
 
   produto: {
