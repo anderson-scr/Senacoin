@@ -1,17 +1,30 @@
 import React, {useState, useEffect, useRef} from 'react'
-import { useNavigate } from 'react-router-dom';
-import { useForm } from "react-hook-form";
-import { yupResolver } from '@hookform/resolvers/yup';
-import { yupSchemaCadProduto } from 'utils/validation/schemas/itens/cadProduto';
-import { callUnidadeAPI } from 'api/common/callUnidades';
-import { verificaSessao } from 'auth/login/verificaSessao';
+import { useNavigate } from 'react-router-dom'
+import { useForm } from 'react-hook-form'
+import { yupResolver } from '@hookform/resolvers/yup'
+import { yupSchemaCadProduto } from 'utils/validation/schemas/itens/cadProduto'
+import { callUnidadeAPI } from 'api/common/callUnidades'
+import { verificaSessao } from 'auth/login/verificaSessao'
+import { callAreaAPI } from 'api/common/callArea'
+import { callSubcategoriaAPI } from 'api/common/callSubcategoria'
+import { callProdutoAPI } from 'api/item/apiProduto'
+import QuestionTooltip from 'common/tooltips/questionTooltip'
+import AddTooltip from 'common/tooltips/addTooltip'
 import './cadProdutoStyle.css'
 
+// Modal imports
+import ModalService from 'common/modal/services/modalService'
+import ModalCadArea from 'common/preMadeModal/cadArea'
+import ModalCadSubcategoria from 'common/preMadeModal/cadSubcategoria'
+import ModalCadUnidade from 'common/preMadeModal/cadUnidade'
 
 const CadProduto = () => {
   const effectOnce = useRef(true)
   const navigate = useNavigate()
   const [unidades, setUnidades] = useState([])
+  const [areas, setAreas] = useState([])
+  const [subcategorias, setSubcategorias] = useState([])
+
   const { register, handleSubmit, formState: {
     errors
   } } = useForm({
@@ -27,89 +40,143 @@ const CadProduto = () => {
       // Fill dropDows unidades
       (async () => {
         setUnidades(await callUnidadeAPI.ativo())
+        setAreas(await callAreaAPI.ativo())
+        setSubcategorias(await callSubcategoriaAPI.ativo())
       })()
 
       return () => effectOnce.current = false
     }
   }, [navigate])
 
+  const modalCadArea = (evt) => {
+    evt.preventDefault()
+    ModalService.open(ModalCadArea)
+  }
+  const modalCadSubcategoria = (evt) => {
+    evt.preventDefault()
+    ModalService.open(ModalCadSubcategoria)
+  }
+  const modalCadUnidade = (evt) => {
+    evt.preventDefault()
+    ModalService.open(ModalCadUnidade)
+  }
+
+
+  const certo = (dados) => {
+    dados.id_unidade = [unidades[(parseInt(dados.id_unidade) - 1)]._id]
+    dados.id_area = areas[parseInt(dados.id_area) - 1].id_unidade[0]
+    dados.id_subcategoria = subcategorias[parseInt(dados.id_subcategoria) - 1]._id
+
+    console.log(dados)
+    callProdutoAPI.novo(dados)
+  }
+  const errado = (dados) => {
+    console.log(dados)
+  }
 
   return (
-    <form className='container'>
-      <div className='containerDouble d-flex'>
+    <form className='container mt-3' onSubmit={handleSubmit(certo, errado)}>
+      <div className='row'>
 
-        <div className='mb-3 flex-grow-1'>
-          <label htmlFor="dropArea" className="form-label">Area</label>
-          <select className="form-select" id='dropArea' aria-label="Default select example" defaultValue={0}>
-            <option value={0} disabled>Selecione</option>
-            <option value={1}>One</option>
-            <option value={2}>Two</option>
-            <option value={3}>Three</option>
+        <div className='mb-3 col'>
+          <AddTooltip label='Areas' onClickFunc={modalCadArea} msg='Criar uma nova area para cadastros.' />
+          <select className="form-select" id='dropArea' aria-label="Default select example" defaultValue="DEFAULT" {...register('id_area')}>
+            <option value="DEFAULT" disabled style={{display: "none"}}>Selecione uma area</option>
+            {areas.length > 1 &&
+              areas.map((area, idx) => {
+                return <option key={idx} value={idx + 1}>{area.nome}</option>
+              })
+            }
           </select>
-          <div id="emailHelp" className="form-text">Este campo e obrigatório.</div>
+          <div style={{height: '25px'}}>
+            {errors?.id_area?.type &&
+              <div className="form-text text-danger m-0">Preencha o campo corretamente.</div>
+            }
+          </div>
         </div>
-        <div className='mb-3 flex-grow-1'>
-          <label htmlFor="dropSubcategoria" className="form-label">Subcategoria</label>
-          <select className="form-select" id='dropSubcategoria' aria-label="Default select example" defaultValue={0}>
-            <option value={0} disabled>Selecione</option>
-            <option value={1}>One</option>
-            <option value={2}>Two</option>
-            <option value={3}>Three</option>
+        <div className='mb-3 col'>
+          <AddTooltip label='Subcategoria' onClickFunc={modalCadSubcategoria} msg='Criar nova subcategoria para cadastros.' /> 
+          <select className="form-select" id='dropSubcategoria' aria-label="Default select example" defaultValue="DEFAULT" {...register('id_subcategoria')}>
+            <option value="DEFAULT" disabled style={{display: "none"}}>Selecione uma subcategoria</option>
+            {subcategorias.length > 1 &&
+              subcategorias.map((subcategoria, idx) => {
+                return <option key={idx} value={idx + 1}>{subcategoria.nome}</option>
+              })
+            }
           </select>
-          <div id="emailHelp" className="form-text">Este campo e obrigatório.</div>
+          <div style={{height: '25px'}}>
+            {errors?.id_subcategoria?.type &&
+              <div className="form-text text-danger m-0">Preencha o campo corretamente.</div>
+            }
+          </div>
         </div>
       </div>
 
-      <div className='containerDouble d-flex'>
-        <div className="mb-3 flex-grow-1">
+      <div className='row'>
+        <div className="mb-3 col">
           <label htmlFor="exampleInputEmail1" className="form-label">Titulo</label>
-          <input type="email" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" />
-          <div id="emailHelp" className="form-text">Este campo e obrigatório.</div>
+          <input type="text" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" {...register('nome')}/>
+          {errors?.nome?.type &&
+            <div className="form-text text-danger m-0">Preencha o campo corretamente.</div>
+          }
         </div>
-        <div className='mb-3 flex-grow-1'>
-          <label htmlFor="dropSubcategoria" className="form-label">Unidade</label>
-          <select className="form-select" id='dropSubcategoria' aria-label="Default select example" defaultValue={0}>
-            <option value="DEFAULT" disabled style={{display: "none"}}>Selecione uma unidade.</option>
+        <div className='mb-3 col'>
+          <AddTooltip label='Unidade' onClickFunc={modalCadUnidade} msg='Criar uma nova unidade para cadastros.' />
+          <select className="form-select" id='dropSubcategoria' aria-label="Default select example" defaultValue="DEFAULT" {...register('id_unidade')}>
+            <option value="DEFAULT" disabled style={{display: "none"}}>Selecione uma unidade</option>
             {unidades.length > 1 &&
               unidades.map((unidade, idx) => {
                 return <option key={idx} value={idx + 1}>{unidade.nome}</option>
               })
             }
           </select>
-          <div id="emailHelp" className="form-text">Este campo e obrigatório.</div>
+          <div style={{height: '25px'}}>
+            {errors?.id_unidade?.type &&
+              <div className="form-text text-danger m-0">Preencha o campo corretamente.</div>
+            }
+          </div>
         </div>
       </div>
 
-      <div className='containerDouble d-flex'>
-        <div className="mb-3 flex-grow-1">
-          <label htmlFor="exampleInputPassword1" className="form-label" >Senacoins</label>
-          <input type="number" className="form-control" id="exampleInputPassword1" placeholder="100" />
-          <div id="emailHelp" className="form-text">Este campo e obrigatório.</div>
+      <div className='row'>
+        <div className="mb-3 col">
+          <QuestionTooltip label='Senacoins' msg='Quantos Senacoins um produto vai custar.' />
+          <input type="number" className="form-control" id="exampleInputPassword1" placeholder="100" {...register('pontos')}/>
+          <div style={{height: '25px'}}>
+            {errors?.pontos?.type &&
+              <div className="form-text text-danger m-0">Preencha o campo corretamente.</div>
+            }
+          </div>
+
         </div>
-        <div className="mb-3 flex-grow-1">
-          <label htmlFor="exampleInputPassword1" className="form-label" >Quantidade</label>
-          <input type="number" className="form-control" id="exampleInputPassword1" placeholder="300" />
-          <div id="emailHelp" className="form-text">Este campo e obrigatório.</div>
+        <div className="mb-3 col">
+          <QuestionTooltip label='Quantidade' msg='Quantidade do produto disponível em estoque.' />
+          <input type="number" className="form-control" id="exampleInputPassword1" placeholder="300" {...register('quantidade')}/>
+          <div style={{height: '25px'}}>
+            {errors?.quantidade?.type &&
+              <div className="form-text text-danger m-0">Preencha o campo corretamente.</div>
+            }
+          </div>
         </div>
       </div>
 
-      <div className='containerDouble d-flex'>
-        <div className="mb-3 flex-grow-1" >
+      <div className='row'>
+        <div className="mb-3 col" >
           <label htmlFor="exampleInputEmail1" className="form-label">Descrição</label>
-          <input type="text" className="iptDescricao form-control" id="exampleInputEmail1" aria-describedby="emailHelp" />
+          <textarea type="text" className="iptDescricao form-control" id="exampleInputEmail1" aria-describedby="emailHelp" {...register('descricao')} />
         </div>
-        <div className="mb-3 ">
-          <label htmlFor="formFile" className="form-label">Default file input example</label>
-          <input className="form-control" type="file" id="formFile" />
+        <div className="mb-3 col-4">
+          <label htmlFor="formFile" className="form-label">Imagem</label>
+          <input className="form-control" type="file" id="formFile" {...register('imagem')} />
         </div>
       </div>
 
       <div className='containerBtns row mt-5'>
         <div className='col d-flex'>
-          <button type="submit" className="btn btn-outline-secondary w-50">Cancelar</button>
+          <button type="submit" className="btn btnCancelar btn-outline-secondary w-50">Cancelar</button>
         </div>
         <div className='col d-flex justify-content-end'>
-          <button type="submit" className="btn btn-primary w-50">Salvar</button>
+          <button type="submit" className="btn btnSalvar btn-primary w-50">Salvar</button>
         </div>
       </div>
     </form>

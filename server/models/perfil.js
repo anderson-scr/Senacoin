@@ -1,21 +1,17 @@
 const mongoose = require('mongoose');
+const { PermissoesSchema } = require('./permissoes');
 
 exports.PerfilSchema = new mongoose.Schema({
 	nome: {type: String, required: true},
-	cad_usuarios: {type: Boolean, default: false},
-	cad_itens: {type: Boolean, default: false},
-	cad_perfis: {type: Boolean, default: false},
-	cad_areas: {type: Boolean, default: false},
-	cad_subcategorias: {type: Boolean, default: false},
-	cad_promocoes: {type: Boolean, default: false},
-	cad_unidades: {type: Boolean, default: false},
-	cad_qrcodes: {type: Boolean, default: false},
+	permissoes: {type: PermissoesSchema, required: true},
+	ativo: {type: Boolean, default: true}, 
+}, { versionKey: false });
 
-	ger_usuarios: {type: Boolean, default: false},
-	ger_itens: {type: Boolean, default: false},
-	ger_promocoes: {type: Boolean, default: false},
-	ger_qrcodes: {type: Boolean, default: false},
-	relatorios: {type: Boolean, default: false},
+exports.AuditoriaPerfilSchema = new mongoose.Schema({
+	colaborador: {type: String, immutable: true},
+	data: {type: Date, immutable: true, default: () => Date.now() - 4*60*60*1000}, //fuso horario gmt-4
 
-	id_status: {type: mongoose.Types.ObjectId, ref: "Status", required: true}, //.populate("id_status")
+	nome: {type: String, immutable: true},
+	permissoes: {type: PermissoesSchema, immutable: true},
+	ativo: {type: Boolean, immutable: true}, 
 }, { versionKey: false });

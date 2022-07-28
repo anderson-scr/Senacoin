@@ -1,99 +1,172 @@
 const mongoose = require('mongoose');
 const Unidade = mongoose.model('Unidade');
+const AuditoriaUnidade = mongoose.model('AuditoriaUnidade');
 
 
-exports.new = (req, res, next) => {
+exports.new = async (req, res, _next) => {
+
+    if (!Object.keys(req.body).length)
+		return res.status(400).json({ success: false, msg: "solicitação mal construída, informações faltando ou incorretas" });
     
-    if (!("id_status" in req.body))
-        req.body["id_status"] = "62cec6c463187bb9b498687b";
+    if (!("ativo" in req.body))
+        req.body["ativo"] = true;
 
-    Unidade.create(req.body, (err, unidade) =>  {
-        if (err)
-            return res.status(500).json({ success: false, ...err });
+    const session = await mongoose.startSession();
+    try {
+        await session.withTransaction(async () => {
 
-        res.status(201).json({ success: true, ...unidade["_doc"]});
-    });
+            await Unidade.create([req.body], { session })
+            .then(async (unidade) => {
+                await AuditoriaUnidade.create([{colaborador: req.jwt.sub, ...req.body}], { session })
+                .then((_audunidade) =>{
+                    res.status(201).json({ success: true, ...unidade[0]["_doc"]}); // ["_doc"] é a posicao do obj de retorno onde se encontra o documento criado));
+                })
+                .catch(async (err) => {
+                    await session.abortTransaction();
+                    res.status(500).json({ success: false, msg: `${err}` });
+                });
+            })
+            .catch(async (err) => {
+                await session.abortTransaction();
+                res.status(500).json({ success: false, msg: `${err}` });
+            })
+        });
+    } catch (err) {
+        res.status(500).json({ success: false, msg: `${err}` });
+    } finally {
+        await session.endSession();
+    }
 }
 
-exports.newList = (req, res, next) => {
+exports.newList = (req, res, _next) => {
+
+    if (!Object.keys(req.body).length)
+		return res.status(400).json({ success: false, msg: "solicitação mal construída, informações faltando ou incorretas" });
 
     req.body.forEach(unidade => {
-        if (!("id_status" in unidade))
-            unidade["id_status"] = "62cec6c463187bb9b498687b";
+        if (!("ativo" in unidade))
+            unidade["ativo"] = true;
     });
     
     Unidade.insertMany(req.body, (err, docs) => {
         if (err)
-            return res.status(500).json({ success: false, ...err });
+            return res.status(500).json({ success: false, msg: `${err}` });
     
         res.status(201).json({ success: true, total: docs.length});
     });
 }
 
-exports.listAll = (req, res, next) => {
+exports.listAll = (_req, res, _next) => {
 
 	Unidade.find({})
-    .select("nome cidade uf id_status")
-    .populate({path : 'id_status', select: '-_id'})
+    .select("nome cidade uf ativo")
     .then((unidades) => {
         
         if (!unidades.length)
-            return res.status(204).json({ success: false, msg: "nenhuma unidade encontrada." });  
+            return res.status(204).json();  
         else
             res.status(200).json(unidades);
     })
     .catch((err) => {
-        res.status(500).json(err);
+        res.status(500).json({success: false, msg: `${err}`});
     });
 }
 
-exports.listActive = (req, res, next) => {
+exports.listActive = (_req, res, _next) => {
 
-	Unidade.find({id_status: "62cec6c463187bb9b498687b"})
+	Unidade.find({ativo: true})
     .select("nome")
     .then((unidades) => {
         
         if (!unidades.length)
-            return res.status(204).json({ success: false, msg: "nenhuma unidade encontrada." });  
+            return res.status(204).json();  
         else
             res.status(200).json(unidades);
     })
     .catch((err) => {
-        res.status(500).json(err);
+        res.status(500).json({success: false, msg: `${err}`});
     });
 }
 
-exports.listOne = (req, res, next) => { // colocar um && pra procurar por id tbm
+exports.listOne = (req, res, _next) => { // colocar um && pra procurar por id tbm
 
-    Unidade.findOne({ _id: req.params.id })
-    .populate({path : 'id_status', select: '-_id'})
+    Unidade.findById(req.params.id)
     .then((unidade) => {
         
         if (!unidade)
-			return res.status(204).json({ success: false, msg: "unidade não encontrada." });
+			return res.status(204).json();
         
 		res.status(200).json({ success: true, 'unidade': unidade});
     })
     .catch((err) => {
-        res.status(500).json(err);
+        res.status(500).json({success: false, msg: `${err}`});
     });
 }
 
-exports.edit = (req, res, nxt) => {
+exports.edit = async (req, res, _nxt) => {
 
-    // delete req.body.id_status; // impede de enviar opcoes que não devem ser alteradas
-    Unidade.findByIdAndUpdate(req.params.id, {$set: req.body}, {new: true})
-    .select('-_id')
-    .populate({path : 'id_status', select: '-_id'})
-    .then((doc) => (res.status(200).json(doc)))
-    .catch((err) => (res.status(500).json(err)));
+    if (!Object.keys(req.body).length)
+        return res.status(400).json({ success: false, msg: "solicitação mal construída, informações faltando ou incorretas" });
+    
+    const session = await mongoose.startSession();
+    try {
+        await session.withTransaction(async () => {
+
+            await Unidade.findByIdAndUpdate(req.params.id, {$set: req.body}, { session: session, new: true})
+            .then(async (unidade) => {
+                await AuditoriaUnidade.create([{colaborador: req.jwt.sub, ...req.body}], { session })
+                .then((_audunidade) =>{
+                    res.status(201).json({ success: true, ...unidade[0]["_doc"]}); // ["_doc"] é a posicao do obj de retorno onde se encontra o documento criado));
+                })
+                .catch(async (err) => {
+                    await session.abortTransaction();
+                    res.status(500).json({ success: false, msg: `${err}` });
+                });
+            })
+            .catch(async (err) => {
+                await session.abortTransaction();
+                res.status(500).json({ success: false, msg: `${err}` });
+            })
+        });
+    } catch (err) {
+        res.status(500).json({ success: false, msg: `${err}` });
+    } finally {
+        await session.endSession();
+    }
 }
 
-exports.delete = (req, res, nxt) => {
+exports.delete = async (req, res, _nxt) => {
 
-    Unidade.findByIdAndUpdate(req.params.id, {id_status: mongoose.Types.ObjectId("62cec7b263187bb9b498687e")}, {new: true})
-    .select('-_id')
-    .populate({path : 'id_status', select: '-_id'})
-    .then((doc) => (res.status(200).json(doc)))
-    .catch((err) => (res.status(500).json(err)));
+    const session = await mongoose.startSession();
+    try {
+        await session.withTransaction(async () => {
+
+            await Unidade.findByIdAndUpdate(req.params.id, {ativo: false}, { session: session, new: true})
+            .then(async (unidade) => {
+                await AuditoriaUnidade.create([{colaborador: req.jwt.sub, ...req.body}], { session })
+                .then((_audunidade) =>{
+                    res.status(201).json({ success: true, ...unidade[0]["_doc"]}); // ["_doc"] é a posicao do obj de retorno onde se encontra o documento criado));
+                })
+                .catch(async (err) => {
+                    await session.abortTransaction();
+                    res.status(500).json({ success: false, msg: `${err}` });
+                });
+            })
+            .catch(async (err) => {
+                await session.abortTransaction();
+                res.status(500).json({ success: false, msg: `${err}` });
+            })
+        });
+    } catch (err) {
+        res.status(500).json({ success: false, msg: `${err}` });
+    } finally {
+        await session.endSession();
+    }
+}
+
+exports.deleteAll = (_req, res, _nxt) => {
+    
+    Unidade.deleteMany({})
+    .then((n) => (res.status(200).json({success: true, total: n.deletedCount})))
+    .catch((err) => (res.status(500).json({ success: false, msg: `${err}` })));
 }

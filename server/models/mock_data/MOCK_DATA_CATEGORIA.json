@@ -1,23 +1,23 @@
 [
     {
         "nome": "Produtos",
-        "descricao": "Produtos/Cursos",
-        "id_status": {
-            "$oid": "62cec6c463187bb9b498687b"
+        "descricao": "Brindes e afins",
+        "_id": {
+            "$oid": "62d017a1181c3910ccfd43d1"
         }
     },
     {
         "nome": "Eventos",
         "descricao": "Workshop",
-        "id_status": {
-            "$oid": "62cec6c463187bb9b498687b"
+        "_id": {
+            "$oid": "62d017a1181c3910ccfd43d2"
         }
     },
     {
         "nome": "Serviços",
         "descricao": "Serviços de Corte de Cabelo/Barba",
-        "id_status": {
-            "$oid": "62cec6c463187bb9b498687b"
+        "_id": {
+            "$oid": "62d017a1181c3910ccfd43d3"
         }
     }
 ]

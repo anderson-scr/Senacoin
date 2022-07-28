@@ -1,28 +1,27 @@
 const mongoose = require('mongoose');
+const { PermissoesSchema } = require('./permissoes');
 
 exports.ColaboradorSchema = new mongoose.Schema({
 	nome: {type: String, required: true},
-	email: {type: String, required: true, lowercase: true, unique: true},
+	email: {type: String, required: true, unique: true},
 	cpf: {type: String, required: true, minLength: 15, maxLength: 15, unique: true},
-	matricula: {type: String, default: null, unique: true},
+	matricula: {type: String, required: true, minLength: 4, maxLength: 8, unique: true},
 	hash: {type: String, required: true},
 	salt: {type: String, required: true},
-	
-	cad_usuarios: {type: Boolean, default: false},
-	cad_itens: {type: Boolean, default: false},
-	cad_perfis: {type: Boolean, default: false},
-	cad_areas: {type: Boolean, default: false},
-	cad_subcategorias: {type: Boolean, default: false},
-	cad_promocoes: {type: Boolean, default: false},
-	cad_unidades: {type: Boolean, default: false},
-	cad_qrcode: {type: Boolean, default: false},
-
-	ger_usuarios: {type: Boolean, default: false},
-	ger_itens: {type: Boolean, default: false},
-	ger_promocoes: {type: Boolean, default: false},
-	ger_qrcode: {type: Boolean, default: false},
-	relatorios: {type: Boolean, default: false},
-
+	permissoes: {type: PermissoesSchema, required: true},
 	id_unidade: [{type: mongoose.Types.ObjectId, ref: "Unidade", required: true}],
-	id_status: {type: mongoose.Types.ObjectId, ref: "Status", required: true}
+	ativo: {type: Boolean, default: true}
+}, { versionKey: false });
+
+exports.AuditoriaColaboradorSchema = new mongoose.Schema({
+	colaborador: {type: String, immutable: true},
+	data: {type: Date, immutable: true, default: () => Date.now() - 4*60*60*1000}, //fuso horario gmt-4,
+	
+	nome: {type: String, immutable: true},
+	email: {type: String, immutable: true},
+	cpf: {type: String, immutable: true},
+	matricula: {type: String, immutable: true},
+	permissoes: {type: PermissoesSchema, immutable: true},
+	id_unidade: [{type: mongoose.Types.ObjectId, ref: "Unidade", immutable: true}],
+	ativo: {type: Boolean, immutable: true}
 }, { versionKey: false });

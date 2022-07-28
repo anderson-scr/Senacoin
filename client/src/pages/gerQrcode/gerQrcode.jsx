@@ -1,6 +1,9 @@
 import React, { useEffect, useRef } from 'react'
 import { verificaSessao } from 'auth/login/verificaSessao'
 import { useNavigate } from 'react-router-dom'
+import { callQrcodeAPI } from 'api/qrcode/apiQrcode'
+import Table from 'common/table/tableIndex'
+import { gerQrcodeTableSchema } from 'common/table/schemas/gerQrcode'
 
 const GerQrcode = () => {
   const effectOnce = useRef(true)
@@ -14,11 +17,11 @@ const GerQrcode = () => {
   
       return () => effectOnce.current = false
     }
-  }, [])
+  }, [navigate])
 
 
   return (
-    <div>GerQrcode</div>
+    <Table apiRoute={callQrcodeAPI.todos} columnSchema={gerQrcodeTableSchema} rowSize={12} />
   )
 }
 

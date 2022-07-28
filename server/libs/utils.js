@@ -1,8 +1,10 @@
 const crypto = require('crypto');
-const jsonwebtoken = require('jsonwebtoken');
+const jwt = require('jsonwebtoken');
 const fs = require('fs');
 const path = require('path');
+const mongoose = require('mongoose');
 
+const Colaborador = mongoose.model('Colaborador');
 const PRIV_KEY = fs.readFileSync(path.join(__dirname, 'id_rsa_priv.pem'), 'utf8');
 const PUB_KEY = fs.readFileSync(path.join(__dirname, 'id_rsa_pub.pem'), 'utf8');
 
@@ -20,6 +22,7 @@ const PUB_KEY = fs.readFileSync(path.join(__dirname, 'id_rsa_pub.pem'), 'utf8');
  * the decrypted hash/salt with the password that the user provided at login
  */
 function validPassword(password, hash, salt) {
+
 	if(!password)
 		return false
 		
@@ -38,6 +41,7 @@ function validPassword(password, hash, salt) {
  * You would then store the hashed password in the database and then re-hash it to verify later (similar to what we do here)
  */
 function genPassword(password) {
+
 	var salt = crypto.randomBytes(32).toString('hex');
 	var genHash = crypto.pbkdf2Sync(password, salt, 10000, 64, 'sha512').toString('hex');
 	
@@ -52,16 +56,13 @@ function genPassword(password) {
  * @param {*} user - The user object.  We need this to set the JWT `sub` payload property to the MongoDB user ID
  */
 function issueJWT(user) {
-	const _id = user._id;
 
 	const expiresIn = '1d';
-
 	const payload = {
-		sub: _id,
-		iat: Date.now()
+		sub: user.email,
 	};
 
-	const signedToken = jsonwebtoken.sign(payload, PRIV_KEY, { expiresIn: expiresIn, algorithm: 'RS256' });
+	const signedToken = jwt.sign(payload, PRIV_KEY, { expiresIn: expiresIn, algorithm: 'RS256' });
 
 	return {
 		token: "Bearer " + signedToken,
@@ -69,32 +70,54 @@ function issueJWT(user) {
 	}
 }
 
-function authMiddleware(req, res, next) {
+function authUserMiddleware(req, res, next) {
 
 	if(!req.headers.authorization)
-	{
-		res.status(401).json({ success: false, msg: "You are not authorized to visit this route" });
-		return
-	}
+		return res.status(401).json({ success: false, msg: "Voce não esta autenticado a acessar essa rota" });
 
 	const tokenParts = req.headers.authorization.split(' ');
-	if (tokenParts[0] === 'Bearer' && tokenParts[1].match(/\S+\.\S+\.\S+/) !== null) {
+	if (tokenParts[0] === 'Bearer' && /\S+\.\S+\.\S+/.test(tokenParts[1])) {
+		jwt.verify(tokenParts[1], PUB_KEY, { algorithms: ['RS256'] }, (err, decoded) => {
+			if (!err)
+			{
+				Colaborador.findOne({ email: decoded.sub })
+				.then((colab) => {
+					if (!colab)
+						return res.status(403).json({ success: false, msg: "Voce não esta autorizado a acessar essa rota" }); // significa que é um aluno.
+					if (!colab.ativo)
+						return res.status(401).json({ success: false, msg: "Usuário não encontrado" });
+				
+					req.jwt = decoded;
+					next();
+				})
+				.catch((err) => {
+					res.status(500).json({success: false, msg: `${err}`});
+				});
+			}
+			else
+				res.status(401).json({ success: false, msg: "Voce não esta autenticado a acessar essa rota" });
+		});
+	}
+	else
+		res.status(401).json({ success: false, msg: "Voce não esta autenticado a acessar essa rota" });
+}
 
-		try {
-			const verification = jsonwebtoken.verify(tokenParts[1], PUB_KEY, { algorithms: ['RS256'] });
-			req.jwt = verification;
-			next();
-		} catch(err) {
-			res.status(401).json({ success: false, msg: "You are not authorized to visit this route" });
-		}
+function authRoleMiddleware(role) {
 
-	} else {
-		res.status(401).json({ success: false, msg: "You are not authorized to visit this route" });
+	return (req, res, next) => {
+		Colaborador.findOne({ email: req.jwt.sub })
+		.then((colab) => {
+			if (!colab)
+				return res.status(403).json({ success: false, msg: "Voce não esta autorizado a acessar essa rota" });
+			if (!colab.permissoes[role])
+				return res.status(403).json({ success: false, msg: "Voce não esta autorizado a acessar essa rota" });
+			
+			next()
+		})
+		.catch((err) => {
+			res.status(500).json({success: false, msg: `${err}`});
+		});
 	}
 }
 
-
-module.exports.validPassword = validPassword;
-module.exports.genPassword = genPassword;
-module.exports.issueJWT = issueJWT;
-module.exports.authMiddleware = authMiddleware;
+module.exports = {validPassword, genPassword, issueJWT, authUserMiddleware, authRoleMiddleware};

@@ -26,3 +26,7 @@
   background-color: var(--senac-amarelo);
   border-color: var(--senac-amarelo-dark);
 }
+textarea {
+  resize: none;
+}
+

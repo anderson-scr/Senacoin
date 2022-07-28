@@ -28,7 +28,6 @@ const BarraLateral = () => {
   }
   const changePageTitle = (evt) => {
     setPageIn(evt.target.closest("li").getAttribute("data-datatooltip"))
-    console.log(navigation.current.closest(".active"))
   }
   useEffect(() => {
     if(effectOne.current) {
