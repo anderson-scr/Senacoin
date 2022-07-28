@@ -9,13 +9,19 @@ export const gerItemTableSchema = [
     accessor: "pontos",
     className: "senacoins"
   },
-  {
-    Header: "Categoria",
+  { Header: "Subcategoria",
+    accessor: "id_subcategoria.nome",
+    className: "senacoins"
+  },
+  { Header: "Area",
+    accessor: "id_area.nome",
+    className: "senacoins"
+  },
+  { Header: "Categoria",
     accessor: "id_categoria.nome",
     className: "categoria"
   },
-  {
-    Header: "Status",
+  { Header: "Status",
     accessor: "id_status.nome"
   }
 ]

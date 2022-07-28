@@ -18,6 +18,7 @@ export const callTodosItemsAPI = {
     try {
       const apiResponse = await api.get(routes.items.todos + offset)
       // If there's no data in the apiResponse, return a empty array for react-table
+      console.log(apiResponse)
       if(apiResponse.status === 204) {
         return []
       } else return apiResponse.data
