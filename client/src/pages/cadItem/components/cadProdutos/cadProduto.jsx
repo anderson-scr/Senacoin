@@ -61,6 +61,9 @@ const CadProduto = () => {
     ModalService.open(ModalCadUnidade)
   }
 
+  const checkImg = (evt) => {
+    console.log(evt.target.files[0])
+  }
 
   const certo = (dados) => {
     dados.id_unidade = [unidades[(parseInt(dados.id_unidade) - 1)]._id]
@@ -77,7 +80,7 @@ const CadProduto = () => {
   }
 
   return (
-    <form className='container mt-3' onSubmit={handleSubmit(certo, errado)}>
+    <form className='container mt-3' onSubmit={handleSubmit(certo, errado)} encType="multipart/form-data" >
       <div className='row'>
 
         <div className='mb-3 col'>
@@ -169,7 +172,7 @@ const CadProduto = () => {
         </div>
         <div className="mb-3 col-4">
           <label htmlFor="formFile" className="form-label">Imagem</label>
-          <input className="form-control" type="file" id="formFile" {...register('imagem')} />
+          <input className="form-control" type="file" id="formFile" onChangeCapture={evt => checkImg(evt)} {...register('imagem')} />
         </div>
       </div>
 

@@ -31,7 +31,7 @@ const TableFilters = ({categoriaOrUnidade, area, subcategoria, ativo, filter, se
           {area && // Check if it's to render this element
           <div className='mb-3 col-3'>
             <label htmlFor="dropArea" className="form-label">Area</label>
-            <select className="form-select" id='dropArea' aria-label="Default select example" defaultValue="DEFAULT">
+            <select className="form-select" id='dropArea' aria-label="Default select example" onChangeCapture={evt => setFilter(areas[evt.target.value - 1].nome)} defaultValue="DEFAULT">
               <option value="DEFAULT" disabled style={{display: "none"}}>Selecione</option>
               {areas.length > 1 &&
                 areas.map((area, idx) => {
@@ -43,7 +43,7 @@ const TableFilters = ({categoriaOrUnidade, area, subcategoria, ativo, filter, se
           {subcategoria && // Check if it's to render this element
           <div className='mb-3 col-3 '>
             <label htmlFor="dropSubcategoria" className="form-label">Subcategoria</label>
-            <select className="form-select" id='dropSubcategoria' aria-label="Default select example" defaultValue="DEFAULT">
+            <select className="form-select" id='dropSubcategoria' aria-label="Default select example" onChangeCapture={evt => setFilter(subcategorias[evt.target.value - 1].nome)} defaultValue="DEFAULT">
               <option value="DEFAULT" disabled style={{display: "none"}}>Selecione</option>
               {subcategorias.length > 1 &&
                 subcategorias.map((subcategoria, idx) => {
@@ -64,7 +64,7 @@ const TableFilters = ({categoriaOrUnidade, area, subcategoria, ativo, filter, se
           {!categoriaOrUnidade && // Check if it's to render this element
           <div className='mb-3 col-3 '>
             <label htmlFor="dropSubcategoria" className="form-label">Unidade</label>
-            <select className="form-select" id='dropSubcategoria' aria-label="Default select example" defaultValue="DEFAULT">
+            <select className="form-select" id='dropSubcategoria' aria-label="Default select example" onChangeCapture={evt => setFilter(unidades[evt.target.value - 1].nome)} defaultValue="DEFAULT">
               <option value="DEFAULT" disabled style={{display: "none"}}>Selecione</option>
               {unidades.length > 1 &&
                 unidades.map((unidade, idx) => {

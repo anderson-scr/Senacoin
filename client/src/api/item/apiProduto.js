@@ -5,7 +5,7 @@ export const callProdutoAPI = {
   novo: async (dadosProduto) => {
     try {
       const apiResponse = await api.post(routes.produto.novo, JSON.stringify(dadosProduto))
-      return apiResponse.data
+      console.log(apiResponse)
 
     } catch (error) {
       console.log(error)

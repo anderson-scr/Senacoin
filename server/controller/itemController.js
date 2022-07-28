@@ -24,7 +24,7 @@ exports.new = async (req, res, _next) => {
 		return res.status(400).json({ success: false, msg: "solicitação mal construída, informações faltando ou incorretas" });
     
     // >>> só ta aqui por causa do postman <<<
-    req.body = {...JSON.parse(req.body.data)}
+    // req.body = {...JSON.parse(req.body.data)}
     
     categoria = getIdbyName(req.params.categoria);
 	if (!categoria)
