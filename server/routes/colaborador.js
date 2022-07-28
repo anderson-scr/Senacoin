@@ -10,9 +10,9 @@ router.post('/register', utils.authUserMiddleware, utils.authRoleMiddleware("cad
 // add a new colaborador list
 router.post('/populate', utils.authUserMiddleware, utils.authRoleMiddleware("cad_usuarios"), controller.newList);
 // list all colaboradores
-router.get('/all/:offset', utils.authUserMiddleware, utils.authRoleMiddleware("ger_usuarios"), controller.listAll);
+router.get('/all/:offset?', utils.authUserMiddleware, utils.authRoleMiddleware("ger_usuarios"), controller.listAll);
 // list all active colaboradores
-router.get('/active/:offset', utils.authUserMiddleware, utils.authRoleMiddleware("ger_usuarios"), controller.listActive);
+router.get('/active/:offset?', utils.authUserMiddleware, controller.listActive);
 // list single colaborador
 router.get('/:id', utils.authUserMiddleware, utils.authRoleMiddleware("ger_usuarios"), controller.listOne);
 // edit a colaborador

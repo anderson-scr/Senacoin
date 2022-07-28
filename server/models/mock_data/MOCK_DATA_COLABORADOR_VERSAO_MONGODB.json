@@ -335,10 +335,10 @@
         "_id": {
             "$oid":  "62d55f6b40b8c4d87661c8e2"
         },
-        "nome": "Anderson Carrion",
-        "email": "anderson.scr@outlook.com",
-        "cpf": "458.748.748-85 ",
-        "matricula": "28464657-1",
+        "nome": "ADM MASTER NAO DELETE",
+        "email": "admin@master.com",
+        "cpf": "777.777.777-77 ",
+        "matricula": "77777777-1",
         "hash": "d9069f602b0fedc77102c3cc3898e19fb7fbafa19842a5ded34b1072621a5f5c5115290173482f46d78ebed910bf1621d9e77670d03861faa54a0f92f547b59f",
         "salt": "d6156e101a4b691620b335eb3370952e9993ec41ff03758bc4680c056910e8e8",
         "permissoes":{
@@ -357,11 +357,8 @@
             "ger_qrcodes": true,
             "relatorios": true
         },
-        "id_status":  {
-            "$oid":  "62cec6c463187bb9b498687b"
-        },
         "id_unidade": [
-            {"$oid": "62d06f2c181c3910cc1f8268"}
-        ]
+        ],
+        "ativo": true
     }
 ]

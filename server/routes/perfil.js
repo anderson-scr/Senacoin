@@ -4,13 +4,13 @@ const utils = require('../libs/utils');
 
 
 // add a new perfil
-router.post('/new', utils.authUserMiddleware, utils.authRoleMiddleware("cad_perfis"), controller.new);
+router.post('/add', utils.authUserMiddleware, utils.authRoleMiddleware("cad_perfis"), controller.new);
 // add a new perfil list
 router.post('/populate', utils.authUserMiddleware, utils.authRoleMiddleware("cad_perfis"), controller.newList);
 // list all perfis
 router.get('/all', utils.authUserMiddleware, utils.authRoleMiddleware("cad_perfis"), controller.listAll);
 // list all active perfis
-router.get('/active', utils.authUserMiddleware, utils.authRoleMiddleware("cad_perfis"), controller.listActive);
+router.get('/active', utils.authUserMiddleware, controller.listActive);
 // list single perfil
 router.get('/:id', utils.authUserMiddleware, utils.authRoleMiddleware("cad_perfis"), controller.listOne);
 // edit a perfil

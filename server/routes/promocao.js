@@ -10,7 +10,7 @@ router.post('/populate', utils.authUserMiddleware, utils.authRoleMiddleware("cad
 // list all promocoes
 router.get('/all', utils.authUserMiddleware, utils.authRoleMiddleware("ger_promocoes"), controller.listAll);
 // list all active promocoes
-router.get('/active', utils.authUserMiddleware, utils.authRoleMiddleware("ger_promocoes"), controller.listActive);
+router.get('/active', utils.authUserMiddleware, controller.listActive);
 // list single promocao
 router.get('/:id', utils.authUserMiddleware, utils.authRoleMiddleware("ger_promocoes"), controller.listOne);
 // edit a promocao

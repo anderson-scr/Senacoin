@@ -1,8 +1,4 @@
-export const colunasSchema = [
-  { Header: "Check", 
-    accessor: "check",
-    className: "checkBox"
-  },
+export const cadQrcodeTableSchema = [
   { Header: "Nome",
     accessor: "nome",
     className: "nome"
@@ -10,5 +6,10 @@ export const colunasSchema = [
   { Header: "Senacoins",
     accessor: "pontos",
     className: "senacoins"
+  },
+  {
+    Header: "Categoria",
+    accessor: "id_categoria.nome",
+    className: "categoria"
   }
 ]

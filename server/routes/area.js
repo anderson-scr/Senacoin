@@ -10,7 +10,7 @@ router.post('/populate', utils.authUserMiddleware, utils.authRoleMiddleware("cad
 // list all areas
 router.get('/all', utils.authUserMiddleware, utils.authRoleMiddleware("cad_areas"), controller.listAll);
 // list all active areas
-router.get('/active', utils.authUserMiddleware, utils.authRoleMiddleware("cad_areas"), controller.listActive);
+router.get('/active', utils.authUserMiddleware, controller.listActive);
 // list single area
 router.get('/:id', utils.authUserMiddleware, utils.authRoleMiddleware("cad_areas"), controller.listOne);
 // edit a area

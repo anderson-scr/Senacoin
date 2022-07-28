@@ -8,9 +8,9 @@ router.post('/add', utils.authUserMiddleware, utils.authRoleMiddleware("cad_qrco
 // add a new qr code list
 router.post('/populate', utils.authUserMiddleware, utils.authRoleMiddleware("cad_qrcodes"), controller.newList);
 // list all qr codes
-router.get('/all/:offset', utils.authUserMiddleware, utils.authRoleMiddleware("ger_qrcodes"), controller.listAll);
+router.get('/all/:offset?', utils.authUserMiddleware, utils.authRoleMiddleware("ger_qrcodes"), controller.listAll);
 // list all active qr codes
-router.get('/active/:offset', utils.authUserMiddleware, utils.authRoleMiddleware("ger_qrcodes"), controller.listActive);
+router.get('/active/:offset?', utils.authUserMiddleware, controller.listActive);
 // list single qr code
 router.get('/:id', utils.authUserMiddleware, utils.authRoleMiddleware("ger_qrcodes"), controller.listOne);
 // edit a qr code

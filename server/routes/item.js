@@ -8,13 +8,13 @@ router.post('/:categoria/add', utils.authUserMiddleware, utils.authRoleMiddlewar
 // add a new item list
 router.post('/populate', utils.authUserMiddleware, utils.authRoleMiddleware("cad_itens"), controller.newList);
 // list all items
-router.get('/all/:offset', utils.authUserMiddleware, utils.authRoleMiddleware("ger_itens"), controller.listAll);
+router.get('/all/:offset?', utils.authUserMiddleware, utils.authRoleMiddleware("ger_itens"), controller.listAll);
 // list all active items
-router.get('/active/:offset', utils.authUserMiddleware, utils.authRoleMiddleware("ger_itens"), controller.listActive);
+router.get('/active/:offset?', utils.authUserMiddleware, utils.authRoleMiddleware("ger_itens"), controller.listActive);
 // list all items of a categoria
-router.get('/:categoria/all/:offset', utils.authUserMiddleware, utils.authRoleMiddleware("ger_itens"), controller.listAllByCategory);
+router.get('/:categoria/all/:offset?', utils.authUserMiddleware, utils.authRoleMiddleware("ger_itens"), controller.listAllByCategory);
 // list all active items of a categoria
-router.get('/:categoria/active/:offset', utils.authUserMiddleware, utils.authRoleMiddleware("ger_itens"), controller.listActiveByCategory);
+router.get('/:categoria/active/:offset?', utils.authUserMiddleware, controller.listActiveByCategory);
 // list single item
 router.get('/:id', utils.authUserMiddleware, utils.authRoleMiddleware("ger_itens"), controller.listOne);
 // edit a item

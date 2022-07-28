@@ -82,16 +82,16 @@ function authUserMiddleware(req, res, next) {
 			{
 				Colaborador.findOne({ email: decoded.sub })
 				.then((colab) => {
-					if (colab.id_status.toString() === "62cec6c463187bb9b498687b")
-					{
-						req.jwt = decoded;
-						next();
-					}
-					else
-						res.status(401).json({ success: false, msg: "Usuário não encontrado" });
+					if (!colab)
+						return res.status(403).json({ success: false, msg: "Voce não esta autorizado a acessar essa rota" }); // significa que é um aluno.
+					if (!colab.ativo)
+						return res.status(401).json({ success: false, msg: "Usuário não encontrado" });
+				
+					req.jwt = decoded;
+					next();
 				})
 				.catch((err) => {
-					res.status(500).json(err);
+					res.status(500).json({success: false, msg: `${err}`});
 				});
 			}
 			else
@@ -115,13 +115,9 @@ function authRoleMiddleware(role) {
 			next()
 		})
 		.catch((err) => {
-			res.status(500).json(err);
+			res.status(500).json({success: false, msg: `${err}`});
 		});
 	}
 }
 
-module.exports.validPassword = validPassword;
-module.exports.genPassword = genPassword;
-module.exports.issueJWT = issueJWT;
-module.exports.authUserMiddleware = authUserMiddleware;
-module.exports.authRoleMiddleware = authRoleMiddleware;
+module.exports = {validPassword, genPassword, issueJWT, authUserMiddleware, authRoleMiddleware};
