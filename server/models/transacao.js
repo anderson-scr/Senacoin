@@ -10,6 +10,5 @@ exports.TransacaoSchema = new mongoose.Schema({
 	
 	id_item: {type: mongoose.Types.ObjectId, ref: "Item", default: null, immutable: true},
 	id_qrcode: {type: mongoose.Types.ObjectId, ref: "QrCode", default: null, immutable: true},
-	id_promocao: {type: mongoose.Types.ObjectId, ref: "Promocao", default: null, immutable: true}, // promocao utilizada, deve ser inserido automatico pela controladora
-																									// caso a transação se enquadre em alguma promoção?
+	id_promocao: {type: mongoose.Types.ObjectId, ref: "Promocao", default: null, immutable: true}, // promocao utilizada (bonus de ganho de pontos), deve ser inserido automatico pela controladora
 }, { versionKey: false });

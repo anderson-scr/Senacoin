@@ -120,8 +120,4 @@ function authRoleMiddleware(role) {
 	}
 }
 
-module.exports.validPassword = validPassword;
-module.exports.genPassword = genPassword;
-module.exports.issueJWT = issueJWT;
-module.exports.authUserMiddleware = authUserMiddleware;
-module.exports.authRoleMiddleware = authRoleMiddleware;
+module.exports = {validPassword, genPassword, issueJWT, authUserMiddleware, authRoleMiddleware};
