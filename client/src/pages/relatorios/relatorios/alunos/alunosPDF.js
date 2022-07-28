@@ -1,12 +1,12 @@
 import pdfMake from 'pdfmake/build/pdfmake'
 import pdfFonts from 'pdfmake/build/vfs_fonts'
 
-function generatePDF(reportType) {
+function alunosPDF() {
 
-    pdfMake.vfs = pdfFonts.pdfMake.vfs;
+    pdfMake.vfs = pdfFonts.pdfMake.vfs
     const reportTitle = [
         {
-            text: "Name",
+            text: 'Aluno',
             fontSize: 15,
             bold: true,
             margin: [15, 20, 0, 45]
@@ -91,4 +91,4 @@ function generatePDF(reportType) {
     pdfMake.createPdf(docDefinitions).download()
 }
 
-export default generatePDF
+export default alunosPDF

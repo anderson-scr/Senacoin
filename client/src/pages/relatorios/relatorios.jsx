@@ -1,27 +1,46 @@
 import React from 'react'
 import { useState } from "react"
 import { useEffect } from "react";
-import generatePDF from './relatorios/alunos/generatePDF'
 import { BsFileEarmarkPdf } from "react-icons/bs";
 import { AiFillPicture } from 'react-icons/ai';
-// import styles from "stylesRelatorios.modules.css";
+
+//relatórios
+import alunosPDF from './relatorios/alunos/alunosPDF'
+import unidadesPDF from './relatorios/unidades/unidadesPDF'
+
 
 const Relatorios = () => {
 
-  // function test() {
-  //   console.log(tipo, dataInicio, dataFim)
-  // }
-
   const [typeReport, setTypeReport] = useState()
   const [dateStart, setDateStart] = useState()
-  const [dateEnd, setDateEnd] = useState()  
+  const [dateEnd, setDateEnd] = useState()
+
+  function selectReport() {
+    switch (typeReport) {
+      case '1':
+        alunosPDF()
+        break;    
+      case '2':
+        unidadesPDF()
+        break;    
+      case '3':
+        alert('Relatório Administradores* selecionado')
+        break;    
+      case '4':
+        alert('Relatório Matrículas selecionado')
+        break;    
+      default:
+        alert(`typeReport: ${typeReport}`)
+        break;
+  }
+}
 
   return (
     <>
       <div className='formRelatorios'>
         <form className=''>
           <select className="form-select mb-3 col-6" aria-label="Default select example" onChange={(e) => setTypeReport(e.target.value)}>
-            <option selected>Selecione seu relatôrio</option>
+            <option value='0' selected>Selecione seu relatôrio</option>
             <option value="1">Alunos</option>
             <option value="2">Unidades*</option>
             <option value="3">Administradores*</option>
@@ -38,7 +57,7 @@ const Relatorios = () => {
             </div>
           </div>
           <div className='btns d-flex flex-column mt-3'>
-            <input onClick={generatePDF} type="button" className='btn btn-danger col-3 mt-3' value="Gerar PDF" />
+            <input onClick={selectReport} type="button" className='btn btn-danger col-3 mt-3' value="Gerar PDF" />
           </div>
         </form>
       </div>
