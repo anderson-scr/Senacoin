@@ -14,6 +14,11 @@ export const gerUsuarioTabelaSchema = [
     accessor: "matricula"
   },
   {
+    Header: "Unidade(s)",
+    accessor: "id_unidade[0].nome",
+    className: "categoria"
+  },
+  {
     Header: "Status",
     accessor: "id_status.nome",
     className: "categoria"

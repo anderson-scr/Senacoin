@@ -1,10 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react'
-import GlobalFilter from './globalFilter';
-import { callUnidadeAPI } from 'api/common/callUnidades';
-import { callAreaAPI } from 'api/common/callArea';
-import { callSubcategoriaAPI } from 'api/common/callSubcategoria';
+import { callUnidadeAPI } from 'api/common/callUnidades'
+import { callAreaAPI } from 'api/common/callArea'
+import { callSubcategoriaAPI } from 'api/common/callSubcategoria'
 
-const TableFilters = ({categoriaOrUnidade, area, subcategoria, ativo}) => {
+const TableFilters = ({categoriaOrUnidade, area, subcategoria, ativo, filter, setFilter}) => {
   const effectOnce = useRef(true)
   const [subcategorias, setSubcategorias] = useState([])
   const [unidades, setUnidades] = useState([])
@@ -22,7 +21,6 @@ const TableFilters = ({categoriaOrUnidade, area, subcategoria, ativo}) => {
 
       return () => effectOnce.current = false
     }
-
   }, [])
 
 
@@ -86,7 +84,12 @@ const TableFilters = ({categoriaOrUnidade, area, subcategoria, ativo}) => {
               }
             </select>
           </div>}
-         <GlobalFilter filter='texto' setFilter={'texto'}/>
+          <div className="mb-3 col-3">
+            <label htmlFor="iptPesquisa" className="form-label">Pesquisar</label>
+            <div className="input-group">
+              <input id="iptPesquisa" type="text" className="form-control" aria-label="Search input" defaultValue={filter || ''} onChangeCapture={evt => setFilter(evt.target.value)} aria-describedby="button-addon2" />
+            </div>
+          </div>
         </div>
       </div>
     </div>

@@ -66,7 +66,9 @@ const CadProduto = () => {
     dados.id_unidade = [unidades[(parseInt(dados.id_unidade) - 1)]._id]
     dados.id_area = areas[parseInt(dados.id_area) - 1].id_unidade[0]
     dados.id_subcategoria = subcategorias[parseInt(dados.id_subcategoria) - 1]._id
-
+    dados.id_categoria = '62d017a1181c3910ccfd43d1'
+    dados.imagem = 'teste'
+    
     console.log(dados)
     callProdutoAPI.novo(dados)
   }
