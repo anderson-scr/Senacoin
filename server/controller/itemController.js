@@ -97,7 +97,7 @@ exports.newList = (req, res, _next) => {
 exports.listAll = (req, res, _next) => {
 	Item.find({}).skip(req.params.offset || 0).limit(60)
     .select("nome id_area id_categoria id_unidade pontos ativo")
-	.populate({path : 'id_area', select: 'nome -_id'})   //.populate('id_unidade id_perfil ativo')
+	.populate({path : 'id_area', select: 'nome -_id'}) 
     .populate({path : 'id_categoria', select: 'nome -_id'})
     .populate({path : 'id_unidade', select: 'nome -_id'})
     .then((itens) => {  
@@ -119,7 +119,7 @@ exports.listAllByCategory = (req, res, _next) => {
 
 	Item.find({id_categoria: categoria}).skip(req.params.offset || 0).limit(60)
     .select("nome id_area id_unidade pontos ativo")
-	.populate({path : 'id_area', select: 'nome -_id'})   //.populate('id_unidade id_perfil ativo')
+	.populate({path : 'id_area', select: 'nome -_id'}) 
     .populate({path : 'id_unidade', select: 'nome -_id'})
     
     .then((itens) => {
@@ -137,7 +137,7 @@ exports.listActive = (req, res, _next) => {
 
 	Item.find({ativo: true}).skip(req.params.offset || 0).limit(60)
     .select("nome pontos id_area id_categoria id_subcategoria id_unidade")
-	.populate({path : 'id_area', select: 'nome -_id'})   //.populate('id_unidade id_perfil ativo')
+	.populate({path : 'id_area', select: 'nome -_id'}) 
     .populate({path : 'id_categoria', select: 'nome -_id'})
     .populate({path : 'id_subcategoria', select: 'nome -_id'})
     .populate({path : 'id_unidade', select: 'nome -_id'})
@@ -160,7 +160,7 @@ exports.listActiveByCategory = (req, res, _next) => {
 
 	Item.find({id_categoria: categoria, ativo: true})
     .select("nome pontos id_area id_unidade pontos descricao imagem")
-	.populate({path : 'id_area', select: 'nome -_id'})   //.populate('id_unidade id_perfil ativo')
+	.populate({path : 'id_area', select: 'nome -_id'}) 
     .populate({path : 'id_unidade', select: 'nome -_id'})
     .then((itens) => {
         if (!itens.length)
