@@ -1,0 +1,15 @@
+{
+    "nome": "Teste qrcode back",
+    "descricao": "front",
+    "unico": true,
+    "diario": false,
+    "semanal": false,
+    "mensal": true,
+    "url": null,
+    "data_inicio": "2022-08-06T00:00:00.000-04:00",
+    "data_fim": "2022-08-06T00:00:00.000-04:00",
+    "quantidade": 405,
+    "id_item": null,
+    "id_unidade": [],
+    "ativo": true
+}
