@@ -23,7 +23,7 @@ import { MdArrowDropDown, MdArrowDropUp } from "react-icons/md";
 import { BsDot } from "react-icons/bs";
 
 
-const Table = ({apiRoute, columnSchema, setCurrentState = false, filters = true, categoria = false}) => {
+const Table = ({apiRoute, columnSchema, setCurrentState = false, filters = true, categoria = false, subcategoria = true, area = true, ativo = false}) => {
   const effectOnce = useRef(true)
   const [dataTabela, setDataTabela] = useState([])
   const navigate = useNavigate()
@@ -127,7 +127,7 @@ const Table = ({apiRoute, columnSchema, setCurrentState = false, filters = true,
 
   return (
     <div>
-      {filters && <TableFilters categoriaOrUnidade={categoria} />}
+      {filters && <TableFilters categoriaOrUnidade={categoria} subcategoria={subcategoria} area={area} ativo={ativo} />}
       <div className='container mt-4 containerTable'>
         <table className="table">
           <thead className='tableHead'>
