@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react'
-import { BsSearch } from "react-icons/bs";
+import GlobalFilter from './globalFilter';
 import { callUnidadeAPI } from 'api/common/callUnidades';
 import { callAreaAPI } from 'api/common/callArea';
 import { callSubcategoriaAPI } from 'api/common/callSubcategoria';
@@ -86,15 +86,7 @@ const TableFilters = ({categoriaOrUnidade, area, subcategoria, ativo}) => {
               }
             </select>
           </div>}
-          <div className="mb-3 col-3">
-            <label htmlFor="iptPesquisa" className="form-label">Pesquisar</label>
-            <div className="input-group">
-              <input id="iptPesquisa" type="text" className="form-control" aria-label="Recipient's username" aria-describedby="button-addon2" />
-              <button className="btn btn-outline-secondary" type="button" id="btnPesquisa" >
-                <BsSearch size={18} />
-              </button>
-            </div>
-          </div>
+         <GlobalFilter filter='texto' setFilter={'texto'}/>
         </div>
       </div>
     </div>
