@@ -139,22 +139,54 @@ exports.listOne = (req, res, _next) => {
     Aluno.findById(req.params.id)
     .select('-hash -salt')
     .populate({path : 'id_unidade', select: 'nome cidade uf -_id'})
-    .populate({path : 'saldo', select: 'pontos data_inicio data_fim -_id'})
+    .populate({path : 'saldo', select: 'pontos data_inicio data_fim'})
     .then((aluno) => {
-        let intAluno = {...aluno._doc};
-        console.log(intAluno);
-
-        intAluno.saldo = senacoin.sum(aluno.saldo);
-        console.log(intAluno);
-
         if (!aluno)
             return res.status(204).json();  
-        else
-            res.status(200).json(intAluno);
+        
+        const saldoAtualizado = senacoin.sum(aluno.saldo);
+        atualizaSaldo(req.jwt.sub, aluno._id, saldoAtualizado.senacoins);
+
+        let _aluno = {...aluno._doc};
+        _aluno.saldo = saldoAtualizado.total;
+
+        res.status(200).json(_aluno);
     })
     .catch((err) => {
         res.status(500).json({success: false, msg: `${err}`});
     });
+}
+
+async function atualizaSaldo (responsavel, id, senacoins) {
+
+    const session = await mongoose.startSession();
+	try {    
+		await session.withTransaction(async () => {
+            await Aluno.findByIdAndUpdate(id, {saldo: senacoins}, { session: session, new: true})
+            .select('-_id')
+			.then(async (aluno) => {
+				if (!aluno)
+                    console.log({success: false, msg: 'aluno não encontrado'});
+
+				await AuditoriaAluno.create([{responsavel: responsavel,  ...aluno._doc}], { session })
+				.then((audaluno) =>{
+					console.log({ success: true, audaluno});
+				})
+				.catch(async (err) => {
+					await session.abortTransaction();
+					console.log({ success: false, msg: `${err}` });
+				});
+			})
+			.catch(async (err) => {
+				await session.abortTransaction();
+				console.log({ success: false, msg: `${err}` });
+			})
+		});
+	} catch (err) {
+		console.log({ success: false, msg: `${err}` });
+	} finally {
+		await session.endSession();
+	}
 }
 
 exports.studentReport = (req, res, _next) => {
@@ -188,10 +220,7 @@ exports.enrollmentReport = (req, res, _next) => {
         .then((audaluno) => {
             console.log(audaluno);
             if (!audaluno)
-            {
-                console.log('204 - 2');
                 return res.status (204).json();
-            }
             res.status(200).json({success: true, ...aluno._doc, ...audaluno._doc})
         })
         .catch((err)=>{

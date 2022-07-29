@@ -55,6 +55,10 @@ exports.newList = (req, res, _next) => {
         res.status(201).json({ success: true, total: docs.length});
     });
 }
+exports.use = (req, res, _next) => {
+    console.log('entrei');
+    return res.status(200).json({success: true, msg: "usou um qr code!"})
+}
 
 exports.listAll = (req, res, _next) => {
 

@@ -40,15 +40,17 @@ exports.new = async (responsavel, pontos, data_fim) => {
 exports.sum = (senacoins) => {
     
     total = 0;
-    temp = [...senacoins]
-    temp.forEach((lote, idx) => {
-        if (lote.data_inicio.getTime() < Date.now() && lote.data_fim.getTime() > Date.now())
-            total += lote.pontos;
-        else
-            senacoins.splice(idx, 1);
-    });
+    senacoins = senacoins.reduce((acumuladora, lote) => {
+        if (lote.data_inicio.getTime() < Date.now() && lote.data_fim.getTime() > Date.now()) {
+            acumuladora.push(lote._id);
+            total += lote.pontos    
+        }
+
+        return acumuladora;
+    }, []); 
+
     console.log({total, senacoins});
-    return total //{total, senacoins};
+    return {total, senacoins};
 }
 
 exports.sub = (responsavel, pontos, senacoins) => {
@@ -64,7 +66,7 @@ exports.sub = (responsavel, pontos, senacoins) => {
         }
         else {
             console.log({responsavel: responsavel, id: senacoins[0]._id, pontos: senacoins[0].pontos - pontos})
-            this.edit(responsavel, senacoins[0]._id, senacoins[0].pontos - pontos)
+            atualizaSenacoin(responsavel, senacoins[0]._id, senacoins[0].pontos - pontos)
         }
     }
     
@@ -73,7 +75,7 @@ exports.sub = (responsavel, pontos, senacoins) => {
 }
 
 
-exports.edit = async (responsavel, id, pontos) => {
+async function atualizaSenacoin (responsavel, id, pontos) {
 
     const session = await mongoose.startSession();
 	try {    

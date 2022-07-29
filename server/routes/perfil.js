@@ -4,21 +4,21 @@ const utils = require('../libs/utils');
 
 
 // add a new perfil
-router.post('/add', utils.authUserMiddleware, utils.authRoleMiddleware("cad_perfis"), controller.new);
+router.post('/add', utils.authUserMiddleware("cad_perfis"), controller.new);
 // add a new perfil list
-router.post('/populate', utils.authUserMiddleware, utils.authRoleMiddleware("cad_perfis"), controller.newList);
+router.post('/populate', utils.authUserMiddleware("cad_perfis"), controller.newList);
 // list all perfis
-router.get('/all', utils.authUserMiddleware, utils.authRoleMiddleware("cad_perfis"), controller.listAll);
+router.get('/all', utils.authUserMiddleware("cad_perfis"), controller.listAll);
 // list all active perfis
-router.get('/active', utils.authUserMiddleware, controller.listActive);
+router.get('/active', utils.authUserMiddleware(), controller.listActive);
 // list single perfil
-router.get('/:id', utils.authUserMiddleware, utils.authRoleMiddleware("cad_perfis"), controller.listOne);
+router.get('/:id', utils.authUserMiddleware("cad_perfis"), controller.listOne);
 // edit a perfil
-router.patch('/:id', utils.authUserMiddleware, utils.authRoleMiddleware("cad_perfis"), controller.edit);
+router.patch('/:id', utils.authUserMiddleware("cad_perfis"), controller.edit);
 // delete all perfil
-router.delete('/truncate', utils.authUserMiddleware, utils.authRoleMiddleware("cad_perfis"), controller.deleteAll);
+router.delete('/truncate', utils.authUserMiddleware("cad_perfis"), controller.deleteAll);
 // delete a perfil
-router.delete('/:id', utils.authUserMiddleware, utils.authRoleMiddleware("cad_perfis"), controller.delete);
+router.delete('/:id', utils.authUserMiddleware("cad_perfis"), controller.delete);
 
 
 module.exports = router;
