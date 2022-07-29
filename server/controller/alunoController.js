@@ -145,7 +145,9 @@ exports.listOne = (req, res, _next) => {
             return res.status(204).json();  
         
         const saldoAtualizado = senacoin.sum(aluno.saldo);
-        atualizaSaldo(req.jwt.sub, aluno._id, saldoAtualizado.senacoins);
+        if (!this.atualizaSaldo(req.jwt.sub, saldoAtualizado.senacoins, 0, aluno._id)) // 0 para sobrescrever o saldo
+            throw new Error(`erro na atualizacao dos senacoins`);
+
 
         let _aluno = {...aluno._doc};
         _aluno.saldo = saldoAtualizado.total;
@@ -157,20 +159,33 @@ exports.listOne = (req, res, _next) => {
     });
 }
 
-async function atualizaSaldo (responsavel, id, senacoins) {
-
+// esssa funcao sobrescreve o vetor de senacoins removendo os vencidos se opcao for 0
+// senao da push adicionando ao vetor
+exports.atualizaSaldo = async (responsavel, senacoins, opcao, id) => {
+    
+    if (opcao)
+        opcao = {$push: {saldo: senacoins}}
+    else
+        opcao = {saldo: senacoins}
+    
+    sucesso = false;
     const session = await mongoose.startSession();
 	try {    
 		await session.withTransaction(async () => {
-            await Aluno.findByIdAndUpdate(id, {saldo: senacoins}, { session: session, new: true})
+            if(!id)
+                await Aluno.findOneAndUpdate({email: responsavel}, opcao, { session: session, new: true}) // precisa arrumar isso
+            else
+                await Aluno.findByIdAndUpdate(id, opcao, { session: session, new: true})
             .select('-_id')
 			.then(async (aluno) => {
+                console.log('entrei2')
 				if (!aluno)
                     console.log({success: false, msg: 'aluno não encontrado'});
 
 				await AuditoriaAluno.create([{responsavel: responsavel,  ...aluno._doc}], { session })
 				.then((audaluno) =>{
 					console.log({ success: true, audaluno});
+                    sucesso = true;
 				})
 				.catch(async (err) => {
 					await session.abortTransaction();
@@ -187,6 +202,7 @@ async function atualizaSaldo (responsavel, id, senacoins) {
 	} finally {
 		await session.endSession();
 	}
+    return sucesso;
 }
 
 exports.studentReport = (req, res, _next) => {

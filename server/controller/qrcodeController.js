@@ -1,4 +1,6 @@
 const mongoose = require('mongoose');
+const aluno = require('./alunoController');
+const senacoin = require('./senacoinController');
 const QrCode = mongoose.model('QrCode');
 const AuditoriaQrCode = mongoose.model('AuditoriaQrCode');
 
@@ -56,8 +58,29 @@ exports.newList = (req, res, _next) => {
     });
 }
 exports.use = (req, res, _next) => {
-    console.log('entrei');
-    return res.status(200).json({success: true, msg: "usou um qr code!"})
+    QrCode.findById(req.params.id)
+    .then(async (qrcode) => {
+        
+        if (!qrcode)
+            return res.status(204).json();  
+        if (!qrcode.ativo)
+            return res.status(410).json({success: false, msg: "qrcode expirado"});
+        if (qrcode.data_inicio.getTime() > Date.now() || qrcode.data_fim.getTime() < Date.now())
+            return res.status(410).json({success: false, msg: "qrcode expirado"});
+        
+        /* insira aqui verificacao de uso unico, diario, mensal por aluno */
+        /* insira aqui verificacao de uso no item? como funciona isso msm? */
+
+        const lote  = await senacoin.new(req.jwt.sub, qrcode.pontos)
+        if (! await aluno.atualizaSaldo(req.jwt.sub, lote._id, 1)) // para dar push no saldo do aluno
+            return res.status(500).json({success: false, msg: "erro na hora de converter o qr code."})
+        
+        return res.status(200).json({success: true, msg: "qr code convertido."});
+
+    })
+    .catch((err) => {
+        res.status(500).json({success: false, msg: `${err}`});
+    });
 }
 
 exports.listAll = (req, res, _next) => {
