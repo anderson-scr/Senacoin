@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const aluno = require('./alunoController');
 const senacoin = require('./senacoinController');
+const item = require('./itemController');
 const QrCode = mongoose.model('QrCode');
 const AuditoriaQrCode = mongoose.model('AuditoriaQrCode');
 
@@ -68,11 +69,26 @@ exports.use = (req, res, _next) => {
         if (qrcode.data_inicio.getTime() > Date.now() || qrcode.data_fim.getTime() < Date.now())
             return res.status(410).json({success: false, msg: "qrcode expirado"});
         
+        let lote;
+        if (qrcode.id_item)
+        {
+            const infoItem = await item.getInfo(qrcode.id_item);
+            // console.log(infoItem);
+            if (!infoItem.ativo)
+                return res.status(410).json({success: false, msg: "item inativo"});
+            
+            let duracao;
+            if (infoItem.horas > 20)
+                duracao = Date.now() - 4*60*60*1000 + 1.5*infoItem.horas*60*60*1000; // fuso horario gmt-4 + 1.5 x duracao do item
+            
+            lote = await senacoin.new(req.jwt.sub, infoItem.pontos, duracao);
+        }
+        else
+            lote = await senacoin.new(req.jwt.sub, qrcode.pontos);
+        
         /* insira aqui verificacao de uso unico, diario, mensal por aluno */
-        /* insira aqui verificacao de uso no item? como funciona isso msm? */
-
-        const lote  = await senacoin.new(req.jwt.sub, qrcode.pontos)
-        if (! await aluno.atualizaSaldo(req.jwt.sub, lote._id, 1)) // para dar push no saldo do aluno
+        
+        if (! await aluno.atualizaSaldo(req.jwt.sub, lote._id, 1)) //1 para dar push no saldo do aluno
             return res.status(500).json({success: false, msg: "erro na hora de converter o qr code."})
         
         return res.status(200).json({success: true, msg: "qr code convertido."});
@@ -102,9 +118,9 @@ exports.listAll = (req, res, _next) => {
 
 exports.listActive = (req, res, _next) => {
 
-	const today = new Date(new Date()-3600*1000*4); //fuso horario gmt-4 talvez .toISOString() no final
+	const today = Date.now() - 3600*1000*4; //fuso horario gmt-4 talvez .toISOString() no final
 
-	QrCode.find({$and: [{ativo: true}, {data_inicio: {$gte: today}}, {data_fim: {$lt: today}}]}).skip(req.params.offset || 0).limit(60)
+	QrCode.find({$and: [{ativo: true}, {data_inicio: {$lt: today}}, {data_fim: {$gte: today}}]}).skip(req.params.offset || 0).limit(60)
     .select("-ativo -_id")
 	.populate({path : 'id_item', select: 'nome area id_categoria -_id', populate: {path: 'id_categoria', select: 'nome -_id'}})
 	.populate({path : 'id_unidade', select: 'nome -_id'})

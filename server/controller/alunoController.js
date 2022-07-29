@@ -168,17 +168,19 @@ exports.atualizaSaldo = async (responsavel, senacoins, opcao, id) => {
     else
         opcao = {saldo: senacoins}
     
+    let objBusca;
+    if(!id)
+        objBusca = {email: responsavel};
+    else
+        objBusca = {_id: id};
+
     sucesso = false;
     const session = await mongoose.startSession();
 	try {    
 		await session.withTransaction(async () => {
-            if(!id)
-                await Aluno.findOneAndUpdate({email: responsavel}, opcao, { session: session, new: true}) // precisa arrumar isso
-            else
-                await Aluno.findByIdAndUpdate(id, opcao, { session: session, new: true})
+            await Aluno.findOneAndUpdate(objBusca, opcao, { session: session, new: true}) // precisa arrumar isso
             .select('-_id')
 			.then(async (aluno) => {
-                console.log('entrei2')
 				if (!aluno)
                     console.log({success: false, msg: 'aluno não encontrado'});
 

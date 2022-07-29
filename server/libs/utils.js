@@ -91,10 +91,10 @@ function authUserMiddleware(role) {
 						{
 							await Aluno.findOne({ email: decoded.sub })
 							.then((aluno) => {
-								if (req.params.id != aluno._id)
+								if (role && req.params.id != aluno._id)
 								{
 									flag = false;
-									res.status(403).json({ success: false, msg: "Voce não esta autorizado a acessar essa rota" });
+									res.status(403).json({ success: false, msg: "Voce não esta autorizado a acessar essa rota1" });
 								}
 							})
 							.catch((_aluno) => {
@@ -113,7 +113,7 @@ function authUserMiddleware(role) {
 							if (role && !colab.permissoes[role])
 							{
 								flag = false;
-								res.status(403).json({ success: false, msg: "Voce não esta autorizado a acessar essa rota" });
+								res.status(403).json({ success: false, msg: "Voce não esta autorizado a acessar essa rota2" });
 							}
 						}
 						if (flag)

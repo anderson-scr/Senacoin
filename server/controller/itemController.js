@@ -193,6 +193,21 @@ exports.listOne = (req, res, _next) => {
     });
 }
 
+exports.getInfo = async (id) => {
+    let _item;
+    await Item.findById(id)
+    .select('pontos horas ativo -_id')
+    .then((item) => {   
+        if (!item)
+            console.log({success: false, msg: "item não encontrado"});
+		_item = item;
+    })
+    .catch((err) => {
+        console.log({success: false, msg: `${err}`});
+    });
+    return _item;
+}
+
 exports.edit = async (req, res, _nxt) => {
 
     if (!Object.keys(req.body).length)

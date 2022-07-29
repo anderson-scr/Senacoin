@@ -14,7 +14,7 @@ exports.login = (req, res, _next) => {
     console.log(req.body.email)
 		
 		if (!colab)
-			return res.status(401).json({ success: false, msg: "email/senha inválidos!1" });
+			return res.status(401).json({ success: false, msg: "email/senha inválidos!" });
 		
 		const isValid = utils.validPassword(req.body.senha, colab.hash, colab.salt);  
 		if (isValid)
@@ -23,7 +23,7 @@ exports.login = (req, res, _next) => {
 			res.status(200).json({ success: true, email: colab.email, token: tokenObject.token, expiresIn: tokenObject.expires});
 		}
 		else 
-			res.status(401).json({ success: false, msg: "email/senha inválidos!2" });
+			res.status(401).json({ success: false, msg: "email/senha inválidos!" });
 	})
 	.catch((err) => {
 		res.status(500).json({success: false, msg: `${err}`});
