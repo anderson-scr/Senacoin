@@ -7,7 +7,7 @@ import { verificaSessao } from 'auth/login/verificaSessao'
 // Table
 import TablePagination from './components/tablePagination'
 import TableFilters from './components/tableFilters'
-import { useTable, usePagination, useRowSelect, useSortBy } from 'react-table'
+import { useTable, usePagination, useRowSelect, useSortBy, useGlobalFilter, useFilters } from 'react-table'
 
 // Select row type
 import { RowCheckbox } from './components/rowSelection'
@@ -23,7 +23,7 @@ import { MdArrowDropDown, MdArrowDropUp } from "react-icons/md";
 import { BsDot } from "react-icons/bs";
 
 
-const Table = ({apiRoute, columnSchema, setCurrentState = false, filters = true, categoria = false}) => {
+const Table = ({apiRoute, columnSchema, setCurrentState = false, filters = true, categoria = false, subcategoria = true, area = true, ativo = false}) => {
   const effectOnce = useRef(true)
   const [dataTabela, setDataTabela] = useState([])
   const navigate = useNavigate()
@@ -52,7 +52,7 @@ const Table = ({apiRoute, columnSchema, setCurrentState = false, filters = true,
     data: dataTabela
 
     // useRowSelect adds a new row so we can put checkbox in it
-  }, useSortBy, usePagination, useRowSelect, (hooks) => {
+  }, useFilters,useGlobalFilter, useSortBy, usePagination, useRowSelect, (hooks) => {
       hooks.visibleColumns.push(columns => {
         if(columns[0].Header === 'Editar') {
           columns.splice(0, 1)
@@ -98,12 +98,15 @@ const Table = ({apiRoute, columnSchema, setCurrentState = false, filters = true,
     pageOptions,
     state,
     setPageSize,
+    setGlobalFilter,
     page,
     selectedFlatRows, // Attr for select rows
   } = tableInstance
 
   // Page current on
   const {  pageIndex } = state
+  //Filter
+  const { globalFilter } = state
 
   // Save current selected rows
   useEffect(() => {
@@ -127,7 +130,14 @@ const Table = ({apiRoute, columnSchema, setCurrentState = false, filters = true,
 
   return (
     <div>
-      {filters && <TableFilters categoriaOrUnidade={categoria} />}
+      {filters && <TableFilters 
+        categoriaOrUnidade={categoria} 
+        subcategoria={subcategoria} 
+        area={area} 
+        ativo={ativo} 
+        filter={globalFilter}
+        setFilter={setGlobalFilter}
+      />}
       <div className='container mt-4 containerTable'>
         <table className="table">
           <thead className='tableHead'>

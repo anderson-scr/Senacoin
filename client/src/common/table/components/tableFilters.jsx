@@ -1,10 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react'
-import { BsSearch } from "react-icons/bs";
-import { callUnidadeAPI } from 'api/common/callUnidades';
-import { callAreaAPI } from 'api/common/callArea';
-import { callSubcategoriaAPI } from 'api/common/callSubcategoria';
+import { callUnidadeAPI } from 'api/common/callUnidades'
+import { callAreaAPI } from 'api/common/callArea'
+import { callSubcategoriaAPI } from 'api/common/callSubcategoria'
 
-const TableFilters = ({categoriaOrUnidade}) => {
+const TableFilters = ({categoriaOrUnidade, area, subcategoria, ativo, filter, setFilter}) => {
   const effectOnce = useRef(true)
   const [subcategorias, setSubcategorias] = useState([])
   const [unidades, setUnidades] = useState([])
@@ -22,7 +21,6 @@ const TableFilters = ({categoriaOrUnidade}) => {
 
       return () => effectOnce.current = false
     }
-
   }, [])
 
 
@@ -30,9 +28,10 @@ const TableFilters = ({categoriaOrUnidade}) => {
     <div className="container text-start">
       <div>
         <div className='row'>
+          {area && // Check if it's to render this element
           <div className='mb-3 col-3'>
             <label htmlFor="dropArea" className="form-label">Area</label>
-            <select className="form-select" id='dropArea' aria-label="Default select example" defaultValue="DEFAULT">
+            <select className="form-select" id='dropArea' aria-label="Default select example" onChangeCapture={evt => setFilter(areas[evt.target.value - 1].nome)} defaultValue="DEFAULT">
               <option value="DEFAULT" disabled style={{display: "none"}}>Selecione</option>
               {areas.length > 1 &&
                 areas.map((area, idx) => {
@@ -40,10 +39,11 @@ const TableFilters = ({categoriaOrUnidade}) => {
                 })
               }
             </select>
-          </div>
+          </div>}
+          {subcategoria && // Check if it's to render this element
           <div className='mb-3 col-3 '>
             <label htmlFor="dropSubcategoria" className="form-label">Subcategoria</label>
-            <select className="form-select" id='dropSubcategoria' aria-label="Default select example" defaultValue="DEFAULT">
+            <select className="form-select" id='dropSubcategoria' aria-label="Default select example" onChangeCapture={evt => setFilter(subcategorias[evt.target.value - 1].nome)} defaultValue="DEFAULT">
               <option value="DEFAULT" disabled style={{display: "none"}}>Selecione</option>
               {subcategorias.length > 1 &&
                 subcategorias.map((subcategoria, idx) => {
@@ -51,10 +51,20 @@ const TableFilters = ({categoriaOrUnidade}) => {
                 })
               }
             </select>
-          </div>
-          {!categoriaOrUnidade && <div className='mb-3 col-3 '>
-            <label htmlFor="dropSubcategoria" className="form-label">Unidade</label>
+          </div>}
+          {ativo && // Check if it's to render this element
+          <div className='mb-3 col-3 '>
+            <label htmlFor="dropSubcategoria" className="form-label">Ativo</label>
             <select className="form-select" id='dropSubcategoria' aria-label="Default select example" defaultValue="DEFAULT">
+              <option value="DEFAULT" disabled style={{display: "none"}}>Selecione</option>
+              <option value="1" >Ativo</option>
+              <option value="2" >Inativo</option>
+            </select>
+          </div>}
+          {!categoriaOrUnidade && // Check if it's to render this element
+          <div className='mb-3 col-3 '>
+            <label htmlFor="dropSubcategoria" className="form-label">Unidade</label>
+            <select className="form-select" id='dropSubcategoria' aria-label="Default select example" onChangeCapture={evt => setFilter(unidades[evt.target.value - 1].nome)} defaultValue="DEFAULT">
               <option value="DEFAULT" disabled style={{display: "none"}}>Selecione</option>
               {unidades.length > 1 &&
                 unidades.map((unidade, idx) => {
@@ -77,10 +87,7 @@ const TableFilters = ({categoriaOrUnidade}) => {
           <div className="mb-3 col-3">
             <label htmlFor="iptPesquisa" className="form-label">Pesquisar</label>
             <div className="input-group">
-              <input id="iptPesquisa" type="text" className="form-control" aria-label="Recipient's username" aria-describedby="button-addon2" />
-              <button className="btn btn-outline-secondary" type="button" id="btnPesquisa" >
-                <BsSearch size={18} />
-              </button>
+              <input id="iptPesquisa" type="text" className="form-control" aria-label="Search input" defaultValue={filter || ''} onChangeCapture={evt => setFilter(evt.target.value)} aria-describedby="button-addon2" />
             </div>
           </div>
         </div>

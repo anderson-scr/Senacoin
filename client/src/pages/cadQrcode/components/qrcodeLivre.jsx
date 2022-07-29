@@ -5,6 +5,7 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import { useForm } from 'react-hook-form'
 import { yupSchemaCadQrcodeLivre } from 'utils/validation/schemas/qrcode/livre'
 import QuestionTooltip from 'common/tooltips/questionTooltip'
+import { callQrcodeAPI } from 'api/qrcode/apiQrcode'
 
 const QrcodeLivre = () => {
   const navigate = useNavigate()
@@ -27,16 +28,14 @@ const QrcodeLivre = () => {
   }, [navigate])
 
 
-  function salvarInfo(data) {
-    console.log(data)
-  }
-  function deuRuim(data) {
-    console.log(data)
-  }
+  function cadastrarQrcodeLivre(qrcodeData) {
+    callQrcodeAPI.novo(qrcodeData)
 
+    console.log(qrcodeData)
+  }
 
   return (
-    <form className='form container' onSubmit={handleSubmit(salvarInfo, deuRuim)}>
+    <form className='form container' onSubmit={handleSubmit(cadastrarQrcodeLivre)}>
 
       {/* First row */}
       <div className='col'>
