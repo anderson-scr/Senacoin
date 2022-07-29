@@ -94,7 +94,7 @@ function authUserMiddleware(role) {
 								if (role && req.params.id != aluno._id)
 								{
 									flag = false;
-									res.status(403).json({ success: false, msg: "Voce não esta autorizado a acessar essa rota1" });
+									res.status(403).json({ success: false, msg: "Voce não esta autorizado a acessar essa rota" });
 								}
 							})
 							.catch((_aluno) => {
@@ -113,7 +113,7 @@ function authUserMiddleware(role) {
 							if (role && !colab.permissoes[role])
 							{
 								flag = false;
-								res.status(403).json({ success: false, msg: "Voce não esta autorizado a acessar essa rota2" });
+								res.status(403).json({ success: false, msg: "Voce não esta autorizado a acessar essa rota" });
 							}
 						}
 						if (flag)

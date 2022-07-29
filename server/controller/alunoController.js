@@ -161,7 +161,7 @@ exports.listOne = (req, res, _next) => {
 
 // esssa funcao sobrescreve o vetor de senacoins removendo os vencidos se opcao for 0
 // senao da push adicionando ao vetor
-exports.atualizaSaldo = async (responsavel, senacoins, opcao, id) => {
+exports.atualizaSaldo = async (responsavel, senacoins, opcao, id, unidadeQrcode) => {
     
     if (opcao)
         opcao = {$push: {saldo: senacoins}}
@@ -182,8 +182,10 @@ exports.atualizaSaldo = async (responsavel, senacoins, opcao, id) => {
             .select('-_id')
 			.then(async (aluno) => {
 				if (!aluno)
-                    console.log({success: false, msg: 'aluno não encontrado'});
-
+                    throw new Error('aluno não encontrado');
+                if (!aluno.id_unidade.includes(unidadeQrcode[0]))
+                    throw new Error('aluno não pertence a mesma unidade do qrcode');
+                    
 				await AuditoriaAluno.create([{responsavel: responsavel,  ...aluno._doc}], { session })
 				.then((audaluno) =>{
 					console.log({ success: true, audaluno});

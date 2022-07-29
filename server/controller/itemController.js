@@ -53,7 +53,7 @@ exports.new = async (req, res, _next) => {
                             if(err)
                             {
                                 await session.abortTransaction();
-                                res.status(500).json({ success: false, msg: `${err}1` });
+                                res.status(500).json({ success: false, msg: `${err}` });
                             }
                         });
                     }

@@ -1,7 +1,8 @@
 const mongoose = require('mongoose');
-const aluno = require('./alunoController');
-const senacoin = require('./senacoinController');
+const promocao = require('./promocaoController');
 const item = require('./itemController');
+const senacoin = require('./senacoinController');
+const aluno = require('./alunoController');
 const QrCode = mongoose.model('QrCode');
 const AuditoriaQrCode = mongoose.model('AuditoriaQrCode');
 
@@ -59,21 +60,31 @@ exports.newList = (req, res, _next) => {
     });
 }
 exports.use = (req, res, _next) => {
+
     QrCode.findById(req.params.id)
     .then(async (qrcode) => {
-        
         if (!qrcode)
             return res.status(204).json();  
         if (!qrcode.ativo)
             return res.status(410).json({success: false, msg: "qrcode expirado"});
         if (qrcode.data_inicio.getTime() > Date.now() || qrcode.data_fim.getTime() < Date.now())
             return res.status(410).json({success: false, msg: "qrcode expirado"});
-        
+
+        let multiplicador = 0;
+        promocoes = await promocao.getActivePromo(qrcode.id_unidade);
+        if (promocoes)
+        {
+            promocoes.forEach(promo => {
+                if (promo.multiplicador > multiplicador)
+                    multiplicador = promo.multiplicador;
+            });
+        }
+
+        console.log(multiplicador);
         let lote;
         if (qrcode.id_item)
         {
             const infoItem = await item.getInfo(qrcode.id_item);
-            // console.log(infoItem);
             if (!infoItem.ativo)
                 return res.status(410).json({success: false, msg: "item inativo"});
             
@@ -81,15 +92,17 @@ exports.use = (req, res, _next) => {
             if (infoItem.horas > 20)
                 duracao = Date.now() - 4*60*60*1000 + 1.5*infoItem.horas*60*60*1000; // fuso horario gmt-4 + 1.5 x duracao do item
             
-            lote = await senacoin.new(req.jwt.sub, infoItem.pontos, duracao);
+            lote = await senacoin.new(req.jwt.sub, infoItem.pontos*multiplicador, duracao);
         }
         else
-            lote = await senacoin.new(req.jwt.sub, qrcode.pontos);
+            lote = await senacoin.new(req.jwt.sub, qrcode.pontos*multiplicador);
         
         /* insira aqui verificacao de uso unico, diario, mensal por aluno */
-        
-        if (! await aluno.atualizaSaldo(req.jwt.sub, lote._id, 1)) //1 para dar push no saldo do aluno
+
+        if (! await aluno.atualizaSaldo(req.jwt.sub, lote._id, 1, null, qrcode.id_unidade)) //1 para dar push no saldo do aluno
             return res.status(500).json({success: false, msg: "erro na hora de converter o qr code."})
+
+        /* insira aqui logica para salvar a transacao */
         
         return res.status(200).json({success: true, msg: "qr code convertido."});
 
@@ -118,7 +131,7 @@ exports.listAll = (req, res, _next) => {
 
 exports.listActive = (req, res, _next) => {
 
-	const today = Date.now() - 3600*1000*4; //fuso horario gmt-4 talvez .toISOString() no final
+	const today = Date.now() - 3600*1000*4; //fuso horario gmt-4 talvez
 
 	QrCode.find({$and: [{ativo: true}, {data_inicio: {$lt: today}}, {data_fim: {$gte: today}}]}).skip(req.params.offset || 0).limit(60)
     .select("-ativo -_id")
