@@ -1,0 +1,16 @@
+senacoin API:
+
+- autenticação que mantém o login por um determinado tempo.
+- autorização que verifica a permissão do colaborador ou do aluno (que pode ver os próprios dados)
+- rotas p/ envio de informação de aluno, area, categoria, colaborador, item, perfil, promoção, qrcode, subcategoria e unidade.
+- criação do lote promocional de senacoins no 1° cadastro dos alunos.
+- verificação de lotes expirados de senacoin e atualização do saldo se necessário antes de enviar o mesmo.
+- validade do senacoin gerada automatimente 30 dias para itens com menos de 20h ou 1.5x da duração caso contrário
+- rota para receber senacoins através de qrcode
+- verificar promoções vigentes na unidade e aplica las ao receber os senacoins
+- rota para utilizar senacoins e subtraí los do saldo
+
+- salvar todas as transações no banco
+- verificar se o senacoin foi usado e quando foi usado (uso unico, diário ou mensal)
+
+front end:
