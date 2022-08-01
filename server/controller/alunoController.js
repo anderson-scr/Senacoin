@@ -209,6 +209,19 @@ exports.atualizaSaldo = async (responsavel, senacoins, opcao, id, unidadeQrcode)
     return sucesso;
 }
 
+exports.verificaQrCode = async (email, tipo, qrcode) => {
+    try {
+        qrcodes = await Aluno.findOne({email: email}).select(`${tipo} -_id`);
+        console.log(qrcodes[tipo].includes(qrcode));
+        if (qrcodes[tipo].includes(qrcode))
+            return true
+    } catch (err) {
+        console.log({ success: false, msg: `${err}` });
+        return true
+    }
+    return false;
+}
+
 exports.studentReport = (req, res, _next) => {
     Aluno.findById(req.params.id)
     .select('nome email matricula id_unidade ativo -_id')

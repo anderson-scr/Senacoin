@@ -7,10 +7,14 @@ exports.AlunoSchema = new mongoose.Schema({
 	matricula: {type: String, required: true, unique: true},
 	hash: {type: String, required: true},
 	salt: {type: String, required: true},
-	saldo: [{type: mongoose.Types.ObjectId, ref: "SenaCoin"}],
 	apelido: {type: String, default: null}, // devo auditar isso?
 	telefone: {type: String, default: null}, // devo auditar isso?
 	data_nasc: {type: Date, required: true},
+	saldo: [{type: mongoose.Types.ObjectId, ref: "SenaCoin"}],
+	qrcode_unico: [{type: mongoose.Types.ObjectId, ref: "QrCode"}],
+	qrcode_diario: [{type: mongoose.Types.ObjectId, ref: "QrCode"}],
+	qrcode_semanal: [{type: mongoose.Types.ObjectId, ref: "QrCode"}],
+	qrcode_mensal: [{type: mongoose.Types.ObjectId, ref: "QrCode"}],
 	id_unidade: [{type: mongoose.Types.ObjectId, ref: "Unidade", required: true}],
 	ativo: {type: Boolean, default: true}
 }, { versionKey: false });
