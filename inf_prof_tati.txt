@@ -12,5 +12,6 @@ senacoin API:
 
 - salvar todas as transações no banco
 - verificar se o senacoin foi usado e quando foi usado (uso unico, diário ou mensal)
+- adicionar rota para alterar a cotação do senacoin
 
 front end:

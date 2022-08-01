@@ -23,13 +23,13 @@ exports.onError = () => {
 
 // When the connection is reconnected
 exports.onReconnect = () => {
-    mongoose.connection.on('reconnected', function() {
+    mongoose.connection.on('reconnected', () => {
         console.log('Reconnected to DB');
     });
 }
 // When the connection is disconnected
 exports.onDisconnect = () => {
-    mongoose.connection.on('disconnected',  () =>{
+    mongoose.connection.on('disconnected', () => {
         console.log('Database disconnected');
     });
 } 
