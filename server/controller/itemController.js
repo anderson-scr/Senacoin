@@ -283,3 +283,33 @@ exports.deleteAll = (_req, res, _nxt) => {
     .then((n) => (res.status(200).json({success: true, total: n.deletedCount})))
     .catch((err) => (res.status(500).json({ success: false, msg: `${err}` })));
 }
+
+
+// For img
+exports.newImg = async (req, res) => {  
+  imgName = req.params.imgName
+  console.log(req.body)
+  console.log('chego aqui')
+  console.log(imgName)
+  if (!imgName)
+    return res.status(400).json({msg: "Imagem inexistente."})
+
+  const session = await mongoose.startSession()
+  try {
+      await session.withTransaction(async () => {
+          const file = req.files.file
+          
+          await file.mv(`${__basedir}/uploads/${imgName}`, async err =>{
+            if(err)
+            {
+                await session.abortTransaction()
+                res.status(500).json({ success: false, msg: `${err}` })
+            }
+          })
+      })
+  } catch (err) {
+      res.status(500).json({ success: false, msg: `${err}4` })
+  } finally {
+      await session.endSession()
+  }
+}
