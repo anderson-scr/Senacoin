@@ -5,6 +5,7 @@ const path = require('path');
 const mongoose = require('mongoose');
 
 const Colaborador = mongoose.model('Colaborador');
+const Aluno = mongoose.model('Aluno');
 const PRIV_KEY = fs.readFileSync(path.join(__dirname, 'id_rsa_priv.pem'), 'utf8');
 const PUB_KEY = fs.readFileSync(path.join(__dirname, 'id_rsa_pub.pem'), 'utf8');
 
@@ -70,58 +71,69 @@ function issueJWT(user) {
 	}
 }
 
-function authUserMiddleware(req, res, next) {
+function authUserMiddleware(role) {
 
-	if(!req.headers.authorization)
-		return res.status(401).json({ success: false, msg: "Voce não esta autenticado a acessar essa rota" });
-
-	const tokenParts = req.headers.authorization.split(' ');
-	if (tokenParts[0] === 'Bearer' && /\S+\.\S+\.\S+/.test(tokenParts[1])) {
-		jwt.verify(tokenParts[1], PUB_KEY, { algorithms: ['RS256'] }, (err, decoded) => {
-			if (!err)
-			{
-				Colaborador.findOne({ email: decoded.sub })
-				.then((colab) => {
-					if (!colab)
-						return res.status(403).json({ success: false, msg: "Voce não esta autorizado a acessar essa rota" }); // significa que é um aluno.
-					if (colab.id_status.toString() !== "62cec6c463187bb9b498687b")
-						return res.status(401).json({ success: false, msg: "Usuário não encontrado" });
-				
-					req.jwt = decoded;
-					next();
-				})
-				.catch((err) => {
-					res.status(500).json({success: false, msg: `${err}`});
-				});
-			}
-			else
-				res.status(401).json({ success: false, msg: "Voce não esta autenticado a acessar essa rota" });
-		});
-	}
-	else
-		res.status(401).json({ success: false, msg: "Voce não esta autenticado a acessar essa rota" });
-}
-
-function authRoleMiddleware(role) {
-
+	role ??= false;
 	return (req, res, next) => {
-		Colaborador.findOne({ email: req.jwt.sub })
-		.then((colab) => {
-			if (!colab)
-				return res.status(403).json({ success: false, msg: "Voce não esta autorizado a acessar essa rota" });
-			if (!colab.permissoes[role])
-				return res.status(403).json({ success: false, msg: "Voce não esta autorizado a acessar essa rota" });
-			
-			next()
-		})
-		.catch((err) => {
-			res.status(500).json({success: false, msg: `${err}`});
-		});
+
+		if(!req.headers.authorization)
+			return res.status(401).json({ success: false, msg: "Voce não esta autenticado a acessar essa rota" });
+		
+		let flag = true;
+		const tokenParts = req.headers.authorization.split(' ');
+		if (tokenParts[0] === 'Bearer' && /\S+\.\S+\.\S+/.test(tokenParts[1])) {
+			jwt.verify(tokenParts[1], PUB_KEY, { algorithms: ['RS256'] }, async (err, decoded) => {
+				if (!err)
+				{
+					await Colaborador.findOne({ email: decoded.sub })
+					.then(async (colab) => {
+						if (!colab)
+						{
+							await Aluno.findOne({ email: decoded.sub })
+							.then((aluno) => {
+								if (role && req.params.id != aluno._id)
+								{
+									flag = false;
+									res.status(403).json({ success: false, msg: "Voce não esta autorizado a acessar essa rota" });
+								}
+							})
+							.catch((_aluno) => {
+								flag = false;
+								res.status(500).json({success: false, msg: `${err}`});
+							})
+						}
+						else
+						{
+							if (!colab.ativo)
+							{
+								flag = false;
+								res.status(401).json({ success: false, msg: "Usuário não encontrado" });
+							}
+							
+							if (role && !colab.permissoes[role])
+							{
+								flag = false;
+								res.status(403).json({ success: false, msg: "Voce não esta autorizado a acessar essa rota" });
+							}
+						}
+						if (flag)
+						{
+							req.jwt = decoded;
+							next();
+						}
+					})
+					.catch((err) => {
+						res.status(500).json({success: false, msg: `${err}`});
+					});
+				}
+				else
+					res.status(401).json({ success: false, msg: "Voce não esta autenticado a acessar essa rota" });
+			});
+		}
+		else
+			res.status(401).json({ success: false, msg: "Voce não esta autenticado a acessar essa rota" });
 	}
 }
 
-module.exports.validPassword = validPassword;
-module.exports.genPassword = genPassword;
-module.exports.issueJWT = issueJWT;
-module.exports.authUserMiddleware = authUserMiddleware;
-module.exports.authRoleMiddleware = authRoleMiddleware;
+
+module.exports = {validPassword, genPassword, issueJWT, authUserMiddleware};

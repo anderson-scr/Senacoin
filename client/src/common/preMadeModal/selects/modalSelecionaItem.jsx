@@ -18,7 +18,7 @@ export default function ModalSelecionarItem(props) {
       </ModalHeader>
 
       <ModalBody>
-        <Table apiRoute={callTodosItemsAPI.ativos} columnSchema={selectItemTableSchema} rowSize={12} setCurrentState={props} categoria={true} />
+        <Table apiRoute={callTodosItemsAPI.ativos} columnSchema={selectItemTableSchema} setCurrentState={props} categoria={true} />
       </ModalBody>
 
       <ModalFooter>

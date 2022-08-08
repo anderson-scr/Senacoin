@@ -7,6 +7,7 @@ import { yupSchemaCadPromocao } from 'utils/validation/schemas/cadPromocao'
 import ModalSelecionarItem from '../../common/preMadeModal/selects/modalSelecionaItem'
 import ModalService from 'common/modal/services/modalService'
 import QuestionTooltip from 'common/tooltips/questionTooltip'
+import { callPromocaoAPI } from 'api/promocao/apiPromocao'
 
 const CadPromocao = () => {
   const effectOnce = useRef(true)
@@ -28,15 +29,16 @@ const CadPromocao = () => {
       return () => effectOnce.current = false
     }
   }, [navigate])
-  useEffect(() => {
-    console.log(selectedItems)
-  }, [selectedItems])
+  
 
   const teste = (evt) => {
     evt.preventDefault()
     ModalService.open(ModalSelecionarItem, {}, setSelectedItems)
   }
   function salvarInfo(data) {
+    data = {...data, 
+      id_item: selectedItems
+    }
     console.log(data)
   }
   function deuRuim(data) {

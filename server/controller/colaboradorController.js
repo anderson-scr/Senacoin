@@ -11,6 +11,7 @@ exports.login = (req, res, _next) => {
 
 	Colaborador.findOne({ email: req.body.email })
 	.then((colab) => {
+    console.log(req.body.email)
 		
 		if (!colab)
 			return res.status(401).json({ success: false, msg: "email/senha inválidos!" });
@@ -38,8 +39,8 @@ exports.new = async (req, res, _next) => {
 	const saltHash = utils.genPassword(req.body.senha);
 	delete req.body.senha;
 	
-	if (!("id_status" in req.body))
-		req.body["id_status"] = "62cec6c463187bb9b498687b";
+	if (!("ativo" in req.body))
+		req.body["ativo"] = true;
 	
 	const session = await mongoose.startSession();
 	try {
@@ -76,10 +77,10 @@ exports.newList = (req, res, _next) => {
 
 	req.body.forEach(colab => {
 		const saltHash = utils.genPassword(colab.senha);
-		delete colab.id_status;
+		delete colab.senha;
 
-		if (!("id_status" in colab))
-			colab["id_status"] = "62cec6c463187bb9b498687b";
+		if (!("ativo" in colab))
+			colab["ativo"] = true;
 
 		colab["hash"] = saltHash.hash;
 		colab["salt"] = saltHash.salt;
@@ -95,15 +96,15 @@ exports.newList = (req, res, _next) => {
 
 exports.listAll = (req, res, _next) => {
 
-	Colaborador.find({}).skip(req.params.offset).limit(60)
-	.populate({path : 'id_unidade', select: 'nome -_id'})   //.populate('id_unidade id_perfil id_status')
-	.populate({path : 'id_status', select: '-_id'})
+	Colaborador.find({}).skip(req.params.offset || 0).limit(60)
+	.select("nome email cpf matricula id_unidade ativo")
+	.populate({path : 'id_unidade', select: 'nome -_id'}) 
 	.then((colabs) => {
 		
 		if (!colabs.length)
 			return res.status(204).json();  
 		else
-			res.status(200).json({total: colabs.length, ...colabs});
+			res.status(200).json(colabs);
 	})
 	.catch((err) => {
 		res.status(500).json({success: false, msg: `${err}`});
@@ -112,15 +113,15 @@ exports.listAll = (req, res, _next) => {
 
 exports.listActive = (req, res, _next) => {
 
-	Colaborador.find({id_status: "62cec6c463187bb9b498687b"}).skip(req.params.offset).limit(60)
+	Colaborador.find({ativo: true}).skip(req.params.offset || 0).limit(60)
 	.select("nome email cpf matricula id_unidade")
-	.populate({path : 'id_unidade', select: 'nome -_id'})   //.populate('id_unidade id_perfil id_status')
+	.populate({path : 'id_unidade', select: 'nome -_id'}) 
 	.then((colabs) => {
 		
 		if (!colabs.length)
 			return res.status(204).json();  
 		else
-			res.status(200).json({total: colabs.length, ...colabs});
+			res.status(200).json(colabs);
 	})
 	.catch((err) => {
 		res.status(500).json({success: false, msg: `${err}`});
@@ -131,8 +132,7 @@ exports.listOne = (req, res, _next) => {
 	
 	Colaborador.findById(req.params.id)
 	.select('-hash -salt')
-	.populate({path : 'id_unidade', select: 'nome cidade uf -_id'}) //.populate('id_unidade id_perfil id_status')
-	.populate({path : 'id_status', select: '-_id'})
+	.populate({path : 'id_unidade', select: 'nome cidade uf -_id'}) //.populate('id_unidade id_perfil ativo')
 	.then((colab) => {
 		
 		if (!colab)
@@ -187,7 +187,7 @@ exports.delete = async (req, res, _nxt) => {
 	try {
 		await session.withTransaction(async () => {
 
-			await Colaborador.findByIdAndUpdate(req.params.id, {id_status: mongoose.Types.ObjectId("62cec7b263187bb9b498687e")}, { session: session, new: true})
+			await Colaborador.findByIdAndUpdate(req.params.id, {ativo: false}, { session: session, new: true})
 			.select('-_id')
 			.then(async (colab) => {
 				if (!colab)

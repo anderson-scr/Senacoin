@@ -12,6 +12,8 @@ import { yupSchemaCadQrcodeVinculado } from 'utils/validation/schemas/qrcode/vin
 import ModalSelecionarItem from 'common/preMadeModal/selects/modalSelecionaItem'
 import ModalService from 'common/modal/services/modalService'
 
+// API
+import { callQrcodeAPI } from 'api/qrcode/apiQrcode'
 
 const QrcodeVinculado = () => {
   const navigate = useNavigate()
@@ -34,24 +36,18 @@ const QrcodeVinculado = () => {
     }
   }, [navigate])
 
-
   const abrirModal = (evt) => {
     evt.preventDefault()
-    ModalService.open(ModalSelecionarItem, {}, setItemsVinculados)
+    ModalService.open(ModalSelecionarItem, {}, setItemsVinculados, 0)
   }
 
-
-  function salvarInfo(data) {
-    console.log(data)
-  }
-  function deuRuim(data) {
-    console.log(data)
+  function cadastrarQrcodeVinculado(qrcodeData) {
+    callQrcodeAPI.novo(qrcodeData)
+    console.log(qrcodeData)
   }
 
   return (
-    <form className='form container' onSubmit={handleSubmit(salvarInfo, deuRuim)}>
-
-      {/* First row */}
+    <form className='form container' onSubmit={handleSubmit(cadastrarQrcodeVinculado)}>
       <div className='col'>
         <div className="mb-2">
           <label htmlFor="iptNome" className="form-label">Titulo</label>
@@ -99,7 +95,7 @@ const QrcodeVinculado = () => {
         <div className='containerDouble d-flex'>
           <div className="mb-2 flex-grow-1">
             <QuestionTooltip label='Data inicial' msg='Define a data inicial do período em que o Qrcode estará disponível.' />
-            <input type="date" className="form-control" id="exampleInputPassword1" {...register("data_inicial")} />
+            <input type="date" className="form-control" id="exampleInputPassword1" {...register("data_inicio")} />
             <div style={{height: '25px'}}>
               {errors?.data_inicio?.type &&
                 <div className="form-text text-danger">Preencha o campo corretamente.</div>
@@ -108,7 +104,7 @@ const QrcodeVinculado = () => {
           </div>
           <div className="mb-2 flex-grow-1">
             <QuestionTooltip label='Data final' msg='Define a data final do período em que o Qrcode estará disponível.' />
-            <input type="date" className="form-control" id="exampleInputPassword1" {...register("data_final")} />
+            <input type="date" className="form-control" id="exampleInputPassword1" {...register("data_fim")} />
             <div style={{height: '25px'}}>
               {errors?.data_fim?.type &&
                 <div className="form-text text-danger">Preencha o campo corretamente.</div>
@@ -119,17 +115,17 @@ const QrcodeVinculado = () => {
         
         <div className="mb-2 flex-grow-1 containerDesc" >
           <label htmlFor="exampleInputEmail1" className="form-label">Descrição</label>
-          <input type="text" className="iptDescricao form-control" id="exampleInputEmail1" aria-describedby="emailHelp" {...register("descricao")} />
+          <textarea type="text" className="iptDescricao form-control" id="exampleInputEmail1" aria-describedby="emailHelp" {...register("descricao")} />
         </div>
       </div>
 
       {/* Second row */}
       <div className='containerBtns row mt-5'>
         <div className='col d-flex'>
-          <button type="submit" className="btn btnCancelar btn-outline-secondary w-50">Cancelar</button>
+          <button type="button" className="btn btnCancelar btn-outline-secondary w-50">Cancelar</button>
         </div>
         <div className='col d-flex justify-content-end'>
-          <button type="submit" className="btn btnSalvar   btn-primary w-50">Salvar</button>
+          <button type="submit" className="btn btnSalvar btn-primary w-50">Salvar</button>
         </div>
       </div>
 

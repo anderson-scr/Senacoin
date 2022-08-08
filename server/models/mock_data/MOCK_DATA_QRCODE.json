@@ -1,6 +1,6 @@
 [
     {
-        "titulo": "qrcode de teste nº1",
+        "nome": "qrcode de teste nº1",
         "descricao": "esse é um qrcode de teste lorem ipsum",
         "id_item": "62d084f2832c341f47f324e5",
         "id_unidade": "62d06f2c181c3910cc1f826f",
@@ -14,7 +14,7 @@
         "quantidade": 40
     },
     {
-        "titulo": "qrcode de teste nº2",
+        "nome": "qrcode de teste nº2",
         "descricao": "esse é um qrcode de teste lorem ipsum",
         "id_item": "62d0804035569ca7f674aa0d",
         "id_unidade": "62d06f2c181c3910cc1f826a",
@@ -28,7 +28,7 @@
         "quantidade": 30
     },
     {
-        "titulo": "qrcode de teste nº3",
+        "nome": "qrcode de teste nº3",
         "descricao": "esse é um qrcode de teste lorem ipsum",
         "id_item": "62d0799935a49445068a056e",
         "id_unidade": "62d06f2c181c3910cc1f8268",
@@ -42,7 +42,7 @@
         "quantidade": 20
     },
     {
-        "titulo": "qrcode de teste nº4",
+        "nome": "qrcode de teste nº4",
         "descricao": "esse é um qrcode de teste lorem ipsum",
         "unico": false,
         "diario": false,

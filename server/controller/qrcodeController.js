@@ -1,4 +1,8 @@
 const mongoose = require('mongoose');
+const promocao = require('./promocaoController');
+const item = require('./itemController');
+const senacoin = require('./senacoinController');
+const aluno = require('./alunoController');
 const QrCode = mongoose.model('QrCode');
 const AuditoriaQrCode = mongoose.model('AuditoriaQrCode');
 
@@ -8,8 +12,8 @@ exports.new = async (req, res, _next) => {
     if (!Object.keys(req.body).length)
 		return res.status(400).json({ success: false, msg: "solicitação mal construída, informações faltando ou incorretas" });
     
-    if (!("id_status" in req.body))
-        req.body["id_status"] = "62cec6c463187bb9b498687b";
+    if (!("ativo" in req.body))
+        req.body["ativo"] = true;
     
     const session = await mongoose.startSession();
     try {
@@ -44,8 +48,8 @@ exports.newList = (req, res, _next) => {
 		return res.status(400).json({ success: false, msg: "solicitação mal construída, informações faltando ou incorretas" });
     
     req.body.forEach(qrcode => {
-        if (!("id_status" in qrcode))
-            qrcode["id_status"] = "62cec6c463187bb9b498687b";
+        if (!("ativo" in qrcode))
+            qrcode["ativo"] = true;
     });
     
     QrCode.insertMany(req.body, (err, docs) => {
@@ -55,19 +59,82 @@ exports.newList = (req, res, _next) => {
         res.status(201).json({ success: true, total: docs.length});
     });
 }
+exports.use = (req, res, _next) => {
+
+    QrCode.findById(req.params.id)
+    .then(async (qrcode) => {
+        if (!qrcode)
+            return res.status(204).json();  
+        if (!qrcode.ativo)
+            return res.status(410).json({success: false, msg: "qrcode expirado"});
+        if (qrcode.data_inicio.getTime() > Date.now() || qrcode.data_fim.getTime() < Date.now())
+            return res.status(410).json({success: false, msg: "qrcode expirado"});
+        
+        let jaFoiUtilizado = false;
+        if (qrcode.unico)
+            jaFoiUtilizado = await aluno.verificaQrCode(req.jwt.sub, "qrcode_unico", qrcode._id);
+        else if (qrcode.diario)
+            jaFoiUtilizado = await aluno.verificaQrCode(req.jwt.sub, "qrcode_diario", qrcode._id);
+        else if (qrcode.semanal)
+            jaFoiUtilizado = await aluno.verificaQrCode(req.jwt.sub, "qrcode_semanal", qrcode._id);
+        else if (qrcode.mensal)
+            jaFoiUtilizado = await aluno.verificaQrCode(req.jwt.sub, "qrcode_mensal", qrcode._id);
+        
+        if (jaFoiUtilizado)
+            return res.status(410).json({success: false, msg: "qr code já utilizado."});
+        
+        let multiplicador = 0;
+        promocoes = await promocao.getActivePromo(qrcode.id_unidade);
+        if (promocoes)
+        {
+            promocoes.forEach(promo => {
+                if (promo.multiplicador > multiplicador)
+                    multiplicador = promo.multiplicador;
+            });
+        }
+
+        console.log(multiplicador);
+        let lote;
+        if (qrcode.id_item)
+        {
+            const infoItem = await item.getInfo(qrcode.id_item);
+            if (!infoItem.ativo)
+                return res.status(410).json({success: false, msg: "item inativo"});
+            
+            let duracao;
+            if (infoItem.horas > 20)
+                duracao = Date.now() - 4*60*60*1000 + 1.5*infoItem.horas*60*60*1000; // fuso horario gmt-4 + 1.5 x duracao do item
+            
+            lote = await senacoin.new(req.jwt.sub, infoItem.pontos*multiplicador, duracao);
+        }
+        else
+            lote = await senacoin.new(req.jwt.sub, qrcode.pontos*multiplicador);
+
+    
+        if (! await aluno.atualizaSaldo(req.jwt.sub, lote._id, 1, null, qrcode.id_unidade)) //1 para dar push no saldo do aluno
+            return res.status(500).json({success: false, msg: "erro na hora de converter o qr code."});
+
+        /* insira aqui logica para salvar a transacao */
+        
+        return res.status(200).json({success: true, msg: "qr code convertido."});
+
+    })
+    .catch((err) => {
+        res.status(500).json({success: false, msg: `${err}`});
+    });
+}
 
 exports.listAll = (req, res, _next) => {
 
-	QrCode.find({}).skip(req.params.offset).limit(60)
-    .select("titulo descricao id_unidade id_status")
+	QrCode.find({}).skip(req.params.offset || 0).limit(60)
+    .select("nome descricao id_unidade ativo")
 	.populate({path : 'id_unidade', select: 'nome cidade uf -_id'})
-    .populate({path : 'id_status', select: '-_id'})
     .then((qrcodes) => {
         
         if (!qrcodes.length)
-            return res.status(204).json();  
+            return res.status(204).json(qrcodes);
         else
-            res.status(200).json({total: qrcodes.length, ...qrcodes});
+            res.status(200).json(qrcodes);
     })
     .catch((err) => {
         res.status(500).json({success: false, msg: `${err}`});
@@ -76,10 +143,10 @@ exports.listAll = (req, res, _next) => {
 
 exports.listActive = (req, res, _next) => {
 
-	const today = new Date(new Date()-3600*1000*4); //fuso horario gmt-4 talvez .toISOString() no final
+	const today = Date.now() - 3600*1000*4; //fuso horario gmt-4 talvez
 
-	QrCode.find({$and: [{id_status: "62cec6c463187bb9b498687b"}, {data_inicio: {$gte: today}}, {data_fim: {$lt: today}}]}).skip(req.params.offset).limit(60)
-    .select("-id_status -_id")
+	QrCode.find({$and: [{ativo: true}, {data_inicio: {$lt: today}}, {data_fim: {$gte: today}}]}).skip(req.params.offset || 0).limit(60)
+    .select("-ativo -_id")
 	.populate({path : 'id_item', select: 'nome area id_categoria -_id', populate: {path: 'id_categoria', select: 'nome -_id'}})
 	.populate({path : 'id_unidade', select: 'nome -_id'})
     .then((qrcodes) => {
@@ -87,7 +154,7 @@ exports.listActive = (req, res, _next) => {
         if (!qrcodes.length)
             return res.status(204).json();  
         else
-            res.status(200).json({total: qrcodes.length, ...qrcodes});
+            res.status(200).json(qrcodes);
     })
     .catch((err) => {
         res.status(500).json({success: false, msg: `${err}`});
@@ -100,7 +167,6 @@ exports.listOne = (req, res, _next) => {
     .select('-_id')
     .populate({path : 'id_item', select: 'nome area id_categoria -_id', populate: {path: 'id_categoria', select: 'nome -_id'}})
 	.populate({path : 'id_unidade', select: 'nome cidade uf -_id'})
-    .populate({path : 'id_status', select: '-_id'})
     .then((qrcode) => {
         
         if (!qrcode)
@@ -123,10 +189,13 @@ exports.edit = async (req, res, _nxt) => {
         await session.withTransaction(async () => {
 
             await QrCode.findByIdAndUpdate(req.params.id, {$set: req.body}, { session: session, new: true})
+            .select('-_id')
             .then(async (qrcode) => {
-                await AuditoriaQrCode.create([{colaborador: req.jwt.sub, ...req.body}], { session })
-                .then((_audqrcode) =>{
-                    res.status(201).json({ success: true, ...qrcode[0]["_doc"]}); // ["_doc"] é a posicao do obj de retorno onde se encontra o documento criado));
+                if (!qrcode)
+                    return res.status(204).json();
+                await AuditoriaQrCode.create([{colaborador: req.jwt.sub, ...qrcode._doc}], { session })
+                .then((audqrcode) =>{
+                    res.status(201).json({ success: true, ...audqrcode[0]["_doc"]}); // ["_doc"] é a posicao do obj de retorno onde se encontra o documento criado));
                 })
                 .catch(async (err) => {
                     await session.abortTransaction();
@@ -151,11 +220,11 @@ exports.delete = async (req, res, _nxt) => {
     try {
         await session.withTransaction(async () => {
 
-            await QrCode.findByIdAndUpdate(req.params.id, {id_status: mongoose.Types.ObjectId("62cec7b263187bb9b498687e")}, { session: session, new: true})
+            await QrCode.findByIdAndUpdate(req.params.id, {ativo: false}, { session: session, new: true})
             .then(async (qrcode) => {
-                await AuditoriaQrCode.create([{colaborador: req.jwt.sub, ...req.body}], { session })
-                .then((_audqrcode) =>{
-                    res.status(201).json({ success: true, ...qrcode[0]["_doc"]}); // ["_doc"] é a posicao do obj de retorno onde se encontra o documento criado));
+                await AuditoriaQrCode.create([{colaborador: req.jwt.sub, ...qrcode._doc}], { session })
+                .then((audqrcode) =>{
+                    res.status(201).json({ success: true, ...audqrcode[0]["_doc"]}); // ["_doc"] é a posicao do obj de retorno onde se encontra o documento criado));
                 })
                 .catch(async (err) => {
                     await session.abortTransaction();

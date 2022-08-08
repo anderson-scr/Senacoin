@@ -11,5 +11,10 @@ export const selectItemTableSchema = [
     Header: "Categoria",
     accessor: "id_categoria.nome",
     className: "categoria"
+  },
+  {
+    Header: "Subcategoria",
+    accessor: "id_subcategoria.nome",
+    className: "subcategoria"
   }
 ]

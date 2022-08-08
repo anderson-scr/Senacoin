@@ -31,31 +31,40 @@ export const routes = {
   },
   
   items: {
-    todos: 'item/all',
-    ativo: 'item/active'
+    todos: 'item/all/',
+    ativo: 'item/active/'
   },
 
   produto: {
     novo: /* Id antes */ 'item/produto/add',
     ativo: /* Id antes */ 'item/produto/active',
-    todos: /* Id antes */ 'item/produto/all'
+    todos: /* Id antes */ 'item/produto/all',
+    novoImagem: 'item/'
   },
   
   evento: {
     novo: /* Id antes */ 'item/evento/add',
     ativo: /* Id antes */ 'item/evento/active',
-    todos: /* Id antes */ 'item/evento/all'
+    todos: /* Id antes */ 'item/evento/all',
+    novoImagem: 'item/'
   },
   
   servico: {
     novo: /* Id antes */ 'item/servico/add',
     ativo: /* Id antes */ 'item/servico/active',
-    todos: /* Id antes */ 'item/servico/all'
+    todos: /* Id antes */ 'item/servico/all',
+    novoImagem: 'item/'
   },
 
   qrcode: {
     novo: 'qrcode/add',
-    ativo: 'qrcode/active',
-    todos: 'qrcode/all'
+    ativo: 'qrcode/active/',
+    todos: 'qrcode/all/'
+  },
+
+  promocao: {
+    novo: 'promocao/add',
+    ativo: 'promocao/active/',
+    todos: 'promocao/all/'
   }
 }

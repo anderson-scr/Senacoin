@@ -10,6 +10,8 @@ import { callSubcategoriaAPI } from 'api/common/callSubcategoria'
 import { callProdutoAPI } from 'api/item/apiProduto'
 import QuestionTooltip from 'common/tooltips/questionTooltip'
 import AddTooltip from 'common/tooltips/addTooltip'
+import setImageName from 'utils/setImageName'
+import { callImgAPI } from 'api/item/apiImg'
 import './cadProdutoStyle.css'
 
 // Modal imports
@@ -24,7 +26,9 @@ const CadProduto = () => {
   const [unidades, setUnidades] = useState([])
   const [areas, setAreas] = useState([])
   const [subcategorias, setSubcategorias] = useState([])
+  const [file, setFile] = useState()
 
+  // React for with Yup for validation and saving the user entry
   const { register, handleSubmit, formState: {
     errors
   } } = useForm({
@@ -48,6 +52,8 @@ const CadProduto = () => {
     }
   }, [navigate])
 
+
+  // Calls all modals
   const modalCadArea = (evt) => {
     evt.preventDefault()
     ModalService.open(ModalCadArea)
@@ -63,18 +69,21 @@ const CadProduto = () => {
 
 
   const certo = (dados) => {
-    dados.id_unidade = unidades[(parseInt(dados.id_unidade) - 1)]._id
+    dados.id_unidade = [unidades[(parseInt(dados.id_unidade) - 1)]._id]
     dados.id_area = areas[parseInt(dados.id_area) - 1].id_unidade[0]
     dados.id_subcategoria = subcategorias[parseInt(dados.id_subcategoria) - 1]._id
+    dados.id_categoria = '62d017a1181c3910ccfd43d1'
+    // Save the file name to send to routes
+    const fileName = setImageName(file.name)
+    dados.imagem = fileName
 
-    callProdutoAPI.novo(dados)
+    console.log(file)
+    //callProdutoAPI.novo(dados)
+    callImgAPI.novoImagem(file, fileName)
   }
-  const errado = (dados) => {
-    console.log(dados)
-  }
-
+  
   return (
-    <form className='container mt-3' onSubmit={handleSubmit(certo, errado)}>
+    <form className='container mt-3' onSubmit={handleSubmit(certo)} encType="multipart/form-data" >
       <div className='row'>
 
         <div className='mb-3 col'>
@@ -166,7 +175,7 @@ const CadProduto = () => {
         </div>
         <div className="mb-3 col-4">
           <label htmlFor="formFile" className="form-label">Imagem</label>
-          <input className="form-control" type="file" id="formFile" />
+          <input className="form-control" type="file" id="formFile" onChangeCapture={evt => setFile(evt.target.files[0])} {...register('imagem')} />
         </div>
       </div>
 

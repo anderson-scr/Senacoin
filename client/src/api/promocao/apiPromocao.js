@@ -1,10 +1,10 @@
 import api from '../routes/default';
 import { routes } from "api/routes/routes";
 
-export const callTodosItemsAPI = {
+export const callPromocaoAPI = {
   ativos: async (offset) => {
     try {
-      const apiResponse = await api.get(routes.items.ativo + offset)
+      const apiResponse = await api.get(routes.promocao.ativo + offset)
       // If there's no data in the apiResponse, return a empty array for react-table
       if(apiResponse.status === 204) {
         return []
@@ -16,9 +16,8 @@ export const callTodosItemsAPI = {
   },
   todos: async (offset) => {
     try {
-      const apiResponse = await api.get(routes.items.todos + offset)
+      const apiResponse = await api.get(routes.promocao.todos + offset)
       // If there's no data in the apiResponse, return a empty array for react-table
-      console.log(apiResponse)
       if(apiResponse.status === 204) {
         return []
       } else return apiResponse.data
