@@ -181,9 +181,17 @@ exports.atualizaSaldo = async (responsavel, senacoins, opcao, id, unidadeQrcode,
         .then(async (aluno) => {
             if (!aluno)
                 throw new Error('aluno não encontrado');
-            if (!aluno.id_unidade.includes(unidadeQrcode[0]))
+
+            let msmUnidade = true;
+            aluno.id_unidade.forEach(unidade => {
+                console.log('entrei');
+                if (!unidadeQrcode.includes(unidade))
+                    msmUnidade = false;
+            });
+            console.log('sai');
+            if (!msmUnidade)
                 throw new Error('aluno não pertence a mesma unidade do qrcode');
-                
+
             await AuditoriaAluno.create([{responsavel: responsavel,  ...aluno._doc}], { session })
             .then((audaluno) =>{
                 console.log({ success: true, audaluno});
@@ -191,15 +199,15 @@ exports.atualizaSaldo = async (responsavel, senacoins, opcao, id, unidadeQrcode,
             })
             .catch(async (err) => {
                 await session.abortTransaction();
-                console.log({ success: false, msg: `${err}` });
+                console.log({ success: false, msg: `${err}1` });
             });
         })
         .catch(async (err) => {
             await session.abortTransaction();
-            console.log({ success: false, msg: `${err}` });
+            console.log({ success: false, msg: `${err}2` });
         })
 	} catch (err) {
-		console.log({ success: false, msg: `${err}` });
+		console.log({ success: false, msg: `${err}3` });
 	} 
     return sucesso;
 }
@@ -218,7 +226,7 @@ exports.verificaQrCode = async (email, tipo, qrcode, session) => {
             try {
                 res = await Aluno.findOneAndUpdate({email: email}, {$push: {[tipo]: qrcode}}, {session: session, new: true}).select('-_id');
                 try {
-                    await AuditoriaAluno.create([{responsavel: responsavel,  ...res}], { session })
+                    await AuditoriaAluno.create([{responsavel: Aluno.email,  ...res}], { session })
                 } catch (error) {
                     await session.abortTransaction();
                     return true;

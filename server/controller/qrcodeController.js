@@ -10,7 +10,7 @@ const AuditoriaQrCode = mongoose.model('AuditoriaQrCode');
 exports.new = async (req, res, _next) => {
 
     if (!Object.keys(req.body).length)
-		return res.status(400).json({ success: false, msg: "solicitação mal construída, informações faltando ou incorretas" });
+		return res.status(400).json({ success: false, msg: "solicitação mal construída, informações faltando ou incorretas." });
     
     if (!("ativo" in req.body))
         req.body["ativo"] = true;
@@ -45,7 +45,7 @@ exports.new = async (req, res, _next) => {
 exports.newList = (req, res, _next) => {
 
     if (!Object.keys(req.body).length)
-		return res.status(400).json({ success: false, msg: "solicitação mal construída, informações faltando ou incorretas" });
+		return res.status(400).json({ success: false, msg: "solicitação mal construída, informações faltando ou incorretas." });
     
     req.body.forEach(qrcode => {
         if (!("ativo" in qrcode))
@@ -66,73 +66,84 @@ exports.use = (req, res, _next) => {
         if (!qrcode)
             return res.status(204).json();  
         if (!qrcode.ativo)
-            return res.status(410).json({success: false, msg: "qrcode expirado"});
+            return res.status(410).json({success: false, msg: "qrcode expirado."});
         if (qrcode.data_inicio.getTime() > Date.now() || qrcode.data_fim.getTime() < Date.now())
-            return res.status(410).json({success: false, msg: "qrcode expirado"});
-        
+            return res.status(410).json({success: false, msg: "qrcode expirado."});
+
+        vStatusObjResposta = [];
         const session = await mongoose.startSession();
-        try {
-            await session.withTransaction(async () => {
-                let jaFoiUtilizado = false;
-                if (qrcode.unico)
-                    jaFoiUtilizado = await aluno.verificaQrCode(req.jwt.sub, "qrcode_unico", qrcode._id, session);
-                else if (qrcode.diario)
-                    jaFoiUtilizado = await aluno.verificaQrCode(req.jwt.sub, "qrcode_diario", qrcode._id, session);
-                else if (qrcode.semanal)
-                    jaFoiUtilizado = await aluno.verificaQrCode(req.jwt.sub, "qrcode_semanal", qrcode._id, session);
-                else if (qrcode.mensal)
-                    jaFoiUtilizado = await aluno.verificaQrCode(req.jwt.sub, "qrcode_mensal", qrcode._id, session);
-                
-                if (jaFoiUtilizado)
+        await session.withTransaction(async () => {
+            let jaFoiUtilizado = false;
+            if (qrcode.unico)
+                jaFoiUtilizado = await aluno.verificaQrCode(req.jwt.sub, "qrcode_unico", qrcode._id, session);
+            else if (qrcode.diario)
+                jaFoiUtilizado = await aluno.verificaQrCode(req.jwt.sub, "qrcode_diario", qrcode._id, session);
+            else if (qrcode.semanal)
+                jaFoiUtilizado = await aluno.verificaQrCode(req.jwt.sub, "qrcode_semanal", qrcode._id, session);
+            else if (qrcode.mensal)
+                jaFoiUtilizado = await aluno.verificaQrCode(req.jwt.sub, "qrcode_mensal", qrcode._id, session);
+            
+            if (jaFoiUtilizado)
+            {
+                await session.endSession();
+                vStatusObjResposta.push(410);
+                vStatusObjResposta.push({success: false, msg: "qr code já utilizado."});
+                return;
+            }
+            
+            let multiplicador = 0;
+            promocoes = await promocao.getActivePromo(qrcode.id_unidade);
+            if (promocoes)
+            {
+                promocoes.forEach(promo => {
+                    if (promo.multiplicador > multiplicador)
+                        multiplicador = promo.multiplicador;
+                });
+            }
+
+            console.log('mult = ', multiplicador); //nao passei aqi
+            let lote;
+            if (qrcode.id_item)
+            {
+                const infoItem = await item.getInfo(qrcode.id_item);
+                if (!infoItem.ativo)
                 {
                     await session.endSession();
-                    return res.status(410).json({success: false, msg: "qr code já utilizado."});
+                    vStatusObjResposta.push(410);
+                    vStatusObjResposta.push({success: false, msg: "item inativo."});
+                    return;
                 }
                 
-                let multiplicador = 0;
-                promocoes = await promocao.getActivePromo(qrcode.id_unidade);
-                if (promocoes)
-                {
-                    promocoes.forEach(promo => {
-                        if (promo.multiplicador > multiplicador)
-                            multiplicador = promo.multiplicador;
-                    });
-                }
-
-                console.log(multiplicador);
-                let lote;
-                if (qrcode.id_item)
-                {
-                    const infoItem = await item.getInfo(qrcode.id_item);
-                    if (!infoItem.ativo)
-                    {
-                        await session.endSession();
-                        return res.status(410).json({success: false, msg: "item inativo"});
-                    }
-                    
-                    let duracao;
-                    if (infoItem.horas > 20)
-                        duracao = Date.now() - 4*60*60*1000 + 1.5*infoItem.horas*60*60*1000; // fuso horario gmt-4 + 1.5 x duracao do item
-                    
-                    lote = await senacoin.new(req.jwt.sub, infoItem.pontos*multiplicador, duracao, session);
-                }
-                else
-                    lote = await senacoin.new(req.jwt.sub, qrcode.pontos*multiplicador, session);
-
-                if (! await aluno.atualizaSaldo(req.jwt.sub, lote._id, 1, null, qrcode.id_unidade, session)) //1 para dar push no saldo do aluno
-                {
-                    await session.endSession();
-                    return res.status(500).json({success: false, msg: "erro na hora de converter o qr code."});
-                }
-
-                /* insira aqui logica para salvar a transacao */
+                let duracao;
+                if (infoItem.horas > 20)
+                    duracao = Date.now() - 4*60*60*1000 + 1.5*infoItem.horas*60*60*1000; // fuso horario gmt-4 + 1.5 x duracao do item
                 
-            });
-        } catch (error) {
-            console.log({ success: false, msg: `${err}` });
-        }
+                lote = await senacoin.new(req.jwt.sub, infoItem.pontos*multiplicador, duracao, session);
+            }
+            else
+            {
+                console.log('entrei123');    
+                lote = await senacoin.new(req.jwt.sub, qrcode.pontos*multiplicador, undefined, session);
+            }
+            if (! await aluno.atualizaSaldo(req.jwt.sub, lote._id, 1, null, qrcode.id_unidade, session)) //1 para dar push no saldo do aluno
+            {
+                await session.endSession();
+                vStatusObjResposta.push(500);
+                vStatusObjResposta.push({success: false, msg: "erro na hora de converter o qr code."});
+                return;
+            }
+
+            /* insira aqui logica para salvar a transacao */
+            
+        });
         await session.endSession();
-        return res.status(200).json({success: true, msg: "qr code convertido."});
+        if (!vStatusObjResposta)
+        {
+            vStatusObjResposta.push(200);
+            vStatusObjResposta.push({success: true, msg: "qr code convertido."});
+        }
+        console.log(`res.status(${vStatusObjResposta[0]}).json(${vStatusObjResposta[1]})`);
+        return res.status(vStatusObjResposta[0]).json(vStatusObjResposta[1]);
     })
     .catch((err) => {
         console.log({success: false, msg: `${err}`}); //res.status(500).json
