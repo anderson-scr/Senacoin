@@ -282,7 +282,7 @@ exports.newImg = async (req, res) => {
       let imagem = req.files.selectedFile;
 
       //Use the mv() method to place the file in upload directory (i.e. "uploads")
-      imagem.mv(`${__basedir}/uploads/` + imagem.name);
+      imagem.mv(`${__basedir}/uploads/${req.params.categoria}/` + imagem.name);
 
       //send response
       res.send({
@@ -296,6 +296,6 @@ exports.newImg = async (req, res) => {
       })
     }
   } catch (err) {
-      res.status(500).json({ success: false, msg: `${err}4` })
+      res.status(500).json({ success: false, msg: `${err}` })
   }
 }

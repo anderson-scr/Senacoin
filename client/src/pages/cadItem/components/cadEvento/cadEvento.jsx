@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { callEventoAPI } from 'api/item/apiEvento'
-import { yupSchemaCadServico } from 'utils/validation/schemas/itens/cadServico'
+import { yupSchemaCadEvento } from 'utils/validation/schemas/itens/cadEvento'
 import { useNavigate } from 'react-router-dom'
 import { callUnidadeAPI } from 'api/common/callUnidades'
 import { verificaSessao } from 'auth/login/verificaSessao'
@@ -10,7 +10,7 @@ import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import QuestionTooltip from 'common/tooltips/questionTooltip'
 import AddTooltip from 'common/tooltips/addTooltip'
-
+import setImageName from 'utils/setImageName'
 
 // Modal Imports
 import ModalService from 'common/modal/services/modalService'
@@ -24,11 +24,12 @@ const CadEvento = () => {
   const [areas, setAreas] = useState([])
   const [subcategorias, setSubcategorias] = useState([])
   const [unidades, setUnidades] = useState([])
+  const [file, setFile] = useState()
 
   const { register, handleSubmit, formState: {
     errors
   } } = useForm({
-    resolver: yupResolver(yupSchemaCadServico)
+    resolver: yupResolver(yupSchemaCadEvento)
   });
 
   useEffect(() => {
@@ -64,21 +65,23 @@ const CadEvento = () => {
   }
 
 
-  const certo = (dados) => {
+  const submitForm = (dados) => {
+    // Set the ids from each item in dados
     dados.id_unidade = unidades[(parseInt(dados.id_unidade) - 1)]._id
     dados.id_area = areas[parseInt(dados.id_area) - 1].id_unidade[0]
     dados.id_subcategoria = subcategorias[parseInt(dados.id_subcategoria) - 1]._id
+    dados.id_categoria = '62d017a1181c3910ccfd43d2'
 
-    callEventoAPI.novo(dados)
+    // Change the file name to a unique name.
+    const fileName = setImageName(file.name)
+    const newFile = new File([file], fileName)
+    dados.imagem = fileName
+
+    callEventoAPI.novo(dados, newFile)
   }
-  const ruim = (dados) => {
-    console.log(dados)
-    console.log("deu ruim")
-  }
-  
   
   return (
-    <form className='container mx-auto mt-3' onSubmit={handleSubmit(certo, ruim)} encType="multipart/form-data">
+    <form className='container mx-auto mt-3' onSubmit={handleSubmit(submitForm)} encType="multipart/form-data">
       <div className='row'>
 
         <div className='mb-3 col-4'>
@@ -175,12 +178,12 @@ const CadEvento = () => {
 
       <div className='row'>
         <div className="mb-3 col-6" >
-          <label htmlFor="exampleInputEmail1" className="form-label">Descrição</label>
-          <textarea type="text" className="iptDescricao form-control" id="exampleInputEmail1" aria-describedby="emailHelp" {...register("descricao")} />
+          <label htmlFor="iptDescricao" className="form-label">Descrição</label>
+          <textarea type="text" className="iptDescricao form-control" id="iptDescricao" style={{height: '120px'}} {...register("descricao")} />
         </div>
         <div className="mb-3 col-6">
-          <label htmlFor="formFile" className="form-label">Default file input example</label>
-          <input className="form-control" type="file" id="formFile" {...register("imagem")} />
+          <label htmlFor="formFile" className="form-label">Imagem</label>
+          <input className="form-control" type="file" id="formFile" onChangeCapture={evt => setFile(evt.target.files[0])} {...register("imagem")} />
         </div>
       </div>
 
