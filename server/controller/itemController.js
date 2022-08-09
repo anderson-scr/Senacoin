@@ -271,10 +271,7 @@ exports.deleteAll = (_req, res, _nxt) => {
 
 
 // For img
-exports.newImg = async (req, res) => {  
-  console.log('chego aqui')
-  console.log(req.files)
-
+exports.newImg = async (req, res) => {
   try {
     if(!req.files) {
       res.send({
@@ -282,20 +279,19 @@ exports.newImg = async (req, res) => {
         message: 'No file uploaded'
       })
     } else {
-      //Use the name of the input field (i.e. "avatar") to retrieve the uploaded file
-      let avatar = req.files.avatar;
-      
+      let imagem = req.files.selectedFile;
+
       //Use the mv() method to place the file in upload directory (i.e. "uploads")
-      avatar.mv(`${__basedir}/uploads/` + avatar.name);
+      imagem.mv(`${__basedir}/uploads/` + imagem.name);
 
       //send response
       res.send({
         status: true,
         message: 'File is uploaded',
         data: {
-          name: avatar.name,
-          mimetype: avatar.mimetype,
-          size: avatar.size
+          name: imagem.name,
+          mimetype: imagem.mimetype,
+          size: imagem.size
        }
       })
     }
