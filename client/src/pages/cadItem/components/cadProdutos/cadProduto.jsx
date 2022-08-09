@@ -79,7 +79,7 @@ const CadProduto = () => {
 
     console.log(file)
     //callProdutoAPI.novo(dados)
-    callImgAPI.novoImagem(file, fileName)
+    //callImgAPI.novoImagem(file, fileName)
   }
   
   return (
