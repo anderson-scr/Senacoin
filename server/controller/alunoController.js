@@ -126,7 +126,7 @@ exports.listActive = (_req, res, _next) => {
     .then((alunos) => {
         
         if (!alunos.length)
-            return res.status(204).json();  
+            res.status(204).json();  
         else
             res.status(200).json(alunos);
     })
@@ -161,7 +161,7 @@ exports.listOne = (req, res, _next) => {
 
 // esssa funcao sobrescreve o vetor de senacoins removendo os vencidos se opcao for 0
 // senao da push adicionando ao vetor
-exports.atualizaSaldo = async (responsavel, senacoins, opcao, id, unidadeQrcode) => {
+exports.atualizaSaldo = async (responsavel, senacoins, opcao, id, unidadeQrcode, session) => {
     
     if (opcao)
         opcao = {$push: {saldo: senacoins}}
@@ -175,46 +175,68 @@ exports.atualizaSaldo = async (responsavel, senacoins, opcao, id, unidadeQrcode)
         objBusca = {_id: id};
 
     sucesso = false;
-    const session = await mongoose.startSession();
 	try {    
-		await session.withTransaction(async () => {
-            await Aluno.findOneAndUpdate(objBusca, opcao, { session: session, new: true}) // precisa arrumar isso
-            .select('-_id')
-			.then(async (aluno) => {
-				if (!aluno)
-                    throw new Error('aluno não encontrado');
-                if (!aluno.id_unidade.includes(unidadeQrcode[0]))
-                    throw new Error('aluno não pertence a mesma unidade do qrcode');
-                    
-				await AuditoriaAluno.create([{responsavel: responsavel,  ...aluno._doc}], { session })
-				.then((audaluno) =>{
-					console.log({ success: true, audaluno});
-                    sucesso = true;
-				})
-				.catch(async (err) => {
-					await session.abortTransaction();
-					console.log({ success: false, msg: `${err}` });
-				});
-			})
-			.catch(async (err) => {
-				await session.abortTransaction();
-				console.log({ success: false, msg: `${err}` });
-			})
-		});
+        await Aluno.findOneAndUpdate(objBusca, opcao, { session: session, new: true}) // precisa arrumar isso
+        .select('-_id')
+        .then(async (aluno) => {
+            if (!aluno)
+                throw new Error('aluno não encontrado');
+
+            let msmUnidade = true;
+            aluno.id_unidade.forEach(unidade => {
+                console.log('entrei');
+                if (!unidadeQrcode.includes(unidade))
+                    msmUnidade = false;
+            });
+            console.log('sai');
+            if (!msmUnidade)
+                throw new Error('aluno não pertence a mesma unidade do qrcode');
+
+            await AuditoriaAluno.create([{responsavel: responsavel,  ...aluno._doc}], { session })
+            .then((audaluno) =>{
+                console.log({ success: true, audaluno});
+                sucesso = true;
+            })
+            .catch(async (err) => {
+                await session.abortTransaction();
+                console.log({ success: false, msg: `${err}1` });
+            });
+        })
+        .catch(async (err) => {
+            await session.abortTransaction();
+            console.log({ success: false, msg: `${err}2` });
+        })
 	} catch (err) {
-		console.log({ success: false, msg: `${err}` });
-	} finally {
-		await session.endSession();
-	}
+		console.log({ success: false, msg: `${err}3` });
+	} 
     return sucesso;
 }
 
-exports.verificaQrCode = async (email, tipo, qrcode) => {
+exports.verificaQrCode = async (email, tipo, qrcode, session) => {
     try {
-        qrcodes = await Aluno.findOne({email: email}).select(`${tipo} -_id`);
-        console.log(qrcodes[tipo].includes(qrcode));
+        const qrcodes = await Aluno.findOne({email: email, tipo: qrcode})
+        .select(`${tipo} -_id`);
         if (qrcodes[tipo].includes(qrcode))
+        {
+            await session.abortTransaction();
             return true
+        }
+        else 
+        {
+            try {
+                res = await Aluno.findOneAndUpdate({email: email}, {$push: {[tipo]: qrcode}}, {session: session, new: true}).select('-_id');
+                try {
+                    await AuditoriaAluno.create([{responsavel: Aluno.email,  ...res}], { session })
+                } catch (error) {
+                    await session.abortTransaction();
+                    return true;
+                }
+            } catch (err) {
+                console.log({ success: false, msg: `${err}` });
+                await session.abortTransaction();
+                return true;
+            }
+        }
     } catch (err) {
         console.log({ success: false, msg: `${err}` });
         return true
