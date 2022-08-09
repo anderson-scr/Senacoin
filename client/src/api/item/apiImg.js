@@ -2,9 +2,11 @@ import axios from 'axios'
 import { routes } from 'api/routes/routes'
 
 export const callImgAPI = {
-  novoImagem: async (image, fileName) => {
+  novoImagem: async (imageFile) => {
+    const formData = new FormData();
+    formData.append("selectedFile", imageFile);
     try {
-      const apiResponse = await axios.post(`http://localhost:5000/api/v1/item/${fileName}/addImg`, image, {
+      const apiResponse = await axios.post(`http://localhost:5000/api/v1/item/addImg`, formData, {
         headers: {
           'Content-type': 'multipart/form-data'
         }

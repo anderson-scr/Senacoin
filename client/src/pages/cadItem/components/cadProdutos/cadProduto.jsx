@@ -73,13 +73,15 @@ const CadProduto = () => {
     dados.id_area = areas[parseInt(dados.id_area) - 1].id_unidade[0]
     dados.id_subcategoria = subcategorias[parseInt(dados.id_subcategoria) - 1]._id
     dados.id_categoria = '62d017a1181c3910ccfd43d1'
-    // Save the file name to send to routes
+    // Change the file name to a unique name.
     const fileName = setImageName(file.name)
+    const newFile = new File([file], fileName)
+    
+    // Save the file name to send to item route
     dados.imagem = fileName
-
-    console.log(file)
+    
     //callProdutoAPI.novo(dados)
-    //callImgAPI.novoImagem(file, fileName)
+    callImgAPI.novoImagem(newFile)
   }
   
   return (
