@@ -1,64 +1,31 @@
 const mongoose = require('mongoose');
 const Transacao = mongoose.model('Transacao');
-const AuditoriaTransacao = mongoose.model('AuditoriaTransacao');
 const Aluno = mongoose.model('Aluno');
-const AuditoriaAluno = mongoose.model('AuditoriaAluno');
-const Senacoin = mongoose.model('SenaCoin');
-const AuditoriaSenacoin = mongoose.model('AuditoriaSenaCoin');
-const Item = mongoose.model('Item');
-const AuditoriaItem = mongoose.model('AuditoriaItem');
-const QrCode = mongoose.model('QrCode');
-const AuditoriaQrCode = mongoose.model('AuditoriaQrCode');
-const Promocao = mongoose.model('Promocao');
-const AuditoriaPromocao = mongoose.model('AuditoriaPromocao');
 
-
-exports.new = (req, res, _next) => {
+exports.new = async (responsavel, id_aluno, id_senacoin, pontos, tipo, id_item, id_qrcode, id_promocao, session) => {
 	
-	if (!Object.keys(req.body).length)
-		return res.status(400).json({ success: false, msg: "solicitação mal construída, informações faltando ou incorretas" });
+	if (!id_aluno)
+	{
+		aluno = await Aluno.findOne({ email: responsavel });
+		id_aluno = aluno._id;
+	}
 
-	if (!("tipo" in req.body))
-		return res.status(400).json({ success: false, msg: "informe o tipo da transação." });
-	
-	if (req.body.tipo && "id_promocao" in req.body)
-		return res.status(400).json({ success: false, msg: "promoção só pode ser aplicada a transações do tipo saída." });
-	
-	if (!req.body.tipo && "id_qrcode" in req.body)
-		return res.status(400).json({ success: false, msg: "qr code só pode ser utilizado em transações do tipo entrada." });
-
-	if (!req.body.tipo && !("id_item" in req.body))
-		return res.status(400).json({ success: false, msg: "transações do tipo saída necessitam de um item." });
-
-	if ("id_item" in req.body && "id_qrcode" in req.body)
-		return res.status(400).json({ success: false, msg: "mais de uma fonte de senacoins informada, a transação deve ser atômica." });
-
-	if ("id_item" in req.body)
-		Item.findById(req.body.id_item) // busca a quantidade de senacoins a serem gerados ou gastos
-
-	else if ("id_qrcode" in req.body)
-		QrCode.findById(req.body.id_qrcode) // busca a quantidade de senacoins a serem gerados
-	else
-		return res.status(400).json({ success: false, msg: "erro de BIOS muito grave nunca deveria chegar aqui." });
-
-	if ("id_promocao" in req.body)
-		Promocao.findById(req.body.id_promocao) // busca a a valor do desconto
-
-	Senacoin.create({qnt_senacoins, validade_inicio, validade_fim}, (err, senacoin) =>  {
-        if (err)
-            return res.status(500).json({ success: false, msg: `${err}` });
-
-        res.status(201).json({ success: true, ...senacoin["_doc"]});
-    });
-
-	Aluno.findByIdAndUpdate(req.body.id_aluno) // atualiza o saldo do aluno
-
-    Transacao.create(req.body, (err, transacao) =>  {
-        if (err)
-            return res.status(500).json({ success: false, msg: `${err}` });
-
-        res.status(201).json({ success: true, ...transacao["_doc"]});
-    });
+	let sucesso = false;
+    try {
+		await Transacao.create([{responsavel, id_aluno, id_senacoin, pontos, tipo, id_item, id_qrcode, id_promocao}], { session })
+		.then(async (transacao) => {
+			console.log(transacao[0]);
+			sucesso = true;
+		})
+		.catch(async (err) => {
+			await session.abortTransaction();
+			console.log({ success: false, msg: `${err}` });
+		})
+    } catch (err) {
+		await session.abortTransaction();
+        console.log({ success: false, msg: `${err}` });
+	}
+	return sucesso;
 }
 
 exports.newList = (req, res, _next) => {

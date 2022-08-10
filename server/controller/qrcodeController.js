@@ -5,7 +5,7 @@ const senacoin = require('./senacoinController');
 const aluno = require('./alunoController');
 const QrCode = mongoose.model('QrCode');
 const AuditoriaQrCode = mongoose.model('AuditoriaQrCode');
-
+const transacao = require('./transacaoController');
 
 exports.new = async (req, res, _next) => {
 
@@ -70,7 +70,7 @@ exports.use = (req, res, _next) => {
         if (qrcode.data_inicio.getTime() > Date.now() || qrcode.data_fim.getTime() < Date.now())
             return res.status(410).json({success: false, msg: "qrcode expirado."});
 
-        vStatusObjResposta = [];
+        let vStatusObjResposta = [];
         const session = await mongoose.startSession();
         await session.withTransaction(async () => {
             let jaFoiUtilizado = false;
@@ -91,17 +91,20 @@ exports.use = (req, res, _next) => {
                 return;
             }
             
-            let multiplicador = 0;
+            let promocaoUtilizada = {id: null, multiplicador: 0};
             promocoes = await promocao.getActivePromo(qrcode.id_unidade);
             if (promocoes)
             {
                 promocoes.forEach(promo => {
-                    if (promo.multiplicador > multiplicador)
-                        multiplicador = promo.multiplicador;
+                    if (promo.multiplicador > promocaoUtilizada.multiplicador)
+                    {
+                        promocaoUtilizada.id = promo._id
+                        promocaoUtilizada.multiplicador = promo.multiplicador;
+                    }
                 });
             }
 
-            console.log('mult = ', multiplicador); //nao passei aqi
+            console.log('mult = ', promocaoUtilizada.multiplicador); //nao passei aqi
             let lote;
             if (qrcode.id_item)
             {
@@ -118,14 +121,14 @@ exports.use = (req, res, _next) => {
                 if (infoItem.horas > 20)
                     duracao = Date.now() - 4*60*60*1000 + 1.5*infoItem.horas*60*60*1000; // fuso horario gmt-4 + 1.5 x duracao do item
                 
-                lote = await senacoin.new(req.jwt.sub, infoItem.pontos*multiplicador, duracao, session);
+                lote = await senacoin.new(req.jwt.sub, infoItem.pontos*promocaoUtilizada.multiplicador, duracao, session);
             }
             else
             {
-                console.log('entrei123');    
-                lote = await senacoin.new(req.jwt.sub, qrcode.pontos*multiplicador, undefined, session);
+                lote = await senacoin.new(req.jwt.sub, qrcode.pontos*promocaoUtilizada.multiplicador, undefined, session);
             }
-            if (! await aluno.atualizaSaldo(req.jwt.sub, lote._id, 1, null, qrcode.id_unidade, session)) //1 para dar push no saldo do aluno
+            
+            if (! await aluno.atualizaSaldo(req.jwt.sub, lote._id, qrcode.id_unidade, session))
             {
                 await session.endSession();
                 vStatusObjResposta.push(500);
@@ -133,15 +136,23 @@ exports.use = (req, res, _next) => {
                 return;
             }
 
-            /* insira aqui logica para salvar a transacao */
+            if (! await transacao.new(req.jwt.sub, null, lote._id, lote.pontos, 1, qrcode.id_item ,qrcode._id, promocaoUtilizada.id, session))
+            {
+                await session.endSession();
+                vStatusObjResposta.push(500);
+                vStatusObjResposta.push({success: false, msg: "erro na hora de salvar a transacao."});
+                return;   
+            }
             
         });
         await session.endSession();
-        if (!vStatusObjResposta)
+        
+        if (!vStatusObjResposta.length)
         {
             vStatusObjResposta.push(200);
             vStatusObjResposta.push({success: true, msg: "qr code convertido."});
         }
+
         console.log(`res.status(${vStatusObjResposta[0]}).json(${vStatusObjResposta[1]})`);
         return res.status(vStatusObjResposta[0]).json(vStatusObjResposta[1]);
     })

@@ -133,7 +133,7 @@ exports.getActivePromo = async (unidades) => {
     const today = new Date(new Date()-3600*1000*4); //fuso horario gmt-4
 
 	await Promocao.find({$and: [{ativo: true}, {data_inicio: {$lt: today}}, {data_fim: {$gte: today}}, {id_unidade: {$in: unidades}}]})
-    .select("multiplicador id_unidade -_id")
+    .select("multiplicador id_unidade")
     .then((promocoes) => {
         if (!promocoes.length)
             console.log('não foi encontrado nenhuma promoção');
