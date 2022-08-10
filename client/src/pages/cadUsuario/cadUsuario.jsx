@@ -60,7 +60,6 @@ const CadUsuario = () => {
       (async () => {
         setPerfil(await callPerfilAPI.ativo())
       })()
-
       return () => effectOnce.current = false
     }
   }, [navigate])
@@ -78,16 +77,17 @@ const CadUsuario = () => {
 
 
   function cadastrarUsuario(dados) {
-    // Arrumando a estrutura do objeto para enviar pro post de usuario
+    // Fixing object structure in somme keys to send to the back
     dados.senha = dados.nome.toLowerCase() + '1234'
     dados.nome = dados.nome + ' ' + dados.sobrenome
     dados.cpf = dados.cpf + ' '
     dados.id_unidade = selectedUnidades
-
-    // Depois dos spreads, deleto os desnecessários
+    dados.permissoes = {...permissoes}
+    
+    // After restructuring the object, we delete what is not needed in the back end
     delete dados.sobrenome
     delete dados.perfil
-
+    
     callUsuarioAPI.novo(dados)
   }
 
@@ -97,10 +97,9 @@ const CadUsuario = () => {
     setPermissoes(tempoPerfil)
   }
 
-  // Permits to change the current value of the permissao sate
+  // Permits to change the current value of permissao state
   const changePermissao = (evt) => {
     const tempPermissao = {...permissoes}
-    console.log(tempPermissao)
     tempPermissao[evt.target.id] = !tempPermissao[evt.target.id]
     setPermissoes({...tempPermissao})
   }

@@ -16,10 +16,10 @@ const FormLogin = () => {
   const [showPassword, setShowPassword] = useState(true);
   const inputPassword = useRef()
   const navigate = useNavigate()
-  const { setUserAuth } = useContext(AuthContext)
+  const { setUserAuth, setPermissions } = useContext(AuthContext)
 
 
-  const checkLogin = async (evt) => {
+  const checkLogin = (evt) => {
     evt.preventDefault()
     const {emailLogin, senhaLogin} = getFormData()
 
@@ -30,16 +30,23 @@ const FormLogin = () => {
       inputPassword.current.value = ''
 
     } else {
+      (async () => {
+        // Returns true if the login was successful and all the permissions that the user has
+        const login = await verificaLogin.authLogin(emailLogin, senhaLogin)
+        localStorage.setItem("permissions", JSON.stringify(login.permissoes))
+
+        if(login.success) {
+          setUserAuth(true)
+          setPermissions(login.permissoes)
+          navigate("/Dashboard", {replace: true} )
+          
+        } else {
+          ModalService.open( LoginInvalido ) 
+          inputPassword.current.value = ''
+        }
+      })()
 
       // Calls the API to check if the user entry matches any user in DB
-      if(await verificaLogin.authLogin(emailLogin, senhaLogin)) {
-        setUserAuth(true)
-        navigate("/Dashboard", {replace: true} )
-        
-      } else {
-        ModalService.open( LoginInvalido ) 
-        inputPassword.current.value = ''
-      }
     }
   }
 

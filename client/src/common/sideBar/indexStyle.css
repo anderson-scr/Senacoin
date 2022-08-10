@@ -59,6 +59,7 @@
 .navBarraLateral {
   overflow: visible;
   width: 85%;
+  min-height: 67%;
 }
 .navBarraLateral ul {
   list-style-type: none;

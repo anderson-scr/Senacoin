@@ -30,12 +30,14 @@ import QrcodeVinculado from 'pages/cadQrcode/components/qrcodeVinculado'
 
 
 function App() {
-  const [userAuth, setUserAuth] = useState(localStorage.accessToken? true : false);
+  const [userAuth, setUserAuth] = useState(localStorage.accessToken? true : false)
+  const [permissions, setPermissions] = useState([])
 
   return (
     <Router>
       <AuthContext.Provider value={{
-        userAuth, setUserAuth
+        userAuth, setUserAuth, // It'll be true if the user has sucssefuly authenticated
+        permissions, setPermissions // What the user has permission access or not
       }}>
 
         <Routes>

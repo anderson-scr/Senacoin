@@ -8,8 +8,8 @@ export const verificaLogin = {
         if(data.status === 200) {
           localStorage.setItem("accessToken", JSON.stringify(data.data.token))
           localStorage.setItem("x-user-email", emailEntrada)
-          return true
-
+          
+          return data.data
         } else return false
       })
     return call
