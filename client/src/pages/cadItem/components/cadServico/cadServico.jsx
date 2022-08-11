@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useRef} from 'react'
+import React, { useState, useEffect, useRef, useContext } from 'react'
 import { callServicoAPI } from 'api/item/apiServico'
 import { yupSchemaCadServico } from 'utils/validation/schemas/itens/cadServico'
 import { useNavigate } from 'react-router-dom'
@@ -12,6 +12,9 @@ import QuestionTooltip from 'common/tooltips/questionTooltip'
 import AddTooltip from 'common/tooltips/addTooltip'
 import setImageName from 'utils/setImageName'
 
+// Context
+import { AuthContext } from 'contexts/authContext'
+
 // Modal Imports
 import ModalService from 'common/modal/services/modalService'
 import ModalCadArea from 'common/preMadeModal/cadArea'
@@ -22,6 +25,7 @@ import ModalCadUnidade from 'common/preMadeModal/cadUnidade'
 const CadServico = () => {
   const effectOnce = useRef(true)
   const navigate = useNavigate()
+  const { permissions } = useContext(AuthContext)
   const [areas, setAreas] = useState([])
   const [subcategorias, setSubcategorias] = useState([])
   const [unidades, setUnidades] = useState([])
@@ -87,7 +91,7 @@ const CadServico = () => {
 
       <div className='row'>
         <div className='mb-3 col-4'>
-          <AddTooltip label='Areas' onClickFunc={modalCadArea} msg='Criar uma nova area para cadastros.' />
+          <AddTooltip label='Areas' permission={permissions.cad_areas} onClickFunc={modalCadArea} msg='Criar uma nova area para cadastros.' />
           <select className="form-select" id='dropArea' aria-label="Default select example" defaultValue="DEFAULT" {...register("id_area")}>
             <option value="DEFAULT" disabled style={{display: "none"}}>Selecione uma area</option>
             {areas.length > 1 &&
@@ -103,7 +107,7 @@ const CadServico = () => {
           </div>
         </div>
         <div className='mb-3 col-4 '>
-          <AddTooltip label='Subcategoria' onClickFunc={modalCadSubcategoria} msg='Criar nova subcategoria para cadastros.' /> 
+          <AddTooltip label='Subcategoria' permission={permissions.cad_subcategorias} onClickFunc={modalCadSubcategoria} msg='Criar nova subcategoria para cadastros.' /> 
           <select className="form-select" id='dropSubcategoria' aria-label="Default select example" defaultValue="DEFAULT" {...register("id_subcategoria")}>
             <option value="DEFAULT" disabled style={{display: "none"}}>Selecione uma subcategoria</option>
             {subcategorias.length > 1 &&
@@ -119,7 +123,7 @@ const CadServico = () => {
           </div>
         </div>
         <div className='mb-3 col-4 '>
-          <AddTooltip label='Unidade' onClickFunc={modalCadUnidade} msg='Criar uma nova unidade para cadastros.' />
+          <AddTooltip label='Unidade' permission={permissions.cad_unidades} onClickFunc={modalCadUnidade} msg='Criar uma nova unidade para cadastros.' />
           <select className="form-select" id='dropSubcategoria' aria-label="Default select example" defaultValue="DEFAULT" {...register("id_unidade")}>
             <option value="DEFAULT" disabled style={{display: "none"}}>Selecione uma unidade</option>
             {unidades.length > 1 &&

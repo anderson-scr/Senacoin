@@ -13,9 +13,8 @@ import { useTable, usePagination, useRowSelect, useSortBy, useGlobalFilter, useF
 import { RowCheckbox } from './components/rowSelection'
 import { RowEdit } from './components/rowEdit'
 
-// Modal imports
+// Modal service
 import ModalService from 'common/modal/services/modalService' 
-import ModalEditItem from 'pages/gerItem/modal/modalEditItem'
 
 // CSS
 import './tableStyle.css'
@@ -23,7 +22,7 @@ import { MdArrowDropDown, MdArrowDropUp } from "react-icons/md";
 import { BsDot } from "react-icons/bs";
 
 
-const Table = ({apiRoute, columnSchema, setCurrentState = false, filters = true, categoria = false, subcategoria = true, area = true, ativo = false}) => {
+const Table = ({apiRoute, columnSchema, modal, setCurrentState = false, filters = true, categoria = false, subcategoria = true, area = true, ativo = false}) => {
   const effectOnce = useRef(true)
   const [dataTabela, setDataTabela] = useState([])
   const navigate = useNavigate()
@@ -127,6 +126,19 @@ const Table = ({apiRoute, columnSchema, setCurrentState = false, filters = true,
     } return cell.render('Cell')
   }
 
+  const getRowInfo = evt => {
+    // Find the TR based on user click position
+    let target = evt.target
+    let targetName = evt.target.nodeName
+    
+    while(targetName !== 'TR') {
+      target = target.parentElement
+      targetName = target.nodeName
+    }
+
+    // Compare the ID from tr clicked and find the data to send into edit modal
+    ModalService.open(modal, {}, dataTabela[target.id])
+  }
 
   return (
     <div>
@@ -143,7 +155,7 @@ const Table = ({apiRoute, columnSchema, setCurrentState = false, filters = true,
           <thead className='tableHead'>
             {dataTabela &&
             headerGroups.map(headerGroup => (
-              <tr {...headerGroup.getHeaderGroupProps()}>
+              <tr {...headerGroup.getHeaderGroupProps()} >
                 {headerGroup.headers.map(column => (
                   <th {...column.getHeaderProps(column.getSortByToggleProps())}>
                     {column.render('Header')}
@@ -156,13 +168,13 @@ const Table = ({apiRoute, columnSchema, setCurrentState = false, filters = true,
             ))}
           </thead>
           <tbody className="table-group-divider">
-          {page.map(row => {
+          {page.map((row, idx) => {
             prepareRow(row)
             return (
-              <tr className="rowTabela" {...row.getRowProps()} >
+              <tr className="rowTabela" id={idx} {...row.getRowProps()}>
                 {row.cells.map(cell => {
                   return <td {...cell.getCellProps(
-                    cell.column.Header === 'Editar'? {onClick: () => ModalService.open(ModalEditItem)} : ''
+                    cell.column.Header === 'Editar'? {onClick: (evt) => getRowInfo(evt)} : ''
                   )}> {verificaStatus(cell)} </td>
                 })}
               </tr>

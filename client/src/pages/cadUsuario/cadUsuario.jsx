@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useRef, useState, useContext } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { verificaSessao } from 'auth/login/verificaSessao'
 
@@ -23,10 +23,15 @@ import ModalService from 'common/modal/services/modalService'
 import ModalCadUnidade from 'common/preMadeModal/cadUnidade'
 import ModalSelecionarUnidade from 'common/preMadeModal/selects/modalSelecionarUnidade'
 
+// Contexts
+import { AuthContext } from 'contexts/authContext'
+
+
 const CadUsuario = () => {
   const effectOnce = useRef(true)
   const [selectedUnidades, setSelectedUnidades] = useState([])
   const [perfis, setPerfil] = useState([])
+  const { permissions } = useContext(AuthContext)
   const [permissoes, setPermissoes] = useState({
     cad_areas: false,
     cad_itens: false,
@@ -170,7 +175,7 @@ const CadUsuario = () => {
             {/* Second Col - first row */}
             <div>
               <div className='mb-2 overflow-visible'>
-                <AddTooltip label='Unidade' msg='Criar uma nova unidade.' onClickFunc={openModalCadUnidade} />
+                <AddTooltip label='Unidade' permission={permissions.cad_unidades} msg='Criar uma nova unidade.' onClickFunc={openModalCadUnidade} />
                 <input type="button" onClick={evt => openModalSelectUnidade(evt)} className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value={`${selectedUnidades.length} unidade(s) selecionada(s)`} />
                 <div style={{height: '25px'}}>
                 {errors?.id_unidade?.type &&

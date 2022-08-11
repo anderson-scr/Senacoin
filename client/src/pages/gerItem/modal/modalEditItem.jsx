@@ -4,7 +4,6 @@ import React from 'react'
 import Modal from 'common/modal/modalIndex'
 import ModalHeader from 'common/modal/components/modalHead'
 import ModalBody from 'common/modal/components/modalBody'
-import ModalFooter from 'common/modal/components/modalFooter'
 
 // Cad for edit
 import EditProduto from './components/editProduto'

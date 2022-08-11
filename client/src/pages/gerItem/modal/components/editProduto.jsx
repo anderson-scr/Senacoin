@@ -144,10 +144,15 @@ const EditProduto = ({closeModal}) => {
 
       <div className='containerBtns row mt-5'>
         <div className='col d-flex'>
-          <button type="submit" onClick={closeModal} className="btn btnCancelar btn-outline-secondary w-50">Cancelar</button>
+          <button type="submit" onClick={closeModal} className="btn btnCancelar btn-outline-secondary w-75">Cancelar</button>
         </div>
+
+        <div className='col d-flex justify-content-center'>
+          <button type="button" className="btn btn-outline-danger w-75">Deletar</button>
+        </div>
+
         <div className='col d-flex justify-content-end'>
-          <button type="submit" className="btn btnSalvar btn-primary w-50">Salvar</button>
+          <button type="submit" className="btn btnSalvar btn-primary w-75">Salvar</button>
         </div>
       </div>
     </form>
