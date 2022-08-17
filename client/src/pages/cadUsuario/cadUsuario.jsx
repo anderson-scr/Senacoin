@@ -31,7 +31,7 @@ const CadUsuario = () => {
   const effectOnce = useRef(true)
   const [selectedUnidades, setSelectedUnidades] = useState([])
   const [perfis, setPerfil] = useState([])
-  const { permissions } = useContext(AuthContext)
+  const {permissions} = useContext(AuthContext)
   const [permissoes, setPermissoes] = useState({
     cad_areas: false,
     cad_itens: false,
@@ -47,12 +47,13 @@ const CadUsuario = () => {
     ger_usuarios: false,
     relatorios: false
   })
+  const [checkSelectedUni, setCheckSelectedUni] = useState(false)
   const navigate = useNavigate()
   const { register, handleSubmit, formState: {
     errors
   } } = useForm({
     resolver: yupResolver(yupSchemaCadUsuario)
-  });
+  })
 
   // Verifica sessão de usuário
   useEffect(() => {
@@ -82,18 +83,21 @@ const CadUsuario = () => {
 
 
   function cadastrarUsuario(dados) {
-    // Fixing object structure in somme keys to send to the back
-    dados.senha = dados.nome.toLowerCase() + '1234'
-    dados.nome = dados.nome + ' ' + dados.sobrenome
-    dados.cpf = dados.cpf + ' '
-    dados.id_unidade = selectedUnidades
-    dados.permissoes = {...permissoes}
-    
-    // After restructuring the object, we delete what is not needed in the back end
-    delete dados.sobrenome
-    delete dados.perfil
-    
-    callUsuarioAPI.novo(dados)
+    verificaUnidade()
+    if(checkSelectedUni) {
+      // Fixing object structure in somme keys to send to the back
+      dados.senha = dados.nome.toLowerCase() + '1234'
+      dados.nome = dados.nome + ' ' + dados.sobrenome
+      dados.cpf = dados.cpf + ' '
+      dados.id_unidade = selectedUnidades
+      dados.permissoes = {...permissoes}
+      
+      // After restructuring the object, we delete what is not needed in the back end
+      delete dados.sobrenome
+      delete dados.perfil
+      
+      callUsuarioAPI.novo(dados)
+    }
   }
 
   // Change the default perfil value
@@ -109,9 +113,14 @@ const CadUsuario = () => {
     setPermissoes({...tempPermissao})
   }
 
+  // We needed this custom verify func cause the react form cannot check the state on selectedUnidades and send to yup.
+  const verificaUnidade = () => {
+    selectedUnidades.length > 0? setCheckSelectedUni(false) : setCheckSelectedUni(true)
+  }
+
   return (
     <section>
-      <form onSubmit={handleSubmit(cadastrarUsuario)}>
+      <form onSubmit={handleSubmit(cadastrarUsuario, verificaUnidade)}>
 
         {/* First row */}
         <div className='container row mx-auto'>
@@ -176,9 +185,9 @@ const CadUsuario = () => {
             <div>
               <div className='mb-2 overflow-visible'>
                 <AddTooltip label='Unidade' permission={permissions.cad_unidades} msg='Criar uma nova unidade.' onClickFunc={openModalCadUnidade} />
-                <input type="button" onClick={evt => openModalSelectUnidade(evt)} className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value={`${selectedUnidades.length} unidade(s) selecionada(s)`} />
+                <input type="button" onClick={evt => openModalSelectUnidade(evt)} className="form-control" id="id_unidade" aria-describedby="emailHelp" value={selectedUnidades.length + ' unidade(s) selecionada(s)'}/>
                 <div style={{height: '25px'}}>
-                {errors?.id_unidade?.type &&
+                {checkSelectedUni &&
                   <div className="form-text text-danger">Preencha o campo corretamente.</div>
                 }
               </div>

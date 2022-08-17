@@ -55,7 +55,7 @@ const CadProduto = () => {
   }, [navigate])
 
 
-  // Call all modals
+  // Modals
   const modalCadArea = (evt) => {
     evt.preventDefault()
     ModalService.open(ModalCadArea)

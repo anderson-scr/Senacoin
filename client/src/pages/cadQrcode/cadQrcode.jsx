@@ -21,7 +21,7 @@ const CadQrcode = () => {
 
   return (
     <div className='container col'>
-      <div className='teste h-100 row'>
+      <div className='h-100 row'>
         <nav className='navCadItem d-flex justify-content-around align-items-end mb-5'>
           <NavLink className="containerTabOption" to="/CadastroQrcode/Livre" >Livre</NavLink>
           <NavLink className="containerTabOption tabCenter" to="/CadastroQrcode/Vinculado" >Vinculado</NavLink>

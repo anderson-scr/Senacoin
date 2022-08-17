@@ -98,6 +98,7 @@ const Table = ({apiRoute, columnSchema, modal, setCurrentState = false, filters 
     state,
     setPageSize,
     setGlobalFilter,
+    gotoPage,
     page,
     selectedFlatRows, // Attr for select rows
   } = tableInstance
@@ -191,6 +192,7 @@ const Table = ({apiRoute, columnSchema, modal, setCurrentState = false, filters 
         canNextPage={canNextPage}
         nextPage={nextPage}
         previousPage={previousPage}
+        gotoPage={gotoPage}
       />
     </div>
   )

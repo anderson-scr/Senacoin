@@ -65,6 +65,7 @@ export const routes = {
   promocao: {
     novo: 'promocao/add',
     ativo: 'promocao/active/',
-    todos: 'promocao/all/'
+    todos: 'promocao/all/',
+    novaImagem: 'promocao/addImg'
   }
 }

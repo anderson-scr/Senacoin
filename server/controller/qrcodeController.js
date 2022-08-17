@@ -153,10 +153,10 @@ exports.use = (req, res, _next) => {
 exports.listAll = (req, res, _next) => {
 
 	QrCode.find({}).skip(req.params.offset || 0).limit(60)
-    .select("nome descricao id_unidade ativo")
+    .select("nome descricao id_unidade ativo data_inicio data_fim")
 	.populate({path : 'id_unidade', select: 'nome cidade uf -_id'})
     .then((qrcodes) => {
-        
+        console.log(qrcodes)
         if (!qrcodes.length)
             return res.status(204).json(qrcodes);
         else
@@ -176,7 +176,7 @@ exports.listActive = (req, res, _next) => {
 	.populate({path : 'id_item', select: 'nome area id_categoria -_id', populate: {path: 'id_categoria', select: 'nome -_id'}})
 	.populate({path : 'id_unidade', select: 'nome -_id'})
     .then((qrcodes) => {
-        
+
         if (!qrcodes.length)
             return res.status(204).json();  
         else

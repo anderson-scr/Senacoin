@@ -19,6 +19,7 @@ const QrcodeVinculado = () => {
   const navigate = useNavigate()
   const effectOnce = useRef(true)
   const [itemsVinculados, setItemsVinculados] = useState([])
+  const [checkSelectedItem, setCheckSelectedItem] = useState(false)
 
   const { register, handleSubmit, formState: {
     errors
@@ -42,12 +43,19 @@ const QrcodeVinculado = () => {
   }
 
   function cadastrarQrcodeVinculado(qrcodeData) {
-    callQrcodeAPI.novo(qrcodeData)
-    console.log(qrcodeData)
+    verifySelectedItems()
+    if(checkSelectedItem) {
+      callQrcodeAPI.novo(qrcodeData)
+      console.log(qrcodeData)
+    }
   }
+    // We needed this custom verify func cause the react form cannot check the state on selectedUnidades and send to yup.
+    const verifySelectedItems = () => {
+      checkSelectedItem.length > 0? setCheckSelectedItem(false) : setCheckSelectedItem(true)
+    }
 
   return (
-    <form className='form container' onSubmit={handleSubmit(cadastrarQrcodeVinculado)}>
+    <form className='form container' onSubmit={handleSubmit(cadastrarQrcodeVinculado, verifySelectedItems)}>
       <div className='col'>
         <div className="mb-2">
           <label htmlFor="iptNome" className="form-label">Titulo</label>
@@ -62,7 +70,7 @@ const QrcodeVinculado = () => {
           <QuestionTooltip label='Item(s) vinculado ao Qrcode' msg='Selecionar quais items irão receberem a promoção.' />
           <input type="button" value={`${itemsVinculados.length} item(s) selecionado(s)`} onClick={evt => abrirModal(evt)} className="form-control" id="iptNome" {...register("item_vinculado")}/>
           <div style={{height: '25px'}}>
-            {errors?.item_vinculado?.type &&
+            {checkSelectedItem &&
               <div className="form-text text-danger">Preencha o campo corretamente.</div>
             }
           </div>
@@ -115,7 +123,7 @@ const QrcodeVinculado = () => {
         
         <div className="mb-2 flex-grow-1 containerDesc" >
           <label htmlFor="exampleInputEmail1" className="form-label">Descrição</label>
-          <textarea type="text" className="iptDescricao form-control" id="exampleInputEmail1" aria-describedby="emailHelp" {...register("descricao")} />
+          <textarea type="text" className="iptDescricao form-control" id="exampleInputEmail1" style={{height: '120px'}} aria-describedby="emailHelp" {...register("descricao")} />
         </div>
       </div>
 

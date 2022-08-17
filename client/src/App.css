@@ -30,3 +30,15 @@ textarea {
   resize: none;
 }
 
+/* Scroll bar style */
+::-webkit-scrollbar {
+  width: 5px;               /* width of the entire scrollbar */
+}
+::-webkit-scrollbar-track {
+  background: var(--main-cinza);        /* color of the tracking area */
+  border-radius: 2px;       /* roundness of the scroll thumb */
+}
+::-webkit-scrollbar-thumb {
+  background-color: var(--senac-azul-dark);    /* color of the scroll thumb */
+  border-radius: 2px;       /* roundness of the scroll thumb */
+}

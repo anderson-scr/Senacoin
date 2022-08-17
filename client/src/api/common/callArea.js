@@ -17,6 +17,7 @@ export const callAreaAPI = {
         return []
       } else return apiResponse.data
     } catch (error) {
+      console.log(error)
       ModalService.open(ModalCadErro)
     }
   },

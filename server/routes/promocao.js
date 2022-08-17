@@ -5,6 +5,8 @@ const utils = require('../libs/utils');
 
 // add a new promocao
 router.post('/add', utils.authUserMiddleware("cad_promocoes"), controller.new);
+// add a new image
+router.post('/:categoria/addImg', controller.newImg);
 // add a new promocao list
 router.post('/populate', utils.authUserMiddleware("cad_promocoes"), controller.newList);
 // list all promocoes
