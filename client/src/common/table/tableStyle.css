@@ -45,3 +45,10 @@ thead {
   border: none;
   padding-left: 19px;
 }
+
+.paginationIdxSelected {
+  border: 1px solid var(--senac-amarelo);
+  color: var(--senac-amarelo-dark) !important; 
+  z-index: 10;
+  pointer-events: none;
+}

@@ -1,10 +1,10 @@
 import React, { useState, useContext, useEffect, useRef } from 'react'
-import './indexStyle.css'
-import GenericOption from './components/genericOption';
+import GenericOption from './components/genericOption'
 import logoSenacoinWhite from 'assets/imgs/logoSenacoinAdmWhite.png'
-import { pageInContext } from 'contexts/pageInContext';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom'
 
+// CSS
+import './indexStyle.css'
 
 // Icons
 import { FaUserCog } from "react-icons/fa"
@@ -15,12 +15,16 @@ import { MdCategory } from "react-icons/md"
 import { HiOutlineQrcode, HiQrcode } from "react-icons/hi"
 import { BsList, BsClipboardCheck, BsPencilSquare, BsPersonPlusFill } from "react-icons/bs"
 
+// Contexts
+import { pageInContext } from 'contexts/pageInContext'
+import { AuthContext } from 'contexts/authContext'
 
 const BarraLateral = () => {
   const [isOpen, setIsOpen] = useState(false)
-  const { setPageIn } = useContext(pageInContext)
-  const navigation = useRef()
   const effectOne = useRef(true)
+  const { setPageIn } = useContext(pageInContext)
+  const { permissions, setPermissions } = useContext(AuthContext)
+  const navigation = useRef()
   const navigate = useNavigate()
 
   const openSideBar = () => {
@@ -29,10 +33,19 @@ const BarraLateral = () => {
   const changePageTitle = (evt) => {
     setPageIn(evt.target.closest("li").getAttribute("data-datatooltip"))
   }
+
   useEffect(() => {
     if(effectOne.current) {
-      setPageIn(navigation.current.querySelector(".active > li").getAttribute("data-datatooltip"))
-      
+      (async () => {
+        // Check if the permissions has ben filled. If not, get from localStorage
+        if(permissions.length === 0) {
+          await setPermissions(JSON.parse(localStorage.getItem('permissions')))
+        }
+        
+        // Save in the context the current page the user is on. In case of reload or anything, so we can keep track of his location
+        setPageIn(navigation.current.querySelector(".active > li").getAttribute("data-datatooltip"))
+      })()
+
       return () => effectOne.current = false
     }
   }, [])
@@ -45,8 +58,8 @@ const BarraLateral = () => {
   return (
     <aside className='barraLateral' style={ isOpen? {width: '285px'} : {width: '70px'}}>
       <section className='containerNav'>
-        {/* Hamburger menu */}
-        <div className='iconeMenuContainer' >
+        {/* Hamburger menu? */}
+        <div className='iconeMenuContainer'>
           <BsList size={30} className="animatedMenu" onClick={openSideBar} />
           <img src={ logoSenacoinWhite } alt="Senacoin" className='logoSenacoin' style={isOpen? 
             {opacity: '1', transitionDelay: '.3s'}
@@ -59,15 +72,22 @@ const BarraLateral = () => {
           <ul>
             <GenericOption icon={<GoGraph className='icon' size={30} />} dataToolTip="Dashboard" path="/Dashboard" isOpen={isOpen} click={changePageTitle} />
             
-            <GenericOption icon={<BsPersonPlusFill className='icon' size={30} />} dataToolTip="Cadastrar Usuário" path="/CadastroUsuario" isOpen={isOpen} click={changePageTitle} />
-            <GenericOption icon={<MdCategory className='icon' size={30} />} dataToolTip="Cadastrar Item" path="/CadastroItem" isOpen={isOpen} click={changePageTitle} />
-            <GenericOption icon={<AiFillTags className='icon' size={30} />} dataToolTip="Cadastrar Promoção" path="/CadastroPromocao" isOpen={isOpen} click={changePageTitle} />
-            <GenericOption icon={<HiOutlineQrcode className='icon' size={30} />} dataToolTip="Cadastrar Qrcode" path="/CadastroQrcode" isOpen={isOpen} click={changePageTitle} />
-
-            <GenericOption icon={<FaUserCog className='icon' size={30} />} dataToolTip="Gerenciar Usuarios" path="/GerenciarUsuarios" isOpen={isOpen} click={changePageTitle} />
-            <GenericOption icon={<BsPencilSquare className='icon' size={30} />} dataToolTip="Gerenciar Items" path="/GerenciarItems" isOpen={isOpen} click={changePageTitle} />
-            <GenericOption icon={<HiQrcode className='icon' size={30} />} dataToolTip="Gerenciar Qrcodes" path="/GerenciarQrcodes" isOpen={isOpen} click={changePageTitle} />
-            <GenericOption icon={<BsClipboardCheck className='icon' size={30} />} dataToolTip="Relatórios" path="/Relatorios" isOpen={isOpen} click={changePageTitle} />
+            {permissions.cad_usuarios && 
+              <GenericOption icon={<BsPersonPlusFill className='icon' size={30} />} dataToolTip="Cadastrar Usuário" path="/CadastroUsuario" isOpen={isOpen} click={changePageTitle} /> }
+            {permissions.cad_itens && 
+              <GenericOption icon={<MdCategory className='icon' size={30} />} dataToolTip="Cadastrar Item" path="/CadastroItem" isOpen={isOpen} click={changePageTitle} /> }
+            {permissions.cad_promocoes && 
+              <GenericOption icon={<AiFillTags className='icon' size={30} />} dataToolTip="Cadastrar Promoção" path="/CadastroPromocao" isOpen={isOpen} click={changePageTitle} /> }
+            {permissions.cad_qrcodes && 
+              <GenericOption icon={<HiOutlineQrcode className='icon' size={30} />} dataToolTip="Cadastrar Qrcode" path="/CadastroQrcode" isOpen={isOpen} click={changePageTitle} /> }
+            {permissions.ger_usuarios && 
+              <GenericOption icon={<FaUserCog className='icon' size={30} />} dataToolTip="Gerenciar Usuarios" path="/GerenciarUsuarios" isOpen={isOpen} click={changePageTitle} /> }
+            {permissions.ger_itens && 
+              <GenericOption icon={<BsPencilSquare className='icon' size={30} />} dataToolTip="Gerenciar Items" path="/GerenciarItems" isOpen={isOpen} click={changePageTitle} /> }
+            {permissions.ger_qrcodes && 
+              <GenericOption icon={<HiQrcode className='icon' size={30} />} dataToolTip="Gerenciar Qrcodes" path="/GerenciarQrcodes" isOpen={isOpen} click={changePageTitle} /> }
+            {permissions.relatorios && 
+              <GenericOption icon={<BsClipboardCheck className='icon' size={30} />} dataToolTip="Relatórios" path="/Relatorios" isOpen={isOpen} click={changePageTitle} /> }
 
           </ul>
         </nav>

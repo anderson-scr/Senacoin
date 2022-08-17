@@ -27,15 +27,19 @@ import CadProduto from 'pages/cadItem/components/cadProdutos/cadProduto'
 import CadServico from 'pages/cadItem/components/cadServico/cadServico'
 import QrcodeLivre from 'pages/cadQrcode/components/qrcodeLivre'
 import QrcodeVinculado from 'pages/cadQrcode/components/qrcodeVinculado'
+import Calendar from 'pages/dashboard/components/calendar/calendar'
+import ItemsAlertTable from 'pages/dashboard/components/itemsAlertTable'
 
 
 function App() {
-  const [userAuth, setUserAuth] = useState(localStorage.accessToken? true : false);
+  const [userAuth, setUserAuth] = useState(localStorage.accessToken? true : false)
+  const [permissions, setPermissions] = useState([])
 
   return (
     <Router>
       <AuthContext.Provider value={{
-        userAuth, setUserAuth
+        userAuth, setUserAuth, // It'll be true if the user has sucssefuly authenticated
+        permissions, setPermissions // What the user has permission access or not
       }}>
 
         <Routes>
@@ -49,7 +53,11 @@ function App() {
           <Route path='/' element={<Navigate replace to='/Dashboard' />} />
           <Route path='/' element={<RequireAuth />} >
             <Route path='/' element={<Layout />}>
-              <Route path='/Dashboard' element={<Dashboard />} />
+              <Route path='/Dashboard' element={<Navigate replace to='/Dashboard/Tabela' />} />
+              <Route path='/Dashboard' element={<Dashboard />} >
+                <Route path='/Dashboard/Tabela' element={<ItemsAlertTable />} />
+                <Route path='/Dashboard/Calendario' element={<Calendar />} />
+              </Route>
               <Route path='/CadastroUsuario' element={<CadUsuario />} />
 
               <Route path='/CadastroItem' element={<Navigate replace to='/CadastroItem/Produto' />} />

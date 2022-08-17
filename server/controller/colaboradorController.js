@@ -11,7 +11,6 @@ exports.login = (req, res, _next) => {
 
 	Colaborador.findOne({ email: req.body.email })
 	.then((colab) => {
-    console.log(req.body.email)
 		
 		if (!colab)
 			return res.status(401).json({ success: false, msg: "email/senha inválidos!" });
@@ -20,7 +19,7 @@ exports.login = (req, res, _next) => {
 		if (isValid)
 		{
 			const tokenObject = utils.issueJWT(colab);
-			res.status(200).json({ success: true, email: colab.email, token: tokenObject.token, expiresIn: tokenObject.expires});
+			res.status(200).json({ success: true, email: colab.email, token: tokenObject.token, expiresIn: tokenObject.expires, permissoes: colab.permissoes});
 		}
 		else 
 			res.status(401).json({ success: false, msg: "email/senha inválidos!" });

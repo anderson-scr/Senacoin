@@ -4,8 +4,8 @@ const utils = require('../libs/utils');
 
 // add a new item
 router.post('/:categoria/add', utils.authUserMiddleware("cad_itens"), controller.new);
-// add a new item
-router.post('/:imgName/addImg', controller.newImg);
+// add a new image
+router.post('/addImg', controller.newImg);
 // add a new item list
 router.post('/populate', utils.authUserMiddleware("cad_itens"), controller.newList);
 // list all items

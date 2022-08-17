@@ -13,6 +13,7 @@ const CadPromocao = () => {
   const effectOnce = useRef(true)
   const navigate = useNavigate()
   const [selectedItems, setSelectedItems] = useState([])
+  const [checkSelectedItems, setCheckSelectedItems] = useState(false)
 
   const { register, handleSubmit, formState: {
     errors
@@ -31,29 +32,35 @@ const CadPromocao = () => {
   }, [navigate])
   
 
-  const teste = (evt) => {
+  const openModal = (evt) => {
     evt.preventDefault()
     ModalService.open(ModalSelecionarItem, {}, setSelectedItems)
   }
-  function salvarInfo(data) {
-    data = {...data, 
-      id_item: selectedItems
+  
+  function cadastrarPromocao(data) {
+    verifySelectedItems()
+    if(checkSelectedItems) {
+      data = {...data, 
+        id_item: selectedItems
+      }
+      console.log(data)
     }
-    console.log(data)
   }
-  function deuRuim(data) {
-    console.log(data)
+  
+  // We needed this custom verify func cause the react form cannot check the state on selectedItems and send to yup.
+  const verifySelectedItems = () => {
+    selectedItems.length > 0? setCheckSelectedItems(false) : setCheckSelectedItems(true)
   }
 
   return (
-    <form className='container' onSubmit={handleSubmit(salvarInfo, deuRuim)}>
+    <form className='container' onSubmit={handleSubmit(cadastrarPromocao, verifySelectedItems)}>
 
       <div className='row'>
         <div className='mb-3 col-6'>
           <QuestionTooltip label='Item(s) vinculado a promoção' msg='Selecionar quais items irão receberem a promoção.' />
-          <input type="button" onClick={evt => teste(evt)} className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value={`${selectedItems.length} item(s) selecionado(s)`} />
+          <input type="button" onClick={evt => openModal(evt)} className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value={`${selectedItems.length} item(s) selecionado(s)`} />
           <div style={{height: '25px'}}>
-            {errors?.item?.type &&
+            {checkSelectedItems &&
               <div className="form-text text-danger">Preencha o campo corretamente.</div>
             }
           </div>
@@ -114,11 +121,11 @@ const CadPromocao = () => {
       <div className='row'>
         <div className="mb-3 flex-grow-1" >
           <label htmlFor="exampleInputEmail1" className="form-label">Descrição</label>
-          <textarea type="text" className="iptDescricao form-control" id="exampleInputEmail1" aria-describedby="emailHelp" {...register("descricao")} />
+          <textarea type="text" className="iptDescricao form-control" id="exampleInputEmail1" aria-describedby="emailHelp" style={{height: '120px'}} {...register("descricao")} />
         </div>
         <div className="mb-3 ">
           <label htmlFor="formFile" className="form-label">Imagem da promoção</label> 
-          <input className="form-control" type="file" id="formFile" {...register("imagem")} />
+          <input className="form-control" type="file" id="formFile" {...register("imagem")}  />
         </div>
       </div>
 

@@ -1,7 +1,7 @@
 import * as yup from 'yup'
 import { regexUtils } from 'utils/validation/regex'
 
-export const yupSchemaCadServico = yup.object().shape({
+export const yupSchemaCadEvento = yup.object().shape({
   nome: yup.string().required(),
   pontos: yup.number().positive().required(),
   id_subcategoria: yup.string().matches(regexUtils.idUnidadePerfil).required(),

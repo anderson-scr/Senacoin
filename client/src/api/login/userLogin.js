@@ -6,6 +6,7 @@ export const callLoginAPI = async (email, senha) => {
     senha: senha
   })
     .then(response => {
+      console.log(response)
       return response
     })
     .catch(error => {

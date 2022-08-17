@@ -42,21 +42,6 @@ exports.new = async (req, res, _next) => {
             .then(async (item) => {
                 await AuditoriaItem.create([{colaborador: req.jwt.sub, ...req.body}], { session })
                 .then(async (_auditem) =>{
-                    if (req.files && Object.keys(req.files).length)
-                    {
-                        const img = req.files.imagem;   // nome e caminho do arquivo
-                        const caminho = path.join('uploads', `${randomUUID()}${path.extname(img.name)}`);
-                        req.body.imagem = caminho;
-
-                        // mv() é usada para colocar o arquivo na pasta do servidor
-                        await img.mv(path.join(__basedir, caminho), async (err) =>{
-                            if(err)
-                            {
-                                await session.abortTransaction();
-                                res.status(500).json({ success: false, msg: `${err}` });
-                            }
-                        });
-                    }
                     res.status(201).json({ success: true, ...item[0]["_doc"]}); // ["_doc"] é a posicao do obj de retorno onde se encontra o documento criado));
                 })
                 .catch(async (err) => {
@@ -286,30 +271,31 @@ exports.deleteAll = (_req, res, _nxt) => {
 
 
 // For img
-exports.newImg = async (req, res) => {  
-  imgName = req.params.imgName
-  console.log(req.body)
-  console.log('chego aqui')
-  console.log(imgName)
-  if (!imgName)
-    return res.status(400).json({msg: "Imagem inexistente."})
-
-  const session = await mongoose.startSession()
+exports.newImg = async (req, res) => {
   try {
-      await session.withTransaction(async () => {
-          const file = req.files.file
-          
-          await file.mv(`${__basedir}/uploads/${imgName}`, async err =>{
-            if(err)
-            {
-                await session.abortTransaction()
-                res.status(500).json({ success: false, msg: `${err}` })
-            }
-          })
+    if(!req.files) {
+      res.send({
+        status: false,
+        message: 'No file uploaded'
       })
+    } else {
+      let imagem = req.files.selectedFile;
+
+      //Use the mv() method to place the file in upload directory (i.e. "uploads")
+      imagem.mv(`${__basedir}/uploads/${req.params.categoria}/` + imagem.name);
+
+      //send response
+      res.send({
+        status: true,
+        message: 'File is uploaded',
+        data: {
+          name: imagem.name,
+          mimetype: imagem.mimetype,
+          size: imagem.size
+       }
+      })
+    }
   } catch (err) {
-      res.status(500).json({ success: false, msg: `${err}4` })
-  } finally {
-      await session.endSession()
+      res.status(500).json({ success: false, msg: `${err}` })
   }
 }

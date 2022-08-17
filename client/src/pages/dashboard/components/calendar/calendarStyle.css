@@ -1,0 +1,17 @@
+.calendarContainer a {
+  color: var(--senac-azul);
+  text-decoration: none;
+}
+.fc-button {
+  background-color: var(--senac-azul) !important;
+  border: none !important;
+}
+.calendarContainer thead {
+  border-bottom: 2px solid var(--senac-azul);
+}
+.fc-col-header-cell-cushion  {
+  color: var(--senac-amarelo-dark) !important;
+}
+.fc-day-today {
+  background-color: #0054944f !important;
+}

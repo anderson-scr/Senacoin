@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useRef, useState, useContext } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { verificaSessao } from 'auth/login/verificaSessao'
 
@@ -23,10 +23,15 @@ import ModalService from 'common/modal/services/modalService'
 import ModalCadUnidade from 'common/preMadeModal/cadUnidade'
 import ModalSelecionarUnidade from 'common/preMadeModal/selects/modalSelecionarUnidade'
 
+// Contexts
+import { AuthContext } from 'contexts/authContext'
+
+
 const CadUsuario = () => {
   const effectOnce = useRef(true)
   const [selectedUnidades, setSelectedUnidades] = useState([])
   const [perfis, setPerfil] = useState([])
+  const {permissions} = useContext(AuthContext)
   const [permissoes, setPermissoes] = useState({
     cad_areas: false,
     cad_itens: false,
@@ -42,12 +47,13 @@ const CadUsuario = () => {
     ger_usuarios: false,
     relatorios: false
   })
+  const [checkSelectedUni, setCheckSelectedUni] = useState(false)
   const navigate = useNavigate()
   const { register, handleSubmit, formState: {
     errors
   } } = useForm({
     resolver: yupResolver(yupSchemaCadUsuario)
-  });
+  })
 
   // Verifica sessão de usuário
   useEffect(() => {
@@ -60,7 +66,6 @@ const CadUsuario = () => {
       (async () => {
         setPerfil(await callPerfilAPI.ativo())
       })()
-
       return () => effectOnce.current = false
     }
   }, [navigate])
@@ -78,17 +83,21 @@ const CadUsuario = () => {
 
 
   function cadastrarUsuario(dados) {
-    // Arrumando a estrutura do objeto para enviar pro post de usuario
-    dados.senha = dados.nome.toLowerCase() + '1234'
-    dados.nome = dados.nome + ' ' + dados.sobrenome
-    dados.cpf = dados.cpf + ' '
-    dados.id_unidade = selectedUnidades
-
-    // Depois dos spreads, deleto os desnecessários
-    delete dados.sobrenome
-    delete dados.perfil
-
-    callUsuarioAPI.novo(dados)
+    verificaUnidade()
+    if(checkSelectedUni) {
+      // Fixing object structure in somme keys to send to the back
+      dados.senha = dados.nome.toLowerCase() + '1234'
+      dados.nome = dados.nome + ' ' + dados.sobrenome
+      dados.cpf = dados.cpf + ' '
+      dados.id_unidade = selectedUnidades
+      dados.permissoes = {...permissoes}
+      
+      // After restructuring the object, we delete what is not needed in the back end
+      delete dados.sobrenome
+      delete dados.perfil
+      
+      callUsuarioAPI.novo(dados)
+    }
   }
 
   // Change the default perfil value
@@ -97,17 +106,21 @@ const CadUsuario = () => {
     setPermissoes(tempoPerfil)
   }
 
-  // Permits to change the current value of the permissao sate
+  // Permits to change the current value of permissao state
   const changePermissao = (evt) => {
     const tempPermissao = {...permissoes}
-    console.log(tempPermissao)
     tempPermissao[evt.target.id] = !tempPermissao[evt.target.id]
     setPermissoes({...tempPermissao})
   }
 
+  // We needed this custom verify func cause the react form cannot check the state on selectedUnidades and send to yup.
+  const verificaUnidade = () => {
+    selectedUnidades.length > 0? setCheckSelectedUni(false) : setCheckSelectedUni(true)
+  }
+
   return (
     <section>
-      <form onSubmit={handleSubmit(cadastrarUsuario)}>
+      <form onSubmit={handleSubmit(cadastrarUsuario, verificaUnidade)}>
 
         {/* First row */}
         <div className='container row mx-auto'>
@@ -171,10 +184,10 @@ const CadUsuario = () => {
             {/* Second Col - first row */}
             <div>
               <div className='mb-2 overflow-visible'>
-                <AddTooltip label='Unidade' msg='Criar uma nova unidade.' onClickFunc={openModalCadUnidade} />
-                <input type="button" onClick={evt => openModalSelectUnidade(evt)} className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value={`${selectedUnidades.length} unidade(s) selecionada(s)`} />
+                <AddTooltip label='Unidade' permission={permissions.cad_unidades} msg='Criar uma nova unidade.' onClickFunc={openModalCadUnidade} />
+                <input type="button" onClick={evt => openModalSelectUnidade(evt)} className="form-control" id="id_unidade" aria-describedby="emailHelp" value={selectedUnidades.length + ' unidade(s) selecionada(s)'}/>
                 <div style={{height: '25px'}}>
-                {errors?.id_unidade?.type &&
+                {checkSelectedUni &&
                   <div className="form-text text-danger">Preencha o campo corretamente.</div>
                 }
               </div>

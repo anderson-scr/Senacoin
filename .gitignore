@@ -41,6 +41,7 @@
 /server/.env.development.local
 /server/.env.test.local
 /server/.env.production.local
+/server/uploads
 
 /server/npm-debug.log*
 /server/yarn-debug.log*

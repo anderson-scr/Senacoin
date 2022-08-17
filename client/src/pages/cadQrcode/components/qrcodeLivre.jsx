@@ -105,7 +105,7 @@ const QrcodeLivre = () => {
         
         <div className="mb-2 flex-grow-1 containerDesc" >
           <label htmlFor="exampleInputEmail1" className="form-label">Descrição</label>
-          <textarea type="text" className="iptDescricao form-control" id="exampleInputEmail1" aria-describedby="emailHelp" {...register("descricao")} />
+          <textarea type="text" className="iptDescricao form-control" id="exampleInputEmail1" style={{height: '120px'}} aria-describedby="emailHelp" {...register("descricao")} />
         </div>
       </div>
 

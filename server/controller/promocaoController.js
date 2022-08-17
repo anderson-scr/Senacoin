@@ -220,3 +220,33 @@ exports.deleteAll = (_req, res, _nxt) => {
     .then((n) => (res.status(200).json({success: true, total: n.deletedCount})))
     .catch((err) => (res.status(500).json({ success: false, msg: `${err}` })));
 }
+
+// For img
+exports.newImg = async (req, res) => {
+  try {
+    if(!req.files) {
+      res.send({
+        status: false,
+        message: 'No file uploaded'
+      })
+    } else {
+      let imagem = req.files.selectedFile;
+
+      //Use the mv() method to place the file in upload directory (i.e. "uploads")
+      imagem.mv(`${__basedir}/uploads/promocao/` + imagem.name);
+
+      //send response
+      res.send({
+        status: true,
+        message: 'File is uploaded',
+        data: {
+          name: imagem.name,
+          mimetype: imagem.mimetype,
+          size: imagem.size
+       }
+      })
+    }
+  } catch (err) {
+      res.status(500).json({ success: false, msg: `${err}` })
+  }
+}

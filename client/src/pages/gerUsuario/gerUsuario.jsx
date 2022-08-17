@@ -5,6 +5,8 @@ import Table from 'common/table/tableIndex'
 import { callUsuarioAPI } from 'api/usuario/callUsuarios'
 import { gerUsuarioTabelaSchema } from 'common/table/schemas/gerUsuario'
 
+// Modal
+import ModalEditUsuario from 'common/preMadeModal/editUsuario'
 
 const GerUsuario = () => {
   const effectOnce = useRef(true)
@@ -22,7 +24,7 @@ const GerUsuario = () => {
   }, [navigate])
 
   return (
-    <Table apiRoute={callUsuarioAPI.todos} columnSchema={gerUsuarioTabelaSchema} rowSize={12} subcategoria={false} area={false} ativo={true}/>
+    <Table apiRoute={callUsuarioAPI.todos} modal={ModalEditUsuario} columnSchema={gerUsuarioTabelaSchema} rowSize={12} subcategoria={false} area={false} ativo={true}/>
   )
 }
 

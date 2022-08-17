@@ -39,21 +39,21 @@ export const routes = {
     novo: /* Id antes */ 'item/produto/add',
     ativo: /* Id antes */ 'item/produto/active',
     todos: /* Id antes */ 'item/produto/all',
-    novoImagem: 'item/'
+    novaImagem: 'item/produto/addImg'
   },
   
   evento: {
     novo: /* Id antes */ 'item/evento/add',
     ativo: /* Id antes */ 'item/evento/active',
     todos: /* Id antes */ 'item/evento/all',
-    novoImagem: 'item/'
+    novaImagem: 'item/evento/addImg'
   },
   
   servico: {
     novo: /* Id antes */ 'item/servico/add',
     ativo: /* Id antes */ 'item/servico/active',
     todos: /* Id antes */ 'item/servico/all',
-    novoImagem: 'item/'
+    novaImagem: 'item/servico/addImg'
   },
 
   qrcode: {
@@ -65,6 +65,7 @@ export const routes = {
   promocao: {
     novo: 'promocao/add',
     ativo: 'promocao/active/',
-    todos: 'promocao/all/'
+    todos: 'promocao/all/',
+    novaImagem: 'promocao/addImg'
   }
 }
