@@ -100,6 +100,9 @@ const ModalEditUsuario = (props) => {
     
     //callUsuarioAPI.novo(dados)
   }
+  useEffect(() => {
+
+  }, [])
 
 
   return (
