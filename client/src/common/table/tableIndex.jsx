@@ -22,7 +22,7 @@ import { MdArrowDropDown, MdArrowDropUp } from "react-icons/md";
 import { BsDot } from "react-icons/bs";
 
 
-const Table = ({apiRoute, rowCount = 12, resizeContainer = false, columnSchema, modal, editColumn = true, setCurrentState = false, filters = true, categoria = false, subcategoria = true, area = true, ativo = false}) => {
+const Table = ({apiRoute, rowCount = 12, resizeContainer = false, enablePagination = true, columnSchema, modal, editColumn = true, setCurrentState = false, filters = true, categoria = false, subcategoria = true, area = true, ativo = false}) => {
   const effectOnce = useRef(true)
   const [dataTabela, setDataTabela] = useState([])
   const navigate = useNavigate()
@@ -153,7 +153,7 @@ const Table = ({apiRoute, rowCount = 12, resizeContainer = false, columnSchema, 
         filter={globalFilter}
         setFilter={setGlobalFilter}
       />}
-      <div className='container mt-4 containerTable' style={ resizeContainer? {minHeight: '20.3vh', maxHeight: '20.3vh'} : {minHeight: '56.3vh', maxHeight: '56.3vh'} }>
+      <div className='container mt-4 containerTable' style={ resizeContainer? {height: 'auto'} : {minHeight: '56.3vh', maxHeight: '56.3vh'} }>
         <table className="table">
           <thead className='tableHead'>
             {dataTabela &&
@@ -187,15 +187,17 @@ const Table = ({apiRoute, rowCount = 12, resizeContainer = false, columnSchema, 
           </tbody>
         </table>
       </div>
-      <TablePagination 
-        canPreviousPage={canPreviousPage} 
-        pageIndex={pageIndex} 
-        pageOptions={pageOptions} 
-        canNextPage={canNextPage}
-        nextPage={nextPage}
-        previousPage={previousPage}
-        gotoPage={gotoPage}
-      />
+      {enablePagination && 
+        <TablePagination 
+          canPreviousPage={canPreviousPage} 
+          pageIndex={pageIndex} 
+          pageOptions={pageOptions} 
+          canNextPage={canNextPage}
+          nextPage={nextPage}
+          previousPage={previousPage}
+          gotoPage={gotoPage}
+        />
+      }
     </div>
   )
 }

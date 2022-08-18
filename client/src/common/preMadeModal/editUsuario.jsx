@@ -3,8 +3,8 @@ import { useNavigate } from 'react-router-dom'
 import { verificaSessao } from 'auth/login/verificaSessao'
 
 // API's
-import { callUsuarioAPI } from 'api/usuario/callUsuarios'
 import { callPerfilAPI } from 'api/common/callPerfil'
+import { callUnidadeAPI } from 'api/common/callUnidades'
 
 // Form validation and more
 import { yupSchemaCadUsuario } from 'utils/validation/schemas/cadUsuario'
@@ -14,13 +14,16 @@ import { yupResolver } from '@hookform/resolvers/yup'
 // Form tooltip
 import QuestionTooltip from 'common/tooltips/questionTooltip'
 
-
 // Modal Imports
 import ModalService from 'common/modal/services/modalService'
 import ModalSelecionarUnidade from 'common/preMadeModal/selects/modalSelecionarUnidade'
 import Modal from "common/modal/modalIndex"
 import ModalHeader from "common/modal/components/modalHead"
 import ModalBody from "common/modal/components/modalBody"
+
+// Table
+import Table from "common/table/tableIndex"
+import { selectUnidadeTableSchema } from 'common/table/schemas/selectUnidade'
 
 
 const ModalEditUsuario = (props) => {
@@ -107,7 +110,7 @@ const ModalEditUsuario = (props) => {
         </h2>
       </ModalHeader>
       <ModalBody>
-        <form className='text-start' onSubmit={handleSubmit(cadastrarUsuario)} style={{width: '60vw'}}>
+        <form className='text-start' onSubmit={handleSubmit(cadastrarUsuario)} style={{width: '72vw'}}>
 
           {/* First row */}
           <div className='container row mx-auto'>
@@ -165,21 +168,17 @@ const ModalEditUsuario = (props) => {
               </div>
             </div>
 
-            {/* Second Col */}
             <div className='col'>
+              <div className='container'>
+                <label className="form-check-label" htmlFor="checkboxCadUsuario">
+                  Unidade
+                </label>
+                <Table apiRoute={callUnidadeAPI.ativo} columnSchema={selectUnidadeTableSchema} rowCount={9} resizeContainer={true} enablePagination={false} filters={false} />
+              </div>
+            </div>
 
-              {/* Second Col - first row */}
+            <div className='col'>
               <div>
-                <div className='mb-2 overflow-visible'>
-                  <label htmlFor="iptUnidades" className="form-label">Unidade</label>
-                  <input type="button" onClick={evt => openModalSelectUnidade(evt)} className="form-control" id="iptUnidades" aria-describedby="emailHelp" value={`${selectedUnidades.length} unidade(s) selecionada(s)`} />
-                  <div style={{height: '25px'}}>
-                  {errors?.id_unidade?.type &&
-                    <div className="form-text text-danger">Preencha o campo corretamente.</div>
-                  }
-                </div>
-                </div>
-
                 <div className='mb-2 overflow-visible'>
                   <QuestionTooltip label='Perfil' msg='Permissões definidas pelo sistema. Voce pode escolher e editar.' />
                   <select className="form-select" id='perfil' aria-label="Default select example" defaultValue="DEFAULT" onChangeCapture={evt => changePerfil(evt)} {...register('perfil')}>
