@@ -81,7 +81,7 @@ exports.newList = (req, res, _next) => {
 
 exports.listAll = (req, res, _next) => {
 	Item.find({}).skip(req.params.offset || 0).limit(60)
-    .select("nome id_area id_categoria id_subcategoria id_unidade pontos ativo")
+    .select("nome id_area id_categoria quantidade id_subcategoria id_unidade pontos ativo")
 	.populate({path : 'id_area', select: 'nome -_id'}) 
     .populate({path : 'id_categoria', select: 'nome -_id'})
     .populate({path : 'id_unidade', select: 'nome -_id'})

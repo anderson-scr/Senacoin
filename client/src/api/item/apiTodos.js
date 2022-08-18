@@ -26,5 +26,26 @@ export const callTodosItemsAPI = {
     } catch (error) {
       console.log(error)
     }
+  },
+  baixoEstoque: async (offset) => {
+    try {
+      const apiResponse = await api.get(routes.items.todos)
+
+      // If there's no data in the apiResponse, return a empty array for react-table
+      if(apiResponse.status === 204) {
+        return []
+      } else {
+        const lowStorage = []
+        apiResponse.data.forEach((data, idx) => {
+          if(data.quantidade < 15 && data.quantidade !== null) {
+            lowStorage.push(apiResponse.data[idx])
+          }
+        })
+        return lowStorage
+      }
+
+    } catch (error) {
+      console.log(error)
+    }
   }
 }

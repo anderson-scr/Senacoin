@@ -1,7 +1,5 @@
 .containerTable {
   overflow-y: auto;
-  min-height: 56.3vh;
-  max-height: 56.3vh;
 }
 .containerTable::-webkit-scrollbar {
   width: 6px;

@@ -31,8 +31,10 @@ const Calendar = () => {
         <FullCalendar
           plugins={[ dayGridPlugin ]}
           initialView="dayGridMonth"
-          height={650}
+          height={395}
           eventAdd={event => handleEventAdd(event)}
+          locale= {'br'}
+          buttonText={{today: 'Ir Para Hoje'}}
         />
       }
     </div>

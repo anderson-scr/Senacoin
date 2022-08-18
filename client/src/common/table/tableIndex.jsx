@@ -22,7 +22,7 @@ import { MdArrowDropDown, MdArrowDropUp } from "react-icons/md";
 import { BsDot } from "react-icons/bs";
 
 
-const Table = ({apiRoute, columnSchema, modal, setCurrentState = false, filters = true, categoria = false, subcategoria = true, area = true, ativo = false}) => {
+const Table = ({apiRoute, rowCount = 12, resizeContainer = false, columnSchema, modal, editColumn = true, setCurrentState = false, filters = true, categoria = false, subcategoria = true, area = true, ativo = false}) => {
   const effectOnce = useRef(true)
   const [dataTabela, setDataTabela] = useState([])
   const navigate = useNavigate()
@@ -40,10 +40,10 @@ const Table = ({apiRoute, columnSchema, modal, setCurrentState = false, filters 
       })()
 
       // Defines the amount of lines in the page
-      setPageSize(12)
+      setPageSize(rowCount)
       return () => effectOnce.current = false
     }
-  }, [navigate, apiRoute, categoria, offset])
+  }, [navigate, apiRoute, categoria, offset, rowCount])
   
   // Definindo as configs da tabela
   const tableInstance = useTable({
@@ -52,37 +52,39 @@ const Table = ({apiRoute, columnSchema, modal, setCurrentState = false, filters 
 
     // useRowSelect adds a new row so we can put checkbox in it
   }, useFilters,useGlobalFilter, useSortBy, usePagination, useRowSelect, (hooks) => {
-      hooks.visibleColumns.push(columns => {
-        if(columns[0].Header === 'Editar') {
-          columns.splice(0, 1)
+      if(editColumn) {
+        hooks.visibleColumns.push(columns => {
+          if(columns[0].Header === 'Editar') {
+            columns.splice(0, 1)
+            return [
+              {
+                id: 'edit',
+                Header: 'Editar',
+                Cell: ( ({row}) => (
+                  <RowEdit {...row.getToggleRowSelectedProps()} />
+                ))
+              },
+              ...columns
+            ]
+          }
           return [
             {
-              id: 'edit',
-              Header: 'Editar',
+              id: 'selection',
+              Header: ({getToggleAllRowsSelectedProps}) => {
+                return (
+                  <div>
+                    <RowCheckbox {...getToggleAllRowsSelectedProps()} />
+                  </div>
+                )
+              },
               Cell: ( ({row}) => (
-                <RowEdit {...row.getToggleRowSelectedProps()} />
+                <RowCheckbox {...row.getToggleRowSelectedProps()} />
               ))
             },
             ...columns
           ]
-        }
-        return [
-          {
-            id: 'selection',
-            Header: ({getToggleAllRowsSelectedProps}) => {
-              return (
-                <div>
-                  <RowCheckbox {...getToggleAllRowsSelectedProps()} />
-                </div>
-              )
-            },
-            Cell: ( ({row}) => (
-              <RowCheckbox {...row.getToggleRowSelectedProps()} />
-            ))
-          },
-          ...columns
-        ]
-      })
+        })
+      }
   // useSortBy. Sortering columns.
   })
 
@@ -151,7 +153,7 @@ const Table = ({apiRoute, columnSchema, modal, setCurrentState = false, filters 
         filter={globalFilter}
         setFilter={setGlobalFilter}
       />}
-      <div className='container mt-4 containerTable'>
+      <div className='container mt-4 containerTable' style={ resizeContainer? {minHeight: '20.3vh', maxHeight: '20.3vh'} : {minHeight: '56.3vh', maxHeight: '56.3vh'} }>
         <table className="table">
           <thead className='tableHead'>
             {dataTabela &&

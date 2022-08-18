@@ -1,6 +1,16 @@
-.fc {
-  transform: scale(.5);
+/* .calendarContainer {
+  transform: scale(.6);
+  position: absolute;
+  top: -150px;
+  left: 0;
 }
+.fc-header-toolbar {
+  width: 35vw;
+}
+.fc-scrollgrid {
+  width: 40.5vw !important;
+  height: 43.6vh !important;
+} */
 .calendarContainer a {
   color: var(--senac-azul);
   text-decoration: none;

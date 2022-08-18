@@ -66,5 +66,33 @@ export const callPromocaoAPI = {
       console.log(error)
       return false
     }
+  },
+  baixoEstoque: async (offset) => {
+    try {
+      const apiResponse = await api.get(routes.promocao.todos)
+
+      // If there's no data in the apiResponse, return a empty array for react-table
+      if(apiResponse.status === 204) {
+        return []
+      } else {
+        const vencer = []
+        const currentDay = new Date();
+        apiResponse.data.forEach((data, idx) => {
+          console.log(data)
+          const cDate = new Date(data.data_fim)
+          if(currentDay < cDate) {
+            const diffTime = Math.abs(cDate - currentDay)
+            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24))
+            
+            if(diffDays <= 7) vencer.push(apiResponse.data[idx])
+          }
+        })
+        console.log(vencer)
+        return apiResponse.data
+      }
+
+    } catch (error) {
+      console.log(error)
+    }
   }
 }
