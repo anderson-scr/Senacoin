@@ -40,19 +40,12 @@ export const callQrcodeAPI = {
       if(apiResponse.status === 204) {
         return []
       } else {
-        const vencer = []
-        const currentDay = new Date();
-        apiResponse.data.forEach((data, idx) => {
-          const cDate = new Date(data.data_fim)
-          if(currentDay < cDate) {
-            const diffTime = Math.abs(cDate - currentDay)
-            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24))
-            
-            if(diffDays <= 7) vencer.push(apiResponse.data[idx])
-          }
+        const sortedByDate = apiResponse.data.sort((a, b) => {
+          return a.data_fim - b.data_fim
         })
-        console.log(vencer)
-        return apiResponse.data
+        const lastFour = sortedByDate.slice(0, 4)
+        console.log(lastFour)
+        return lastFour
       }
 
     } catch (error) {

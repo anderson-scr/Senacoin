@@ -7,15 +7,14 @@ import Calendar from './components/calendar/calendar'
 import ItemsAlertTable from './components/itemsAlertTable'
 
 // API's 
-import { callTodosItemsAPI } from 'api/item/apiTodos'
+import { callQrcodeAPI } from 'api/qrcode/apiQrcode'
 
 // Table 
 import Table from 'common/table/tableIndex'
-import { baixoEstoqueTableSchema } from 'common/table/schemas/baixoEstoque'
+import { lastFourTableSchema } from 'common/table/schemas/lastFourQrcode'
 
 const Dashboard = () => {
   const effectOnce = useRef(true)
-  const [itemLowStorage, setItemLowStorage] = useState([])
   const navigate = useNavigate()
   
   useEffect(() => {
@@ -24,18 +23,10 @@ const Dashboard = () => {
         navigate("/Login", {replace: true})
       }
 
-      // Call promocao API
-      (async () => {
-        setItemLowStorage(await callTodosItemsAPI.baixoEstoque(0))
-      })()
-      
+
       return () => effectOnce.current = false
     }
   }, [navigate])
-
-  useEffect(() => {
-    console.log(itemLowStorage)
-  }, [itemLowStorage])
 
   return (
     <section className='container'>
@@ -49,8 +40,8 @@ const Dashboard = () => {
         </div>
       </div>
       <div className='row'>
-        <h3 className='mt-5' style={{margin: '0'}}>Estoque baixo</h3>
-        <Table filters={false} rowCount={10} resizeContainer={true} apiRoute={callTodosItemsAPI.baixoEstoque} columnSchema={baixoEstoqueTableSchema} editColumn={false} />
+        <h3 className='mt-5' style={{margin: '0'}}>Qrcodes próximos de vencer</h3>
+        <Table filters={false} rowCount={10} resizeContainer={true} apiRoute={callQrcodeAPI.paraVencer} columnSchema={lastFourTableSchema} editColumn={false} enablePagination={false} />
       </div>
     </section>
   )

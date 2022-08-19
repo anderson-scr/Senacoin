@@ -82,8 +82,8 @@ const CadUsuario = () => {
   }
 
 
-  function cadastrarUsuario(dados) {
-    verificaUnidade()
+  async function cadastrarUsuario(dados) {
+    await verificaUnidade()
     if(checkSelectedUni) {
       // Fixing object structure in somme keys to send to the back
       dados.senha = dados.nome.toLowerCase() + '1234'
@@ -95,7 +95,7 @@ const CadUsuario = () => {
       // After restructuring the object, we delete what is not needed in the back end
       delete dados.sobrenome
       delete dados.perfil
-      
+      console.log(dados)
       callUsuarioAPI.novo(dados)
     }
   }
@@ -114,8 +114,8 @@ const CadUsuario = () => {
   }
 
   // We needed this custom verify func cause the react form cannot check the state on selectedUnidades and send to yup.
-  const verificaUnidade = () => {
-    selectedUnidades.length > 0? setCheckSelectedUni(false) : setCheckSelectedUni(true)
+  const verificaUnidade = async () => {
+    selectedUnidades.length > 0? await setCheckSelectedUni(true) : await setCheckSelectedUni(false)
   }
 
   return (

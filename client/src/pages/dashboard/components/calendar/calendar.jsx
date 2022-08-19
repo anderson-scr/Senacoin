@@ -15,7 +15,9 @@ const Calendar = () => {
   useEffect(() => {
     if(effectOnce.current) {
       (async () => {
-        setQrCode(await callQrcodeAPI.todos(0))
+        await setQrCode(await callQrcodeAPI.todos(0))
+      
+        // Set the state to fill calendar
       })()
       return () => effectOnce.current = false
     }

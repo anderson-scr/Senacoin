@@ -153,7 +153,7 @@ exports.use = (req, res, _next) => {
 exports.listAll = (req, res, _next) => {
 
 	QrCode.find({}).skip(req.params.offset || 0).limit(60)
-    .select("nome descricao id_unidade ativo data_inicio data_fim")
+    .select("nome descricao id_unidade pontos ativo data_inicio data_fim")
 	.populate({path : 'id_unidade', select: 'nome cidade uf -_id'})
     .then((qrcodes) => {
         console.log(qrcodes)
