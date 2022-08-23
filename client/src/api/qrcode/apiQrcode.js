@@ -1,11 +1,11 @@
 import api from '../routes/default';
 import { routes } from "api/routes/routes"
 
+
 // Modal
 import ModalService from 'common/modal/services/modalService'
 import ModalCadErro from 'common/preMadeModal/resultados/cadErro'
 import ModalCadCorreto from 'common/preMadeModal/resultados/cadCorreto'
-import { date } from 'yup';
 
 export const callQrcodeAPI = {
   novo: async (dadosQrcode) => {
@@ -44,10 +44,12 @@ export const callQrcodeAPI = {
           return a.data_fim - b.data_fim
         })
         const lastFour = sortedByDate.slice(0, 4)
+        lastFour.forEach((date, idx) => {
+          lastFour[idx].data_fim = date.data_fim.slice(0, 10)
+        })
         console.log(lastFour)
         return lastFour
       }
-
     } catch (error) {
       console.log(error)
     }
