@@ -23,6 +23,9 @@
 .active > li > .icon {
   color: var(--senac-amarelo);
 }
+.active  li div {
+  color: var(--senac-amarelo);
+}
 /* Icons in general */
 .icon {
   color: var(--branco);
