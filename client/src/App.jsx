@@ -27,6 +27,17 @@ import CadProduto from 'pages/cadItem/components/cadProdutos/cadProduto'
 import CadServico from 'pages/cadItem/components/cadServico/cadServico'
 import QrcodeLivre from 'pages/cadQrcode/components/qrcodeLivre'
 import QrcodeVinculado from 'pages/cadQrcode/components/qrcodeVinculado'
+import RelatorioTransacoes from 'pages/relatorios/components/relatorioTransacoes/relatorioTransacoes'
+import RelatorioCadastros from 'pages/relatorios/components/relatorioCadastros/relatorioCadastros'
+import AdministradoresForm from 'pages/relatorios/components/relatorioCadastros/components/administradoresForm'
+import AlunosForm from 'pages/relatorios/components/relatorioCadastros/components/alunosForm'
+import EventosForm from 'pages/relatorios/components/relatorioCadastros/components/eventosForm'
+import ProdutosForm from 'pages/relatorios/components/relatorioCadastros/components/produtosForm'
+import PromocoesForm from 'pages/relatorios/components/relatorioCadastros/components/promocoesForm'
+import QrcodesForm from 'pages/relatorios/components/relatorioCadastros/components/qrcodesForm'
+import ServicosForm from 'pages/relatorios/components/relatorioCadastros/components/servicosForm'
+import SubcategoriaForm from 'pages/relatorios/components/relatorioCadastros/components/subcategoriaForm'
+import UnidadesAreasForm from 'pages/relatorios/components/relatorioCadastros/components/unidadesAreasForm'
 
 
 function App() {
@@ -70,7 +81,22 @@ function App() {
               <Route path='/GerenciarUsuarios' element={<GerUsuario />} />
               <Route path='/GerenciarItems' element={<GerItem />} />
               <Route path='/GerenciarQrcodes' element={<GerQrcode />} />
-              <Route path='/Relatorios' element={<Relatorios />} />
+              
+              <Route path='/Relatorios' element={<Navigate replace to='/Relatorios/Cadastros' />} />
+              <Route path='/Relatorios' element={<Relatorios />}>
+                <Route path='/Relatorios/Cadastros' element={<RelatorioCadastros />} >
+                  <Route path='/Relatorios/Cadastros/Administradores' element={<AdministradoresForm />} />
+                  <Route path='/Relatorios/Cadastros/Alunos' element={<AlunosForm />} />
+                  <Route path='/Relatorios/Cadastros/Eventos' element={<EventosForm />} />
+                  <Route path='/Relatorios/Cadastros/Produtos' element={<ProdutosForm />} />
+                  <Route path='/Relatorios/Cadastros/Promocoes' element={<PromocoesForm />} />
+                  <Route path='/Relatorios/Cadastros/Qrcodes' element={<QrcodesForm />} />
+                  <Route path='/Relatorios/Cadastros/Servicos' element={<ServicosForm />} />
+                  <Route path='/Relatorios/Cadastros/Subcategoria' element={<SubcategoriaForm />} />
+                  <Route path='/Relatorios/Cadastros/UnidadesAreas' element={<UnidadesAreasForm />} />
+                </Route>
+                <Route path='/Relatorios/Transacoes' element={<RelatorioTransacoes />} />
+              </Route>
             </Route>
           </Route>
         </Routes>
