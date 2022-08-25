@@ -12,9 +12,8 @@ const RelatorioCadastros = () => {
     '/Relatorios/Cadastros/Produtos',
     '/Relatorios/Cadastros/Servicos',
     '/Relatorios/Cadastros/Eventos',
-    '/Relatorios/Cadastros/Qrcodes',
     '/Relatorios/Cadastros/Promocoes',
-    '/Relatorios/Cadastros/Subcategoria',
+    '/Relatorios/Cadastros/Qrcodes',
     '/Relatorios/Cadastros/UnidadesAreas'
   ]
 
@@ -34,16 +33,10 @@ const RelatorioCadastros = () => {
           <option value="2">Produtos</option>
           <option value="3">Serviços</option>
           <option value="4">Eventos</option>
-          <option value="5">Qrcodes</option>
-          <option value="6">Promoções</option>
-          <option value="7">Subcategorias</option>
-          <option value="8">Unidades e Areas</option>
+          <option value="5">Promoções</option>
+          <option value="6">Qrcodes</option>
+          <option value="7">Unidades, Areas e Subcategorias</option>
         </select>
-        <div style={{height: '25px'}}>
-          {/* {errors?.perfil?.type &&
-            <div className="form-text text-danger">Preencha o campo corretamente.</div>
-          } */}
-        </div>
       </div>
       <hr />
       <section className='container'>
@@ -54,5 +47,3 @@ const RelatorioCadastros = () => {
 }
 
 export default RelatorioCadastros
-
-'/ativo-/relatorio-aluno'

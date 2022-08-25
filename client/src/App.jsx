@@ -36,8 +36,7 @@ import ProdutosForm from 'pages/relatorios/components/relatorioCadastros/compone
 import PromocoesForm from 'pages/relatorios/components/relatorioCadastros/components/promocoesForm'
 import QrcodesForm from 'pages/relatorios/components/relatorioCadastros/components/qrcodesForm'
 import ServicosForm from 'pages/relatorios/components/relatorioCadastros/components/servicosForm'
-import SubcategoriaForm from 'pages/relatorios/components/relatorioCadastros/components/subcategoriaForm'
-import UnidadesAreasForm from 'pages/relatorios/components/relatorioCadastros/components/unidadesAreasForm'
+import UnidadesAreasSubcategoriasForm from 'pages/relatorios/components/relatorioCadastros/components/unidadesAreasSubcategoriasForm'
 
 
 function App() {
@@ -92,8 +91,7 @@ function App() {
                   <Route path='/Relatorios/Cadastros/Promocoes' element={<PromocoesForm />} />
                   <Route path='/Relatorios/Cadastros/Qrcodes' element={<QrcodesForm />} />
                   <Route path='/Relatorios/Cadastros/Servicos' element={<ServicosForm />} />
-                  <Route path='/Relatorios/Cadastros/Subcategoria' element={<SubcategoriaForm />} />
-                  <Route path='/Relatorios/Cadastros/UnidadesAreas' element={<UnidadesAreasForm />} />
+                  <Route path='/Relatorios/Cadastros/UnidadesAreas' element={<UnidadesAreasSubcategoriasForm />} />
                 </Route>
                 <Route path='/Relatorios/Transacoes' element={<RelatorioTransacoes />} />
               </Route>
