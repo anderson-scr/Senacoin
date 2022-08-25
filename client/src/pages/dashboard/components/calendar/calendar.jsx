@@ -16,7 +16,7 @@ const Calendar = () => {
     if(effectOnce.current) {
       (async () => {
         // Set the state to fill calendar
-        await setCalendarDate(await callCalendarAPI.dataVencimento(0))
+        await setCalendarDate(await callCalendarAPI.dataVencimentoQrcode(0))
       })()
       return () => effectOnce.current = false
     }

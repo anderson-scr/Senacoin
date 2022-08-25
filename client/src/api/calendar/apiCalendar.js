@@ -3,7 +3,7 @@ import api from '../routes/default'
 import { HiQrcode } from "react-icons/hi"
 
 export const callCalendarAPI = {
-  dataVencimento: async (offset) => {
+  dataVencimentoQrcode: async (offset) => {
     try {
       const apiResponse = await api.get(routes.qrcode.todos + offset)
 
