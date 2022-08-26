@@ -44,9 +44,8 @@ const QrcodeVinculado = () => {
 
   function cadastrarQrcodeVinculado(qrcodeData) {
     verifySelectedItems()
-    if(checkSelectedItem) {
+    if(!checkSelectedItem) {
       callQrcodeAPI.novo(qrcodeData)
-      console.log(qrcodeData)
     }
   }
     // We needed this custom verify func cause the react form cannot check the state on selectedUnidades and send to yup.

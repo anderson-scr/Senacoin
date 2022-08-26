@@ -22,7 +22,8 @@ export const callPromocaoAPI = {
   },
   todos: async (offset) => {
     try {
-      const apiResponse = await api.get(routes.promocao.todos + offset)
+      const apiResponse = await api.get(routes.promocao.todos)
+      console.log(apiResponse.data)
       // If there's no data in the apiResponse, return a empty array for react-table
       if(apiResponse.status === 204) {
         return []

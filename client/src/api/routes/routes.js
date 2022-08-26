@@ -38,21 +38,21 @@ export const routes = {
   produto: {
     novo: /* Id antes */ 'item/produto/add',
     ativo: /* Id antes */ 'item/produto/active',
-    todos: /* Id antes */ 'item/produto/all',
+    todos: /* Id antes */ 'item/produto/all/',
     novaImagem: 'item/produto/addImg'
   },
   
   evento: {
     novo: /* Id antes */ 'item/evento/add',
     ativo: /* Id antes */ 'item/evento/active',
-    todos: /* Id antes */ 'item/evento/all',
+    todos: /* Id antes */ 'item/evento/all/',
     novaImagem: 'item/evento/addImg'
   },
   
   servico: {
     novo: /* Id antes */ 'item/servico/add',
     ativo: /* Id antes */ 'item/servico/active',
-    todos: /* Id antes */ 'item/servico/all',
+    todos: /* Id antes */ 'item/servico/all/',
     novaImagem: 'item/servico/addImg'
   },
 
@@ -65,7 +65,7 @@ export const routes = {
   promocao: {
     novo: 'promocao/add',
     ativo: 'promocao/active/',
-    todos: 'promocao/all/',
+    todos: 'promocao/all',
     novaImagem: 'promocao/addImg'
   }
 }

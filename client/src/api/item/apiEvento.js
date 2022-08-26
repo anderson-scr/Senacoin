@@ -42,5 +42,18 @@ export const callEventoAPI = {
       console.log(error)
       return false
     }
-  }
+  },
+  todos: async (offset) => {
+    try {
+      const apiResponse = await api.get(routes.evento.todos + offset)
+      // If there's no data in the apiResponse, return a empty array for react-table
+      console.log(apiResponse)
+      if(apiResponse.status === 204) {
+        return []
+      } else return apiResponse.data
+
+    } catch (error) {
+      console.log(error)
+    }
+  },
 }

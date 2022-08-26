@@ -3,7 +3,7 @@ import { callUnidadeAPI } from 'api/common/callUnidades'
 import { callAreaAPI } from 'api/common/callArea'
 import { callSubcategoriaAPI } from 'api/common/callSubcategoria'
 
-const TableFilters = ({categoriaOrUnidade, area, subcategoria, ativo, filter, setFilter}) => {
+const TableFilters = ({categoriaOrUnidade, area, unidade, subcategoria, ativo, filter, setFilter}) => {
   const effectOnce = useRef(true)
   const [subcategorias, setSubcategorias] = useState([])
   const [unidades, setUnidades] = useState([])
@@ -54,14 +54,14 @@ const TableFilters = ({categoriaOrUnidade, area, subcategoria, ativo, filter, se
           </div>}
           {ativo && // Check if it's to render this element
           <div className='mb-3 col-3 '>
-            <label htmlFor="dropSubcategoria" className="form-label">Ativo</label>
+            <label htmlFor="dropSubcategoria" className="form-label">Status</label>
             <select className="form-select" id='dropSubcategoria' aria-label="Default select example" defaultValue="DEFAULT">
               <option value="DEFAULT" disabled style={{display: "none"}}>Selecione</option>
               <option value="1" >Ativo</option>
               <option value="2" >Inativo</option>
             </select>
           </div>}
-          {!categoriaOrUnidade && // Check if it's to render this element
+          {unidade && // Check if it's to render this element
           <div className='mb-3 col-3 '>
             <label htmlFor="dropSubcategoria" className="form-label">Unidade</label>
             <select className="form-select" id='dropSubcategoria' aria-label="Default select example" onChangeCapture={evt => setFilter(unidades[evt.target.value - 1].nome)} defaultValue="DEFAULT">

@@ -22,7 +22,7 @@ import { MdArrowDropDown, MdArrowDropUp } from "react-icons/md";
 import { BsDot } from "react-icons/bs";
 
 
-const Table = ({apiRoute, rowCount = 12, resizeContainer = false, enablePagination = true, columnSchema, modal, editColumn = true, setCurrentState = false, filters = true, categoria = false, subcategoria = true, area = true, ativo = false}) => {
+const Table = ({apiRoute, rowCount = 12, resizeContainer = false, enablePagination = true, unidade = true, columnSchema, modal, editColumn = true, setCurrentState = false, filters = true, categoria = false, subcategoria = true, area = true, ativo = false}) => {
   const effectOnce = useRef(true)
   const [dataTabela, setDataTabela] = useState([])
   const navigate = useNavigate()
@@ -152,6 +152,7 @@ const Table = ({apiRoute, rowCount = 12, resizeContainer = false, enablePaginati
         ativo={ativo} 
         filter={globalFilter}
         setFilter={setGlobalFilter}
+        unidade={unidade}
       />}
       <div className='container mt-4 containerTable' style={ resizeContainer? {height: 'auto'} : {minHeight: '56.3vh', maxHeight: '56.3vh'} }>
         <table className="table">

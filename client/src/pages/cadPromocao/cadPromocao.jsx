@@ -8,12 +8,14 @@ import ModalSelecionarItem from '../../common/preMadeModal/selects/modalSelecion
 import ModalService from 'common/modal/services/modalService'
 import QuestionTooltip from 'common/tooltips/questionTooltip'
 import { callPromocaoAPI } from 'api/promocao/apiPromocao'
+import setImageName from 'utils/setImageName'
 
 const CadPromocao = () => {
   const effectOnce = useRef(true)
   const navigate = useNavigate()
   const [selectedItems, setSelectedItems] = useState([])
   const [checkSelectedItems, setCheckSelectedItems] = useState(false)
+  const [file, setFile] = useState()
 
   const { register, handleSubmit, formState: {
     errors
@@ -39,11 +41,23 @@ const CadPromocao = () => {
   
   function cadastrarPromocao(data) {
     verifySelectedItems()
-    if(checkSelectedItems) {
+    if(!checkSelectedItems) {
       data = {...data, 
         id_item: selectedItems
       }
+      // Change the file name to a unique name.
+      const fileName = setImageName(file.name)
+      const newFile = new File([file], fileName)
+      
+      // Save the file name to send to item route
+      data.id_unidade = data.id_item
+      delete data.desconto
+      delete data.quantidade
+      delete data.id_item
+      data.multiplicador = 2
+      data.imagem = fileName
       console.log(data)
+      callPromocaoAPI.novo(data, newFile)
     }
   }
   
@@ -66,7 +80,7 @@ const CadPromocao = () => {
           </div>
         </div>
         <div className="mb-3 col-6">
-          <QuestionTooltip label='Desconto de senacoins' msg='Valor abatido no custo do item. Multiplos items recebem o mesmo valor de desconto.' />
+          <QuestionTooltip label='Desconto de senacoins' msg='Valor abatido no custo do item. Múltiplos items recebem o mesmo valor de desconto.' />
           <input type="number" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder='200 Senacoins' {...register("desconto")}/>
           <div style={{height: '25px'}}>
             {errors?.desconto?.type &&
@@ -125,13 +139,13 @@ const CadPromocao = () => {
         </div>
         <div className="mb-3 ">
           <label htmlFor="formFile" className="form-label">Imagem da promoção</label> 
-          <input className="form-control" type="file" id="formFile" {...register("imagem")}  />
+          <input className="form-control" onChangeCapture={evt => setFile(evt.target.files[0])} type="file" id="formFile" {...register("imagem")}  />
         </div>
       </div>
 
       <div className='containerBtns row mt-5'>
         <div className='col d-flex'>
-          <button type="submit" className="btn btnCancelar btn-outline-secondary w-50">Cancelar</button>
+          <button type="button" className="btn btnCancelar btn-outline-secondary w-50">Cancelar</button>
         </div>
         <div className='col d-flex justify-content-end'>
           <button type="submit" className="btn btnSalvar btn-primary w-50">Salvar</button>

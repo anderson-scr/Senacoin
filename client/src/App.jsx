@@ -37,7 +37,13 @@ import PromocoesForm from 'pages/relatorios/components/relatorioCadastros/compon
 import QrcodesForm from 'pages/relatorios/components/relatorioCadastros/components/qrcodesForm'
 import ServicosForm from 'pages/relatorios/components/relatorioCadastros/components/servicosForm'
 import UnidadesAreasSubcategoriasForm from 'pages/relatorios/components/relatorioCadastros/components/unidadesAreasSubcategoriasForm'
-
+import TransacaoAdministrador from 'pages/relatorios/components/relatorioTransacoes/components/transacaoAdministrador'
+import TransacaoAluno from 'pages/relatorios/components/relatorioTransacoes/components/transacaoAluno'
+import TransacaoEvento from 'pages/relatorios/components/relatorioTransacoes/components/transacaoEvento'
+import TransacaoProduto from 'pages/relatorios/components/relatorioTransacoes/components/transacaoProduto'
+import TransacaoQrcode from 'pages/relatorios/components/relatorioTransacoes/components/transacaoQrcode'
+import TransacaoServico from 'pages/relatorios/components/relatorioTransacoes/components/transacaoServico'
+import TransacaoPromocao from 'pages/relatorios/components/relatorioTransacoes/components/transacaoPromocao'
 
 function App() {
   const [userAuth, setUserAuth] = useState(localStorage.accessToken? true : false)
@@ -93,7 +99,15 @@ function App() {
                   <Route path='/Relatorios/Cadastros/Servicos' element={<ServicosForm />} />
                   <Route path='/Relatorios/Cadastros/UnidadesAreas' element={<UnidadesAreasSubcategoriasForm />} />
                 </Route>
-                <Route path='/Relatorios/Transacoes' element={<RelatorioTransacoes />} />
+                <Route path='/Relatorios/Transacoes' element={<RelatorioTransacoes />} >
+                <Route path='/Relatorios/Transacoes/Administradores' element={<TransacaoAdministrador />} />
+                  <Route path='/Relatorios/Transacoes/Alunos' element={<TransacaoAluno />} />
+                  <Route path='/Relatorios/Transacoes/Eventos' element={<TransacaoEvento />} />
+                  <Route path='/Relatorios/Transacoes/Produtos' element={<TransacaoProduto />} />
+                  <Route path='/Relatorios/Transacoes/Promocoes' element={<TransacaoPromocao />} />
+                  <Route path='/Relatorios/Transacoes/Qrcodes' element={<TransacaoQrcode />} />
+                  <Route path='/Relatorios/Transacoes/Servicos' element={<TransacaoServico />} />
+                </Route>
               </Route>
             </Route>
           </Route>
