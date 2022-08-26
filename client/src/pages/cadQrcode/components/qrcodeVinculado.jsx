@@ -45,12 +45,14 @@ const QrcodeVinculado = () => {
   function cadastrarQrcodeVinculado(qrcodeData) {
     verifySelectedItems()
     if(!checkSelectedItem) {
-      callQrcodeAPI.novo(qrcodeData)
+      qrcodeData.item_vinculado = itemsVinculados
+      console.log(qrcodeData)
+      // callQrcodeAPI.novo(qrcodeData)
     }
   }
     // We needed this custom verify func cause the react form cannot check the state on selectedUnidades and send to yup.
     const verifySelectedItems = () => {
-      checkSelectedItem.length > 0? setCheckSelectedItem(false) : setCheckSelectedItem(true)
+      itemsVinculados.length > 0? setCheckSelectedItem(false) : setCheckSelectedItem(true)
     }
 
   return (
@@ -89,11 +91,11 @@ const QrcodeVinculado = () => {
               <QuestionTooltip label='Diário' msg='O Qrcode poderá ser utilizado uma vez por dia por cada usuário.' />
             </div>
             <div className="form-check">
-              <input className="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" {...register("semanal")} />
+              <input className="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault3" {...register("semanal")} />
               <QuestionTooltip label='Semanal' msg='O Qrcode poderá ser semanalmente por cada usuário.' />
             </div>
             <div className="form-check">
-              <input className="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" {...register("mensal")} />
+              <input className="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault4" {...register("mensal")} />
               <QuestionTooltip label='Mensal' msg='O Qrcode poderá ser utilizado uma vez por mes por cada usuário.' />
             </div>
           </div>

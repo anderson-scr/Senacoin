@@ -21,6 +21,10 @@ export const gerItemTableSchema = [
     accessor: "id_categoria.nome",
     className: "categoria"
   },
+  { Header: "Unidade",
+    accessor: "id_unidade[0].nome",
+    className: "unidade"
+  },
   { Header: "Status",
     accessor: "id_status.nome"
   }

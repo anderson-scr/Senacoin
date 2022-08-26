@@ -29,9 +29,8 @@ const QrcodeLivre = () => {
 
 
   function cadastrarQrcodeLivre(qrcodeData) {
-    callQrcodeAPI.novo(qrcodeData)
-
     console.log(qrcodeData)
+    // callQrcodeAPI.novo(qrcodeData)
   }
 
   return (

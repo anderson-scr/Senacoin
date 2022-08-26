@@ -1,6 +1,5 @@
 import { routes } from 'api/routes/routes'
 import api from '../routes/default'
-import { HiQrcode } from "react-icons/hi"
 
 export const callCalendarAPI = {
   dataVencimentoQrcode: async (offset) => {
@@ -19,7 +18,6 @@ export const callCalendarAPI = {
             end: (dateEvent.data_fim).substring(0, 10)
           })
         })
-        console.log(filteredList)
         return filteredList
       }
     }

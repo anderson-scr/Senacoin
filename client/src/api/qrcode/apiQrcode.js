@@ -22,6 +22,7 @@ export const callQrcodeAPI = {
   todos: async (offset) => {
     try {
       const apiResponse = await api.get(routes.qrcode.todos + offset)
+      console.log(apiResponse.data)
 
       // If there's no data in the apiResponse, return a empty array for react-table
       if(apiResponse.status === 204) {
@@ -47,7 +48,6 @@ export const callQrcodeAPI = {
         lastFour.forEach((date, idx) => {
           lastFour[idx].data_fim = date.data_fim.slice(0, 10)
         })
-        console.log(lastFour)
         return lastFour
       }
     } catch (error) {
