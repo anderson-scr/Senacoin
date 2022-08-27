@@ -79,7 +79,7 @@ exports.newList = (req, res, _next) => {
 exports.listAll = (_req, res, _next) => {
 
 	Promocao.find({})
-    .select("nome descricao multiplicador id_unidade ativo -_id")
+    .select("nome descricao data_inicio data_fim multiplicador id_unidade ativo -_id")
 	.populate({path : 'id_unidade', select: 'nome cidade uf -_id'})
     .then((promocoes) => {
         

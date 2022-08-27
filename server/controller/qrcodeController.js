@@ -156,7 +156,6 @@ exports.listAll = (req, res, _next) => {
     .select("nome descricao id_unidade pontos ativo data_inicio data_fim")
 	.populate({path : 'id_unidade', select: 'nome cidade uf -_id'})
     .then((qrcodes) => {
-        console.log(qrcodes)
         if (!qrcodes.length)
             return res.status(204).json(qrcodes);
         else

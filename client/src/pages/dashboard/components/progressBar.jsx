@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { callAreaAPI } from 'api/common/callArea'
 
-const ItemsAlertTable = () => {
+const ProgressBar = () => {
   const effectOnce = useRef(true)
   const [areas, setAreas] = useState([])
 
@@ -34,4 +34,4 @@ const ItemsAlertTable = () => {
   )
 }
 
-export default ItemsAlertTable
+export default ProgressBar

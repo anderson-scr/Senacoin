@@ -38,3 +38,33 @@
   opacity: 1;
   transform: translateY(15px);
 }
+
+.addTooltipCalendar:after, .questionTooltip:after {
+  content: attr(data-msg);
+  color: var(--senac-azul);
+  font-weight: 600;
+  z-index: 1000;
+  border: 1px solid rgb(232, 232, 232);
+  background-color: rgb(252, 252, 252);
+  box-shadow: 0px 0px 3px 3px rgba(0, 0, 0, 0.05);
+  position: absolute;
+  letter-spacing: 1px;
+  border-radius: 5px;
+  bottom: 60px;
+  text-align: center;
+  padding-left: 15px;
+  padding-right: 15px;
+  pointer-events: none;
+  left: -100px;
+  width: 300px;
+  /* Animation */
+  opacity: 0;
+  transition: 
+    opacity .15s ease-in,
+    transform .15s ease-in;
+}
+
+.addTooltipCalendar:hover:after, .questionTooltip:hover:after {
+  opacity: 1;
+  transform: translateY(15px);
+}
