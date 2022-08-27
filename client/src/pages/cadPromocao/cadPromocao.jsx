@@ -130,11 +130,8 @@ const CadPromocao = () => {
       </div>
 
       <div className='containerBtns row mt-5'>
-        <div className='col d-flex'>
-          <button type="submit" className="btn btnCancelar btn-outline-secondary w-50">Cancelar</button>
-        </div>
         <div className='col d-flex justify-content-end'>
-          <button type="submit" className="btn btnSalvar btn-primary w-50">Salvar</button>
+          <button type="submit" className="btn btnSalvar btn-primary w-25">Salvar</button>
         </div>
       </div>
     </form>
