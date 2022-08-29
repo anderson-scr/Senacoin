@@ -5,6 +5,8 @@ exports.ItemSchema = new mongoose.Schema({
 	descricao: {type: String, default: null},
 	pontos: {type: Number, min: 0, default: 0},
 	quantidade: {type: Number, min: 0, default: null}, // somente produto
+	data_inicio: {type: Date, default: null}, // exceto produto
+	data_fim: {type: Date, default: null}, // exceto produto
 	horas: {type: Number, default: null}, // exceto produto
 	imagem: {type: String, default: null},
 	id_area: {type: mongoose.Types.ObjectId, ref: "Area", required: true},
@@ -22,6 +24,8 @@ exports.AuditoriaItemSchema = new mongoose.Schema({
 	descricao: {type: String, immutable: true},
 	pontos: {type: Number, immutable: true},
 	quantidade: {type: Number, immutable: true},
+	data_inicio: {type: Date, default: null},
+	data_fim: {type: Date, default: null},
 	horas: {type: Number, immutable: true},
 	imagem: {type: String, immutable: true},
 	id_area: {type: mongoose.Types.ObjectId, ref: "Area", immutable: true},
