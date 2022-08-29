@@ -66,6 +66,3 @@
   opacity: 1;
   transform: translateY(11.5px);
 }
-.fc-daygrid-body, .fc-scrollgrid-sync-table, .fc-scroller-harness, .fc-scrollgrid, .fc-daygrid, .fc-scrollgrid-section  {
-  overflow-x: visible !important;
-}

@@ -55,10 +55,10 @@ const TableFilters = ({categoriaOrUnidade, area, subcategoria, ativo, filter, se
           {ativo && // Check if it's to render this element
           <div className='mb-3 col-3 '>
             <label htmlFor="dropSubcategoria" className="form-label">Ativo</label>
-            <select className="form-select" id='dropSubcategoria' aria-label="Default select example" defaultValue="DEFAULT">
+            <select className="form-select" id='dropSubcategoria' onChangeCapture={evt => setFilter(evt.target.value)} aria-label="Default select example" defaultValue="DEFAULT">
               <option value="DEFAULT" disabled style={{display: "none"}}>Selecione</option>
               <option value="1" >Ativo</option>
-              <option value="2" >Inativo</option>
+              <option value="0" >Inativo</option>
             </select>
           </div>}
           {!categoriaOrUnidade && // Check if it's to render this element
