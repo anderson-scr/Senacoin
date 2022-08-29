@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useRef } from 'react'
 import { verificaSessao } from 'auth/login/verificaSessao'
 import { useNavigate } from 'react-router-dom'
 
@@ -22,8 +22,6 @@ const Dashboard = () => {
       if(!verificaSessao()) {
         navigate("/Login", {replace: true})
       }
-
-
       return () => effectOnce.current = false
     }
   }, [navigate])

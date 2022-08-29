@@ -67,7 +67,7 @@ const ModalEditUsuario = (props) => {
       })()
       return () => effectOnce.current = false
     }
-  }, [navigate])
+  }, [navigate, props.funcs._id])
 
   // Change the default perfil value
   const changePerfil = (evt) => {
@@ -86,7 +86,7 @@ const ModalEditUsuario = (props) => {
     // Fixing object structure in somme keys to send to the back
     dados.nome = dados.nome + ' ' + dados.sobrenome
     dados.cpf = dados.cpf + ' '
-    dados.id_unidade = selectedUnidades.length == 0? userInfo.id_unidade : selectedUnidades
+    dados.id_unidade = selectedUnidades.length === 0? userInfo.id_unidade : selectedUnidades
     dados.permissoes = {...permissoes}
     
     // After restructuring the object, we delete what is not needed in the back end
@@ -99,7 +99,11 @@ const ModalEditUsuario = (props) => {
   const inativarUsuario = () => {
     callUsuarioAPI.inativaUsuario(userInfo._id)
   }
-
+  const ativarUsuario = () => {
+    let updateUserInfo = userInfo
+    updateUserInfo.ativo = true
+    callUsuarioAPI.atualizarUsuario(userInfo._id, updateUserInfo)
+  }
   // When we receive the userInfo from the API, we set it to the new state that will be sent for the update
   useEffect(() => {
     setPermissoes({...userInfo.permissoes})
@@ -302,9 +306,16 @@ const ModalEditUsuario = (props) => {
 
             {/* Second row */}
             <div className='row mx-auto mt-5'>
-              <div className='col d-flex p-0 justify-content-start'>
-                <button type="button" className="btn btn-outline-danger w-50" onClick={inativarUsuario}>Inativar Usuario</button>
-              </div>
+              {userInfo.ativo &&
+                <div className='col d-flex p-0 justify-content-start'>
+                  <button type="button" className="btn btn-outline-danger w-50" onClick={inativarUsuario}>Inativar Usuario</button>
+                </div>
+              }
+              {!userInfo.ativo &&
+                <div className='col d-flex p-0 justify-content-start'>
+                  <button type="button" className="btn btn-outline-success w-50" onClick={ativarUsuario}>Ativar Usuario</button>
+                </div>
+              }
               <div className='col d-flex p-0 justify-content-end'>
                 <button type="button" onClick={ props.close } className="btn btnCancelar btn-outline-secondary w-75">Cancelar</button>
               </div>

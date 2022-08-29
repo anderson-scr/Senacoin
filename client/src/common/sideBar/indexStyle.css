@@ -125,6 +125,7 @@
   padding-left: 15px;
   padding-right: 15px;
   pointer-events: none;
+  color: var(--senac-azul);
 
   /* Animation */
   opacity: 0;

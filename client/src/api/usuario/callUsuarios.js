@@ -53,7 +53,7 @@ export const callUsuarioAPI = {
   },
   inativaUsuario: async (userId) => {
     try {
-      await api.delete(routes.colaborador.inativaColaboraor + userId)
+      await api.delete(routes.colaborador.inativaColaboraor + userId, JSON.stringify({ativo: false}))
       
       ModalService.open(ModalCadCorreto)
     } catch (error) {
