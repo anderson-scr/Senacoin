@@ -14,7 +14,7 @@ exports.new = async (responsavel, pontos, data_fim, session) => {
             await AuditoriaSenaCoin.create([{responsavel: responsavel, ...senacoin[0]._doc, id_senacoin: senacoin[0]._id}], { session })
             .then((_audsenacoin) =>{
                 lote = senacoin[0];
-                console.log({success: true, _audsenacoin});
+                console.log({success: true, lote: lote});
             })
             .catch(async (err) => {
                 await session.abortTransaction();

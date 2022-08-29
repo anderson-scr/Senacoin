@@ -140,17 +140,16 @@ exports.listOne = (req, res, _next) => {
     .select('-hash -salt')
     .populate({path : 'id_unidade', select: 'nome cidade uf -_id'})
     .populate({path : 'saldo', select: 'pontos data_inicio data_fim'})
-    .then((aluno) => {
+    .then(async (aluno) => {
         if (!aluno)
             return res.status(204).json();  
         
-        const saldoAtualizado = senacoin.sum(aluno.saldo);
-        if (!this.atualizaSaldo(req.jwt.sub, saldoAtualizado.senacoins, 0, aluno._id)) // 0 para sobrescrever o saldo
+        const _verificaSaldo = await this.verificaSaldo(req.jwt.sub, aluno._id, aluno.saldo);
+        if (!_verificaSaldo.sucesso)
             throw new Error(`erro na atualizacao dos senacoins`);
 
-
         let _aluno = {...aluno._doc};
-        _aluno.saldo = saldoAtualizado.total;
+        _aluno.saldo = _verificaSaldo.total;
 
         res.status(200).json(_aluno);
     })
@@ -159,24 +158,51 @@ exports.listOne = (req, res, _next) => {
     });
 }
 
-// esssa funcao sobrescreve o vetor de senacoins removendo os vencidos se opcao for 0
-// senao da push adicionando ao vetor
-exports.atualizaSaldo = async (responsavel, senacoins, opcao, id, unidadeQrcode, session) => {
-    
-    if (opcao)
-        opcao = {$push: {saldo: senacoins}}
-    else
-        opcao = {saldo: senacoins}
-    
-    let objBusca;
-    if(!id)
-        objBusca = {email: responsavel};
-    else
-        objBusca = {_id: id};
+// esssa funcao sobrescreve o vetor de senacoins com o novo vetor sem os lotes vencidos
+exports.verificaSaldo = async (responsavel, id, saldo) => {
 
-    sucesso = false;
+    let sucesso = false;
+    const saldoAtualizado = senacoin.sum(saldo);
+
+    const session = await mongoose.startSession();
+    try {
+        await session.withTransaction(async () => {
+
+            await Aluno.findByIdAndUpdate(id, {saldo: saldoAtualizado.senacoins}, { session: session, new: true})
+            .select('-_id')
+            .then(async (aluno) => {
+                if (!aluno)
+                    throw new Error('aluno não encontrado');
+
+                await AuditoriaAluno.create([{responsavel: responsavel,  ...aluno._doc}], { session })
+                .then((_audaluno) =>{
+                    sucesso = true;
+                })
+                .catch(async (err) => {
+                    await session.abortTransaction();
+                    console.log({ success: false, msg: `${err}` });
+                });
+            })
+            .catch(async (err) => {
+                await session.abortTransaction();
+                console.log({ success: false, msg: `${err}` });
+            })
+        })       
+    } catch (err) {
+        console.log({ success: false, msg: `${err}` });
+    } finally {
+        await session.endSession();
+    }
+    console.log({sucesso, total: saldoAtualizado.total});
+    return {sucesso, total: saldoAtualizado.total};
+}
+
+// esssa funcao modifica o vetor senacoins dando push dos novos lotes a serem adicionados
+exports.atualizaSaldo = async (responsavel, senacoins, unidadeQrcode, session) => {
+    
+    let sucesso = false;
 	try {    
-        await Aluno.findOneAndUpdate(objBusca, opcao, { session: session, new: true}) // precisa arrumar isso
+        await Aluno.findOneAndUpdate({email: responsavel}, {$push: {saldo: senacoins}}, { session: session, new: true})
         .select('-_id')
         .then(async (aluno) => {
             if (!aluno)
@@ -184,11 +210,10 @@ exports.atualizaSaldo = async (responsavel, senacoins, opcao, id, unidadeQrcode,
 
             let msmUnidade = true;
             aluno.id_unidade.forEach(unidade => {
-                console.log('entrei');
                 if (!unidadeQrcode.includes(unidade))
                     msmUnidade = false;
             });
-            console.log('sai');
+            
             if (!msmUnidade)
                 throw new Error('aluno não pertence a mesma unidade do qrcode');
 
@@ -199,15 +224,15 @@ exports.atualizaSaldo = async (responsavel, senacoins, opcao, id, unidadeQrcode,
             })
             .catch(async (err) => {
                 await session.abortTransaction();
-                console.log({ success: false, msg: `${err}1` });
+                console.log({ success: false, msg: `${err}` });
             });
         })
         .catch(async (err) => {
             await session.abortTransaction();
-            console.log({ success: false, msg: `${err}2` });
+            console.log({ success: false, msg: `${err}` });
         })
 	} catch (err) {
-		console.log({ success: false, msg: `${err}3` });
+		console.log({ success: false, msg: `${err}` });
 	} 
     return sucesso;
 }
