@@ -6,6 +6,7 @@ exports.PromocaoSchema = new mongoose.Schema({
 	multiplicador: {type: Number, min: 0, required: true}, // talvez troque
 	data_inicio: {type: Date, required: true},
 	data_fim: {type: Date, required: true},
+	quantidade: {type: Number, default: null}, // somente produto 
 	id_unidade: [{type: mongoose.Types.ObjectId, ref: "Unidade", required: true}],
 	imagem: {type: String, default: null},
 	ativo: {type: Boolean, default: true}
@@ -20,6 +21,7 @@ exports.AuditoriaPromocaoSchema = new mongoose.Schema({
 	multiplicador: {type: Number, immutable: true},
 	data_inicio: {type: Date, immutable: true},
 	data_fim: {type: Date, immutable: true},
+	quantidade: {type: Number, default: null},
 	id_unidade: [{type: mongoose.Types.ObjectId, ref: "Unidade", immutable: true}],
 	imagem: {type: String, immutable: true},
 	ativo: {type: Boolean, immutable: true}
