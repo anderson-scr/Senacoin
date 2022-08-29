@@ -59,12 +59,14 @@ exports.sub = async (responsavel, pontos, senacoins) => {
     while (pontos > 0) {
         if (pontos >= senacoins[0].pontos) {
             senacoinsConvertidos.push(senacoins[0]);
-            pontos -= senacoins[0].pontos;
             senacoins.shift();
+            pontos -= senacoins[0].pontos;
         }
         else {
             console.log({responsavel: responsavel, id: senacoins[0]._id, pontos: senacoins[0].pontos - pontos});
             await atualizaSenacoin(responsavel, senacoins[0]._id, senacoins[0].pontos - pontos)
+            senacoinsConvertidos.push(senacoins[0]);
+            pontos = 0
         }
     }
     console.log({success: true, remanescente: senacoins, gastos: senacoinsConvertidos, totalGastos: total});
@@ -78,11 +80,12 @@ async function atualizaSenacoin (responsavel, id, pontos) {
 		await session.withTransaction(async () => {
 		
 			await SenaCoin.findByIdAndUpdate(id, {pontos: pontos}, { session: session, new: true})
+            .select('-_id')
 			.then(async (senacoin) => {
 				if (!senacoin)
                 console.log({success: false, msg: 'lote de senacoin não encontrado'});
 
-				await AuditoriaSenaCoin.create([{responsavel: responsavel,  ...senacoin._doc}], { session })
+				await AuditoriaSenaCoin.create([{responsavel: responsavel, id_senacoin: id, ...senacoin._doc}], { session })
 				.then((audsenacoin) =>{
 					console.log({ success: true, audsenacoin});
 				})

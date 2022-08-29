@@ -394,6 +394,9 @@ exports.redeemSenacoin = async (responsavel, email, item) => {
 
     try {
         const aluno = await Aluno.findOne({ email: email })
+        .select('-hash -salt')
+        .populate({path : 'saldo', select: 'pontos data_inicio data_fim'});
+
         if (!aluno)
             throw new Error('aluno não encontrado');
         
@@ -405,12 +408,14 @@ exports.redeemSenacoin = async (responsavel, email, item) => {
         try {
             await session.withTransaction(async () => {
     
-                const _aluno = await Aluno.findByIdAndUpdate(aluno._id, {saldo: resultado.remanescente}, { session: session, new: true}).select('-_id');
+                const _aluno = await Aluno.findByIdAndUpdate(aluno._id, {saldo: resultado.remanescente}, { session: session, new: true})
+                .select('-_id');
+
                 if (! _aluno)
                     throw new Error('aluno não encontrado2');
 
                 await AuditoriaAluno.create([{responsavel: responsavel,  ..._aluno._doc}], { session });
-                await transacao.new(req.jwt.sub, aluno.id, resultado.gastos, resultado.totalGastos, 0, item._id, null, null, session);
+                await transacao.new(responsavel, aluno.id, resultado.gastos, resultado.totalGastos, 0, item._id, null, null, session);
             })       
         } catch (err) {
             console.log({ success: false, msg: `${err}` });
