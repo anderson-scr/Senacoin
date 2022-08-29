@@ -76,7 +76,7 @@ exports.listAll = (_req, res, _next) => {
 
 exports.listActive = (_req, res, _next) => {
 	Area.find({ativo: true})
-    .select("nome id_unidade -_id")
+    .select("nome id_unidade")
     .then((areas) => {
         
         if (!areas.length)

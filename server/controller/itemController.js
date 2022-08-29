@@ -196,7 +196,7 @@ exports.listOne = (req, res, _next) => {
 exports.getInfo = async (id) => {
     let _item;
     await Item.findById(id)
-    .select('pontos horas ativo -_id')
+    .select('pontos horas ativo')
     .then((item) => {   
         if (!item)
             console.log({success: false, msg: "item não encontrado"});

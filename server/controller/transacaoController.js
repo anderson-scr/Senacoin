@@ -28,42 +28,6 @@ exports.new = async (responsavel, id_aluno, id_senacoin, pontos, tipo, id_item, 
 	return sucesso;
 }
 
-exports.newList = (req, res, _next) => {
-
-	if (!Object.keys(req.body).length)
-		return res.status(400).json({ success: false, msg: "solicitação mal construída, informações faltando ou incorretas" });
-
-    req.body.forEach(transacao => {
-		if (!("tipo" in transacao))
-			return res.status(400).json({ success: false, msg: "informe o tipo da transação." });
-		if (transacao.tipo && "id_promocao" in transacao)
-			return res.status(400).json({ success: false, msg: "promoção só pode ser aplicada a transações do tipo saída." });
-		if (!transacao.tipo && "id_qrcode" in transacao)
-			return res.status(400).json({ success: false, msg: "qr code só pode ser utilizado em transações do tipo entrada." });
-		if (!transacao.tipo && !("id_item" in transacao))
-			return res.status(400).json({ success: false, msg: "transações do tipo saída necessitam de um item." });
-		if ("id_item" in transacao && "id_qrcode" in transacao)
-			return res.status(400).json({ success: false, msg: "mais de uma fonte de senacoins informada, a transação deve ser atômica." });
-		if ("id_item" in transacao)
-			Item.findById(transacao.id_item) // busca a quantidade de senacoins a serem gerados ou gastos
-		else if ("id_qrcode" in transacao)
-			QrCode.findById(transacao.id_qrcode) // busca a quantidade de senacoins a serem gerados
-		else
-			return res.status(400).json({ success: false, msg: "erro de BIOS muito grave nunca deveria chegar aqui." });
-
-		if ("id_promocao" in transacao)
-			Promocao.findById(transacao.id_promocao) // busca a a valor do desconto
-
-		{} // precisa criar um obj aqui pra inserir no insertMany
-    });
-    
-    Transacao.insertMany({obj_gerado_no_forEach}, (err, docs) => {
-        if (err)
-            return res.status(500).json({ success: false, msg: `${err}` });
-    
-        res.status(201).json({ success: true, total: docs.length});
-    });
-}
 
 exports.listAll = (_req, res, _next) => {
 
