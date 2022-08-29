@@ -42,7 +42,8 @@ export const routes = {
     novo: /* Id antes */ 'item/produto/add',
     ativo: /* Id antes */ 'item/produto/active',
     todos: /* Id antes */ 'item/produto/all/',
-    novaImagem: 'item/produto/addImg'
+    novaImagem: 'item/produto/addImg',
+    buscaProduto: 'item/' 
   },
   
   evento: {

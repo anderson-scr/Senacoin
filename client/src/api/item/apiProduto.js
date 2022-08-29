@@ -56,4 +56,16 @@ export const callProdutoAPI = {
       console.log(error)
     }
   },
+  buscaProduto: async (userId) => {
+    try {
+      const apiResponse = await api.get(routes.produto.buscaProduto + userId)
+      // If there's no data in the apiResponse, return a empty array for react-table
+      if(apiResponse.status === 204) {
+        return []
+      } else return apiResponse.data.item
+
+    } catch (error) {
+      ModalService.open(ModalCadErro)
+    }
+  },
 }

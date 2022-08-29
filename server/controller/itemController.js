@@ -162,10 +162,10 @@ exports.listActiveByCategory = (req, res, _next) => {
 exports.listOne = (req, res, _next) => {
 	
 	Item.findById(req.params.id )
-    .populate({path : 'id_area', select: 'nome -_id'})
-    .populate({path : 'id_categoria', select: 'nome -_id'})
-    .populate({path : 'id_subcategoria', select: 'nome -_id'})
-    .populate({path : 'id_unidade', select: 'nome cidade uf -_id'})
+    .populate({path : 'id_area', select: 'nome _id'})
+    .populate({path : 'id_categoria', select: 'nome _id'})
+    .populate({path : 'id_subcategoria', select: 'nome _id'})
+    .populate({path : 'id_unidade', select: 'nome cidade uf _id'})
     
     .then((item) => {   
         if (!item)

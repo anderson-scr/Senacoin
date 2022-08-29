@@ -3,37 +3,29 @@ import { useNavigate } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { yupSchemaCadProduto } from 'utils/validation/schemas/itens/cadProduto'
-import { callUnidadeAPI } from 'api/common/callUnidades'
 import { verificaSessao } from 'auth/login/verificaSessao'
-import { callAreaAPI } from 'api/common/callArea'
 import { callSubcategoriaAPI } from 'api/common/callSubcategoria'
-import { callProdutoAPI } from 'api/item/apiProduto'
-import QuestionTooltip from 'common/tooltips/questionTooltip'
-import AddTooltip from 'common/tooltips/addTooltip'
 import setImageName from 'utils/setImageName'
+import QuestionTooltip from 'common/tooltips/questionTooltip'
 
-// Context
-import { AuthContext } from 'contexts/authContext'
-
-// Modal imports
-import ModalService from 'common/modal/services/modalService'
-import ModalCadArea from 'common/preMadeModal/cadArea'
-import ModalCadSubcategoria from 'common/preMadeModal/cadSubcategoria'
-import ModalCadUnidade from 'common/preMadeModal/cadUnidade'
+// APIs
+import { callUnidadeAPI } from 'api/common/callUnidades'
+import { callProdutoAPI } from 'api/item/apiProduto'
+import { callAreaAPI } from 'api/common/callArea'
 
 // Modal Imports
 import Modal from "common/modal/modalIndex"
 import ModalHeader from "common/modal/components/modalHead"
 import ModalBody from "common/modal/components/modalBody"
 
-const ModalEditProduto = () => {
+const ModalEditProduto = (props) => {
   const effectOnce = useRef(true)
   const navigate = useNavigate()
-  const { permissions } = useContext( AuthContext )
   const [unidades, setUnidades] = useState([])
   const [areas, setAreas] = useState([])
   const [subcategorias, setSubcategorias] = useState([])
   const [file, setFile] = useState()
+  const [produtosInfo, setProdutosInfo] = useState(false)
 
   // React for with Yup for validation and saving the user entry
   const { register, handleSubmit, formState: {
@@ -50,28 +42,45 @@ const ModalEditProduto = () => {
 
       // Fill dropDows unidades
       (async () => {
-        setUnidades(await callUnidadeAPI.ativo())
-        setAreas(await callAreaAPI.ativo())
-        setSubcategorias(await callSubcategoriaAPI.ativo())
+        await setUnidades(await callUnidadeAPI.ativo())
+        await setAreas(await callAreaAPI.ativo())
+        await setSubcategorias(await callSubcategoriaAPI.ativo())
+        await setProdutosInfo(await callProdutoAPI.buscaProduto(props.funcs._id))
       })()
 
       return () => effectOnce.current = false
     }
   }, [navigate])
 
+  // useEffect(() => {
+  //   console.log(produtosInfo)
+  //   console.log(areas)
+  // }, [produtosInfo])
 
-  // Modals
-  const modalCadArea = (evt) => {
-    evt.preventDefault()
-    ModalService.open(ModalCadArea)
+  const setDropDownValueUnidade = () => {
+    if(unidades.length === 0 || !produtosInfo) return
+
+    unidades.forEach((unidade, idx) => {
+      if (unidade._id === produtosInfo.id_unidade[0]._id) return (idx + 1).toString()
+    })
   }
-  const modalCadSubcategoria = (evt) => {
-    evt.preventDefault()
-    ModalService.open(ModalCadSubcategoria)
+  const setDropDownValueArea = () => {
+    if(areas.length === 0 || !produtosInfo) return
+
+    areas.forEach((area, idx) => {
+      if (area._id === produtosInfo.id_area._id) {
+        return (idx + 1).toString()
+      }
+    })
   }
-  const modalCadUnidade = (evt) => {
-    evt.preventDefault()
-    ModalService.open(ModalCadUnidade)
+  const setDropDownValueSubcategorias = () => {
+    if(subcategorias.length === 0 || !produtosInfo) return
+
+    subcategorias.forEach((subcategoria, idx) => {
+      if (subcategoria._id === produtosInfo.id_subcategoria._id) {
+        return (idx + 1).toString()
+      } 
+    })
   }
 
   const submitForm = (dados) => {
@@ -95,15 +104,17 @@ const ModalEditProduto = () => {
   return (
     <Modal>
       <ModalHeader>
-
+        <h2>
+          Editar Produto
+        </h2>
       </ModalHeader>
       <ModalBody>
-        <form className='container mt-3' onSubmit={handleSubmit(submitForm)} encType="multipart/form-data" >
+        <form className='container mt-3' onSubmit={handleSubmit(submitForm)} encType="multipart/form-data" style={{width: '60vw', textAlign: 'start'}}>
           <div className='row'>
 
             <div className='mb-3 col'>
-              <AddTooltip label='Areas' permission={permissions.cad_areas} onClickFunc={modalCadArea} msg='Criar uma nova area para cadastros.' />
-              <select className="form-select" id='dropArea' aria-label="Default select example" defaultValue="DEFAULT" {...register('id_area')}>
+              <QuestionTooltip label='Area' msg='Escolha a area do produto.' />
+              <select className="form-select" id='dropArea' aria-label="Default select example" defaultValue={setDropDownValueArea()} {...register('id_area')}>
                 <option value="DEFAULT" disabled style={{display: "none"}}>Selecione uma area</option>
                 {areas.length > 1 &&
                   areas.map((area, idx) => {
@@ -118,8 +129,8 @@ const ModalEditProduto = () => {
               </div>
             </div>
             <div className='mb-3 col'>
-              <AddTooltip label='Subcategoria' permission={permissions.cad_subcategorias} onClickFunc={modalCadSubcategoria} msg='Criar nova subcategoria para cadastros.' /> 
-              <select className="form-select" id='dropSubcategoria' aria-label="Default select example" defaultValue="DEFAULT" {...register('id_subcategoria')}>
+              <QuestionTooltip label='Subcategoria' msg='Escolha a subcatgoria do produto.' />
+              <select className="form-select" id='dropSubcategoria' aria-label="Default select example" defaultValue={setDropDownValueSubcategorias} {...register('id_subcategoria')}>
                 <option value="DEFAULT" disabled style={{display: "none"}}>Selecione uma subcategoria</option>
                 {subcategorias.length > 1 &&
                   subcategorias.map((subcategoria, idx) => {
@@ -138,14 +149,14 @@ const ModalEditProduto = () => {
           <div className='row'>
             <div className="mb-3 col">
               <label htmlFor="exampleInputEmail1" className="form-label">Titulo</label>
-              <input type="text" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" {...register('nome')}/>
+              <input type="text" className="form-control" id="exampleInputEmail1" defaultValue={produtosInfo.nome} aria-describedby="emailHelp" {...register('nome')}/>
               {errors?.nome?.type &&
                 <div className="form-text text-danger m-0">Preencha o campo corretamente.</div>
               }
             </div>
             <div className='mb-3 col'>
-              <AddTooltip label='Unidade' permission={permissions.cad_unidades} onClickFunc={modalCadUnidade} msg='Criar uma nova unidade para cadastros.' />
-              <select className="form-select" id='dropSubcategoria' aria-label="Default select example" defaultValue="DEFAULT" {...register('id_unidade')}>
+              <QuestionTooltip label='Unidade' msg='Escolha a unidade do produto.' />
+              <select className="form-select" id='dropUnidade' aria-label="dropDown de unidades" defaultValue={setDropDownValueUnidade} {...register('id_unidade')}>
                 <option value="DEFAULT" disabled style={{display: "none"}}>Selecione uma unidade</option>
                 {unidades.length > 1 &&
                   unidades.map((unidade, idx) => {
@@ -164,7 +175,7 @@ const ModalEditProduto = () => {
           <div className='row'>
             <div className="mb-3 col">
               <QuestionTooltip label='Senacoins' msg='Quantos Senacoins um produto vai custar.' />
-              <input type="number" className="form-control" id="exampleInputPassword1" placeholder="100" {...register('pontos')}/>
+              <input type="number" className="form-control" id="exampleInputPassword1" defaultValue={produtosInfo.pontos} placeholder="100" {...register('pontos')}/>
               <div style={{height: '25px'}}>
                 {errors?.pontos?.type &&
                   <div className="form-text text-danger m-0">Preencha o campo corretamente.</div>
@@ -174,7 +185,7 @@ const ModalEditProduto = () => {
             </div>
             <div className="mb-3 col">
               <QuestionTooltip label='Quantidade' msg='Quantidade do produto disponível em estoque.' />
-              <input type="number" className="form-control" id="exampleInputPassword1" placeholder="300" {...register('quantidade')}/>
+              <input type="number" className="form-control" id="exampleInputPassword1" defaultValue={produtosInfo.quantidade} placeholder="300" {...register('quantidade')}/>
               <div style={{height: '25px'}}>
                 {errors?.quantidade?.type &&
                   <div className="form-text text-danger m-0">Preencha o campo corretamente.</div>
@@ -186,7 +197,7 @@ const ModalEditProduto = () => {
           <div className='row'>
             <div className="mb-3 col" >
               <label htmlFor="exampleInputEmail1" className="form-label">Descrição</label>
-              <textarea type="text" className="iptDescricao form-control" id="exampleInputEmail1" style={{height: '120px'}} {...register('descricao')} />
+              <textarea type="text" defaultValue={produtosInfo.descricao} className="iptDescricao form-control" id="exampleInputEmail1" style={{height: '120px'}} {...register('descricao')} />
             </div>
             <div className="mb-3 col-4">
               <label htmlFor="formFile" className="form-label">Imagem</label>
@@ -194,9 +205,18 @@ const ModalEditProduto = () => {
             </div>
           </div>
 
-          <div className='containerBtns row mt-5'>
-            <div className='col d-flex justify-content-end'>
-              <button type="submit" className="btn btnSalvar btn-primary w-25">Salvar</button>
+          <div className='row mx-auto mt-5'>
+            {/* <div className='col d-flex p-0 justify-content-start p-0'>
+              <button type="button" className="btn btn-outline-danger w-50" >Inativar Usuario</button>
+            </div> */}
+            <div className='col d-flex p-0 justify-content-start p-0'>
+              <button type="button" className="btn btn-outline-success w-50" >Ativar Usuário</button>
+            </div>
+            <div className='col d-flex p-0 justify-content-end'>
+              <button type="button" onClick={ props.close } className="btn btnCancelar btn-outline-secondary w-75">Cancelar</button>
+            </div>
+            <div className='col d-flex justify-content-end p-0'>
+              <button type="submit" className="btn btnSalvar btn-primary w-75">Salvar</button>
             </div>
           </div>
         </form>
