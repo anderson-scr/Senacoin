@@ -131,7 +131,7 @@ exports.listOne = (req, res, _next) => {
 	
 	Colaborador.findById(req.params.id)
 	.select('-hash -salt')
-	.populate({path : 'id_unidade', select: 'nome cidade uf -_id'}) //.populate('id_unidade id_perfil ativo')
+	.populate({path : 'id_unidade', select: 'nome cidade uf _id'}) //.populate('id_unidade id_perfil ativo')
 	.then((colab) => {
 		
 		if (!colab)

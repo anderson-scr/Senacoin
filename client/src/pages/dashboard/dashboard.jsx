@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom'
 
 // Components
 import Calendar from './components/calendar/calendar'
-import ItemsAlertTable from './components/itemsAlertTable'
+import ProgressBar from './components/progressBar'
 
 // API's 
 import { callQrcodeAPI } from 'api/qrcode/apiQrcode'
@@ -33,7 +33,7 @@ const Dashboard = () => {
       <div className='row mb-5' style={{maxHeight: '35vh'}} >
         <div className='col-5 mt-3' >
           <h3 className='mb-3'>Areas mais acessadas</h3>
-          <ItemsAlertTable />
+          <ProgressBar />
         </div>
         <div className='col-7 mt-3'>
           <Calendar />

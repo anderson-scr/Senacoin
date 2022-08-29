@@ -3,7 +3,10 @@ export const routes = {
     login: 'colaborador/login',
     novo: 'colaborador/register',
     ativo: 'colaborador/active',
-    todos: 'colaborador/all'
+    todos: 'colaborador/all',
+    buscaColaborador: 'colaborador/',
+    atualizarColaborador: 'colaborador/',
+    inativaColaboraor: 'colaborador/'
   },
 
   unidade: {

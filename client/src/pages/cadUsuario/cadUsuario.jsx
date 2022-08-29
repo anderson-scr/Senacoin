@@ -15,9 +15,6 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import QuestionTooltip from 'common/tooltips/questionTooltip'
 import AddTooltip from 'common/tooltips/addTooltip'
 
-// CSS
-import './cadUsuarioStyle.css'
-
 // Modal Imports
 import ModalService from 'common/modal/services/modalService'
 import ModalCadUnidade from 'common/preMadeModal/cadUnidade'
@@ -308,11 +305,8 @@ const CadUsuario = () => {
 
           {/* Second row */}
           <div className='row mx-auto mt-5'>
-            <div className='col d-flex p-0'>
-              <button type="button" className="btn btnCancelar btn-outline-secondary w-50">Cancelar</button>
-            </div>
             <div className='col d-flex justify-content-end p-0'>
-              <button type="submit" className="btn btnSalvar btn-primary w-50">Salvar</button>
+              <button type="submit" className="btn btnSalvar btn-primary w-25">Salvar</button>
             </div>
           </div>
         </div>

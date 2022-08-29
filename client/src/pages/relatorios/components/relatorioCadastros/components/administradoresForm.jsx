@@ -66,12 +66,9 @@ const AdministradoresForm = () => {
       </div>
 
       <div className='row mx-auto mt-5'>
-        <div className='col d-flex p-0'>
-          <button type="button" className="btn btnCancelar btn-outline-secondary w-50">Cancelar</button>
-        </div>
         <div className='col d-flex justify-content-end p-0'>
-          <button type="submit" className="btn btnSalvar btn-primary w-50 mx-3">Gerar XLS</button>
-          <button type="submit" className="btn btnSalvar btn-primary w-50">Gerar PDF</button>
+          <button type="submit" className="btn btnSalvar btn-primary w-25 mx-3">Gerar XLS</button>
+          <button type="submit" className="btn btnSalvar btn-primary w-25">Gerar PDF</button>
         </div>
       </div>
     </form>

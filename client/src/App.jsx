@@ -106,7 +106,6 @@ function App() {
                   <Route path='/Relatorios/Transacoes/Produtos' element={<TransacaoProduto />} />
                   <Route path='/Relatorios/Transacoes/Promocoes' element={<TransacaoPromocao />} />
                   <Route path='/Relatorios/Transacoes/Qrcodes' element={<TransacaoQrcode />} />
-                  <Route path='/Relatorios/Transacoes/Servicos' element={<TransacaoServico />} />
                 </Route>
               </Route>
             </Route>

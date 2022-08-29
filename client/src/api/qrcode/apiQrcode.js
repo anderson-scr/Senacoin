@@ -41,8 +41,15 @@ export const callQrcodeAPI = {
       if(apiResponse.status === 204) {
         return []
       } else {
+        
         const sortedByDate = apiResponse.data.sort((a, b) => {
+          // if((a.data_fim - b.data_fim) > new Date.now())
           return a.data_fim - b.data_fim
+        })
+        const currentDate = new Date()
+        sortedByDate.forEach((each, idx) => {
+          const elementDate = new Date(each.data_fim)
+          if(elementDate < currentDate) sortedByDate.splice(idx, 1)  
         })
         const lastFour = sortedByDate.slice(0, 4)
         lastFour.forEach((date, idx) => {

@@ -24,7 +24,7 @@ const GerUsuario = () => {
   }, [navigate])
 
   return (
-    <Table apiRoute={callUsuarioAPI.todos} modal={ModalEditUsuario} columnSchema={gerUsuarioTabelaSchema} rowSize={12} subcategoria={false} area={false} ativo={true}/>
+    <Table apiRoute={callUsuarioAPI.todos} modal={ModalEditUsuario} columnSchema={gerUsuarioTabelaSchema} rowSize={12} subcategoria={false} area={false} ativo={false}/>
   )
 }
 
