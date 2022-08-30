@@ -10,6 +10,8 @@ router.use('/api/v1/colaborador', require('./colaborador'));
 
 router.use('/api/v1/cotacao', require('./cotacao'));
 
+router.use('/api/v1/dashboard', require('./dashboard'));
+
 router.use('/api/v1/item', require('./item'));
 
 router.use('/api/v1/perfil', require('./perfil'));
