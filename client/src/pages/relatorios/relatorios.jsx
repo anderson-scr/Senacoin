@@ -6,6 +6,7 @@ import { AiFillPicture } from 'react-icons/ai';
 
 //relatórios
 import alunosPDF from './relatorios/alunos/alunosPDF'
+import alunosXLXS from './relatorios/alunos/alunosXLS';
 import unidadesPDF from './relatorios/unidades/unidadesPDF'
 
 
@@ -15,7 +16,7 @@ const Relatorios = () => {
   const [dateStart, setDateStart] = useState()
   const [dateEnd, setDateEnd] = useState()
 
-  function selectReport() {
+  function selectReportPDF() {
     switch (typeReport) {
       case '1':
         alunosPDF()
@@ -30,10 +31,30 @@ const Relatorios = () => {
         alert('Relatório Matrículas selecionado')
         break;    
       default:
-        alert(`typeReport: ${typeReport}`)
+        alert(`Selecione um relatório`)
         break;
+    }  
   }
-}
+
+  function selectReportXLXS() {
+    switch (typeReport) {
+      case '1':
+        alunosXLXS.testeXLXS()
+        break;    
+      case '2':
+        alert('Relatório XLXS')
+        break;    
+      case '3':
+        alert('Relatório XLXS')
+        break;    
+      case '4':
+        alert('Relatório XLXS')
+        break;    
+      default:
+        alert('Relatório XLXS')
+        break;
+    }
+  }
 
   return (
     <>
@@ -57,7 +78,10 @@ const Relatorios = () => {
             </div>
           </div>
           <div className='btns d-flex flex-column mt-3'>
-            <input onClick={selectReport} type="button" className='btn btn-danger col-3 mt-3' value="Gerar PDF" />
+            <input onClick={selectReportPDF} type="button" className='btn btn-danger col-3 mt-3' value="Gerar PDF" />
+          </div>
+          <div className='btns d-flex flex-column mt-3'>
+            <input onClick={selectReportXLXS} type="button" className='btn btn-success col-3 mt-3' value="Gerar XLXS" />
           </div>
         </form>
       </div>
