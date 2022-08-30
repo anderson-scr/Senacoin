@@ -3,6 +3,7 @@ const aluno = require('./aluno');
 const area = require('./area');
 const categoria = require('./categoria');
 const colaborador = require('./colaborador');
+const cotacao = require('./cotacao');
 const item = require('./item');
 const perfil = require('./perfil');
 const permissoes = require('./permissoes');
@@ -24,6 +25,9 @@ mongoose.model("Categoria", categoria.CategoriaSchema);
 
 mongoose.model("Colaborador", colaborador.ColaboradorSchema);
 mongoose.model("AuditoriaColaborador", colaborador.AuditoriaColaboradorSchema);
+
+mongoose.model("Cotacao", cotacao.CotacaoSchema);
+mongoose.model("AuditoriaCotacao", cotacao.AuditoriaCotacaoSchema);
 
 mongoose.model("Item", item.ItemSchema);
 mongoose.model("AuditoriaItem", item.AuditoriaItemSchema);

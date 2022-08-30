@@ -10,12 +10,14 @@ senacoin API:
 		- rota para receber senacoins através de qrcode.
 		- verificar promoções vigentes na unidade e aplica las ao receber os senacoins.
 		- rota para utilizar senacoins e subtraí los do saldo.
+		- salvar todas as transações no banco.
+		- verificar se o qrcode foi usado e quando foi usado (uso unico, diário ou mensal).
+		- adicionar rota para alterar a cotação do senacoin.
 	
 	a fazer:
-		- salvar todas as transações no banco.
-		- verificar se o senacoin foi usado e quando foi usado (uso unico, diário ou mensal).
-		- adicionar rota para alterar a cotação do senacoin.
+		- revisar funcoes da rota transacao, para ediçao ou deleçao
 		- adicionar qualificação por palavra-chave nas buscas de algumas rotas.
+		- proc para limpar a lista de qrcode usados (uso unico, diário ou mensal) após o tempo expirado.
 	
 	falta informação:
 		- rota dashboard.

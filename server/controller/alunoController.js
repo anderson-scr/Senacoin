@@ -2,7 +2,9 @@ const mongoose = require('mongoose');
 const Aluno = mongoose.model('Aluno');
 const AuditoriaAluno = mongoose.model('AuditoriaAluno');
 const senacoin = require('./senacoinController');
+const transacao = require('./transacaoController');
 const utils = require('../libs/utils');
+
 
 // logs the user
 exports.login = (req, res, _next) => {
@@ -386,4 +388,44 @@ exports.deleteAll = (_req, res, _nxt) => {
     Aluno.deleteMany({})
     .then((n) => (res.status(200).json({success: true, total: n.deletedCount})))
     .catch((err) => (res.status(500).json({ success: false, msg: `${err}` })));
+}
+
+exports.redeemSenacoin = async (responsavel, email, item) => {
+
+    try {
+        const aluno = await Aluno.findOne({ email: email })
+        .select('-hash -salt')
+        .populate({path : 'saldo', select: 'pontos data_inicio data_fim'});
+
+        if (!aluno)
+            throw new Error('aluno não encontrado');
+        
+        const resultado = await senacoin.sub(responsavel, item.pontos, aluno.saldo);
+        if (!resultado.success)
+            throw new Error(resultado.msg);
+        
+        const session = await mongoose.startSession();
+        try {
+            await session.withTransaction(async () => {
+    
+                const _aluno = await Aluno.findByIdAndUpdate(aluno._id, {saldo: resultado.remanescente}, { session: session, new: true})
+                .select('-_id');
+
+                if (! _aluno)
+                    throw new Error('aluno não encontrado2');
+
+                await AuditoriaAluno.create([{responsavel: responsavel,  ..._aluno._doc}], { session });
+                await transacao.new(responsavel, aluno.id, resultado.gastos, resultado.totalGastos, 0, item._id, null, null, session);
+            })       
+        } catch (err) {
+            console.log({ success: false, msg: `${err}` });
+            await session.abortTransaction();
+        } finally {
+            await session.endSession();
+        }
+        
+        return resultado;
+    } catch (error) {
+        return {sucess: false, msg: error.message}
+    }
 }

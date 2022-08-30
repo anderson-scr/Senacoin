@@ -1,7 +1,9 @@
 const mongoose = require('mongoose');
 const SenaCoin = mongoose.model('SenaCoin');
 const AuditoriaSenaCoin = mongoose.model('AuditoriaSenaCoin');
-
+const aluno = require('./alunoController');
+const item = require('./itemController');
+const cotacao = require('./cotacaoController');
 
 exports.new = async (responsavel, pontos, data_fim, session) => {
 	
@@ -47,27 +49,30 @@ exports.sum = (senacoins) => {
     return {total, senacoins};
 }
 
-exports.sub = (responsavel, pontos, senacoins) => {
+exports.sub = async (responsavel, pontos, senacoins) => {
     
     const total = pontos;
     let senacoinsConvertidos = [];
-
+    
+    if (total > this.sum(senacoins).total)
+        return {success: false, msg: "pontos insuficientes."};
+    
     while (pontos > 0) {
         if (pontos >= senacoins[0].pontos) {
             senacoinsConvertidos.push(senacoins[0]);
-            pontos -= senacoins[0].pontos;
             senacoins.shift();
+            pontos -= senacoins[0].pontos;
         }
         else {
-            console.log({responsavel: responsavel, id: senacoins[0]._id, pontos: senacoins[0].pontos - pontos})
-            atualizaSenacoin(responsavel, senacoins[0]._id, senacoins[0].pontos - pontos)
+            console.log({responsavel: responsavel, id: senacoins[0]._id, pontos: senacoins[0].pontos - pontos});
+            await atualizaSenacoin(responsavel, senacoins[0]._id, senacoins[0].pontos - pontos)
+            senacoinsConvertidos.push(senacoins[0]);
+            pontos = 0
         }
     }
-    
-    // precisa virar uma lista de ids apenas
-    return {remanescente: senacoins, gastos: senacoinsConvertidos, totalGastos: total}; // o primeiro precisa ser adicionado em aluno e o segundo em transacao
+    console.log({success: true, remanescente: senacoins, gastos: senacoinsConvertidos, totalGastos: total});
+    return {success: true, remanescente: senacoins, gastos: senacoinsConvertidos, totalGastos: total}; // o primeiro precisa ser adicionado em aluno e o segundo em transacao
 }
-
 
 async function atualizaSenacoin (responsavel, id, pontos) {
 
@@ -76,11 +81,12 @@ async function atualizaSenacoin (responsavel, id, pontos) {
 		await session.withTransaction(async () => {
 		
 			await SenaCoin.findByIdAndUpdate(id, {pontos: pontos}, { session: session, new: true})
+            .select('-_id')
 			.then(async (senacoin) => {
 				if (!senacoin)
                 console.log({success: false, msg: 'lote de senacoin não encontrado'});
 
-				await AuditoriaSenaCoin.create([{responsavel: responsavel,  ...senacoin._doc}], { session })
+				await AuditoriaSenaCoin.create([{responsavel: responsavel, id_senacoin: id, ...senacoin._doc}], { session })
 				.then((audsenacoin) =>{
 					console.log({ success: true, audsenacoin});
 				})
@@ -99,4 +105,33 @@ async function atualizaSenacoin (responsavel, id, pontos) {
 	} finally {
 		await session.endSession();
 	}
+}
+
+exports.use = async (req, res, _next) => {
+
+    const _item = await item.getInfo(req.body.item);
+    console.log(_item);
+    if (! _item)
+        return res.status(400).json({success: false, msg: "item não encontrado."});
+    
+    if (_item.quantidade <= 0)
+        return res.status(404).json({success: false, msg: "item não esgotado."});
+    
+    if (_item.quantidade >= 1)
+    {
+        const resultado = await item.baixaEstoque(req.jwt.sub, _item._id);
+        console.log(resultado);
+        if (!resultado.success)
+            return res.status(500).json(resultado.msg);
+    }
+
+    const conversao = await aluno.redeemSenacoin(req.jwt.sub, req.body.email, _item);
+    if (!conversao.success)
+        return res.status(500).json({success: false, msg: teste.msg});
+
+    const cambio = await cotacao.getCurrent();
+    if (!cambio)
+        console.log('cambio não definido');
+    
+    res.status(200).json({success: true, msg: "senacoins convertidos com sucesso.", desconto: cambio*_item.horas});
 }
