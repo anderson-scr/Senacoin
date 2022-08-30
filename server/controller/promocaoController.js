@@ -24,21 +24,6 @@ exports.new = async (req, res, _next) => {
             .then(async (promocao) => {
                 await AuditoriaPromocao.create([{colaborador: req.jwt.sub, ...req.body}], { session })
                 .then(async (_audpromocao) =>{
-                    if (req.files && Object.keys(req.files).length)
-                    {
-                        const img = req.files.imagem;   // nome e caminho do arquivo
-                        const caminho = path.join('uploads', `${randomUUID()}${path.extname(img.name)}`);
-                        req.body.imagem = caminho;
-
-                        // mv() é usada para colocar o arquivo na pasta do servidor
-                        await img.mv(path.join(__basedir, caminho), async (err) =>{
-                            if(err)
-                            {
-                                await session.abortTransaction();
-                                res.status(500).json({ success: false, msg: `${err}` });
-                            }
-                        });
-                    }
                     res.status(201).json({ success: true, ...promocao[0]["_doc"]}); // ["_doc"] é a posicao do obj de retorno onde se encontra o documento criado));
                 })
                 .catch(async (err) => {

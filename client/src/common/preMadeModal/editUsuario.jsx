@@ -205,14 +205,14 @@ const ModalEditUsuario = (props) => {
                 </div>
               </div>
 
-            
+
               {/* Second Col - second row */}
               <div className='row d-flex justify-content-center'>
                 {/* Second Col - second row - first col */}
                 {userInfo &&
                   <div className='col-5'>
                     <h4>Cadastros</h4>
-                    
+
                     <div className="form-check mt-2">
                       <input className="form-check-input" type="checkbox" name="checkboxCadUsuario" id="cad_usuarios" onClick={evt => changePermissao(evt)} checked={permissoes.cad_usuarios} {...register('permissoes.cad_usuarios')} />
                       <label className="form-check-label" htmlFor="checkboxCadUsuario">

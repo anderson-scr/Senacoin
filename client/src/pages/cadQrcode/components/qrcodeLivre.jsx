@@ -30,7 +30,7 @@ const QrcodeLivre = () => {
 
   function cadastrarQrcodeLivre(qrcodeData) {
     console.log(qrcodeData)
-    // callQrcodeAPI.novo(qrcodeData)
+    callQrcodeAPI.novo(qrcodeData)
   }
 
   return (

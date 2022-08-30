@@ -35,7 +35,7 @@ export const callPromocaoAPI = {
   },
   novo: async (dadosPromocao, imageFile) => {
     try {
-      const apiResponse = await api.post(routes.produto.novo, JSON.stringify(dadosPromocao))
+      const apiResponse = await api.post(routes.promocao.novo, JSON.stringify(dadosPromocao))
       console.log(apiResponse)
 
       // If the img upload goes wrong, throw new error
@@ -56,7 +56,7 @@ export const callPromocaoAPI = {
     formData.append('selectedFile', imageFile)
 
     try {
-      await axios.post(`http://localhost:5000/api/v1/${routes.promocao.novaImagem}`, formData, {
+      await axios.post(`http://localhost:5000/api/v1/promocao/${routes.promocao.novaImagem}`, formData, {
         headers: {
           'Content-type': 'multipart/form-data'
         }
