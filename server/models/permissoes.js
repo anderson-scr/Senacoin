@@ -14,6 +14,7 @@ exports.PermissoesSchema = new mongoose.Schema({
 	ger_itens: {type: Boolean, default: false},
 	ger_promocoes: {type: Boolean, default: false},
 	ger_qrcodes: {type: Boolean, default: false},
+	ger_cotacao: {type: Boolean, default: false},
 
 	senacoins: {type: Boolean, default: false},
 	relatorios: {type: Boolean, default: false},

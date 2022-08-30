@@ -194,9 +194,10 @@ exports.listOne = (req, res, _next) => {
 }
 
 exports.getInfo = async (id) => {
+
     let _item;
     await Item.findById(id)
-    .select('pontos horas ativo')
+    .select('pontos quantidade horas ativo')
     .then((item) => {   
         if (!item)
             console.log({success: false, msg: "item não encontrado"});
@@ -282,4 +283,42 @@ exports.deleteAll = (_req, res, _nxt) => {
     Item.deleteMany({})
     .then((n) => (res.status(200).json({success: true, total: n.deletedCount})))
     .catch((err) => (res.status(500).json({ success: false, msg: `${err}` })));
+}
+
+exports.baixaEstoque = async (colaborador, id) => {
+    console.log("entrei id: ", id);
+
+    let sucesso = false;
+    const session = await mongoose.startSession();
+	try {    
+		await session.withTransaction(async () => {
+            
+            await Item.findByIdAndUpdate(id, {$inc: {quantidade: -1}}, { session: session, new: true})
+            .select('-_id')
+            .then(async (item) => {   
+                console.log(item._doc);
+                if (!item)
+                    throw new Error("item não encontrado");
+                
+                await AuditoriaItem.create([{colaborador: colaborador, id_item: id, ...item._doc}], { session })
+                .then((auditem) => {
+                    sucesso = true;
+                })
+                .catch(async (err) => {
+                    console.log(err);
+                    await session.abortTransaction();
+                });
+            })
+            .catch(async (err) => {
+                console.log(err);
+                await session.abortTransaction();
+            })
+        });
+        return {success: sucesso}
+    } catch (err) {
+        await session.abortTransaction();
+		return { success: sucesso, msg: err.message };
+	} finally {
+		await session.endSession();
+	}
 }

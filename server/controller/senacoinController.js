@@ -3,6 +3,7 @@ const SenaCoin = mongoose.model('SenaCoin');
 const AuditoriaSenaCoin = mongoose.model('AuditoriaSenaCoin');
 const aluno = require('./alunoController');
 const item = require('./itemController');
+const cotacao = require('./cotacaoController');
 
 exports.new = async (responsavel, pontos, data_fim, session) => {
 	
@@ -108,15 +109,29 @@ async function atualizaSenacoin (responsavel, id, pontos) {
 
 exports.use = async (req, res, _next) => {
 
-    //TODO adicionar verificacao de quantidade 
     const _item = await item.getInfo(req.body.item);
     console.log(_item);
-    if(! _item)
+    if (! _item)
         return res.status(400).json({success: false, msg: "item não encontrado."});
-
-    const teste = await aluno.redeemSenacoin(req.jwt.sub, req.body.email, _item);
-    if (! teste.success)
-        return res.status(500).json({success: false, msg: teste.msg});
     
-    res.status(200).json({success: true, msg: "senacoins convertidos com sucesso."});
+    if (_item.quantidade <= 0)
+        return res.status(404).json({success: false, msg: "item não esgotado."});
+    
+    if (_item.quantidade >= 1)
+    {
+        const resultado = await item.baixaEstoque(req.jwt.sub, _item._id);
+        console.log(resultado);
+        if (!resultado.success)
+            return res.status(500).json(resultado.msg);
+    }
+
+    const conversao = await aluno.redeemSenacoin(req.jwt.sub, req.body.email, _item);
+    if (!conversao.success)
+        return res.status(500).json({success: false, msg: teste.msg});
+
+    const cambio = await cotacao.getCurrent();
+    if (!cambio)
+        console.log('cambio não definido');
+    
+    res.status(200).json({success: true, msg: "senacoins convertidos com sucesso.", desconto: cambio*_item.horas});
 }

@@ -28,6 +28,7 @@ exports.AuditoriaItemSchema = new mongoose.Schema({
 	data_fim: {type: Date, default: null},
 	horas: {type: Number, immutable: true},
 	imagem: {type: String, immutable: true},
+	id_item: {type: mongoose.Types.ObjectId, ref: "Item", immutable: true},
 	id_area: {type: mongoose.Types.ObjectId, ref: "Area", immutable: true},
 	id_categoria: {type: mongoose.Types.ObjectId, ref: "Categoria", immutable: true},
 	id_subcategoria: {type: mongoose.Types.ObjectId, ref: "SubCategoria", immutable: true},
