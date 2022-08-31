@@ -139,7 +139,7 @@ const CadEvento = () => {
       </div>
 
       <div className='row'>
-        <div className="mb-3 col-6">
+        <div className="mb-3 col-4">
           <label htmlFor="exampleInputEmail1" className="form-label">Titulo</label>
           <input type="text" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" {...register("nome")} />
           <div style={{height: '25px'}}>
@@ -148,7 +148,16 @@ const CadEvento = () => {
             }
           </div>
         </div>
-        <div className="mb-3 col-6">
+        <div className="mb-3 col-4">
+          <QuestionTooltip label='Carga Horaria' msg='Quantidade de horas que o evento tem.' />
+          <input type="number" className="form-control" id="iptCargaHoraria" aria-describedby="Carga horaria" {...register("horas")} />
+          <div style={{height: '25px'}}>
+            {errors?.horas?.type &&
+              <div className="form-text text-danger m-0">Preencha o campo corretamente.</div>
+            }
+          </div>
+        </div>
+        <div className="mb-3 col-4">
           <QuestionTooltip label='Senacoins' msg='Quantidade do produto disponível em estoque.' />
           <input type="number" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" {...register("pontos")} />
           <div style={{height: '25px'}}>

@@ -50,7 +50,7 @@ const Table = ({apiRoute, rowCount = 12, resizeContainer = false, enablePaginati
     columns: columnSchema,
     data: dataTabela
 
-    // useRowSelect adds a new row so we can put checkbox in it
+  // useRowSelect adds a new row so we can put checkbox in it
   }, useFilters,useGlobalFilter, useSortBy, usePagination, useRowSelect, (hooks) => {
       if(editColumn) {
         hooks.visibleColumns.push(columns => {

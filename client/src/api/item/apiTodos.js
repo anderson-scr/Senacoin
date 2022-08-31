@@ -55,17 +55,20 @@ export const callTodosItemsAPI = {
       console.log(error)
     }
   },
-  atualizarItem: async (userId, imageFile) => {
+  atualizarItem: async (itemId, itemInfo, imageFile, categoria) => {
     try {
-      const apiResponse = await api.get(routes.items.atualizarItem + userId)
+      await api.patch(routes.items.atualizarItem + itemId, JSON.stringify(itemInfo))
 
       // If the img upload goes wrong, throw new error
-      if(!await callTodosItemsAPI.atualizaImagem(imageFile)) {
-        throw new Error('Erro ao salvar img!')
-      } else {
-        ModalService.open(ModalCadCorreto)
+      if(imageFile != false) {
+        try {
+          await callTodosItemsAPI.atualizaImagem(imageFile, categoria)
+        } catch {
+          throw new Error('Erro ao salvar img!')
+        }
       }
-
+      
+      ModalService.open(ModalCadCorreto)
     } catch (error) {
       ModalService.open(ModalCadErro)
       console.log(error)
@@ -77,7 +80,7 @@ export const callTodosItemsAPI = {
     formData.append('selectedFile', imageFile)
 
     try {
-      await axios.post(`http://localhost:5000/api/v1/${routes.items.novaImagem}`, formData, {
+      await axios.post(`http://localhost:5000/api/v1/item/${categoria}/addImg`, formData, {
         headers: {
           'Content-type': 'multipart/form-data'
         }
@@ -89,4 +92,24 @@ export const callTodosItemsAPI = {
       return false
     }
   },
+  inativaItem: async (userId) => {
+    try {
+      await api.delete(routes.items.inativaItem + userId, JSON.stringify({ativo: false}))
+      
+      ModalService.open(ModalCadCorreto)
+    } catch (error) {
+      console.log(error)
+      ModalService.open(ModalCadErro)
+    }
+  },
+  ativarItem: async (itemId, itemInfo) => {
+    try {
+      await api.patch(routes.items.atualizarItem + itemId, JSON.stringify(itemInfo))
+      
+      ModalService.open(ModalCadCorreto)
+    } catch (error) {
+      ModalService.open(ModalCadErro)
+      console.log(error)
+    }
+  }
 }

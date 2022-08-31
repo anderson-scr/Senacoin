@@ -63,19 +63,19 @@ const QrcodeLivre = () => {
           </div>
           <div className='d-flex justify-content-between mb-2'>
             <div className="form-check">
-              <input className="form-check-input" type="radio" name="defaultRadio" id='radio1' defaultChecked {...register("unico")} />
+              <input className="form-check-input" type="radio" name="flexRadioDefault" id='flexRadioDefault1' checked {...register("unico")} />
               <QuestionTooltip label='Único' msg='O Qrcode so pode ser utilizado uma unica vez.' />
             </div>
             <div className="form-check">
-              <input className="form-check-input" type="radio" name="defaultRadio" id='radio2' {...register("diario")} />
+              <input className="form-check-input" type="radio" name="flexRadioDefault" id='flexRadioDefault2' {...register("diario")} />
               <QuestionTooltip label='Diário' msg='O Qrcode poderá ser utilizado uma vez por dia por cada usuário.' />
             </div>
             <div className="form-check">
-              <input className="form-check-input" type="radio" name="defaultRadio" id='radio3' {...register("semanal")} />
+              <input className="form-check-input" type="radio" name="flexRadioDefault" id='flexRadioDefault3'  {...register("semanal")} />
               <QuestionTooltip label='Semanal' msg='O Qrcode poderá ser semanalmente por cada usuário.' />
             </div>
             <div className="form-check">
-              <input className="form-check-input" type="radio" name="defaultRadio" id='radio4' {...register("mensal")} />
+              <input className="form-check-input" type="radio" name="flexRadioDefault" id='flexRadioDefault4'  {...register("mensal")} />
               <QuestionTooltip label='Mensal' msg='O Qrcode poderá ser utilizado uma vez por mes por cada usuário.' />
             </div>
           </div>

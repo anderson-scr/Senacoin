@@ -202,7 +202,7 @@ exports.edit = async (req, res, _nxt) => {
     const session = await mongoose.startSession();
 	try {    
 		await session.withTransaction(async () => {
-		
+      console.log(req.body)
 			await Item.findByIdAndUpdate(req.params.id, {$set: req.body}, { session: session, new: true})
 			.select('-_id')
 			.then(async (item) => {

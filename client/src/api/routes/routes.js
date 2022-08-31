@@ -36,7 +36,8 @@ export const routes = {
   items: {
     todos: 'item/all/',
     ativo: 'item/active/',
-    atualizarItem: 'item/'
+    atualizarItem: 'item/',
+    inativaItem: 'item/'
   },
 
   produto: {

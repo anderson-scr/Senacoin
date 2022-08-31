@@ -6,6 +6,7 @@ export const yupSchemaCadEvento = yup.object().shape({
   pontos: yup.number().positive().required(),
   id_subcategoria: yup.string().matches(regexUtils.idUnidadePerfil).required(),
   data_inicio: yup.string().matches(regexUtils.data).required(),
+  horas: yup.number().positive().required(),
   data_fim: yup.string().matches(regexUtils.data).required(),
   id_area: yup.string().matches(regexUtils.idUnidadePerfil).required(),
   id_unidade: yup.string().matches(regexUtils.idUnidadePerfil).required(),

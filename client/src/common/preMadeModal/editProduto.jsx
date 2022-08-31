@@ -49,22 +49,38 @@ const ModalEditProduto = (props) => {
   }, [navigate])
 
   const atualizarItem = (dados) => {
-    console.log('aqui')
-    console.log(dados)
+    // Verify if the user has changed any off the options and save the original ID, or change to the new one
+    dados.id_area === '777'? dados.id_area = produtosInfo.id_area._id : dados.id_unidade = [unidades[(parseInt(dados.id_unidade) - 1)]._id]
+    dados.id_subcategoria === '777'? dados.id_subcategoria = produtosInfo.id_subcategoria._id : dados.id_area = areas[parseInt(dados.id_area) - 1]._id
+    dados.id_unidade === '777'? dados.id_unidade = produtosInfo.id_unidade[0]._id : dados.id_subcategoria = subcategorias[parseInt(dados.id_subcategoria) - 1]._id
+    
+    // Saves the new file
+    dados.imagem = produtosInfo.imagem
+    const newFile = dados.imagem.length? new File([file], dados.imagem) : false
+    
+    callTodosItemsAPI.atualizarItem(produtosInfo._id, dados, newFile, 'produto')
   }
-  const erro = (dados) => {
-    console.log(dados)
+  
+  const inativaItem = () => {
+    callTodosItemsAPI.inativaItem(produtosInfo._id)
   }
+  
+  const ativaProduto = () => {
+    let updateProdutoInfo = produtosInfo
+    updateProdutoInfo.ativo = true
+    callTodosItemsAPI.ativarItem(produtosInfo._id, updateProdutoInfo)
+  }
+
 
   return (
     <Modal>
       <ModalHeader>
         <h2>
-          Editar Produto
+          Editar Item
         </h2>
       </ModalHeader>
       <ModalBody>
-        <form className='container mt-3' onSubmit={handleSubmit(atualizarItem, erro)} encType="multipart/form-data" style={{width: '60vw', textAlign: 'start'}}>
+        <form className='container mt-3' onSubmit={handleSubmit(atualizarItem)} encType="multipart/form-data" style={{width: '60vw', textAlign: 'start'}}>
           <div className='row'>
 
             <div className='mb-3 col'>
@@ -171,12 +187,12 @@ const ModalEditProduto = (props) => {
           <div className='row mx-auto mt-5'>
             {produtosInfo.ativo &&
               <div className='col d-flex p-0 justify-content-start p-0'>
-                <button type="button" className="btn btn-outline-danger w-50" >Inativar Usuario</button>
+                <button type="button" onClick={inativaItem} className="btn btn-outline-danger w-50" >Inativar Usuario</button>
               </div>
             }
             {!produtosInfo.ativo &&
               <div className='col d-flex p-0 justify-content-start p-0'>
-                <button type="button" className="btn btn-outline-success w-50" >Ativar Usuário</button>
+                <button type="button" onClick={ativaProduto} className="btn btn-outline-success w-50" >Ativar Usuário</button>
               </div>
             }
             <div className='col d-flex p-0 justify-content-end'>
