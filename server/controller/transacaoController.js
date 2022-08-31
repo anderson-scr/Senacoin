@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const Transacao = mongoose.model('Transacao');
 const Aluno = mongoose.model('Aluno');
+const aluno = require('./alunoController');
 
 exports.new = async (responsavel, id_aluno, id_senacoin, pontos, tipo, id_item, id_qrcode, id_promocao, session) => {
 	
@@ -85,13 +86,28 @@ exports.listOne = (req, res, _next) => {
     });
 }
 
-exports.delete = (req, res, _nxt) => {
+exports.delete = async (req, res, _nxt) => {
 
-	Transacao.findOneAndDelete({_id: req.params.id})
-	.select('-_id')
-	.then((doc) => {
-		
-		res.status(200).json(doc);
-	})
-	.catch((err) => (res.status(500).json({ success: false, msg: `${err}` })));
+	const session = await mongoose.startSession();
+    try {
+
+        await session.withTransaction(async () => {
+			const estorno = await Transacao.findByIdAndDelete(req.params.id, { session: session });
+			console.log(estorno);
+		});
+			
+			if (!estorno.tipo) {
+				await aluno.estornaPontos(req.jwt.sub, id_aluno, id_senacoin, pontos);
+			}
+			else {
+				throw new Error('Estorno de pontos obtidos por QrCode ainda não implementado.');
+			}
+			res.status(200).json({ success: true, msg: 'pontos estornados com sucesso.'});
+	} catch (err) {
+		await session.abortTransaction();
+		res.status(500).json({ success: false, msg: `${err}` })
+	}
+	finally{
+		await session.endSession();
+	}
 }
