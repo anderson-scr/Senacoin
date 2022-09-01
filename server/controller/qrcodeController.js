@@ -197,6 +197,26 @@ exports.listActive = (req, res, _next) => {
     });
 }
 
+exports.expireSoon = (req, res, _next) => {
+    
+    const today = Date.now() - 3600*1000*4; //fuso horario gmt-4 talvez
+    
+    QrCode.find({$and: [{ativo: true}, {data_inicio: {$lt: today}}, {data_fim: {$gte: today}}]}).sort({data_fim: 1}).limit(4)
+    .select("-ativo -_id")
+	.populate({path : 'id_item', select: 'nome area id_categoria -_id', populate: {path: 'id_categoria', select: 'nome -_id'}})
+	.populate({path : 'id_unidade', select: 'nome -_id'})
+    .then((qrcodes) => {
+        
+        if (!qrcodes.length)
+            return res.status(204).json();  
+        else
+            res.status(200).json(qrcodes);
+    })
+    .catch((err) => {
+        res.status(500).json({success: false, msg: `${err}`});
+    });
+}
+
 exports.listOne = (req, res, _next) => {
 
     QrCode.findById(req.params.id)

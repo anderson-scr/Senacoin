@@ -13,6 +13,8 @@ router.get('/redeem/:id', utils.authUserMiddleware(), controller.use);
 router.get('/all/:offset?', utils.authUserMiddleware("ger_qrcodes"), controller.listAll);
 // list all active qr codes
 router.get('/active/:offset?', utils.authUserMiddleware(), controller.listActive);
+// list all active qr codes
+router.get('/expire-soon', utils.authUserMiddleware(), controller.expireSoon);
 // list single qr code
 router.get('/:id', utils.authUserMiddleware("ger_qrcodes"), controller.listOne);
 // edit a qr code

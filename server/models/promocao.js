@@ -8,6 +8,7 @@ exports.PromocaoSchema = new mongoose.Schema({
 	data_fim: {type: Date, required: true},
 	quantidade: {type: Number, default: null}, // somente produto 
 	id_unidade: [{type: mongoose.Types.ObjectId, ref: "Unidade", required: true}],
+	id_item: {type: mongoose.Types.ObjectId, ref: "Item", default: null},
 	imagem: {type: String, default: null},
 	ativo: {type: Boolean, default: true}
 }, { versionKey: false });
@@ -23,6 +24,7 @@ exports.AuditoriaPromocaoSchema = new mongoose.Schema({
 	data_fim: {type: Date, immutable: true},
 	quantidade: {type: Number, default: null},
 	id_unidade: [{type: mongoose.Types.ObjectId, ref: "Unidade", immutable: true}],
+	id_item: {type: mongoose.Types.ObjectId, ref: "Item", default: null},
 	imagem: {type: String, immutable: true},
 	ativo: {type: Boolean, immutable: true}
 }, { versionKey: false });

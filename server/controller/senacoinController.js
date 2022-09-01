@@ -76,6 +76,7 @@ exports.sub = async (responsavel, pontos, senacoins) => {
 
 async function atualizaSenacoin (responsavel, id, pontos) {
 
+    let sucesso = false;
     const session = await mongoose.startSession();
 	try {    
 		await session.withTransaction(async () => {
@@ -88,6 +89,7 @@ async function atualizaSenacoin (responsavel, id, pontos) {
 
 				await AuditoriaSenaCoin.create([{responsavel: responsavel, id_senacoin: id, ...senacoin._doc}], { session })
 				.then((audsenacoin) =>{
+                    sucesso = true;
 					console.log({ success: true, audsenacoin});
 				})
 				.catch(async (err) => {
@@ -104,6 +106,7 @@ async function atualizaSenacoin (responsavel, id, pontos) {
 		console.log({ success: false, msg: `${err}` });
 	} finally {
 		await session.endSession();
+        return sucesso;
 	}
 }
 
@@ -134,4 +137,10 @@ exports.use = async (req, res, _next) => {
         console.log('cambio não definido');
     
     res.status(200).json({success: true, msg: "senacoins convertidos com sucesso.", desconto: cambio*_item.horas});
+}
+
+exports.estornaLote = async (responsavel, id) => {
+	
+    const pontos = await AuditoriaSenaCoin.findById(id).sort({"_id": -1}).limit(1).select('pontos -_id');
+    return atualizaSenacoin(responsavel, id, pontos);
 }

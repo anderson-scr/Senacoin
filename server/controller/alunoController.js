@@ -429,3 +429,35 @@ exports.redeemSenacoin = async (responsavel, email, item) => {
         return {sucess: false, msg: error.message}
     }
 }
+
+exports.estornaPontos = async (responsavel, id, senacoins, pontos) => {
+
+    const infoAluno = Aluno.findById(id).select('-hash -salt');
+    const session = await mongoose.startSession();
+    try {
+        await session.withTransaction(async () => {
+            
+            let loteModificado;
+            senacoins = senacoins.filter(value => {
+                if (infoAluno.saldo.includes(value))
+                {
+                    loteModificado = value;
+                    return false;
+                }
+                return true;
+            });
+
+            const aluno = await Aluno.findByIdAndUpdate(id, {$push: {saldo: senacoins}}, { session: session, new: true}).select('-_id');
+            await AuditoriaAluno.create([{responsavel: responsavel,  ...aluno._doc}], { session });
+
+            if (! await senacoin.estornaLote(responsavel, loteModificado))
+                throw new Error('Erro com estorno do lote modificado');
+        });
+    } catch (error) {
+        await session.abortTransaction();
+        console.log({ success: false, msg: `${err}` });
+    }
+    finally{
+		await session.endSession();
+	}
+}

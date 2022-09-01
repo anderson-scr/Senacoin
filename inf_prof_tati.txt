@@ -13,15 +13,18 @@ senacoin API:
 		- salvar todas as transações no banco.
 		- verificar se o qrcode foi usado e quando foi usado (uso unico, diário ou mensal).
 		- adicionar rota para alterar a cotação do senacoin.
+		- rota qrcode a vencer 4 mais proximos para a dashboard
+		- rota dashboard all com servico/evento, qrcode e promocao.
 	
 	a fazer:
 		- revisar funcoes da rota transacao, para ediçao ou deleçao
-		- adicionar qualificação por palavra-chave nas buscas de algumas rotas.
 		- proc para limpar a lista de qrcode usados (uso unico, diário ou mensal) após o tempo expirado.
 	
 	falta informação:
-		- rota dashboard.
 		- rota relatorio.
 
 
 front end:
+
+estacio.br
+curso: tads

@@ -10,6 +10,8 @@ router.use('/api/v1/colaborador', require('./colaborador'));
 
 router.use('/api/v1/cotacao', require('./cotacao'));
 
+router.use('/api/v1/dashboard', require('./dashboard'));
+
 router.use('/api/v1/item', require('./item'));
 
 router.use('/api/v1/perfil', require('./perfil'));
@@ -21,6 +23,8 @@ router.use('/api/v1/qrcode', require('./qrcode'));
 router.use('/api/v1/senacoin', require('./senacoin'));
 
 router.use('/api/v1/subcategoria', require('./subcategoria'));
+
+router.use('/api/v1/transacao', require('./transacao'));
 
 router.use('/api/v1/unidade', require('./unidade'));
 
