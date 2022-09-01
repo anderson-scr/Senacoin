@@ -90,22 +90,23 @@ exports.delete = async (req, res, _nxt) => {
 
 	const session = await mongoose.startSession();
     try {
-
-        await session.withTransaction(async () => {
+		await session.withTransaction(async () => {
+			
 			const estorno = await Transacao.findByIdAndDelete(req.params.id, { session: session });
 			console.log(estorno);
-		});
-			
 			if (!estorno.tipo) {
-				await aluno.estornaPontos(req.jwt.sub, id_aluno, id_senacoin, pontos);
+				console.log(`chamei aluno.estornaPontos(${req.jwt.sub}, ${estorno.id_aluno}, ${estorno.id_senacoin}, ${estorno.pontos}, ${session})`);
+				if (! await aluno.estornaPontos(req.jwt.sub, estorno.id_aluno, estorno.id_senacoin, estorno.pontos, session))
+					throw new Error('Erro com o estorno dos pontos do aluno.');
 			}
 			else {
 				throw new Error('Estorno de pontos obtidos por QrCode ainda não implementado.');
 			}
 			res.status(200).json({ success: true, msg: 'pontos estornados com sucesso.'});
+		});
 	} catch (err) {
-		await session.abortTransaction();
-		res.status(500).json({ success: false, msg: `${err}` })
+		console.log({ success: false, msg: err.message }, '1');
+		res.status(500).json({ success: false, msg: err.message })
 	}
 	finally{
 		await session.endSession();

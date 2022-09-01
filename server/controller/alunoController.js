@@ -400,13 +400,13 @@ exports.redeemSenacoin = async (responsavel, email, item) => {
         if (!aluno)
             throw new Error('aluno não encontrado');
         
-        const resultado = await senacoin.sub(responsavel, item.pontos, aluno.saldo);
-        if (!resultado.success)
-            throw new Error(resultado.msg);
-        
         const session = await mongoose.startSession();
         try {
             await session.withTransaction(async () => {
+    
+                const resultado = await senacoin.sub(responsavel, item.pontos, aluno.saldo, session);
+                if (!resultado.success)
+                    throw new Error(resultado.msg);
     
                 const _aluno = await Aluno.findByIdAndUpdate(aluno._id, {saldo: resultado.remanescente}, { session: session, new: true})
                 .select('-_id');
@@ -430,34 +430,39 @@ exports.redeemSenacoin = async (responsavel, email, item) => {
     }
 }
 
-exports.estornaPontos = async (responsavel, id, senacoins, pontos) => {
-
-    const infoAluno = Aluno.findById(id).select('-hash -salt');
-    const session = await mongoose.startSession();
+exports.estornaPontos = async (responsavel, id, senacoins, pontos, session) => {
+    console.log('entrei meu rei');
+    const infoAluno = await Aluno.findById(id).select('-hash -salt');
+    console.log(infoAluno.saldo);
     try {
-        await session.withTransaction(async () => {
             
-            let loteModificado;
-            senacoins = senacoins.filter(value => {
-                if (infoAluno.saldo.includes(value))
-                {
-                    loteModificado = value;
-                    return false;
-                }
-                return true;
-            });
+        let loteModificado;
+        console.log(loteModificado, senacoins);
+        senacoins = senacoins.filter(value => {
+            if (infoAluno.saldo.includes(value))
+            {
+                loteModificado = value;
+                console.log('passei return false');
+                return false;
+            }
+            console.log('passei return true');
+            return true;
+        });
+        console.log(loteModificado, senacoins);
 
+        if (!senacoins.length) {
             const aluno = await Aluno.findByIdAndUpdate(id, {$push: {saldo: senacoins}}, { session: session, new: true}).select('-_id');
             await AuditoriaAluno.create([{responsavel: responsavel,  ...aluno._doc}], { session });
+        }
 
-            if (! await senacoin.estornaLote(responsavel, loteModificado))
-                throw new Error('Erro com estorno do lote modificado');
-        });
-    } catch (error) {
-        await session.abortTransaction();
-        console.log({ success: false, msg: `${err}` });
+        if (loteModificado) {
+            console.log(`chamei senacoin.estornaLote(${responsavel}, ${loteModificado}, ${session})`);
+            if (! await senacoin.estornaLote(responsavel, loteModificado, pontos, session))
+                throw new Error('Erro com estorno do lote modificado.');
+        }
+        return true;
+    } catch (err) {
+        console.log({ success: false, msg: err.message }, '2');
+        return false;
     }
-    finally{
-		await session.endSession();
-	}
 }

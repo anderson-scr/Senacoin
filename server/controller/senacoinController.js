@@ -65,7 +65,8 @@ exports.sub = async (responsavel, pontos, senacoins) => {
         }
         else {
             console.log({responsavel: responsavel, id: senacoins[0]._id, pontos: senacoins[0].pontos - pontos});
-            await atualizaSenacoin(responsavel, senacoins[0]._id, senacoins[0].pontos - pontos)
+            if (! await atualizaSenacoin(responsavel, senacoins[0]._id, senacoins[0].pontos - pontos, session))
+                return {success: false, msg: "erro na hora de atualizar o lote."};
             senacoinsConvertidos.push(senacoins[0]);
             pontos = 0
         }
@@ -74,40 +75,22 @@ exports.sub = async (responsavel, pontos, senacoins) => {
     return {success: true, remanescente: senacoins, gastos: senacoinsConvertidos, totalGastos: total}; // o primeiro precisa ser adicionado em aluno e o segundo em transacao
 }
 
-async function atualizaSenacoin (responsavel, id, pontos) {
+async function atualizaSenacoin (responsavel, id, pontos, session) {
 
-    let sucesso = false;
-    const session = await mongoose.startSession();
 	try {    
-		await session.withTransaction(async () => {
-		
-			await SenaCoin.findByIdAndUpdate(id, {pontos: pontos}, { session: session, new: true})
-            .select('-_id')
-			.then(async (senacoin) => {
-				if (!senacoin)
-                console.log({success: false, msg: 'lote de senacoin não encontrado'});
+        const senacoin = await SenaCoin.findByIdAndUpdate(id, {pontos: pontos}, { session: session, new: true}).select('-_id');
+        if (!senacoin)
+            console.log({success: false, msg: 'lote de senacoin não encontrado'}, '3');
 
-				await AuditoriaSenaCoin.create([{responsavel: responsavel, id_senacoin: id, ...senacoin._doc}], { session })
-				.then((audsenacoin) =>{
-                    sucesso = true;
-					console.log({ success: true, audsenacoin});
-				})
-				.catch(async (err) => {
-					await session.abortTransaction();
-					console.log({ success: false, msg: `${err}` });
-				});
-			})
-			.catch(async (err) => {
-				await session.abortTransaction();
-				console.log({ success: false, msg: `${err}` });
-			})
-		});
+        const audsenacoin = await AuditoriaSenaCoin.create([{responsavel: responsavel, id_senacoin: id, ...senacoin._doc}], { session })
+        console.log({ success: true, audsenacoin});
+        // throw new Error('erro de teste');
+        return true;
+    
 	} catch (err) {
-		console.log({ success: false, msg: `${err}` });
-	} finally {
-		await session.endSession();
-        return sucesso;
-	}
+		console.log({ success: false, msg: err.message}, '4');
+        return false;
+    }
 }
 
 exports.use = async (req, res, _next) => {
@@ -139,8 +122,19 @@ exports.use = async (req, res, _next) => {
     res.status(200).json({success: true, msg: "senacoins convertidos com sucesso.", desconto: cambio*_item.horas});
 }
 
-exports.estornaLote = async (responsavel, id) => {
-	
-    const pontos = await AuditoriaSenaCoin.findById(id).sort({"_id": -1}).limit(1).select('pontos -_id');
-    return atualizaSenacoin(responsavel, id, pontos);
+exports.estornaLote = async (responsavel, id, pontos, session) => {
+
+    console.log('entrei estornaLote');
+    try {
+        const senacoin = await SenaCoin.findById(id).select('-_id');
+        await AuditoriaSenaCoin.create([{responsavel: responsavel, id_senacoin: id, ...senacoin._doc}], { session })
+        
+        console.log(`chamei atualizaSenacoin(${responsavel}, ${id}, ${senacoin.pontos+pontos})`);
+        if(! atualizaSenacoin(responsavel, id, senacoin.pontos+pontos, session))
+            throw new Error('Erro ao atualizar o lote modificado.');
+        return true;
+    } catch (err) {
+        console.log({success: false, msg: err.message});
+        return false;
+    }
 }
