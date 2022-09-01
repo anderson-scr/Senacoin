@@ -203,7 +203,7 @@ exports.expireSoon = (req, res, _next) => {
     
     QrCode.find({$and: [{ativo: true}, {data_inicio: {$lt: today}}, {data_fim: {$gte: today}}]}).sort({data_fim: 1}).limit(4)
     .select("-ativo -_id")
-	.populate({path : 'id_item', select: 'nome area id_categoria -_id', populate: {path: 'id_categoria', select: 'nome -_id'}})
+	.populate({path : 'id_item', select: 'nome area pontos id_categoria -_id', populate: {path: 'id_categoria', select: 'nome -_id'}})
 	.populate({path : 'id_unidade', select: 'nome -_id'})
     .then((qrcodes) => {
         

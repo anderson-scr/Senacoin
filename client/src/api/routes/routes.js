@@ -65,7 +65,8 @@ export const routes = {
   qrcode: {
     novo: 'qrcode/add',
     ativo: 'qrcode/active/',
-    todos: 'qrcode/all/'
+    todos: 'qrcode/all/',
+    paraVencer: 'qrcode/expire-soon'
   },
 
   promocao: {
@@ -73,5 +74,8 @@ export const routes = {
     ativo: 'promocao/active/',
     todos: 'promocao/all',
     novaImagem: 'promocao/addImg'
+  },
+  dashboard: {
+    todos: 'dashboard/all'
   }
 }

@@ -33,32 +33,24 @@ export const callQrcodeAPI = {
       console.log(error)
     }
   },
-  paraVencer: async (offset) => {
+  paraVencer: async () => {
     try {
-      const apiResponse = await api.get(routes.qrcode.todos + offset)
-
+      const apiResponse = await api.get(routes.qrcode.paraVencer)
+      
       // If there's no data in the apiResponse, return a empty array for react-table
       if(apiResponse.status === 204) {
         return []
       } else {
-        
-        const sortedByDate = apiResponse.data.sort((a, b) => {
-          // if((a.data_fim - b.data_fim) > new Date.now())
-          return a.data_fim - b.data_fim
+        const filteredDate = []
+        apiResponse.data.forEach(element => {
+          const date = new Date(element.data_fim).toLocaleDateString()
+          element.data_fim = date
+          filteredDate.push(element)
         })
-        const currentDate = new Date()
-        sortedByDate.forEach((each, idx) => {
-          const elementDate = new Date(each.data_fim)
-          if(elementDate < currentDate) sortedByDate.splice(idx, 1)  
-        })
-        const lastFour = sortedByDate.slice(0, 4)
-        lastFour.forEach((date, idx) => {
-          lastFour[idx].data_fim = date.data_fim.slice(0, 10)
-        })
-        return lastFour
-      }
-    } catch (error) {
-      console.log(error)
+        return filteredDate
+      } 
+    } catch(error) {
+
     }
   }
 }

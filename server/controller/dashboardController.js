@@ -8,13 +8,43 @@ exports.getAll = async (req, res, _next) => {
 	try {
 
 		const items = await Item.find({id_categoria: {$in: ["62d017a1181c3910ccfd43d2", "62d017a1181c3910ccfd43d3"]}});
-		list = list.concat(items);
-
+    items.forEach(item => {
+      const withTitle = {
+        title: 'Item',
+        itemName: item.nome,
+        start: item.data_fim,
+        end: item.data_fim,
+        backgroundColor: '#D95443',
+        borderColor: '#D95443'
+      }
+      list.push(withTitle)
+    })
+    
 		const promos = await Promocao.find({});
-		list = list.concat(promos);
+    promos.forEach(promo => { 
+      const withTitle = {
+        title: 'Promoção',
+        itemName: promo.nome,
+        start: promo.data_fim,
+        end: promo.data_fim,
+        backgroundColor: 'rgb(225, 126, 28)',
+        borderColor: 'rgb(225, 126, 28)'
+      }
+      list.push(withTitle)
+    })
 
 		const qrcodes = await QrCode.find({});
-		list = list.concat(qrcodes);
+    qrcodes.forEach(qrcode => { 
+      const withTitle = {
+        title: 'Qrcode',
+        itemName: qrcode.nome,
+        start: qrcode.data_fim,
+        end: qrcode.data_fim,
+        backgroundColor: '#3788D8',
+        borderColor: '#3788D8'
+      }
+      list.push(withTitle)
+    })
 
 		if (!list.length)
 			return res.status(204).json();

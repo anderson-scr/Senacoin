@@ -6,7 +6,7 @@ import FullCalendar from '@fullcalendar/react' // must go before plugins
 import dayGridPlugin from '@fullcalendar/daygrid' // a plugin!
 
 // API's
-import { callCalendarAPI } from 'api/calendar/apiCalendar'
+import { callDashboardAPI } from 'api/dashboard/apiDashboard'
 
 const Calendar = () => {
   const [calendarDate, setCalendarDate] = useState([])
@@ -18,8 +18,7 @@ const Calendar = () => {
       (async () => {
         // Set the state to fill calendar
         await setCalendarDate([
-          ...await callCalendarAPI.dataVencimentoQrcode(0),
-          ...await callCalendarAPI.dataVencimentoPromocao(0)
+          ...await callDashboardAPI.calendarioTodos()
         ])
       })()
       

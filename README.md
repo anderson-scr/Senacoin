@@ -39,3 +39,5 @@ If you dont have it, there`s a clean json file in the "extra" folder, where you 
 npm install
 npm start
 ```
+
+https://www.sliderrevolution.com/resources/css-animated-background/

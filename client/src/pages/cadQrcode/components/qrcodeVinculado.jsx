@@ -20,6 +20,10 @@ const QrcodeVinculado = () => {
   const effectOnce = useRef(true)
   const [itemsVinculados, setItemsVinculados] = useState([])
   const [checkSelectedItem, setCheckSelectedItem] = useState(false)
+  const radioUnico = useRef()
+  const radioDiario = useRef()
+  const radioSemanal = useRef()
+  const radioMensal = useRef()
 
   const { register, handleSubmit, formState: {
     errors
@@ -46,6 +50,10 @@ const QrcodeVinculado = () => {
     verifySelectedItems()
     if(!checkSelectedItem) {
       qrcodeData.item_vinculado = itemsVinculados
+      qrcodeData.unico = radioUnico.current.checked
+      qrcodeData.diario = radioDiario.current.checked
+      qrcodeData.semanal = radioSemanal.current.checked
+      qrcodeData.mensal = radioMensal.current.checked
       console.log(qrcodeData)
       // callQrcodeAPI.novo(qrcodeData)
     }
@@ -83,19 +91,19 @@ const QrcodeVinculado = () => {
           </div>
           <div className='d-flex justify-content-between mb-4'>
             <div className="form-check  ">
-              <input className="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" {...register("unico")} defaultChecked/>
+              <input className="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" ref={radioUnico} defaultChecked/>
               <QuestionTooltip label='Único' msg='O Qrcode so pode ser utilizado uma unica vez.' />
             </div>
             <div className="form-check">
-              <input className="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" {...register("diario")} />
+              <input className="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" ref={radioDiario} />
               <QuestionTooltip label='Diário' msg='O Qrcode poderá ser utilizado uma vez por dia por cada usuário.' />
             </div>
             <div className="form-check">
-              <input className="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault3" {...register("semanal")} />
+              <input className="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault3" ref={radioSemanal} />
               <QuestionTooltip label='Semanal' msg='O Qrcode poderá ser semanalmente por cada usuário.' />
             </div>
             <div className="form-check">
-              <input className="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault4" {...register("mensal")} />
+              <input className="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault4" ref={radioMensal} />
               <QuestionTooltip label='Mensal' msg='O Qrcode poderá ser utilizado uma vez por mes por cada usuário.' />
             </div>
           </div>
