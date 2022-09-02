@@ -11,22 +11,15 @@ exports.new = async (responsavel, id_aluno, id_senacoin, pontos, tipo, id_item, 
 		id_aluno = aluno._id;
 	}
 
-	let sucesso = false;
     try {
-		await Transacao.create([{responsavel, id_aluno, id_senacoin, pontos, tipo, id_item, id_qrcode, id_promocao}], { session })
-		.then(async (transacao) => {
-			console.log(transacao[0]);
-			sucesso = true;
-		})
-		.catch(async (err) => {
-			await session.abortTransaction();
-			console.log({ success: false, msg: `${err}` });
-		})
+		const transacao = await Transacao.create([{responsavel, id_aluno, id_senacoin, pontos, tipo, id_item, id_qrcode, id_promocao}], { session })
+		console.log(transacao);
+		throw new Error('erro de teste');
+		return true;
     } catch (err) {
-		await session.abortTransaction();
-        console.log({ success: false, msg: `${err}` });
+        console.log({ success: false, msg: err.message });
+		return false;
 	}
-	return sucesso;
 }
 
 
@@ -94,6 +87,9 @@ exports.delete = async (req, res, _nxt) => {
 			
 			const estorno = await Transacao.findByIdAndDelete(req.params.id, { session: session });
 			console.log(estorno);
+			if (!estorno)
+				return res.status(204).json();
+				
 			if (!estorno.tipo) {
 				console.log(`chamei aluno.estornaPontos(${req.jwt.sub}, ${estorno.id_aluno}, ${estorno.id_senacoin}, ${estorno.pontos}, ${session})`);
 				if (! await aluno.estornaPontos(req.jwt.sub, estorno.id_aluno, estorno.id_senacoin, estorno.pontos, session))
@@ -109,6 +105,7 @@ exports.delete = async (req, res, _nxt) => {
 		res.status(500).json({ success: false, msg: err.message })
 	}
 	finally{
+		console.log('encerrei a sessao');
 		await session.endSession();
 	}
 }

@@ -285,40 +285,18 @@ exports.deleteAll = (_req, res, _nxt) => {
     .catch((err) => (res.status(500).json({ success: false, msg: `${err}` })));
 }
 
-exports.baixaEstoque = async (colaborador, id) => {
-    console.log("entrei id: ", id);
+exports.baixaEstoque = async (colaborador, id, session) => {
 
-    let sucesso = false;
-    const session = await mongoose.startSession();
+    console.log("entrei id: ", id);
 	try {    
-		await session.withTransaction(async () => {
+        const item = await Item.findByIdAndUpdate(id, {$inc: {quantidade: -1}}, { session: session, new: true}).select('-_id');
+        if (!item)
+            throw new Error("item não encontrado");
             
-            await Item.findByIdAndUpdate(id, {$inc: {quantidade: -1}}, { session: session, new: true})
-            .select('-_id')
-            .then(async (item) => {   
-                console.log(item._doc);
-                if (!item)
-                    throw new Error("item não encontrado");
-                
-                await AuditoriaItem.create([{colaborador: colaborador, id_item: id, ...item._doc}], { session })
-                .then((auditem) => {
-                    sucesso = true;
-                })
-                .catch(async (err) => {
-                    console.log(err);
-                    await session.abortTransaction();
-                });
-            })
-            .catch(async (err) => {
-                console.log(err);
-                await session.abortTransaction();
-            })
-        });
-        return {success: sucesso}
+        await AuditoriaItem.create([{colaborador: colaborador, id_item: id, ...item._doc}], { session })
+        return true
     } catch (err) {
-        await session.abortTransaction();
-		return { success: sucesso, msg: err.message };
-	} finally {
-		await session.endSession();
-	}
+        console.log({ success: sucesso, msg: err.message });
+        return false;
+    }
 }

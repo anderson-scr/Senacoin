@@ -17,7 +17,9 @@ senacoin API:
 		- rota dashboard all com servico/evento, qrcode e promocao.
 	
 	a fazer:
-		- estorno de transacao
+		- estorno de transacao entrada
+		- conferir converter senacoins
+		- refatorar usar qrcode
 		- proc para limpar a lista de qrcode usados (uso unico, diário ou mensal) após o tempo expirado.
 	
 	falta informação:

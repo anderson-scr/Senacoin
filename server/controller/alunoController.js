@@ -147,7 +147,7 @@ exports.listOne = (req, res, _next) => {
             return res.status(204).json();  
         
         const _verificaSaldo = await this.verificaSaldo(req.jwt.sub, aluno._id, aluno.saldo);
-        if (!_verificaSaldo.sucesso)
+        if (!_verificaSaldo.success)
             throw new Error(`erro na atualizacao dos senacoins`);
 
         let _aluno = {...aluno._doc};
@@ -163,80 +163,53 @@ exports.listOne = (req, res, _next) => {
 // esssa funcao sobrescreve o vetor de senacoins com o novo vetor sem os lotes vencidos
 exports.verificaSaldo = async (responsavel, id, saldo) => {
 
-    let sucesso = false;
     const saldoAtualizado = senacoin.sum(saldo);
+    if (saldoAtualizado.anterior === saldoAtualizado.atual)
+        return { success: true, total: saldoAtualizado.anterior };
 
     const session = await mongoose.startSession();
     try {
         await session.withTransaction(async () => {
 
-            await Aluno.findByIdAndUpdate(id, {saldo: saldoAtualizado.senacoins}, { session: session, new: true})
-            .select('-_id')
-            .then(async (aluno) => {
-                if (!aluno)
-                    throw new Error('aluno não encontrado');
+            const aluno = await Aluno.findByIdAndUpdate(id, {saldo: saldoAtualizado.senacoins}, { session: session, new: true}).select('-_id');
+            if (!aluno)
+                throw new Error('aluno não encontrado');
 
-                await AuditoriaAluno.create([{responsavel: responsavel,  ...aluno._doc}], { session })
-                .then((_audaluno) =>{
-                    sucesso = true;
-                })
-                .catch(async (err) => {
-                    await session.abortTransaction();
-                    console.log({ success: false, msg: `${err}` });
-                });
-            })
-            .catch(async (err) => {
-                await session.abortTransaction();
-                console.log({ success: false, msg: `${err}` });
-            })
-        })       
+            await AuditoriaAluno.create([{responsavel: responsavel,  ...aluno._doc}], { session })
+        });
+        console.log({success: true, total: saldoAtualizado.atual});
+        return {success: true, total: saldoAtualizado.atual};
     } catch (err) {
-        console.log({ success: false, msg: `${err}` });
+        console.log({ success: false, msg: err.message });
+        return { success: false, msg: err.message };
     } finally {
         await session.endSession();
     }
-    console.log({sucesso, total: saldoAtualizado.total});
-    return {sucesso, total: saldoAtualizado.total};
 }
 
 // esssa funcao modifica o vetor senacoins dando push dos novos lotes a serem adicionados
 exports.atualizaSaldo = async (responsavel, senacoins, unidadeQrcode, session) => {
     
-    let sucesso = false;
-	try {    
-        await Aluno.findOneAndUpdate({email: responsavel}, {$push: {saldo: senacoins}}, { session: session, new: true})
-        .select('-_id')
-        .then(async (aluno) => {
-            if (!aluno)
-                throw new Error('aluno não encontrado');
+	try {
+        const aluno = await Aluno.findOneAndUpdate({email: responsavel}, {$push: {saldo: senacoins}}, { session: session, new: true}).select('-_id');
 
-            let msmUnidade = true;
-            aluno.id_unidade.forEach(unidade => {
-                if (!unidadeQrcode.includes(unidade))
-                    msmUnidade = false;
-            });
-            
-            if (!msmUnidade)
-                throw new Error('aluno não pertence a mesma unidade do qrcode');
+        if (!aluno)
+            throw new Error('aluno não encontrado');
 
-            await AuditoriaAluno.create([{responsavel: responsavel,  ...aluno._doc}], { session })
-            .then((audaluno) =>{
-                console.log({ success: true, audaluno});
-                sucesso = true;
-            })
-            .catch(async (err) => {
-                await session.abortTransaction();
-                console.log({ success: false, msg: `${err}` });
-            });
-        })
-        .catch(async (err) => {
-            await session.abortTransaction();
-            console.log({ success: false, msg: `${err}` });
-        })
+        let msmUnidade = true;
+        aluno.id_unidade.forEach(unidade => {
+            if (!unidadeQrcode.includes(unidade))
+                msmUnidade = false;
+        });
+        if (!msmUnidade)
+            throw new Error('aluno não pertence a mesma unidade do qrcode');
+
+        await AuditoriaAluno.create([{responsavel: responsavel,  ...aluno._doc}], { session })
+        return true;
 	} catch (err) {
-		console.log({ success: false, msg: `${err}` });
+        console.log({ success: false, msg: err.message });
+        return false;
 	} 
-    return sucesso;
 }
 
 exports.verificaQrCode = async (email, tipo, qrcode, session) => {
@@ -390,43 +363,42 @@ exports.deleteAll = (_req, res, _nxt) => {
     .catch((err) => (res.status(500).json({ success: false, msg: `${err}` })));
 }
 
-exports.redeemSenacoin = async (responsavel, email, item) => {
+exports.redeemSenacoin = async (responsavel, email, item, session) => {
 
+    const aluno = await Aluno.findOne({ email: email })
+    .select('-hash -salt')
+    .populate({path : 'saldo', select: 'pontos data_inicio data_fim'});
+
+    if (!aluno)
+        throw new Error('aluno não encontrado');
+    
     try {
-        const aluno = await Aluno.findOne({ email: email })
-        .select('-hash -salt')
-        .populate({path : 'saldo', select: 'pontos data_inicio data_fim'});
+        const resultado = await senacoin.sub(responsavel, item.pontos, aluno.saldo, session);
+        if (!resultado.success)
+            throw new Error(resultado.msg);
 
-        if (!aluno)
-            throw new Error('aluno não encontrado');
-        
-        const session = await mongoose.startSession();
-        try {
-            await session.withTransaction(async () => {
-    
-                const resultado = await senacoin.sub(responsavel, item.pontos, aluno.saldo, session);
-                if (!resultado.success)
-                    throw new Error(resultado.msg);
-    
-                const _aluno = await Aluno.findByIdAndUpdate(aluno._id, {saldo: resultado.remanescente}, { session: session, new: true})
-                .select('-_id');
+        let equals = true;
+        resultado.remanescente.forEach(value => {
+            if (!aluno.saldo.includes(value))
+            {
+                console.log('equals false');
+                equals = false;
+                return;
+            }
+        });
 
-                if (! _aluno)
-                    throw new Error('aluno não encontrado2');
-
-                await AuditoriaAluno.create([{responsavel: responsavel,  ..._aluno._doc}], { session });
-                await transacao.new(responsavel, aluno.id, resultado.gastos, resultado.totalGastos, 0, item._id, null, null, session);
-            })       
-        } catch (err) {
-            console.log({ success: false, msg: `${err}` });
-            await session.abortTransaction();
-        } finally {
-            await session.endSession();
+        if (!equals) {
+            const _aluno = await Aluno.findByIdAndUpdate(aluno._id, {saldo: resultado.remanescente}, { session: session, new: true}).select('-_id');
+            await AuditoriaAluno.create([{responsavel: responsavel,  ..._aluno._doc}], { session });
         }
         
+        if (! await transacao.new(responsavel, aluno.id, resultado.gastos, resultado.totalGastos, 0, item._id, null, null, session))
+            throw new Error('Erro na hora de salvar a transação.');
+        
         return resultado;
-    } catch (error) {
-        return {sucess: false, msg: error.message}
+    } catch (err) {
+        console.log({ success: false, msg: err.message });
+        return { sucess: false, msg: err.message }
     }
 }
 
@@ -450,7 +422,8 @@ exports.estornaPontos = async (responsavel, id, senacoins, pontos, session) => {
         });
         console.log(loteModificado, senacoins);
 
-        if (!senacoins.length) {
+        if (senacoins.length) {
+            console.log('entrei senacoin.length');
             const aluno = await Aluno.findByIdAndUpdate(id, {$push: {saldo: senacoins}}, { session: session, new: true}).select('-_id');
             await AuditoriaAluno.create([{responsavel: responsavel,  ...aluno._doc}], { session });
         }
