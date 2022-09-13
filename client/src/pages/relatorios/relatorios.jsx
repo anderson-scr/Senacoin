@@ -3,11 +3,24 @@ import { useState } from "react"
 import { useEffect } from "react";
 import { BsFileEarmarkPdf } from "react-icons/bs";
 import { AiFillPicture } from 'react-icons/ai';
+import XLSX from "xlsx";
 
 //relatórios
 import alunosPDF from './relatorios/alunos/alunosPDF'
-import alunosXLXS from './relatorios/alunos/alunosXLS';
+import testeXLSX from './relatorios/alunos/alunosXLSX';
 import unidadesPDF from './relatorios/unidades/unidadesPDF'
+
+function geraXLSX() {
+
+  // console.log(mockData)
+
+  let wb = XLSX.utils.book_new(),
+  ws = XLSX.utils.json_to_sheet(testeXLSX.mockData)
+
+  XLSX.utils.book_append_sheet(wb, ws, 'sheet1')
+
+  XLSX.writeFile(wb, 'Retatório.xlsx')
+}
 
 
 const Relatorios = () => {
@@ -36,10 +49,10 @@ const Relatorios = () => {
     }  
   }
 
-  function selectReportXLXS() {
+  function selectReportXLSX() {
     switch (typeReport) {
       case '1':
-        alunosXLXS.testeXLXS()
+        geraXLSX()
         break;    
       case '2':
         alert('Relatório XLXS')
@@ -81,7 +94,7 @@ const Relatorios = () => {
             <input onClick={selectReportPDF} type="button" className='btn btn-danger col-3 mt-3' value="Gerar PDF" />
           </div>
           <div className='btns d-flex flex-column mt-3'>
-            <input onClick={selectReportXLXS} type="button" className='btn btn-success col-3 mt-3' value="Gerar XLXS" />
+            <input onClick={selectReportXLSX} type="button" className='btn btn-success col-3 mt-3' value="Gerar XLXS" />
           </div>
         </form>
       </div>
