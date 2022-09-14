@@ -7,20 +7,10 @@ import XLSX from "xlsx";
 
 //relatórios
 import alunosPDF from './relatorios/alunos/alunosPDF'
-import testeXLSX from './relatorios/alunos/alunosXLSX';
+import alunosXLSX from './relatorios/alunos/alunosXLSX';
 import unidadesPDF from './relatorios/unidades/unidadesPDF'
 
-function geraXLSX() {
 
-  // console.log(mockData)
-
-  let wb = XLSX.utils.book_new(),
-  ws = XLSX.utils.json_to_sheet(testeXLSX.mockData)
-
-  XLSX.utils.book_append_sheet(wb, ws, 'sheet1')
-
-  XLSX.writeFile(wb, 'Retatório.xlsx')
-}
 
 
 const Relatorios = () => {
@@ -52,7 +42,7 @@ const Relatorios = () => {
   function selectReportXLSX() {
     switch (typeReport) {
       case '1':
-        geraXLSX()
+        alunosXLSX()
         break;    
       case '2':
         alert('Relatório XLXS')

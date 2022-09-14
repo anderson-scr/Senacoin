@@ -1,4 +1,4 @@
-
+import XLSX from 'xlsx'
 
 const mockData = [
     {Nome: 'Mateus', Matricula: '000001', Unidade: 'Senac Hub Academy', Email: 'mateus@mail.com'},
@@ -8,7 +8,13 @@ const mockData = [
     {Nome: 'Pedro', Matricula: '000005', Unidade: 'Senac Hub Academy', Email: 'pedro@mail.com'},
 ]
 
+function geraXLSX() {
+    // console.log(mockData)
+    let wb = XLSX.utils.book_new(),
+    ws = XLSX.utils.json_to_sheet(mockData)
+    XLSX.utils.book_append_sheet(wb, ws, 'sheet1')
+    XLSX.writeFile(wb, 'Retatório.xlsx')
+}
 
-
-// export default testeXLSX
-export default mockData
+export default geraXLSX
+// export default mockData
