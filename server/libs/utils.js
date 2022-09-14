@@ -75,9 +75,11 @@ function authUserMiddleware(role) {
 
 	role ??= false;
 	return (req, res, next) => {
-
-		if(!req.headers.authorization)
-			return res.status(401).json({ success: false, msg: "Voce não esta autenticado a acessar essa rota" });
+    console.log("///////////////////////////////////////////////")
+    console.log(req.headers.authorization)
+    console.log("///////////////////////////////////////////////")
+    if(!req.headers.authorization)
+			return res.status(401).json({ success: false, msg: "Voce não esta autenticado a acessar essa rota1" });
 		
 		let flag = true;
 		const tokenParts = req.headers.authorization.split(' ');
@@ -94,7 +96,7 @@ function authUserMiddleware(role) {
 								if (role && req.params.id != aluno._id)
 								{
 									flag = false;
-									res.status(403).json({ success: false, msg: "Voce não esta autorizado a acessar essa rota" });
+									res.status(403).json({ success: false, msg: "Voce não esta autorizado a acessar essa rota2" });
 								}
 							})
 							.catch((_aluno) => {
@@ -113,7 +115,7 @@ function authUserMiddleware(role) {
 							if (role && !colab.permissoes[role])
 							{
 								flag = false;
-								res.status(403).json({ success: false, msg: "Voce não esta autorizado a acessar essa rota" });
+								res.status(403).json({ success: false, msg: "Voce não esta autorizado a acessar essa rota3" });
 							}
 						}
 						if (flag)
@@ -127,11 +129,11 @@ function authUserMiddleware(role) {
 					});
 				}
 				else
-					res.status(401).json({ success: false, msg: "Voce não esta autenticado a acessar essa rota" });
+					res.status(401).json({ success: false, msg: "Voce não esta autenticado a acessar essa rota4" });
 			});
 		}
 		else
-			res.status(401).json({ success: false, msg: "Voce não esta autenticado a acessar essa rota" });
+			res.status(401).json({ success: false, msg: "Voce não esta autenticado a acessar essa rota5" });
 	}
 }
 

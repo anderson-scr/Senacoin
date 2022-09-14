@@ -26,6 +26,8 @@ const ProgressBar = () => {
 
       // Fill dropDows unidades
       (async () => {
+        console.log("oi")
+        console.log(localStorage)
         setAreas(await callAreaAPI.ativo())
       })()
       return () => effectOnce.current = false

@@ -46,3 +46,11 @@
 .forgotPassword:hover {
   cursor: pointer;
 }
+#btnConfirmModal:focus {
+  background-color: var(--main-color);
+  border-color: var(--senac-amarelo-claro);
+  box-shadow: 0 0 0 0.2rem rgba(225, 126, 28, 0.25);
+}
+#btnConfirmModal:hover {
+  background-color: #ac6700;
+}

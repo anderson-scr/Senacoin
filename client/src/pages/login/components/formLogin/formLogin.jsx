@@ -29,6 +29,7 @@ const FormLogin = () => {
       ModalService.open( LoginCampos )
       inputPassword.current.value = ''
 
+
     } else {
       (async () => {
         // Returns true if the login was successful and all the permissions that the user has
@@ -36,20 +37,17 @@ const FormLogin = () => {
         localStorage.setItem("permissions", JSON.stringify(login.permissoes))
 
         if(login.success) {
-          setUserAuth(true)
-          setPermissions(login.permissoes)
-          navigate("/Dashboard", {replace: true} )
+          await setUserAuth(true)
+          await setPermissions(login.permissoes)
+          navigate("/Dashboard", {replace: true})
           
         } else {
-          ModalService.open( LoginInvalido ) 
+          ModalService.open(LoginInvalido)
           inputPassword.current.value = ''
         }
       })()
-
-      // Calls the API to check if the user entry matches any user in DB
     }
   }
-
 
   // Password visibility 
   const changeVisibility = () => {

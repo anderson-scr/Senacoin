@@ -40,7 +40,7 @@ const EsqueceuSenha = () => {
       <h2 className='titleLoginEsqueceuSenha'>Recuperar senha</h2>
 
       <p className='infoResetSenha'>
-        Iremos enviar ao email informado um link de acesso para redefinir a senha.
+        Iremos enviar ao email informado as novas informações de acesso.
       </p>
 
       <form>
