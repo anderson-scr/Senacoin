@@ -7,7 +7,7 @@ import XLSX from "xlsx";
 
 //relatórios
 import alunosPDF from './relatorios/alunos/alunosPDF'
-import alunosXLSX from './relatorios/alunos/alunosXLSX';
+import geraXLSX from './relatorios/alunos/alunosXLSX';
 import unidadesPDF from './relatorios/unidades/unidadesPDF'
 
 
@@ -42,7 +42,7 @@ const Relatorios = () => {
   function selectReportXLSX() {
     switch (typeReport) {
       case '1':
-        alunosXLSX()
+        geraXLSX()
         break;    
       case '2':
         alert('Relatório XLXS')
